@@ -5,9 +5,26 @@
 #include <string>
 #include "Token.h"
 using namespace std;
+
 class Scanner
 {
-public:
-private:
-    set<pair<string, Token>> reserved;
+   public:
+	   Scanner();
+   private:
+   void populateReservedList();
+   void populatePunctuationList();
+   void populateAssignmentList();
+   void populateArithOperatorList();
+   void populateRelationOperatorList();
+   void populateBooleanOperatorList();
+   
+   set<pair<string, Token*>> reserved;
+   set<pair<string, Token*>> punctuation;
+   set<pair<string, Token*>> assignment;
+   set<pair<string, Token*>> arithOperator;
+   set<pair<string, Token*>> relationOperator;
+   set<pair<string, Token*>> booleanOperator;
+
+
 };
+
