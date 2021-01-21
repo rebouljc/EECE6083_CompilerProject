@@ -2,9 +2,12 @@
 
 
 #include <iostream>
+#include "Token.h"
+#include "Scanner.h"
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    cout << "Hello World!\n";
 }
 
