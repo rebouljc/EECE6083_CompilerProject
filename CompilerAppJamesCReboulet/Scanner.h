@@ -34,7 +34,6 @@ class Scanner
 
    Token* searchSingleCharacterLists(string character);
 
-   bool matchSingleCharacter(string character);
    bool matchReservedWord();
    void readFile();
    

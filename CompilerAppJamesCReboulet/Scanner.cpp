@@ -86,11 +86,6 @@ void Scanner::populateBooleanOperatorList()
 	this->booleanOperator.insert(make_pair("|", new Token("BOOLEAN_OP", "|")));
 }
 
-bool Scanner::matchSingleCharacter(string character)
-{
-	//Search punctuation, assignment, arithOperator, relationOperator, booleanOperator lists for a match.  If so, return true.  Else, return false;
-	return false;
-}
 
 Token* Scanner::searchPunctuationList(string character)
 {
