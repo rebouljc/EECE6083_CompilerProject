@@ -5,12 +5,15 @@
 #include <vector>
 #include <string>
 #include "Token.h"
+#include <fstream>
 using namespace std;
 
 class Scanner
 {
    public:
 	   Scanner();
+	   
+
    private:
    void populateReservedList();
    void populatePunctuationList();
@@ -19,10 +22,22 @@ class Scanner
    void populateRelationOperatorList();
    void populateBooleanOperatorList();
 
+   string readCharacterFromFile(ifstream* filename);
+
+   //search methods
+
+   Token* searchPunctuationList(string character);
+   Token* searchAssignmentList(string character);
+   Token* searchArithOperatorList(string character);
+   Token* searchRelationOperatorList(string character);
+   Token* searchBooleanOperatorList(string character);
+
+   Token* searchSingleCharacterLists(string character);
+
    bool matchSingleCharacter(string character);
    bool matchReservedWord();
    void readFile();
-   void readCharacterFromFile(string filename);
+   
    void reportError();
    void reportWarning();
 
