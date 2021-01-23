@@ -7,3 +7,8 @@ Token::Token(string tokenType, string tokenValue)
 	this->tokenValue = tokenValue;
 
 }
+
+bool Token::operator ==(Token* tok)
+{
+	return false;
+}

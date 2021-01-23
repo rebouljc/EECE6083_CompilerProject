@@ -81,3 +81,33 @@ void Scanner::populateBooleanOperatorList()
 	this->booleanOperator.insert(make_pair("&", new Token("BOOLEAN_OP", "&")));
 	this->booleanOperator.insert(make_pair("|", new Token("BOOLEAN_OP", "|")));
 }
+
+bool Scanner::matchSingleCharacter(string character)
+{
+	//Search punctuation, assignment, arithOperator, relationOperator, booleanOperator lists for a match.  If so, return true.  Else, return false;
+	return false;
+}
+
+bool Scanner::matchReservedWord()
+{
+	return false;
+}
+
+void Scanner::readFile()
+{
+
+}
+
+void readCharacterFromFile(string filename)
+{
+
+}
+void Scanner::reportError()
+{
+
+}
+void Scanner::reportWarning()
+{
+
+}
+
