@@ -30,6 +30,7 @@ class Scanner
    void createBooleanOperatorToken();
    void createReservedWordToken();
    void createIdentifierToken();
+   void createStringLiteralToken();
  
    //read character method
 
@@ -48,6 +49,7 @@ class Scanner
    bool matchReservedWord(string matchString); //Calls createReservedWordToken() if true;
    bool matchLetter(string character);
    bool matchDigit(string character);
+   bool matchPunctuation(string character);
    void readFile();
    
    void reportError();

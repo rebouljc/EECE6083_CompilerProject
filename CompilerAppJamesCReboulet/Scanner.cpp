@@ -109,6 +109,21 @@ void Scanner::createIdentifierToken()
 
 }
 
+void Scanner::createStringLiteralToken()
+{
+
+}
+
+string Scanner::readCharacterFromFile(ifstream* inputStream)
+{
+	char currentCharacter;
+
+	inputStream->get(currentCharacter);
+	string stringEquivChar(1, currentCharacter);
+
+	return stringEquivChar;
+}
+
 void Scanner::populateBooleanOperatorList()
 {
 	this->booleanOperator.insert(make_pair("&", new Token("BOOLEAN_OP", "&")));
@@ -197,6 +212,20 @@ bool Scanner::matchReservedWord(string matchString)
 }
 
 //This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
+bool Scanner::matchLetter(string character)
+{
+	return false;
+}
+
+bool Scanner::matchDigit(string character)
+{
+	return false;
+}
+
+bool Scanner::matchPunctuation(string character)
+{
+	return false;
+}
 
 void Scanner::readFile()
 {
@@ -229,15 +258,7 @@ void Scanner::readFile()
 	
 }
 
-string Scanner::readCharacterFromFile(ifstream* inputStream)
-{
-	char currentCharacter;
 
-	inputStream->get(currentCharacter);
-	string stringEquivChar(1, currentCharacter);
-
-	return stringEquivChar;
-}
 
 void Scanner::reportError()
 {
@@ -248,13 +269,5 @@ void Scanner::reportWarning()
 {
 
 }
-bool Scanner::matchLetter(string character)
-{
-	return false;
-}
 
-bool Scanner::matchDigit(string character)
-{
-	return false;
-}
 
