@@ -80,6 +80,35 @@ void Scanner::populateRelationOperatorList()
 	this->relationOperator.insert(make_pair("!=", new Token("RELATION_OP", "!=")));
 }
 
+void Scanner::createPunctuationToken()
+{
+
+}
+void Scanner::createAssignmentToken()
+{
+
+}
+void Scanner::createArithOperatorToken()
+{
+
+}
+void Scanner::createRelationOperatorToken()
+{
+
+}
+void Scanner::createBooleanOperatorToken()
+{
+
+}
+void Scanner::createReservedWordToken()
+{
+
+}
+void Scanner::createIdentifierToken()
+{
+
+}
+
 void Scanner::populateBooleanOperatorList()
 {
 	this->booleanOperator.insert(make_pair("&", new Token("BOOLEAN_OP", "&")));
@@ -162,7 +191,7 @@ Token* Scanner::searchSingleCharacterLists(string character)
 	return nullptr;
 }
 
-bool Scanner::matchReservedWord()
+bool Scanner::matchReservedWord(string matchString)
 {
 	return false;
 }
@@ -218,5 +247,14 @@ void Scanner::reportError()
 void Scanner::reportWarning()
 {
 
+}
+bool Scanner::matchLetter(string character)
+{
+	return false;
+}
+
+bool Scanner::matchDigit(string character)
+{
+	return false;
 }
 

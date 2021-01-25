@@ -22,6 +22,17 @@ class Scanner
    void populateRelationOperatorList();
    void populateBooleanOperatorList();
 
+   //create methods
+   void createPunctuationToken();
+   void createAssignmentToken();
+   void createArithOperatorToken();
+   void createRelationOperatorToken();
+   void createBooleanOperatorToken();
+   void createReservedWordToken();
+   void createIdentifierToken();
+ 
+   //read character method
+
    string readCharacterFromFile(ifstream* filename);
 
    //search methods
@@ -34,7 +45,9 @@ class Scanner
 
    Token* searchSingleCharacterLists(string character);
 
-   bool matchReservedWord();
+   bool matchReservedWord(string matchString); //Calls createReservedWordToken() if true;
+   bool matchLetter(string character);
+   bool matchDigit(string character);
    void readFile();
    
    void reportError();
