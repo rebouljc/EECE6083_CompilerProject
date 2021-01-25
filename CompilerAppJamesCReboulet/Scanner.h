@@ -22,6 +22,7 @@ class Scanner
    void populateArithOperatorList();
    void populateRelationOperatorList();
    void populateBooleanOperatorList();
+   void populateWhitespaceSymbolsList();
 
    //create methods
    void createDigitCharacter(char character);
@@ -31,7 +32,7 @@ class Scanner
    void createArithOperatorToken();
    void createRelationOperatorToken();
    void createBooleanOperatorToken();
-   void createReservedWordToken();
+   void createReservedWordToken(Token* tokenToAdd);
    void createIdentifierToken();
    void createStringLiteralToken();
  
@@ -46,18 +47,26 @@ class Scanner
    Token* searchArithOperatorList(string character);
    Token* searchRelationOperatorList(string character);
    Token* searchBooleanOperatorList(string character);
+   Token* searchReservedWordList(string character);
 
    Token* searchSingleCharacterLists(string character);
 
-   bool matchReservedWord(string matchString); //Calls createReservedWordToken() if true;
+   //match methods
+
+   void matchReservedWord(); //Calls createReservedWordToken() if true;
    bool matchPunctuation(string character);
-   void readFile();
+
+   //initial readFileMethod()
+
+   void readFile(ifstream* input);
    
    void reportError();
    void reportWarning();
 
    //Other methods - if not a digit or a number
-   void performOtherAction();
+
+   void performOtherAction(ifstream* input, char character);
+   bool isWhitespace(char character);
 
    
    set<pair<string, Token*>> reserved;
@@ -66,6 +75,7 @@ class Scanner
    set<pair<string, Token*>> arithOperator;
    set<pair<string, Token*>> relationOperator;
    set<pair<string, Token*>> booleanOperator;
+   vector<char> whitespaceSymbols;
    vector<Token*> storedTokens;
    vector<Character*> storedCharacters;
 

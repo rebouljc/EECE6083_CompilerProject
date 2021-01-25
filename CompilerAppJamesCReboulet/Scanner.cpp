@@ -11,8 +11,13 @@ Scanner::Scanner()
 	this->populateArithOperatorList();
 	this->populateRelationOperatorList();
 	this->populateBooleanOperatorList();
+	this->populateWhitespaceSymbolsList();
 
-	this->readFile();
+	std::cout << "\nEnter a filename to be scanned.\n";
+	string filename;
+	std::cin >> filename;
+	ifstream* input = new ifstream(filename);
+	this->readFile(input);
 }
 void Scanner::populateReservedList()
 {
@@ -54,12 +59,14 @@ void Scanner::populatePunctuationList()
 	this->punctuation.insert(make_pair("-", new Token("PUNCTUATION", "-")));
 	this->punctuation.insert(make_pair("\"", new Token("PUNCTUATION", "\"")));
 	this->punctuation.insert(make_pair("^\"", new Token("PUNCTUATION", "^\"")));
+	this->punctuation.insert(make_pair(":", new Token("PUNCTUATION", ":")));
 	
 }
 
 void Scanner::populateAssignmentList()
 {
     this->assignment.insert(make_pair(":=", new Token("ASSIGNMENT", ":=")));
+	
 	
 }
 
@@ -81,18 +88,25 @@ void Scanner::populateRelationOperatorList()
 	this->relationOperator.insert(make_pair("!=", new Token("RELATION_OP", "!=")));
 }
 
+void Scanner::populateWhitespaceSymbolsList()
+{
+	this->whitespaceSymbols.push_back(' ');
+	this->whitespaceSymbols.push_back('\t');
+	this->whitespaceSymbols.push_back('\t');
+}
+
 void Scanner::createDigitCharacter(char character)
 {
 	string convertChar(1, character);
 
-	this->storedCharacters.push_back(new Character("LETTER", convertChar));
+	this->storedCharacters.push_back(new Character("DIGIT", convertChar));
 }
 void Scanner::createLetterCharacter(char character)
 {
 	string convertChar(1, character);
-	{
-		this->storedCharacters.push_back(new Character("NUMBER", convertChar));
-	}
+	
+    this->storedCharacters.push_back(new Character("LETTER", convertChar));
+	
 }
 
 void Scanner::createPunctuationToken()
@@ -115,9 +129,10 @@ void Scanner::createBooleanOperatorToken()
 {
 
 }
-void Scanner::createReservedWordToken()
+void Scanner::createReservedWordToken(Token* tokenToAdd)
 {
-
+	//Creates a token for an identified reserved word
+	this->storedTokens.push_back(new Token(tokenToAdd));
 }
 void Scanner::createIdentifierToken()
 {
@@ -221,9 +236,38 @@ Token* Scanner::searchSingleCharacterLists(string character)
 	return nullptr;
 }
 
-bool Scanner::matchReservedWord(string matchString)
+Token* Scanner::searchReservedWordList(string character)
 {
-	return false;
+	Token* result;
+	for (set<pair<string, Token*>>::iterator it = this->reserved.begin(); it != this->reserved.end(); ++it)
+	{
+		if (character == it->first)
+		{
+			return it->second;
+		}
+	}
+
+	return nullptr;
+}
+
+void Scanner::matchReservedWord()
+{
+	//We first have to obtain the string, so we empty the vector of stored characters into a string and then check.
+	string searchString;
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		searchString.push_back(this->storedCharacters.at(i)->getTokenValue()[0]);
+	}
+
+	//Now, search the reserved Words list.
+	Token* resultTok;
+	if ((resultTok = this->searchReservedWordList(searchString)) != nullptr)
+	{
+		//create the reserved word token
+		this->createReservedWordToken(resultTok);
+	}
+
+	
 }
 
 //This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
@@ -233,44 +277,37 @@ bool Scanner::matchPunctuation(string character)
 	return false;
 }
 
-void Scanner::readFile()
+void Scanner::readFile(ifstream* input)
 {
-	std::cout << "\nEnter a filename to be scanned.";
-	string filename;
-	std::cin >> filename;
-	ifstream* input = new ifstream(filename);
+	
 
 	//Read the character from the file.
 
 	char character = readCharacterFromFile(input);
-	if (isalpha(character))
+	if (character == EOF)
+	{
+		return;
+	}
+	else if (isalpha(character))
 	{
 		this->createLetterCharacter(character);
+		this->readFile(input);
+		
 	}
 
 	else if (isdigit(character))
 	{
 		this->createDigitCharacter(character);
+		this->readFile(input);
 	}
 
-	else
+	else //Not a letter or a digit, so perform an alternative action.  
 	{
-
+		performOtherAction(input, character);
 	}
-	
-	
 
-	//Check if there is a match to an existing token (punctuation, assignment, arithOp, relationalOp, or booleanOp.
-	//*********TODO******* I forgot, we also need to add a method to determine whether the character is an integer, a floating point, or a letter.
-	Token* result;
-	//If this is true, create a token for that character.
-	//Else, continue reading characters until a space is encountered and read them into a string.  Then, check to see if anyone of them matches a reserved word.  
-	//If so, create a token for the reserved word.
-	//Else, we consider that string to be an identifier and we create a token for each identifier.
-	//
-
-	
-}
+	return;
+ }
 
 
 
@@ -284,9 +321,32 @@ void Scanner::reportWarning()
 
 }
 
-void Scanner::performOtherAction()
+void Scanner::performOtherAction(ifstream* input, char character)
 {
+	//check for whitespace
+	char nextCharacter;
+	string charToString;
 
+	if (this->isWhitespace(character))
+	{
+		//We either need to create the token as a letter, number, reserved word, or identifier.  How do we decide?
+		//We need to call Scanner::matchReservedWord() which will start checking the reservedWords list for a match;
+		this->matchReservedWord();
+
+		//nextCharacter = this->readCharacterFromFile(input);
+	}
 }
 
+bool Scanner::isWhitespace(char character)
+{
+	for (unsigned int i = 0; i < this->whitespaceSymbols.size(); ++i)
+	{
+		if (this->whitespaceSymbols.at(i) == character)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
 

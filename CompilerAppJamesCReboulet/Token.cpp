@@ -11,10 +11,35 @@ Token::Token(string tokenType, string tokenValue)
 
 }
 
+Token::Token(Token* token)
+{
+	this->tokenType = token->getTokenType();
+	this->tokenValue = token->getTokenValue();
+}
+
 bool Token::operator ==(Token* tok)
 {
 	return false;
 }
+
+string Token::getTokenType()
+{
+	return tokenType;
+}
+string Token::getTokenValue()
+{
+	return tokenValue;
+}
+
+void Token::setTokenType(string type)
+{
+	tokenType = type;
+}
+void Token::setTokenValue(string value)
+{
+	tokenValue = value;
+}
+
 void Token::setTokenOccurrence(int occurrence)
 {
 	this->tokenOccurrence = occurrence;
