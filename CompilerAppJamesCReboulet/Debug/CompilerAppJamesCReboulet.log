@@ -1,5 +1,7 @@
-﻿  CompilerAppJamesCReboulet.cpp
+﻿  Character.cpp
+  CompilerAppJamesCReboulet.cpp
   Token.cpp
   Scanner.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(265,9): warning C4101: 'result': unreferenced local variable
   Generating Code...
   CompilerAppJamesCReboulet.vcxproj -> C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Debug\CompilerAppJamesCReboulet.exe

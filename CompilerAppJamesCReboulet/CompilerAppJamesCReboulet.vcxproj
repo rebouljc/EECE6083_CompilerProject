@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="CompilerAppJamesCReboulet.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Scanner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Scanner.h" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 
+
 Scanner::Scanner()
 {
 	this->populateReservedList();
@@ -80,6 +81,20 @@ void Scanner::populateRelationOperatorList()
 	this->relationOperator.insert(make_pair("!=", new Token("RELATION_OP", "!=")));
 }
 
+void Scanner::createDigitCharacter(char character)
+{
+	string convertChar(1, character);
+
+	this->storedCharacters.push_back(new Character("LETTER", convertChar));
+}
+void Scanner::createLetterCharacter(char character)
+{
+	string convertChar(1, character);
+	{
+		this->storedCharacters.push_back(new Character("NUMBER", convertChar));
+	}
+}
+
 void Scanner::createPunctuationToken()
 {
 
@@ -114,15 +129,15 @@ void Scanner::createStringLiteralToken()
 
 }
 
-string Scanner::readCharacterFromFile(ifstream* inputStream)
+char Scanner::readCharacterFromFile(ifstream* inputStream)
 {
 	char currentCharacter;
 
 	inputStream->get(currentCharacter);
-	string stringEquivChar(1, currentCharacter);
-
-	return stringEquivChar;
+	return currentCharacter;
 }
+
+
 
 void Scanner::populateBooleanOperatorList()
 {
@@ -212,15 +227,6 @@ bool Scanner::matchReservedWord(string matchString)
 }
 
 //This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
-bool Scanner::matchLetter(string character)
-{
-	return false;
-}
-
-bool Scanner::matchDigit(string character)
-{
-	return false;
-}
 
 bool Scanner::matchPunctuation(string character)
 {
@@ -236,7 +242,23 @@ void Scanner::readFile()
 
 	//Read the character from the file.
 
-	string character = readCharacterFromFile(input);
+	char character = readCharacterFromFile(input);
+	if (isalpha(character))
+	{
+		this->createLetterCharacter(character);
+	}
+
+	else if (isdigit(character))
+	{
+		this->createDigitCharacter(character);
+	}
+
+	else
+	{
+
+	}
+	
+	
 
 	//Check if there is a match to an existing token (punctuation, assignment, arithOp, relationalOp, or booleanOp.
 	//*********TODO******* I forgot, we also need to add a method to determine whether the character is an integer, a floating point, or a letter.
@@ -246,15 +268,7 @@ void Scanner::readFile()
 	//If so, create a token for the reserved word.
 	//Else, we consider that string to be an identifier and we create a token for each identifier.
 	//
-	if ((result = searchSingleCharacterLists(character)) != nullptr)
-	{
-		
-	}
-	//Determine if the next character is a space.  If so, check to see if the character is a letter or a number.
-	else
-	{
 
-	}
 	
 }
 
@@ -266,6 +280,11 @@ void Scanner::reportError()
 }
 
 void Scanner::reportWarning()
+{
+
+}
+
+void Scanner::performOtherAction()
 {
 
 }

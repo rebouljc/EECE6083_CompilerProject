@@ -6,6 +6,7 @@
 #include <string>
 #include "Token.h"
 #include <fstream>
+#include "Character.h"
 using namespace std;
 
 class Scanner
@@ -23,6 +24,8 @@ class Scanner
    void populateBooleanOperatorList();
 
    //create methods
+   void createDigitCharacter(char character);
+   void createLetterCharacter(char character);
    void createPunctuationToken();
    void createAssignmentToken();
    void createArithOperatorToken();
@@ -34,7 +37,7 @@ class Scanner
  
    //read character method
 
-   string readCharacterFromFile(ifstream* filename);
+   char readCharacterFromFile(ifstream* filename);
 
    //search methods
 
@@ -47,13 +50,14 @@ class Scanner
    Token* searchSingleCharacterLists(string character);
 
    bool matchReservedWord(string matchString); //Calls createReservedWordToken() if true;
-   bool matchLetter(string character);
-   bool matchDigit(string character);
    bool matchPunctuation(string character);
    void readFile();
    
    void reportError();
    void reportWarning();
+
+   //Other methods - if not a digit or a number
+   void performOtherAction();
 
    
    set<pair<string, Token*>> reserved;
@@ -63,6 +67,7 @@ class Scanner
    set<pair<string, Token*>> relationOperator;
    set<pair<string, Token*>> booleanOperator;
    vector<Token*> storedTokens;
+   vector<Character*> storedCharacters;
 
 
 };
