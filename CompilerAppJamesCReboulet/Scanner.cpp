@@ -92,7 +92,7 @@ void Scanner::populateWhitespaceSymbolsList()
 {
 	this->whitespaceSymbols.push_back(' ');
 	this->whitespaceSymbols.push_back('\t');
-	this->whitespaceSymbols.push_back('\t');
+	this->whitespaceSymbols.push_back('\n');
 }
 
 void Scanner::createDigitCharacter(char character)
@@ -109,9 +109,9 @@ void Scanner::createLetterCharacter(char character)
 	
 }
 
-void Scanner::createPunctuationToken()
+void Scanner::createSingleCharacterToken(Token* token)
 {
-
+	this->storedTokens.push_back(new Token(token->getTokenType(), token->getTokenValue()));
 }
 void Scanner::createAssignmentToken()
 {
@@ -238,7 +238,7 @@ Token* Scanner::searchSingleCharacterLists(string character)
 
 Token* Scanner::searchReservedWordList(string character)
 {
-Token* result;
+
 for (set<pair<string, Token*>>::iterator it = this->reserved.begin(); it != this->reserved.end(); ++it)
 {
 	if (character == it->first)
@@ -265,17 +265,79 @@ void Scanner::matchReservedWord()
 	{
 		//create the reserved word token
 		this->createReservedWordToken(resultTok);
+
+		//if we have identified a lexeme as a reserved word, make sure to empty the character vector.
+
+		this->storedCharacters.clear();
+		
 	}
 
+	else
+	{
+
+		//this->matchNumber();  //**Need to put this in for later. For matching numbers.
+		
+		
+		
+	}
+
+	
+	//Try this just to test the reserved word
+	this->storedCharacters.clear();
 
 }
 
-//This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
-
-bool Scanner::matchPunctuation(string character)
+void Scanner::matchIdentifier()
 {
-	return false;
+
 }
+
+void Scanner::matchNumber()
+{
+	//verify that everything is a digit first.
+
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		if (this->storedCharacters.at(i)->getTokenType() == "LETTER")
+		{
+			return;
+		}
+	}
+	//Set all of the token superclasses to "NUMBER" and combine them into a single Token*
+
+	((Token*)(this->storedCharacters.at(0)))->setTokenType("NUMBER");
+
+	for (int i = 1; i < this->storedCharacters.size(); ++i)
+	{
+		((Token*)(this->storedCharacters.at(0)))->addToSubTokenObjects((Token*)this->storedCharacters.at(i));
+	}
+	
+	//Now, add that to the tokens list
+	this->storedTokens.push_back((Token*)this->storedCharacters.at(0));
+ 
+	//Test whether we can downcast from superclass to subclass.
+	//The parser will then be a subclass of scanner, and it can communicate with the scanner if needed.  
+	//I am trying to set this up correctly in the beginning, so that I will hopefully encounter fewer issues in the future..
+	//Of course, it probably won't work that way, but at least it is a plan.
+
+	Character* characterObject;
+	characterObject = dynamic_cast <Character*> (this->storedCharacters.at(0));
+	
+
+
+
+}
+
+void Scanner::matchLetter()
+{
+
+}
+
+void Scanner::matchStringLiteral()
+{
+
+}
+//This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
 
 void Scanner::readFile(ifstream* input)
 {
@@ -284,29 +346,33 @@ void Scanner::readFile(ifstream* input)
 	//Read the character from the file.
 
 	char character = readCharacterFromFile(input);
-	if (character == EOF)
+	if (input->eof())
 	{
 		return;
 	}
 	else if (isalpha(character))
 	{
 		this->createLetterCharacter(character);
-		this->readFile(input);
+		
+		
 
 	}
 
 	else if (isdigit(character))
 	{
 		this->createDigitCharacter(character);
-		this->readFile(input);
+		
+		
 	}
 
 	else //Not a letter or a digit, so perform an alternative action.  
 	{
 		performOtherAction(input, character);
 	}
-
+	this->readFile(input); //The recursive call is made until EOF is encountered.
+	
 	return;
+	
 }
 
 
@@ -323,18 +389,16 @@ void Scanner::reportWarning()
 
 void Scanner::performOtherAction(ifstream* input, char character)
 {
-	//check for whitespace
-	char nextCharacter;
-	string charToString;
+	
+	string charToString(1, character); //Convert char character to string, so that it can be used by class methods.
 	Token* singleCharTok;
 
+	//check for whitespace
 	if (this->isWhitespace(character))
 	{
 		//We either need to create the token as a letter, number, reserved word, or identifier.  How do we decide?
 		//We need to call Scanner::matchReservedWord() which will start checking the reservedWords list for a match;
 		this->matchReservedWord();
-
-		//nextCharacter = this->readCharacterFromFile(input);
 	}
 	
 
@@ -343,12 +407,15 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		//Match the reserved word
 		this->matchReservedWord();
 
-		//create a token for the punctuation mark
+		//create a token for the single character mark
+		this->createSingleCharacterToken(singleCharTok);
+		
 	}
-	else
-	{
-		//Throw a compiler error exception and terminate.
-	}
+
+	//NOTE:  Right now the program is blowing up, because we are not calling this->storedCharacters.clear() yet except when we encounter a reserved word.  
+	//Maybe I will briefly do this to see whether the scanner can recognize digits.
+
+	return;
 }
 
 bool Scanner::isWhitespace(char character)

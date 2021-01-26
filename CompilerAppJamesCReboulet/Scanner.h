@@ -27,7 +27,7 @@ class Scanner
    //create methods
    void createDigitCharacter(char character);
    void createLetterCharacter(char character);
-   void createPunctuationToken();
+   void createSingleCharacterToken(Token* token);
    void createAssignmentToken();
    void createArithOperatorToken();
    void createRelationOperatorToken();
@@ -54,7 +54,10 @@ class Scanner
    //match methods
 
    void matchReservedWord(); //Calls createReservedWordToken() if true;
-   bool matchPunctuation(string character);
+   void matchIdentifier();
+   void matchNumber();
+   void matchLetter();
+   void matchStringLiteral();
 
    //initial readFileMethod()
 

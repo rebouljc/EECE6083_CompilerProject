@@ -12,6 +12,8 @@ public:
 
 	
 private:
+	string subTokenType;
+	string subTokenValue;
 	
 
 };
