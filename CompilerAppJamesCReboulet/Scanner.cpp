@@ -238,16 +238,16 @@ Token* Scanner::searchSingleCharacterLists(string character)
 
 Token* Scanner::searchReservedWordList(string character)
 {
-	Token* result;
-	for (set<pair<string, Token*>>::iterator it = this->reserved.begin(); it != this->reserved.end(); ++it)
+Token* result;
+for (set<pair<string, Token*>>::iterator it = this->reserved.begin(); it != this->reserved.end(); ++it)
+{
+	if (character == it->first)
 	{
-		if (character == it->first)
-		{
-			return it->second;
-		}
+		return it->second;
 	}
+}
 
-	return nullptr;
+return nullptr;
 }
 
 void Scanner::matchReservedWord()
@@ -267,7 +267,7 @@ void Scanner::matchReservedWord()
 		this->createReservedWordToken(resultTok);
 	}
 
-	
+
 }
 
 //This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
@@ -279,7 +279,7 @@ bool Scanner::matchPunctuation(string character)
 
 void Scanner::readFile(ifstream* input)
 {
-	
+
 
 	//Read the character from the file.
 
@@ -292,7 +292,7 @@ void Scanner::readFile(ifstream* input)
 	{
 		this->createLetterCharacter(character);
 		this->readFile(input);
-		
+
 	}
 
 	else if (isdigit(character))
@@ -307,7 +307,7 @@ void Scanner::readFile(ifstream* input)
 	}
 
 	return;
- }
+}
 
 
 
@@ -326,6 +326,7 @@ void Scanner::performOtherAction(ifstream* input, char character)
 	//check for whitespace
 	char nextCharacter;
 	string charToString;
+	Token* singleCharTok;
 
 	if (this->isWhitespace(character))
 	{
@@ -334,6 +335,19 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		this->matchReservedWord();
 
 		//nextCharacter = this->readCharacterFromFile(input);
+	}
+	
+
+	else if ((singleCharTok = this->searchSingleCharacterLists(charToString)) != nullptr)
+	{
+		//Match the reserved word
+		this->matchReservedWord();
+
+		//create a token for the punctuation mark
+	}
+	else
+	{
+		//Throw a compiler error exception and terminate.
 	}
 }
 
