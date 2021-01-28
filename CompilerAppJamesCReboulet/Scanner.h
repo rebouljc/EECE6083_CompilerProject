@@ -27,6 +27,7 @@ class Scanner
    //create methods
    void createDigitCharacter(char character);
    void createLetterCharacter(char character);
+   void createPeriodCharacter();
    void createSingleCharacterToken(Token* token);
    void createAssignmentToken();
    void createArithOperatorToken();
@@ -35,7 +36,7 @@ class Scanner
    void createReservedWordToken(Token* tokenToAdd);
    void createIdentifierToken();
    void createStringLiteralToken();
-   void createNumberToken(string type, double value);
+   void createNumberToken(string type, int value);
  
    //read character method
 
@@ -54,12 +55,12 @@ class Scanner
 
    //match methods
 
-   void matchReservedWord(); //Calls createReservedWordToken() if true;
+   void matchReservedWord(ifstream* input); //Calls createReservedWordToken() if true;
    bool matchIdentifier();
-   void matchNumber();
+   void matchNumber(ifstream* input);
    void matchLetter();
    void matchStringLiteral();
-   void otherActionMatchNotReservedWord();
+   void otherActionMatchNotReservedWord(ifstream* input);
 
    //initial readFileMethod()
 
@@ -72,7 +73,7 @@ class Scanner
 
    void performOtherAction(ifstream* input, char character);
    bool isWhitespace(char character);
-   double computeFloatingPointResult(vector<int>* inputVector, double input, double exponent);
+   int computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize);
 
    
    set<pair<string, Token*>> reserved;

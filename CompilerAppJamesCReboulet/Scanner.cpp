@@ -110,6 +110,11 @@ void Scanner::createLetterCharacter(char character)
 	
 }
 
+void Scanner::createPeriodCharacter()
+{
+	this->storedCharacters.push_back(new Character("PERIOD", "."));
+}
+
 void Scanner::createSingleCharacterToken(Token* token)
 {
 	this->storedTokens.push_back(new Token(token->getTokenType(), token->getTokenValue()));
@@ -142,7 +147,7 @@ void Scanner::createIdentifierToken()
 	Token* recentToken = this->storedTokens.at(this->storedTokens.size()-1);
 	string identifier;
 
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		identifier.push_back(this->storedCharacters.at(i)->getTokenValue()[0]);
 		recentToken->setTokenValue(identifier);
@@ -156,7 +161,7 @@ void Scanner::createStringLiteralToken()
 
 }
 
-void Scanner::createNumberToken(string type, double value)
+void Scanner::createNumberToken(string type, int value)
 {
 	this->storedTokens.push_back(new Token("NUMBER", value));
 }
@@ -238,6 +243,7 @@ Token* Scanner::searchRelationOperatorList(string character,ifstream* input)
 		{
 			//We need to read and disguard that character, so it doesn't screw things up in the input stream later.
 			char byteWaste = this->readCharacterFromFile(input);
+			//Now, we need to read letters into the stored character array until we encounter a space character
 			return it->second;
 		}
 	}
@@ -288,7 +294,7 @@ for (set<pair<string, Token*>>::iterator it = this->reserved.begin(); it != this
 return nullptr;
 }
 
-void Scanner::matchReservedWord()
+void Scanner::matchReservedWord(ifstream* input)
 {
 	//We first have to obtain the string, so we empty the vector of stored characters into a string and then check.
 	string searchString;
@@ -311,13 +317,12 @@ void Scanner::matchReservedWord()
 
 	else
 	{
-		this->otherActionMatchNotReservedWord();
-		//this->matchNumber();  //**Need to put this in for later. For matching numbers.
+		this->otherActionMatchNotReservedWord(input);
 	}
 	
 }
 
-void Scanner::otherActionMatchNotReservedWord()
+void Scanner::otherActionMatchNotReservedWord(ifstream* input)
 {
 	if (this->storedCharacters.empty())
 	{
@@ -326,7 +331,7 @@ void Scanner::otherActionMatchNotReservedWord()
 	
 	else if (!matchIdentifier())
 	{
-		this->matchNumber();
+		this->matchNumber(input);
 	}
 }
 
@@ -346,11 +351,11 @@ bool Scanner::matchIdentifier()
 
 }
 
-void Scanner::matchNumber()
+void Scanner::matchNumber(ifstream* input)
 {
 	//verify that everything is a digit first.
 	
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		if (this->storedCharacters.at(i)->getTokenType() == "LETTER")
 		{
@@ -358,25 +363,22 @@ void Scanner::matchNumber()
 		}
 	}
 	
-	//If we get here, they must all be digits or we would have gotten the hell out of here above.
-    //Ah, what to do next??  Take an Ambien, write some more code, commit to the repository, and then wake up the next morning and curse at all of the crazy mistakes.
-    //Here we go!~~~~~~
 
 	//First, we convert all characters to integers.
 
 	vector<int> intVector;
 
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		if (this->storedCharacters.at(i)->getTokenType() == "DIGIT")
 		{
-			intVector.push_back(stoi(this->storedCharacters.at(0)->getTokenValue(), nullptr, 10));
+			intVector.push_back(stoi(this->storedCharacters.at(i)->getTokenValue(), NULL, 10));
 		}
 	}
 
-	double initialInput = 0;
-	double initialExponent = 1;
-	double finalResult = this->computeFloatingPointResult(&intVector, initialInput, initialExponent);
+	
+	
+	double finalResult = this->computeIntegerLiteralResult(&intVector, 0, intVector.size());
 
 	//Now, create the double token.
 	
@@ -385,21 +387,42 @@ void Scanner::matchNumber()
 	//Remember to clear the characters
 	this->storedCharacters.clear();
 
+	//Now, let's peek ahead and check if we see a period, so that we can then compute a floating point.
+	
+	char peekChar = this->peekNextCharacterInFile(input);
+	string peekCharString(1, peekChar);
+	Token* checkToken = this->searchPunctuationList(peekCharString);
+	if ((checkToken != nullptr && checkToken->getTokenValue() == "."))
+	{
+		//We need to skip over the period and load the digits after the period into the characters list.
+		char byteWaste = this->readCharacterFromFile(input);
+		this->createPeriodCharacter();
+	}
+
+	
+	return;
+
 
 }
 
-double Scanner::computeFloatingPointResult(vector<int>* inputVector, double input, double exponent)
+int Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize)
 {
+	--vectorSize; //be sure to decrement exponent by 1 for vector size or it will decemate the calculation, when the method recurses.  
 
-	double currentValue = std::pow(inputVector->at(inputVector->size() - 1), exponent);
-	inputVector->pop_back(); //We have processed that element.  Now delete it, so we don't run into infinite recursion.
+	double currentValue = inputVector->at(vecStartElement);
+	++vecStartElement;
 
-	if (inputVector->empty())
+	if (vecStartElement == inputVector->size())
 	{
+		
 		return currentValue;
 	}
 
-	return currentValue + this->computeFloatingPointResult(inputVector, input, ++exponent);
+	
+	currentValue *= pow(10.0, vectorSize);
+	
+	
+	return currentValue + (this->computeIntegerLiteralResult(inputVector, vecStartElement, vectorSize));
 	
 }
 
@@ -450,8 +473,6 @@ void Scanner::readFile(ifstream* input)
 	
 }
 
-
-
 void Scanner::reportError()
 {
 
@@ -473,14 +494,13 @@ void Scanner::performOtherAction(ifstream* input, char character)
 	{
 		//We either need to create the token as a letter, number, reserved word, or identifier.  How do we decide?
 		//We need to call Scanner::matchReservedWord() which will start checking the reservedWords list for a match;
-		this->matchReservedWord();
+		this->matchReservedWord(input);
 	}
 	
-
 	else if ((singleCharTok = this->searchSingleCharacterLists(charToString, input)) != nullptr)
 	{
 		//Match the reserved word
-		this->matchReservedWord();
+		this->matchReservedWord(input);
 
 		//create a token for the single character mark
 		this->createSingleCharacterToken(singleCharTok);
