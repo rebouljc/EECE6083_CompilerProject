@@ -11,7 +11,7 @@ Token::Token(string tokenType, string tokenValue)
 
 }
 
-Token::Token(string tokenType, int numberValue)
+Token::Token(string tokenType, double numberValue)
 {
 	this->tokenType = tokenType;
 	this->tokenValue = "INTEGER_LITERAL";
@@ -64,5 +64,15 @@ void Token::setTokenIsPeriodStatus(bool setting)
 bool Token::getIsPeriodStatus()
 {
 	return this->isPeriod;
+}
+
+void Token::setDoubleNumberTokenValue(double value)
+{
+	this->integerNumberTokenValue = value;
+}
+
+double Token::getIntegerNumberTokenValue()
+{
+	return this->integerNumberTokenValue;
 }
 

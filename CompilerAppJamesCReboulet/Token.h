@@ -12,7 +12,7 @@ public:
 	Token();
 	Token(string tokenType, string tokenValue);
 	Token(Token* token);
-	Token(string tokenType, int numberValue);
+	Token(string tokenType, double numberValue);
 	bool operator == (Token* tok);
 	string getTokenType();
 	string getTokenValue();
@@ -20,11 +20,13 @@ public:
 	void setTokenValue(string value);
 	void setTokenIsPeriodStatus(bool setting);
 	bool getIsPeriodStatus();
+	void setDoubleNumberTokenValue(double value);
+	double getIntegerNumberTokenValue();
 	
 protected:
 	string tokenType;
 	string tokenValue;
-	int integerNumberTokenValue;
+	double integerNumberTokenValue;
 	string tokenLineNumber;
 	int tokenOccurrence;
 	void setTokenOccurrence(int occurrence);

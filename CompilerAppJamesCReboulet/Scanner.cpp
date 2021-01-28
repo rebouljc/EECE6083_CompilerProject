@@ -161,7 +161,7 @@ void Scanner::createStringLiteralToken()
 
 }
 
-void Scanner::createNumberToken(string type, int value)
+void Scanner::createNumberToken(string type, double value)
 {
 	this->storedTokens.push_back(new Token("NUMBER", value));
 }
@@ -389,8 +389,12 @@ void Scanner::matchNumber(ifstream* input)
 	{
 		//If we get here, we must call a floating point method and then get out of here before an Integer is created.
 		this->storedTokens.pop_back();  //We don't need that token anymore now that we know about it.  This doesn't affect the Punctuation Method.
-		computeFloatingPointLiteralResult(&intVector, 0, intVector.size());
-		return;
+		finalResult = computeFloatingPointLiteralResult(&intVector, 0, intVector.size());
+		Token* tokenToModify = this->storedTokens.at(this->storedTokens.size() - 1);
+		tokenToModify->setTokenValue("FLOATING_POINT_LITERAL");
+		tokenToModify->setDoubleNumberTokenValue(finalResult + this->storedTokens.at(this->storedTokens.size() - 1)->getIntegerNumberTokenValue());
+
+		
 	}
 	
 	else
@@ -431,24 +435,24 @@ double Scanner::computeFloatingPointLiteralResult(vector<int>* inputVector, int 
 {
 	--vectorSize; //be sure to decrement exponent by 1 for vector size or it will decemate the calculation, when the method recurses.  
 
-	double currentValue = inputVector->at(vecStartElement);
+	double currentValue = inputVector->at(inputVector->size() - 1);
 	++vecStartElement;
 
 	if (vecStartElement == inputVector->size())
 	{
 
-		return currentValue;
+		return (currentValue/10);
 	}
 
 
-	currentValue *= pow(10.0, -vectorSize);
+	currentValue *= (1.0/(pow(10.0, vectorSize)));
 
 
 	return currentValue + (this->computeIntegerLiteralResult(inputVector, vecStartElement, vectorSize));
 
 }
 
-int Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize)
+double Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize)
 {
 	--vectorSize; //be sure to decrement exponent by 1 for vector size or it will decemate the calculation, when the method recurses.  
 

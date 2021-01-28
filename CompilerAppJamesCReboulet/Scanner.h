@@ -36,7 +36,7 @@ class Scanner
    void createReservedWordToken(Token* tokenToAdd);
    void createIdentifierToken();
    void createStringLiteralToken();
-   void createNumberToken(string type, int value);
+   void createNumberToken(string type, double value);
  
    //read character method
 
@@ -73,7 +73,7 @@ class Scanner
 
    void performOtherAction(ifstream* input, char character);
    bool isWhitespace(char character);
-   int computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize);
+   double computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize);
    double computeFloatingPointLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize);
 
    
