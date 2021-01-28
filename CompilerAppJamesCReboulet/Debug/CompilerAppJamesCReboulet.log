@@ -2,8 +2,8 @@
   CompilerAppJamesCReboulet.cpp
   Token.cpp
   Scanner.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(385,36): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(418,10): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(425,22): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(402,37): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(461,10): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(468,22): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
   Generating Code...
   CompilerAppJamesCReboulet.vcxproj -> C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Debug\CompilerAppJamesCReboulet.exe

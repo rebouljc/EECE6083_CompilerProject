@@ -324,7 +324,10 @@ void Scanner::matchReservedWord(ifstream* input)
 
 void Scanner::otherActionMatchNotReservedWord(ifstream* input)
 {
-	if (this->storedCharacters.empty())
+	//This is a problem because if we encounter a period character, the storedCharacters list is empty and we are getting a null pointer exception here
+	//When we try to access the first element of an empty vector.
+	
+	if (this->storedCharacters.empty() /*&& !this->storedTokens.at(this->storedTokens.size() -1)->getIsPeriodStatus()*/)
 	{
 		return;
 	}
@@ -365,6 +368,7 @@ void Scanner::matchNumber(ifstream* input)
 	
 
 	//First, we convert all characters to integers.
+	
 
 	vector<int> intVector;
 
@@ -376,17 +380,35 @@ void Scanner::matchNumber(ifstream* input)
 		}
 	}
 
-	
-	
-	double finalResult = this->computeIntegerLiteralResult(&intVector, 0, intVector.size());
+	//First, we check to see whether the last token was a period symbol.  I try to keep things clean and then all of the issues start happening and the 
+	//code starts to get dirtier.
 
-	//Now, create the double token.
+	double finalResult;
+
+	if (this->storedTokens.at(this->storedTokens.size() - 1)->getIsPeriodStatus())
+	{
+		//If we get here, we must call a floating point method and then get out of here before an Integer is created.
+		this->storedTokens.pop_back();  //We don't need that token anymore now that we know about it.  This doesn't affect the Punctuation Method.
+		computeFloatingPointLiteralResult(&intVector, 0, intVector.size());
+		return;
+	}
 	
-	this->createNumberToken("NUMBER", finalResult);
+	else
+	{
+		//Now, create the integer_literal token.
+
+		
+		finalResult = this->computeIntegerLiteralResult(&intVector, 0, intVector.size());
+		this->createNumberToken("NUMBER", finalResult);
+	}
+
+	
 
 	//Remember to clear the characters
 	this->storedCharacters.clear();
 
+#define DO_NOT_USE 0
+#ifndef DO_NOT_USE
 	//Now, let's peek ahead and check if we see a period, so that we can then compute a floating point.
 	
 	char peekChar = this->peekNextCharacterInFile(input);
@@ -399,9 +421,30 @@ void Scanner::matchNumber(ifstream* input)
 		this->createPeriodCharacter();
 	}
 
-	
+#endif
 	return;
 
+
+}
+
+double Scanner::computeFloatingPointLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize)
+{
+	--vectorSize; //be sure to decrement exponent by 1 for vector size or it will decemate the calculation, when the method recurses.  
+
+	double currentValue = inputVector->at(vecStartElement);
+	++vecStartElement;
+
+	if (vecStartElement == inputVector->size())
+	{
+
+		return currentValue;
+	}
+
+
+	currentValue *= pow(10.0, -vectorSize);
+
+
+	return currentValue + (this->computeIntegerLiteralResult(inputVector, vecStartElement, vectorSize));
 
 }
 
@@ -502,8 +545,21 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		//Match the reserved word
 		this->matchReservedWord(input);
 
+		
 		//create a token for the single character mark
 		this->createSingleCharacterToken(singleCharTok);
+
+		//If the token is a '.' symbol, we need to set the period status flag to true;
+		if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == ".")
+		{
+			this->storedTokens.at(this->storedTokens.size() - 1)->setTokenIsPeriodStatus(true);
+
+			//If this is so, call this->matchReservedWordAgain()
+			//Recurse back into the readFile again.  DOUBLE RECURSION, BABY!!  This is how a programmer speaks when they haven't gotten any in a while.
+
+			this->readFile(input);
+
+		}
 		
 	}
 

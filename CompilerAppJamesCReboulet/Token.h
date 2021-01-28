@@ -18,6 +18,8 @@ public:
 	string getTokenValue();
 	void setTokenType(string type);
 	void setTokenValue(string value);
+	void setTokenIsPeriodStatus(bool setting);
+	bool getIsPeriodStatus();
 	
 protected:
 	string tokenType;
@@ -27,6 +29,7 @@ protected:
 	int tokenOccurrence;
 	void setTokenOccurrence(int occurrence);
 	void setTokenLineNumber(string lineNumber);
+	bool isPeriod = false;
 	
 	
 };

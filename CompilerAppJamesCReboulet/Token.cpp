@@ -57,3 +57,12 @@ void Token::setTokenLineNumber(string lineNumber)
 	this->tokenLineNumber = lineNumber;
 }
 
+void Token::setTokenIsPeriodStatus(bool setting)
+{
+	this->isPeriod = setting;
+}
+bool Token::getIsPeriodStatus()
+{
+	return this->isPeriod;
+}
+
