@@ -21,7 +21,7 @@ public:
 	void setTokenIsPeriodStatus(bool setting);
 	bool getIsPeriodStatus();
 	void setDoubleNumberTokenValue(double value);
-	double getIntegerNumberTokenValue();
+	double getIntegerDoubleNumberTokenValue();
 	
 protected:
 	string tokenType;

@@ -384,15 +384,17 @@ void Scanner::matchNumber(ifstream* input)
 	//code starts to get dirtier.
 
 	double finalResult;
+	
 
 	if (this->storedTokens.at(this->storedTokens.size() - 1)->getIsPeriodStatus())
 	{
+		
 		//If we get here, we must call a floating point method and then get out of here before an Integer is created.
 		this->storedTokens.pop_back();  //We don't need that token anymore now that we know about it.  This doesn't affect the Punctuation Method.
 		finalResult = computeFloatingPointLiteralResult(&intVector, 0, intVector.size());
 		Token* tokenToModify = this->storedTokens.at(this->storedTokens.size() - 1);
 		tokenToModify->setTokenValue("FLOATING_POINT_LITERAL");
-		tokenToModify->setDoubleNumberTokenValue(finalResult + this->storedTokens.at(this->storedTokens.size() - 1)->getIntegerNumberTokenValue());
+		tokenToModify->setDoubleNumberTokenValue(finalResult + this->storedTokens.at(this->storedTokens.size() - 1)->getIntegerDoubleNumberTokenValue());
 
 		
 	}
@@ -435,17 +437,17 @@ double Scanner::computeFloatingPointLiteralResult(vector<int>* inputVector, int 
 {
 	--vectorSize; //be sure to decrement exponent by 1 for vector size or it will decemate the calculation, when the method recurses.  
 
-	double currentValue = inputVector->at(inputVector->size() - 1);
+	double currentValue = inputVector->at(vecStartElement);
 	++vecStartElement;
 
 	if (vecStartElement == inputVector->size())
 	{
 
-		return (currentValue/10);
+		return (currentValue *= ((double)(1)/(pow((double)(10),vecStartElement))));
 	}
 
 
-	currentValue *= (1.0/(pow(10.0, vectorSize)));
+	currentValue *= ((double)(1)/(pow((double)(10), vecStartElement)));
 
 
 	return currentValue + (this->computeIntegerLiteralResult(inputVector, vecStartElement, vectorSize));

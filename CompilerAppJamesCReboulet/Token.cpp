@@ -71,7 +71,7 @@ void Token::setDoubleNumberTokenValue(double value)
 	this->integerNumberTokenValue = value;
 }
 
-double Token::getIntegerNumberTokenValue()
+double Token::getIntegerDoubleNumberTokenValue()
 {
 	return this->integerNumberTokenValue;
 }
