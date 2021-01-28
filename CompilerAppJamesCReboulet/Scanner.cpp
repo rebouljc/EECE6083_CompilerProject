@@ -137,6 +137,17 @@ void Scanner::createReservedWordToken(Token* tokenToAdd)
 void Scanner::createIdentifierToken()
 {
 
+	this->storedTokens.push_back(new Token());
+	Token* recentToken = this->storedTokens.at(this->storedTokens.size()-1);
+	string identifier;
+
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		identifier.push_back(this->storedCharacters.at(i)->getTokenValue()[0]);
+		recentToken->setTokenValue(identifier);
+	}
+	//make sure to clear the stored characters list or a pile will form.
+	this->storedCharacters.clear();
 }
 
 void Scanner::createStringLiteralToken()
@@ -150,6 +161,11 @@ char Scanner::readCharacterFromFile(ifstream* inputStream)
 
 	inputStream->get(currentCharacter);
 	return currentCharacter;
+}
+
+char Scanner::peekNextCharacterInFile(ifstream* inputStream)
+{
+	return inputStream->peek();
 }
 
 
@@ -173,12 +189,18 @@ Token* Scanner::searchPunctuationList(string character)
 	}
 	return nullptr;
 }
-Token* Scanner::searchAssignmentList(string character)
+Token* Scanner::searchAssignmentList(string character, ifstream* input)
 {
+	char peekChar = this->peekNextCharacterInFile(input);
+	string checkPeekString = character;
+	checkPeekString.push_back(peekChar);
+
 	for (set<pair<string, Token*>>::iterator it = this->assignment.begin(); it != this->assignment.end(); ++it)
 	{
-		if (character == it->first)
+		if (checkPeekString == it->first)
 		{
+			//We need to read and disguard that character, so it doesn't screw things up in the input stream later.
+			char byteWaste = this->readCharacterFromFile(input);
 			return it->second;
 		}
 	}
@@ -195,18 +217,27 @@ Token* Scanner::searchArithOperatorList(string character)
 	}
 	return nullptr;
 }
-Token* Scanner::searchRelationOperatorList(string character)
+
+//This will never return anything because only one character is being sent at a time.
+//We have to look ahead and see if there is a match.  Involves passing pointers all over the place for the inputStream.
+
+Token* Scanner::searchRelationOperatorList(string character,ifstream* input)
 {
+	char peekChar = this->peekNextCharacterInFile(input);
+	string checkPeekString = character;
+	checkPeekString.push_back(peekChar);
 	for (set<pair<string, Token*>>::iterator it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
 	{
-		if (character == it->first)
+		if (checkPeekString == it->first)
 		{
+			//We need to read and disguard that character, so it doesn't screw things up in the input stream later.
+			char byteWaste = this->readCharacterFromFile(input);
 			return it->second;
 		}
 	}
 	return nullptr;
 }
-Token* Scanner::searchBooleanOperatorList(string character)
+Token* Scanner::searchBooleanOperatorList(string character) 
 {
 	for (set<pair<string, Token*>>::iterator it = this->booleanOperator.begin(); it != this->booleanOperator.end(); ++it)
 	{
@@ -218,18 +249,19 @@ Token* Scanner::searchBooleanOperatorList(string character)
 	return nullptr;
 }
 
-Token* Scanner::searchSingleCharacterLists(string character)
+Token* Scanner::searchSingleCharacterLists(string character, ifstream* input)
 {
 	Token* result;
 
-	if ((result = searchPunctuationList(character)) != nullptr)
+	if ((result = searchRelationOperatorList(character,input)) != nullptr)
 		return result;
-	else if ((result = searchAssignmentList(character)) != nullptr)
+	else if ((result = searchAssignmentList(character, input)) != nullptr)
+		return result;
+	else if ((result = searchPunctuationList(character)) != nullptr)
 		return result;
 	else if ((result = searchArithOperatorList(character)) != nullptr)
 		return result;
-	else if ((result = searchRelationOperatorList(character)) != nullptr)
-		return result;
+	
 	else if ((result = searchBooleanOperatorList(character)) != nullptr)
 		return result;
 	
@@ -267,35 +299,51 @@ void Scanner::matchReservedWord()
 		this->createReservedWordToken(resultTok);
 
 		//if we have identified a lexeme as a reserved word, make sure to empty the character vector.
-
 		this->storedCharacters.clear();
 		
 	}
 
 	else
 	{
-
+		this->otherActionMatchNotReservedWord();
 		//this->matchNumber();  //**Need to put this in for later. For matching numbers.
-		
-		
-		
 	}
-
 	
-	//Try this just to test the reserved word
-	this->storedCharacters.clear();
-
 }
 
-void Scanner::matchIdentifier()
+void Scanner::otherActionMatchNotReservedWord()
 {
+	if (this->storedCharacters.empty())
+	{
+		return;
+	}
+	
+	else if (!matchIdentifier())
+	{
+		this->matchNumber();
+	}
+}
+
+bool Scanner::matchIdentifier()
+{
+	 
+     if (this->storedCharacters.at(0)->getTokenType() == "DIGIT")
+	 {
+		return false;
+	 }
+
+	 this->createIdentifierToken();
+
+	 return true;
+	
+
 
 }
 
 void Scanner::matchNumber()
 {
 	//verify that everything is a digit first.
-
+	
 	for (int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		if (this->storedCharacters.at(i)->getTokenType() == "LETTER")
@@ -303,28 +351,8 @@ void Scanner::matchNumber()
 			return;
 		}
 	}
-	//Set all of the token superclasses to "NUMBER" and combine them into a single Token*
-
-	((Token*)(this->storedCharacters.at(0)))->setTokenType("NUMBER");
-
-	for (int i = 1; i < this->storedCharacters.size(); ++i)
-	{
-		((Token*)(this->storedCharacters.at(0)))->addToSubTokenObjects((Token*)this->storedCharacters.at(i));
-	}
 	
-	//Now, add that to the tokens list
-	this->storedTokens.push_back((Token*)this->storedCharacters.at(0));
- 
-	//Test whether we can downcast from superclass to subclass.
-	//The parser will then be a subclass of scanner, and it can communicate with the scanner if needed.  
-	//I am trying to set this up correctly in the beginning, so that I will hopefully encounter fewer issues in the future..
-	//Of course, it probably won't work that way, but at least it is a plan.
-
-	Character* characterObject;
-	characterObject = dynamic_cast <Character*> (this->storedCharacters.at(0));
-	
-
-
+	//If we get here, they must all be digits.
 
 }
 
@@ -402,7 +430,7 @@ void Scanner::performOtherAction(ifstream* input, char character)
 	}
 	
 
-	else if ((singleCharTok = this->searchSingleCharacterLists(charToString)) != nullptr)
+	else if ((singleCharTok = this->searchSingleCharacterLists(charToString, input)) != nullptr)
 	{
 		//Match the reserved word
 		this->matchReservedWord();
@@ -411,6 +439,7 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		this->createSingleCharacterToken(singleCharTok);
 		
 	}
+
 
 	//NOTE:  Right now the program is blowing up, because we are not calling this->storedCharacters.clear() yet except when we encounter a reserved word.  
 	//Maybe I will briefly do this to see whether the scanner can recognize digits.

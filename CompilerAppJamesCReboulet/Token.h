@@ -17,7 +17,7 @@ public:
 	string getTokenValue();
 	void setTokenType(string type);
 	void setTokenValue(string value);
-	void addToSubTokenObjects(Token* tokenToAdd);
+	
 protected:
 	string tokenType;
 	string tokenValue;
@@ -25,6 +25,6 @@ protected:
 	int tokenOccurrence;
 	void setTokenOccurrence(int occurrence);
 	void setTokenLineNumber(string lineNumber);
-	vector<Token*> subTokenObjects;
+	
 	
 };

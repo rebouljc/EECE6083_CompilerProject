@@ -2,15 +2,15 @@
 
 Character::Character(string type, string character)
 {
-	this->subTokenType = type;
-	this->subTokenValue = character;
+	this->tokenType = type;
+	this->tokenValue = character;
 }
 
 string Character::getTokenType()
 {
-	return this->subTokenType;
+	return this->tokenType;
 }
 string Character::getTokenValue()
 {
-	return this->subTokenValue;
+	return this->tokenValue;
 }

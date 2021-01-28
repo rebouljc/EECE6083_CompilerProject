@@ -50,9 +50,3 @@ void Token::setTokenLineNumber(string lineNumber)
 	this->tokenLineNumber = lineNumber;
 }
 
-void Token::addToSubTokenObjects(Token* tokenToAdd)
-{
-	
-    this->subTokenObjects.push_back(tokenToAdd);
-	
-}

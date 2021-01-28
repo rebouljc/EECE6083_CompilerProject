@@ -39,25 +39,26 @@ class Scanner
    //read character method
 
    char readCharacterFromFile(ifstream* filename);
+   char peekNextCharacterInFile(ifstream* inputStream);
 
    //search methods
 
    Token* searchPunctuationList(string character);
-   Token* searchAssignmentList(string character);
+   Token* searchAssignmentList(string character, ifstream* input);
    Token* searchArithOperatorList(string character);
-   Token* searchRelationOperatorList(string character);
+   Token* searchRelationOperatorList(string character, ifstream* input);
    Token* searchBooleanOperatorList(string character);
    Token* searchReservedWordList(string character);
-
-   Token* searchSingleCharacterLists(string character);
+   Token* searchSingleCharacterLists(string character, ifstream* input);
 
    //match methods
 
    void matchReservedWord(); //Calls createReservedWordToken() if true;
-   void matchIdentifier();
+   bool matchIdentifier();
    void matchNumber();
    void matchLetter();
    void matchStringLiteral();
+   void otherActionMatchNotReservedWord();
 
    //initial readFileMethod()
 
