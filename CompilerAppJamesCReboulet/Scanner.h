@@ -35,6 +35,7 @@ class Scanner
    void createReservedWordToken(Token* tokenToAdd);
    void createIdentifierToken();
    void createStringLiteralToken();
+   void createNumberToken(string type, double value);
  
    //read character method
 
@@ -71,6 +72,7 @@ class Scanner
 
    void performOtherAction(ifstream* input, char character);
    bool isWhitespace(char character);
+   double computeFloatingPointResult(vector<int>* inputVector, double input, double exponent);
 
    
    set<pair<string, Token*>> reserved;

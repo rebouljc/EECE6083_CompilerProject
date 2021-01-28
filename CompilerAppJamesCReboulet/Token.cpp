@@ -11,6 +11,13 @@ Token::Token(string tokenType, string tokenValue)
 
 }
 
+Token::Token(string tokenType, double numberValue)
+{
+	this->tokenType = tokenType;
+	this->tokenValue = "INTEGER_LITERAL";
+	this->numberTokenValue = numberValue;
+}
+
 Token::Token(Token* token)
 {
 	this->tokenType = token->getTokenType();

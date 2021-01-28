@@ -1,6 +1,7 @@
 #include "Scanner.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 
 Scanner::Scanner()
@@ -153,6 +154,11 @@ void Scanner::createIdentifierToken()
 void Scanner::createStringLiteralToken()
 {
 
+}
+
+void Scanner::createNumberToken(string type, double value)
+{
+	this->storedTokens.push_back(new Token("NUMBER", value));
 }
 
 char Scanner::readCharacterFromFile(ifstream* inputStream)
@@ -352,8 +358,49 @@ void Scanner::matchNumber()
 		}
 	}
 	
-	//If we get here, they must all be digits.
+	//If we get here, they must all be digits or we would have gotten the hell out of here above.
+    //Ah, what to do next??  Take an Ambien, write some more code, commit to the repository, and then wake up the next morning and curse at all of the crazy mistakes.
+    //Here we go!~~~~~~
 
+	//First, we convert all characters to integers.
+
+	vector<int> intVector;
+
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		if (this->storedCharacters.at(i)->getTokenType() == "DIGIT")
+		{
+			intVector.push_back(stoi(this->storedCharacters.at(0)->getTokenValue(), nullptr, 10));
+		}
+	}
+
+	double initialInput = 0;
+	double initialExponent = 1;
+	double finalResult = this->computeFloatingPointResult(&intVector, initialInput, initialExponent);
+
+	//Now, create the double token.
+	
+	this->createNumberToken("NUMBER", finalResult);
+
+	//Remember to clear the characters
+	this->storedCharacters.clear();
+
+
+}
+
+double Scanner::computeFloatingPointResult(vector<int>* inputVector, double input, double exponent)
+{
+
+	double currentValue = std::pow(inputVector->at(inputVector->size() - 1), exponent);
+	inputVector->pop_back(); //We have processed that element.  Now delete it, so we don't run into infinite recursion.
+
+	if (inputVector->empty())
+	{
+		return currentValue;
+	}
+
+	return currentValue + this->computeFloatingPointResult(inputVector, input, ++exponent);
+	
 }
 
 void Scanner::matchLetter()
