@@ -371,31 +371,28 @@ void Scanner::matchNumber(ifstream* input)
 	
 
 	vector<int> intVector;
+	string intString;
+	double finalResult = 0;
 
 	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		if (this->storedCharacters.at(i)->getTokenType() == "DIGIT")
 		{
 			intVector.push_back(stoi(this->storedCharacters.at(i)->getTokenValue(), NULL, 10));
+			intString.push_back(this->storedCharacters.at(i)->getTokenValue()[0]);
 		}
 	}
 
 	//First, we check to see whether the last token was a period symbol.  I try to keep things clean and then all of the issues start happening and the 
 	//code starts to get dirtier.
-
-	double finalResult;
-	
-
-	if (this->storedTokens.at(this->storedTokens.size() - 1)->getIsPeriodStatus())
+	Token* lastStoredTokenPtr = this->storedTokens.at(this->storedTokens.size() - 1);
+	if (lastStoredTokenPtr->getIsPeriodStatus())
 	{
-		
-		//If we get here, we must call a floating point method and then get out of here before an Integer is created.
-		this->storedTokens.pop_back();  //We don't need that token anymore now that we know about it.  This doesn't affect the Punctuation Method.
-		finalResult = computeFloatingPointLiteralResult(&intVector, 0, intVector.size());
-		Token* tokenToModify = this->storedTokens.at(this->storedTokens.size() - 1);
-		tokenToModify->setTokenValue("FLOATING_POINT_LITERAL");
-		tokenToModify->setDoubleNumberTokenValue(finalResult + this->storedTokens.at(this->storedTokens.size() - 1)->getIntegerDoubleNumberTokenValue());
-
+		this->storedTokens.pop_back(); //Get rid of that period token RIGHT NOW!  YES! I finally got the floating point token created!!!
+		finalResult = this->computeFloatingPointLiteralResult(&intVector);
+		this->storedTokens.at(this->storedTokens.size() - 1)->setTokenType("NUMBER");
+		this->storedTokens.at(this->storedTokens.size() - 1)->setTokenValue("FLOATING_POINT_LITERAL");
+		this->storedTokens.at(this->storedTokens.size() - 1)->setDoubleNumberTokenValue(finalResult + (this->storedTokens.at(this->storedTokens.size() - 1)->getIntegerDoubleNumberTokenValue()));
 		
 	}
 	
@@ -433,25 +430,22 @@ void Scanner::matchNumber(ifstream* input)
 
 }
 
-double Scanner::computeFloatingPointLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize)
-{
-	--vectorSize; //be sure to decrement exponent by 1 for vector size or it will decemate the calculation, when the method recurses.  
+double Scanner::computeFloatingPointLiteralResult(vector<int>* intVector)
+{ 
+	string intString = "0";
+	intString += ".";
 
-	double currentValue = inputVector->at(vecStartElement);
-	++vecStartElement;
-
-	if (vecStartElement == inputVector->size())
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
-
-		return (currentValue *= ((double)(1)/(pow((double)(10),vecStartElement))));
+		if (this->storedCharacters.at(i)->getTokenType() == "DIGIT")
+		{
+			
+			intString += this->storedCharacters.at(i)->getTokenValue()[0];
+		}
 	}
-
-
-	currentValue *= ((double)(1)/(pow((double)(10), vecStartElement)));
-
-
-	return currentValue + (this->computeIntegerLiteralResult(inputVector, vecStartElement, vectorSize));
-
+	string::size_type sizeString;
+	return stod(intString, &sizeString);
+	    
 }
 
 double Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize)

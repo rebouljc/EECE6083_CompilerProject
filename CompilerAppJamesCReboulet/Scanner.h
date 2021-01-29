@@ -74,7 +74,7 @@ class Scanner
    void performOtherAction(ifstream* input, char character);
    bool isWhitespace(char character);
    double computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize);
-   double computeFloatingPointLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize);
+   double computeFloatingPointLiteralResult(vector<int>* intVector);
 
    
    set<pair<string, Token*>> reserved;
