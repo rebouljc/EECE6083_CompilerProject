@@ -59,7 +59,7 @@ class Scanner
    bool matchIdentifier();
    void matchNumber(ifstream* input);
    void matchLetter();
-   void matchStringLiteral();
+   void matchStringLiteral(ifstream* input);
    void otherActionMatchNotReservedWord(ifstream* input);
 
    //initial readFileMethod()
@@ -76,6 +76,9 @@ class Scanner
    double computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize);
    double computeFloatingPointLiteralResult(vector<int>* intVector);
 
+   //Comment checking and ignoring method
+   void commentCheckingAndIgnoringMethod(ifstream* input);
+   void embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input);
    
    set<pair<string, Token*>> reserved;
    set<pair<string, Token*>> punctuation;

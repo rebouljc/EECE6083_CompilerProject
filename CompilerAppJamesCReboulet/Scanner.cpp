@@ -158,7 +158,23 @@ void Scanner::createIdentifierToken()
 
 void Scanner::createStringLiteralToken()
 {
+	//Else, we get down to business and then return.
+	this->storedTokens.at(this->storedTokens.size() - 1)->setTokenType("STRING_LITERAL");
 
+	//Now, create the string.  We can ignore the puntuation now, and save later processing
+	string newString;
+
+	//Read the character from the file.
+
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		newString = newString + this->storedCharacters.at(i)->getTokenValue();
+	}
+
+	//Oh yeah!  We need to actually set the token value too..  I forgot.
+	this->storedTokens.at(this->storedTokens.size() - 1)->setTokenValue(newString);
+	//Now, as always, we need to clear the character list
+	this->storedCharacters.clear();
 }
 
 void Scanner::createNumberToken(string type, double value)
@@ -273,7 +289,6 @@ Token* Scanner::searchSingleCharacterLists(string character, ifstream* input)
 		return result;
 	else if ((result = searchArithOperatorList(character)) != nullptr)
 		return result;
-	
 	else if ((result = searchBooleanOperatorList(character)) != nullptr)
 		return result;
 	
@@ -331,6 +346,7 @@ void Scanner::otherActionMatchNotReservedWord(ifstream* input)
 	{
 		return;
 	}
+
 	
 	else if (!matchIdentifier())
 	{
@@ -350,8 +366,6 @@ bool Scanner::matchIdentifier()
 
 	 return true;
 	
-
-
 }
 
 void Scanner::matchNumber(ifstream* input)
@@ -409,7 +423,7 @@ void Scanner::matchNumber(ifstream* input)
 
 	//Remember to clear the characters
 	this->storedCharacters.clear();
-
+	
 #define DO_NOT_USE 0
 #ifndef DO_NOT_USE
 	//Now, let's peek ahead and check if we see a period, so that we can then compute a floating point.
@@ -474,9 +488,42 @@ void Scanner::matchLetter()
 
 }
 
-void Scanner::matchStringLiteral()
+void Scanner::matchStringLiteral(ifstream* input)
 {
+	char character = readCharacterFromFile(input);
 
+	if (input->eof()) //Prevents infinite recursion if user forgets to end string literal with "
+	{
+	//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
+	//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
+    //if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
+
+	return;
+	}
+
+	
+	if (isalpha(character))
+	{
+		this->createLetterCharacter(character);
+	
+	}
+
+	else if (isdigit(character))
+	{
+		this->createDigitCharacter(character);
+	}
+
+	
+	else if (character == '"')
+	{
+		this->createStringLiteralToken();
+		
+		return;
+
+	}
+	
+	this->matchStringLiteral(input); //recurse back.
+	
 }
 //This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
 
@@ -487,10 +534,13 @@ void Scanner::readFile(ifstream* input)
 	//Read the character from the file.
 
 	char character = readCharacterFromFile(input);
+
 	if (input->eof())
 	{
 		return;
 	}
+
+	
 	else if (isalpha(character))
 	{
 		this->createLetterCharacter(character);
@@ -555,17 +605,40 @@ void Scanner::performOtherAction(ifstream* input, char character)
 			this->storedTokens.at(this->storedTokens.size() - 1)->setTokenIsPeriodStatus(true);
 
 			//If this is so, call this->matchReservedWordAgain()
-			//Recurse back into the readFile again.  DOUBLE RECURSION, BABY!!  This is how a programmer speaks when they haven't gotten any in a while.
+			//Recurse back into the readFile again.  DOUBLE RECURSION, BABY!!  This is how you speak when you aren't getting any because
+			//you are a CS major and have no time and no money. 
 
-			this->readFile(input);
+			this->readFile(input); //Then, it will go back to matchReservedWord(input).
 
 		}
+
+		//But, if we see a \" symbol, we know that we must have a string literal, so we go directly to that method and parse it out.
+		//If we don't do it here, then this method will recurse and check for a reserved word and create an identifier instead of string literal.
+
+		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "\"")
+		{
+			this->matchStringLiteral(input);
+		}
+		//Else, we consider it a comment and we start ignoring comments
+
+		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "/") // We do the comment checking and ignoring.
+		{
+			
+	        //We have to peek ahead, though and return immediately if we do not see another "/".  Then we have an ARITH_OPERATOR token.
+			
+			char peekChar = this->peekNextCharacterInFile(input);
+			if (peekChar == '/')
+			{
+				//Get rid of the ARITH_OPERATOR token that was just added by the previous state
+				this->storedTokens.pop_back();
+				this->commentCheckingAndIgnoringMethod(input);
+			}
+		}
+
 		
 	}
 
-
-	//NOTE:  Right now the program is blowing up, because we are not calling this->storedCharacters.clear() yet except when we encounter a reserved word.  
-	//Maybe I will briefly do this to see whether the scanner can recognize digits.
+	//TODO: GET THE EMBEDDED COMMENTS WORKING BY TONIGHT AND GET THIS SCANNER FINISHED, SO WE CAN GET INTO PARSING.
 
 	return;
 }
@@ -582,4 +655,61 @@ bool Scanner::isWhitespace(char character)
 
 	return false;
 }
+
+void Scanner::commentCheckingAndIgnoringMethod(ifstream* input)
+{
+	char readNextCharacter = this->readCharacterFromFile(input);
+
+	if (readNextCharacter == '\n')
+	{
+		return;
+	}
+
+	else if (readNextCharacter == '*')
+	{
+		//Now, we recurse into our other method and then return from here.  Two returns.
+		this->embeddedCommentsCheckingAndIgnoringAncillaryMethod(input);
+		return;
+	}
+
+	else if (readNextCharacter == '/')
+	{
+		//We have to do another peek to see if we have a closing */  Otherwise, we will probably parse bullshit again.
+		char peekChar = this->peekNextCharacterInFile(input);
+
+		if (peekChar == '/')
+		{
+			//Waste the next token
+			char wasteToken = this->readCharacterFromFile(input);
+			
+
+		}
+
+	}
+
+
+	this->commentCheckingAndIgnoringMethod(input);
+}
+
+void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input)
+{
+	char readNextCharacter = this->readCharacterFromFile(input);
+	if (readNextCharacter == '*')
+	{
+		//We have to do another peek to see if we have a closing */  Otherwise, we will probably parse bullshit again.
+		char peekChar = this->peekNextCharacterInFile(input);
+
+		if (peekChar == '/')
+		{
+			//Waste the next token
+			char wasteToken = this->readCharacterFromFile(input);
+			
+		
+		}
+
+	}
+
+
+}
+
 
