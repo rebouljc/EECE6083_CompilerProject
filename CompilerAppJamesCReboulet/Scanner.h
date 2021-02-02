@@ -77,6 +77,7 @@ class Scanner
    double computeFloatingPointLiteralResult(vector<int>* intVector);
 
    //Comment checking and ignoring method
+   void commentCheckingIgnoringDecisionMethod(ifstream* input);
    void commentCheckingAndIgnoringMethod(ifstream* input);
    void embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input);
    

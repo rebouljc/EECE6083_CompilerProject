@@ -656,6 +656,11 @@ bool Scanner::isWhitespace(char character)
 	return false;
 }
 
+void Scanner::commentCheckingIgnoringDecisionMethod(ifstream* input)
+{
+
+}
+
 void Scanner::commentCheckingAndIgnoringMethod(ifstream* input)
 {
 	char readNextCharacter = this->readCharacterFromFile(input);
