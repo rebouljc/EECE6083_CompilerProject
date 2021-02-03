@@ -78,7 +78,7 @@ class Scanner
 
    //Comment checking and ignoring method
    void commentCheckingIgnoringDecisionMethod(ifstream* input);
-   void commentCheckingAndIgnoringMethod(ifstream* input);
+   void commentCheckingAndIgnoringAncillaryMethod(ifstream* input);
    void embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input);
    
    set<pair<string, Token*>> reserved;

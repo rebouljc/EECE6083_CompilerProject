@@ -621,17 +621,19 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		}
 		//Else, we consider it a comment and we start ignoring comments
 
-		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "/") // We do the comment checking and ignoring.
+		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "/" ||
+			     this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "*") // We do the comment checking and ignoring.
 		{
 			
 	        //We have to peek ahead, though and return immediately if we do not see another "/".  Then we have an ARITH_OPERATOR token.
 			
 			char peekChar = this->peekNextCharacterInFile(input);
-			if (peekChar == '/')
+			if (peekChar == '/' || peekChar == '*')
 			{
 				//Get rid of the ARITH_OPERATOR token that was just added by the previous state
 				this->storedTokens.pop_back();
-				this->commentCheckingAndIgnoringMethod(input);
+				this->commentCheckingIgnoringDecisionMethod(input);
+				
 			}
 		}
 
@@ -658,11 +660,6 @@ bool Scanner::isWhitespace(char character)
 
 void Scanner::commentCheckingIgnoringDecisionMethod(ifstream* input)
 {
-
-}
-
-void Scanner::commentCheckingAndIgnoringMethod(ifstream* input)
-{
 	char readNextCharacter = this->readCharacterFromFile(input);
 
 	if (readNextCharacter == '\n')
@@ -672,47 +669,57 @@ void Scanner::commentCheckingAndIgnoringMethod(ifstream* input)
 
 	else if (readNextCharacter == '*')
 	{
-		//Now, we recurse into our other method and then return from here.  Two returns.
+		
 		this->embeddedCommentsCheckingAndIgnoringAncillaryMethod(input);
-		return;
+		
 	}
 
 	else if (readNextCharacter == '/')
 	{
-		//We have to do another peek to see if we have a closing */  Otherwise, we will probably parse bullshit again.
-		char peekChar = this->peekNextCharacterInFile(input);
-
-		if (peekChar == '/')
-		{
-			//Waste the next token
-			char wasteToken = this->readCharacterFromFile(input);
-			
-
-		}
-
+		
+			this->commentCheckingAndIgnoringAncillaryMethod(input);
 	}
 
+	return;
+}
 
-	this->commentCheckingAndIgnoringMethod(input);
+void Scanner::commentCheckingAndIgnoringAncillaryMethod(ifstream* input)
+{
+	char readNextCharacter = this->readCharacterFromFile(input);
+
+	if (readNextCharacter == '\n')
+	{
+		return;
+	}
+	//Waste and recurse until '\n' is encountered, then return.
+	char wasteChar = this->readCharacterFromFile(input);
+	this->commentCheckingAndIgnoringAncillaryMethod(input);
+    
 }
 
 void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input)
 {
 	char readNextCharacter = this->readCharacterFromFile(input);
+
+
 	if (readNextCharacter == '*')
 	{
 		//We have to do another peek to see if we have a closing */  Otherwise, we will probably parse bullshit again.
 		char peekChar = this->peekNextCharacterInFile(input);
-
 		if (peekChar == '/')
 		{
-			//Waste the next token
-			char wasteToken = this->readCharacterFromFile(input);
 			
-		
+			char wasteToken = this->readCharacterFromFile(input);
+			return;
+
 		}
+		
 
 	}
+
+	//Waste and recurse until '\n' is encountered, then return.  I forgot to waste.
+	char wasteChar = this->readCharacterFromFile(input);
+	this->embeddedCommentsCheckingAndIgnoringAncillaryMethod(input);
 
 
 }
