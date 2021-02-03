@@ -640,7 +640,7 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		
 	}
 
-	//TODO: GET THE EMBEDDED COMMENTS WORKING BY TONIGHT AND GET THIS SCANNER FINISHED, SO WE CAN GET INTO PARSING.
+	//TODO: Get error checking complete.  Design Parser.  
 
 	return;
 }
