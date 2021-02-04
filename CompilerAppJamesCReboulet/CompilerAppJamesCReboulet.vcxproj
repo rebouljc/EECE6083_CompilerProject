@@ -147,6 +147,8 @@
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="IdentifierBeginsWithNumberException.h" />
+    <ClInclude Include="IllegalEqualsSignException.h" />
+    <ClInclude Include="IllegalIdentifierException.h" />
     <ClInclude Include="NoClosingCommentMarkException.h" />
     <ClInclude Include="StringLiteralException.h" />
     <ClInclude Include="Token.h" />

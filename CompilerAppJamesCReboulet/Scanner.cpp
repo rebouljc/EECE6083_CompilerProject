@@ -5,7 +5,16 @@
 #include "StringLiteralException.h"
 #include "IdentifierBeginsWithNumberException.h"
 #include "NoClosingCommentMarkException.h"
+#include "IllegalEqualsSignException.h"
+#include "IllegalIdentifierException.h"
 
+
+//This scanner is guaranteed not to crap out.  If something is wrong, it will immediately stop at the line of the first instance of
+//the problem and throw an exception.  I will not continue to further processing and throw out 100 unrelated compiler errors in the process,
+//when the REAL problem was that the user simply used an illegal character or forgot to properly close their comments with */, etc.
+//The trick is to catch as many errors as possible the earliest in the process, to prevent it from continuing and trying to recover from
+//terrible scenarios and generating hundreds of issues in the process.  If the user writes code wrong, IT IS JUNK and needs to be FIXED NOW!
+//None of this Donald Trump impeachment crap - "I didn't mean that..."  No, you SAID IT and DIDN'T IMMEDIATELY CORRECT IT IF YOU HAD SPOKEN WRONG so that is WHAT YOU MEANT!
 
 Scanner::Scanner()
 {
@@ -29,7 +38,6 @@ void Scanner::init()
 	std::cin >> filename;
 	ifstream* input = new ifstream(filename);
 	this->readFile(input);
-
 }
 
 void Scanner::incrementLineNumber()
@@ -40,6 +48,11 @@ void Scanner::incrementLineNumber()
 int Scanner::getLineNumber()
 {
 	return this->lineNumber;
+}
+
+int Scanner::getFirstCommentLineNumber()
+{
+	return this->firstCommentLineNumber;
 }
 void Scanner::populateReservedList()
 {
@@ -82,13 +95,11 @@ void Scanner::populatePunctuationList()
 	this->punctuation.insert(make_pair("\"", new Token("PUNCTUATION", "\"")));
 	this->punctuation.insert(make_pair("^\"", new Token("PUNCTUATION", "^\"")));
 	this->punctuation.insert(make_pair(":", new Token("PUNCTUATION", ":")));
-	
 }
 
 void Scanner::populateAssignmentList()
 {
     this->assignment.insert(make_pair(":=", new Token("ASSIGNMENT", ":=")));
-	
 	
 }
 
@@ -108,6 +119,31 @@ void Scanner::populateRelationOperatorList()
 	this->relationOperator.insert(make_pair(">=", new Token("RELATION_OP", ">=")));
 	this->relationOperator.insert(make_pair("==", new Token("RELATION_OP", "==")));
 	this->relationOperator.insert(make_pair("!=", new Token("RELATION_OP", "!=")));
+
+	this->relationOperator.insert(make_pair("= ", new Token("ILLEGAL_ASSIGNMENT_OP", "= ")));
+	this->relationOperator.insert(make_pair("~", new Token("ILLEGAL_ASSIGNMENT_OP", "~ ")));
+	this->relationOperator.insert(make_pair("! ", new Token("ILLEGAL_ASSIGNMENT_OP", "! ")));
+	this->relationOperator.insert(make_pair("? ", new Token("ILLEGAL_ASSIGNMENT_OP", "? ")));
+	this->relationOperator.insert(make_pair("@ ", new Token("ILLEGAL_ASSIGNMENT_OP", "@ ")));
+	this->relationOperator.insert(make_pair("' ", new Token("ILLEGAL_ASSIGNMENT_OP", "' ")));
+	this->relationOperator.insert(make_pair("`", new Token("ILLEGAL_ASSIGNMENT_OP", "` ")));
+	this->relationOperator.insert(make_pair("$ ", new Token("ILLEGAL_ASSIGNMENT_OP", "$ ")));
+	this->relationOperator.insert(make_pair("% ", new Token("ILLEGAL_ASSIGNMENT_OP", "% ")));
+	this->relationOperator.insert(make_pair("# ", new Token("ILLEGAL_ASSIGNMENT_OP", "# ")));
+
+	this->relationOperator.insert(make_pair("=\n", new Token("ILLEGAL_ASSIGNMENT_OP", "=\n")));
+	this->relationOperator.insert(make_pair("~\n", new Token("ILLEGAL_ASSIGNMENT_OP", "~\n")));
+	this->relationOperator.insert(make_pair("!\n", new Token("ILLEGAL_ASSIGNMENT_OP", "!\n")));
+	this->relationOperator.insert(make_pair("?\n", new Token("ILLEGAL_ASSIGNMENT_OP", "?\n")));
+	this->relationOperator.insert(make_pair("@\n", new Token("ILLEGAL_ASSIGNMENT_OP", "@\n")));
+	this->relationOperator.insert(make_pair("'\n", new Token("ILLEGAL_ASSIGNMENT_OP", "'\n")));
+	this->relationOperator.insert(make_pair("`\n", new Token("ILLEGAL_ASSIGNMENT_OP", "`\n")));
+	this->relationOperator.insert(make_pair("$\n", new Token("ILLEGAL_ASSIGNMENT_OP", "$\n")));
+	this->relationOperator.insert(make_pair("%\n", new Token("ILLEGAL_ASSIGNMENT_OP", "%\n")));
+	this->relationOperator.insert(make_pair("#\n", new Token("ILLEGAL_ASSIGNMENT_OP", "#\n")));
+
+	
+
 }
 
 void Scanner::populateWhitespaceSymbolsList()
@@ -128,7 +164,6 @@ void Scanner::createLetterCharacter(char character)
 	string convertChar(1, character);
 	
     this->storedCharacters.push_back(new Character("LETTER", convertChar));
-	
 }
 
 void Scanner::createPeriodCharacter()
@@ -156,7 +191,7 @@ void Scanner::createIdentifierToken()
 
 	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
-		identifier.push_back(this->storedCharacters.at(i)->getTokenValue()[0]);
+		identifier.push_back(tolower(this->storedCharacters.at(i)->getTokenValue()[0]));
 		recentToken->setTokenValue(identifier);
 	}
 	//make sure to clear the stored characters list or a pile will form.
@@ -193,6 +228,7 @@ char Scanner::readCharacterFromFile(ifstream* inputStream)
 {
 	char currentCharacter;
 	inputStream->get(currentCharacter);
+
 	if (currentCharacter == '\n')
 	{
 		this->incrementLineNumber();
@@ -205,14 +241,11 @@ char Scanner::peekNextCharacterInFile(ifstream* inputStream)
 	return inputStream->peek();
 }
 
-
-
 void Scanner::populateBooleanOperatorList()
 {
 	this->booleanOperator.insert(make_pair("&", new Token("BOOLEAN_OP", "&")));
 	this->booleanOperator.insert(make_pair("|", new Token("BOOLEAN_OP", "|")));
 }
-
 
 Token* Scanner::searchPunctuationList(string character)
 {
@@ -228,6 +261,7 @@ Token* Scanner::searchPunctuationList(string character)
 }
 Token* Scanner::searchAssignmentList(string character, ifstream* input)
 {
+	
 	char peekChar = this->peekNextCharacterInFile(input);
 	string checkPeekString = character;
 	checkPeekString.push_back(peekChar);
@@ -240,6 +274,7 @@ Token* Scanner::searchAssignmentList(string character, ifstream* input)
 			char byteWaste = this->readCharacterFromFile(input);
 			return it->second;
 		}
+
 	}
 	return nullptr;
 }
@@ -263,15 +298,23 @@ Token* Scanner::searchRelationOperatorList(string character,ifstream* input)
 	char peekChar = this->peekNextCharacterInFile(input);
 	string checkPeekString = character;
 	checkPeekString.push_back(peekChar);
+
 	for (set<pair<string, Token*>>::iterator it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
 	{
 		if (checkPeekString == it->first)
 		{
+			if (it->second->getTokenType() == "ILLEGAL_ASSIGNMENT_OP")
+			{
+				throw IllegalEqualsSignException();
+			}
 			//We need to read and disguard that character, so it doesn't screw things up in the input stream later.
 			char byteWaste = this->readCharacterFromFile(input);
 			//Now, we need to read letters into the stored character array until we encounter a space character
 			return it->second;
 		}
+
+		
+		
 	}
 	return nullptr;
 }
@@ -325,7 +368,7 @@ void Scanner::matchReservedWord(ifstream* input)
 	string searchString;
 	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
-		searchString.push_back(this->storedCharacters.at(i)->getTokenValue()[0]);
+		searchString.push_back(tolower(this->storedCharacters.at(i)->getTokenValue()[0]));
 	}
 
 	//Now, search the reserved Words list.
@@ -365,16 +408,26 @@ void Scanner::otherActionMatchNotReservedWord(ifstream* input)
 
 bool Scanner::matchIdentifier()
 {
-	 
+	//search the whole damn list, since this doesn't work if the character is in the middle of the list.
+	//It is slightly inefficient, but what do you do??
+
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		if (this->storedCharacters.at(i)->getTokenType() == "BAD_BOY")
+		{
+			throw IllegalIdentifierException();
+			return false;
+		}
+	}
+
      if (this->storedCharacters.at(0)->getTokenType() == "DIGIT")
 	 {
 		return false;
 	 }
-
+	
 	 this->createIdentifierToken();
 
-	 return true;
-	
+	 return true;	
 }
 
 void Scanner::matchNumber(ifstream* input)
@@ -390,12 +443,15 @@ void Scanner::matchNumber(ifstream* input)
 			throw IdentifierBeginsWithNumberException();
 			return;
 		}
+
+		else if (this->storedCharacters.at(i)->getTokenType() == "BAD_BOY")
+		{
+			throw IllegalEqualsSignException();
+		}
 	}
 	
-
 	//First, we convert all characters to integers.
 	
-
 	vector<int> intVector;
 	string intString;
 	double finalResult = 0;
@@ -431,14 +487,10 @@ void Scanner::matchNumber(ifstream* input)
 		this->createNumberToken("NUMBER", finalResult);
 	}
 
-	
-
 	//Remember to clear the characters
 	this->storedCharacters.clear();
 	
 	return;
-
-
 }
 
 double Scanner::computeFloatingPointLiteralResult(vector<int>* intVector)
@@ -455,8 +507,7 @@ double Scanner::computeFloatingPointLiteralResult(vector<int>* intVector)
 		}
 	}
 	string::size_type sizeString;
-	return stod(intString, &sizeString);
-	    
+	return stod(intString, &sizeString);    
 }
 
 double Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecStartElement, double vectorSize)
@@ -472,14 +523,10 @@ double Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecSta
 		return currentValue;
 	}
 
-	
 	currentValue *= pow(10.0, vectorSize);
 	
-	
 	return currentValue + (this->computeIntegerLiteralResult(inputVector, vecStartElement, vectorSize));
-	
 }
-
 
 void Scanner::matchStringLiteral(ifstream* input)
 {
@@ -491,17 +538,15 @@ void Scanner::matchStringLiteral(ifstream* input)
 	//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
 	//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
     //if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
-
-	return;
+		
+		return;
 	}
 
-	
 	if (isalpha(character) || character == '_')
 	{
 		this->createLetterCharacter(character);
-	
 	}
-
+	
 	else if (isdigit(character))
 	{
 		this->createDigitCharacter(character);
@@ -513,18 +558,14 @@ void Scanner::matchStringLiteral(ifstream* input)
 		this->createStringLiteralToken();
 		
 		return;
-
 	}
 	
 	this->matchStringLiteral(input); //recurse back.
-	
 }
 //This is the primary Scanner method that will be utilized in this application - compilation of all of the other methods.
 
 void Scanner::readFile(ifstream* input)
 {
-
-
 	//Read the character from the file.
 
 	char character = readCharacterFromFile(input);
@@ -534,25 +575,30 @@ void Scanner::readFile(ifstream* input)
 		return;
 	}
 
-	
 	else if (isalpha(character) || character == '_')
 	{
 		this->createLetterCharacter(character);
-		
-		
+	}
 
+	
+	else if (character == '~' || character == '!' ||
+		character == '?' || character == '@'      ||
+		character == '\''|| character == '`'      ||
+		character == '$' || character == '%'      ||
+		character == '#'
+		)
+	{
+		string charToPush(1, character);
+		this->storedCharacters.push_back(new Character("BAD_BOY", charToPush));
 	}
 
 	else if (isdigit(character))
 	{
 		this->createDigitCharacter(character);
-		
-		
 	}
 
 	else //Not a letter or a digit, so perform an alternative action.  
 	{
-	
 		performOtherAction(input, character);
 
 		//We have to put a corrective hack in to prevent the line number on a token from being incorrectly incremented when it has
@@ -566,17 +612,6 @@ void Scanner::readFile(ifstream* input)
 	this->readFile(input); //The recursive call is made until EOF is encountered.
 	
 	return;
-	
-}
-
-void Scanner::reportError()
-{
-
-}
-
-void Scanner::reportWarning()
-{
-
 }
 
 void Scanner::performOtherAction(ifstream* input, char character)
@@ -598,7 +633,6 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		//Match the reserved word
 		this->matchReservedWord(input);
 
-		
 		//create a token for the single character mark
 		this->createSingleCharacterToken(singleCharTok);
 
@@ -612,7 +646,6 @@ void Scanner::performOtherAction(ifstream* input, char character)
 			//you are a CS major and have no time and no money. 
 
 			this->readFile(input); //Then, it will go back to matchReservedWord(input).
-
 		}
 
 		//But, if we see a " symbol, we know that we must have a string literal, so we go directly to that method and parse it out.
@@ -627,7 +660,6 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "/" ||
 			     this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "*") // We do the comment checking and ignoring.
 		{
-			
 	        //We have to peek ahead, though and return immediately if we do not see another "/".  Then we have an ARITH_OPERATOR token.
 			
 			char peekChar = this->peekNextCharacterInFile(input);
@@ -635,26 +667,19 @@ void Scanner::performOtherAction(ifstream* input, char character)
 			{
 				//Get rid of the ARITH_OPERATOR token that was just added by the previous state
 				this->storedTokens.pop_back();
-				this->commentCheckingIgnoringDecisionMethod(input);
-				
-			}
-			
-			
-			
+				this->commentCheckingIgnoringDecisionMethod(input);	
+			}	
 		}
-
-		
 	}
-
-	//TODO: Get error checking complete.  Design Parser.  
+ 
 	if (!this->storedTokens.empty())
 	{
-		if ((this->storedTokens.at(0)->getTokenValue()) != "program" &&
-			(this->storedTokens.at(0)->getTokenValue()) != "PROGRAM"
-			)
+		
+		if ( (this->storedTokens.at(0)->getTokenValue()) != "program" )
 		{
 			throw NoClosingCommentMarkException();
 		}
+		
 	}
 	
 	return;
@@ -662,7 +687,6 @@ void Scanner::performOtherAction(ifstream* input, char character)
 
 bool Scanner::isWhitespace(char character)
 {
-
 	for (unsigned int i = 0; i < this->whitespaceSymbols.size(); ++i)
 	{
 		if (this->whitespaceSymbols.at(i) == character)
@@ -681,20 +705,18 @@ void Scanner::commentCheckingIgnoringDecisionMethod(ifstream* input)
 
 	if (readNextCharacter == '\n')
 	{
-		
 		return;
 	}
 
 	else if (readNextCharacter == '*')
 	{
-		
+		this->firstCommentLineNumber = this->lineNumber;
 		this->embeddedCommentsCheckingAndIgnoringAncillaryMethod(input);
 		
 	}
 
 	else if (readNextCharacter == '/')
-	{
-		
+	{	
 			this->commentCheckingAndIgnoringAncillaryMethod(input);
 	}
 
@@ -706,45 +728,37 @@ void Scanner::commentCheckingAndIgnoringAncillaryMethod(ifstream* input)
 	char readNextCharacter = this->readCharacterFromFile(input);
 
 	if (readNextCharacter == '\n')
-	{
-		
+	{	
 		return;
 	}
 	//Waste and recurse until '\n' is encountered, then return.
 	char wasteChar = this->readCharacterFromFile(input);
 	this->commentCheckingAndIgnoringAncillaryMethod(input);
-    
 }
 
 void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input)
 {
 	char readNextCharacter = this->readCharacterFromFile(input);
-
+	
 	if(input->eof())
 	{
 		throw NoClosingCommentMarkException();
-
 	}
-	else if (readNextCharacter == '*')
+	
+	if (readNextCharacter == '*')
 	{
 		//We have to do another peek to see if we have a closing */  Otherwise, we will probably parse bullshit again.
 		char peekChar = this->peekNextCharacterInFile(input);
 		if (peekChar == '/')
-		{
-			
+		{	
 			char wasteToken = this->readCharacterFromFile(input);
 			return;
-
 		}
-		
-
 	}
 
 	//Waste and recurse until '*' is encountered, then return.  I forgot to waste.
 	char wasteChar = this->readCharacterFromFile(input);
 	this->embeddedCommentsCheckingAndIgnoringAncillaryMethod(input);
-
-
 }
 
 

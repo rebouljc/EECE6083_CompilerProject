@@ -14,6 +14,7 @@ class Scanner
    public:
 	   Scanner();
 	   int getLineNumber();
+	   int getFirstCommentLineNumber();
 	   void init();
 
    private:
@@ -65,9 +66,6 @@ class Scanner
    //initial readFileMethod()
 
    void readFile(ifstream* input);
-   
-   void reportError();
-   void reportWarning();
 
    //Other methods - if not a digit or a number
 
@@ -80,7 +78,6 @@ class Scanner
    void commentCheckingIgnoringDecisionMethod(ifstream* input);
    void commentCheckingAndIgnoringAncillaryMethod(ifstream* input);
    void embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input);
-   
    set<pair<string, Token*>> reserved;
    set<pair<string, Token*>> punctuation;
    set<pair<string, Token*>> assignment;
@@ -91,6 +88,7 @@ class Scanner
    vector<Token*> storedTokens;
    vector<Character*> storedCharacters;
    int lineNumber;
+   int firstCommentLineNumber;
 
 
 };

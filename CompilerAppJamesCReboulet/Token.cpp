@@ -46,10 +46,6 @@ Token::Token(string tokenType, double numberValue, int tokenLineNumber)
 	this->tokenLineNumber = tokenLineNumber;
 }
 
-
-
-
-
 bool Token::operator ==(Token* tok)
 {
 	return false;

@@ -47,5 +47,11 @@
     <ClInclude Include="NoClosingCommentMarkException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IllegalEqualsSignException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IllegalIdentifierException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 /* ok so it's also time to test
-	*/ nested comments; can you do it??
+	/* nested comments; can you do it??
 	*/*/
 
 PROGRAM grant IS
@@ -11,7 +11,7 @@ PROGRAM grant IS
 	procedure if_proc : integer()
         variable declaration : integer;
 		begin
-			if(true) then jake := jake + 1 * 69;
+			if(true) then jake := jake + 1;
 			else zach := zach + RYAN[2];
 		end if;
 	end procedure;
