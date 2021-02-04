@@ -38,5 +38,14 @@
     <ClInclude Include="Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringLiteralException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IdentifierBeginsWithNumberException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NoClosingCommentMarkException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

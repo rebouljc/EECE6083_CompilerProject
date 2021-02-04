@@ -13,9 +13,14 @@ class Scanner
 {
    public:
 	   Scanner();
-	   
+	   int getLineNumber();
+	   void init();
 
    private:
+
+	   //increment line number method
+   void incrementLineNumber();
+   
    void populateReservedList();
    void populatePunctuationList();
    void populateAssignmentList();
@@ -29,10 +34,6 @@ class Scanner
    void createLetterCharacter(char character);
    void createPeriodCharacter();
    void createSingleCharacterToken(Token* token);
-   void createAssignmentToken();
-   void createArithOperatorToken();
-   void createRelationOperatorToken();
-   void createBooleanOperatorToken();
    void createReservedWordToken(Token* tokenToAdd);
    void createIdentifierToken();
    void createStringLiteralToken();
@@ -58,7 +59,6 @@ class Scanner
    void matchReservedWord(ifstream* input); //Calls createReservedWordToken() if true;
    bool matchIdentifier();
    void matchNumber(ifstream* input);
-   void matchLetter();
    void matchStringLiteral(ifstream* input);
    void otherActionMatchNotReservedWord(ifstream* input);
 
@@ -90,6 +90,7 @@ class Scanner
    vector<char> whitespaceSymbols;
    vector<Token*> storedTokens;
    vector<Character*> storedCharacters;
+   int lineNumber;
 
 
 };

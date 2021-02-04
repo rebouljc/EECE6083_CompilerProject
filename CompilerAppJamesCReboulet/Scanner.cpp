@@ -2,9 +2,17 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include "StringLiteralException.h"
+#include "IdentifierBeginsWithNumberException.h"
+#include "NoClosingCommentMarkException.h"
 
 
 Scanner::Scanner()
+{
+	
+}
+
+void Scanner::init()
 {
 	this->populateReservedList();
 	this->populatePunctuationList();
@@ -14,11 +22,24 @@ Scanner::Scanner()
 	this->populateBooleanOperatorList();
 	this->populateWhitespaceSymbolsList();
 
+	this->lineNumber = 1;
+
 	std::cout << "\nEnter a filename to be scanned.\n";
 	string filename;
 	std::cin >> filename;
 	ifstream* input = new ifstream(filename);
 	this->readFile(input);
+
+}
+
+void Scanner::incrementLineNumber()
+{
+	this->lineNumber++;
+}
+
+int Scanner::getLineNumber()
+{
+	return this->lineNumber;
 }
 void Scanner::populateReservedList()
 {
@@ -117,28 +138,15 @@ void Scanner::createPeriodCharacter()
 
 void Scanner::createSingleCharacterToken(Token* token)
 {
-	this->storedTokens.push_back(new Token(token->getTokenType(), token->getTokenValue()));
+	this->storedTokens.push_back(new Token(token->getTokenType(), token->getTokenValue(), this->lineNumber));
 }
-void Scanner::createAssignmentToken()
-{
 
-}
-void Scanner::createArithOperatorToken()
-{
-
-}
-void Scanner::createRelationOperatorToken()
-{
-
-}
-void Scanner::createBooleanOperatorToken()
-{
-
-}
 void Scanner::createReservedWordToken(Token* tokenToAdd)
 {
 	//Creates a token for an identified reserved word
-	this->storedTokens.push_back(new Token(tokenToAdd));
+	this->storedTokens.push_back(new Token(tokenToAdd, this->lineNumber));
+
+	
 }
 void Scanner::createIdentifierToken()
 {
@@ -179,7 +187,7 @@ void Scanner::createStringLiteralToken()
 
 void Scanner::createNumberToken(string type, double value)
 {
-	this->storedTokens.push_back(new Token("NUMBER", value));
+	this->storedTokens.push_back(new Token("NUMBER", value, this->lineNumber));
 }
 
 char Scanner::readCharacterFromFile(ifstream* inputStream)
@@ -339,10 +347,9 @@ void Scanner::matchReservedWord(ifstream* input)
 
 void Scanner::otherActionMatchNotReservedWord(ifstream* input)
 {
-	//This is a problem because if we encounter a period character, the storedCharacters list is empty and we are getting a null pointer exception here
-	//When we try to access the first element of an empty vector.
+
 	
-	if (this->storedCharacters.empty() /*&& !this->storedTokens.at(this->storedTokens.size() -1)->getIsPeriodStatus()*/)
+	if (this->storedCharacters.empty())
 	{
 		return;
 	}
@@ -376,6 +383,9 @@ void Scanner::matchNumber(ifstream* input)
 	{
 		if (this->storedCharacters.at(i)->getTokenType() == "LETTER")
 		{
+			//Here is where we throw the exception.  We obviously have an identifier that starts with a digit and contains a letter.  BAD!
+
+			throw IdentifierBeginsWithNumberException();
 			return;
 		}
 	}
@@ -424,21 +434,6 @@ void Scanner::matchNumber(ifstream* input)
 	//Remember to clear the characters
 	this->storedCharacters.clear();
 	
-#define DO_NOT_USE 0
-#ifndef DO_NOT_USE
-	//Now, let's peek ahead and check if we see a period, so that we can then compute a floating point.
-	
-	char peekChar = this->peekNextCharacterInFile(input);
-	string peekCharString(1, peekChar);
-	Token* checkToken = this->searchPunctuationList(peekCharString);
-	if ((checkToken != nullptr && checkToken->getTokenValue() == "."))
-	{
-		//We need to skip over the period and load the digits after the period into the characters list.
-		char byteWaste = this->readCharacterFromFile(input);
-		this->createPeriodCharacter();
-	}
-
-#endif
 	return;
 
 
@@ -483,10 +478,6 @@ double Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecSta
 	
 }
 
-void Scanner::matchLetter()
-{
-
-}
 
 void Scanner::matchStringLiteral(ifstream* input)
 {
@@ -494,6 +485,7 @@ void Scanner::matchStringLiteral(ifstream* input)
 
 	if (input->eof()) //Prevents infinite recursion if user forgets to end string literal with "
 	{
+		throw StringLiteralException();
 	//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
 	//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
     //if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
@@ -587,6 +579,10 @@ void Scanner::performOtherAction(ifstream* input, char character)
 	{
 		//We either need to create the token as a letter, number, reserved word, or identifier.  How do we decide?
 		//We need to call Scanner::matchReservedWord() which will start checking the reservedWords list for a match;
+		if (character == '\n')
+		{
+			this->incrementLineNumber();
+		}
 		this->matchReservedWord(input);
 	}
 	
@@ -612,7 +608,7 @@ void Scanner::performOtherAction(ifstream* input, char character)
 
 		}
 
-		//But, if we see a \" symbol, we know that we must have a string literal, so we go directly to that method and parse it out.
+		//But, if we see a " symbol, we know that we must have a string literal, so we go directly to that method and parse it out.
 		//If we don't do it here, then this method will recurse and check for a reserved word and create an identifier instead of string literal.
 
 		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "\"")
@@ -635,13 +631,25 @@ void Scanner::performOtherAction(ifstream* input, char character)
 				this->commentCheckingIgnoringDecisionMethod(input);
 				
 			}
+			
+			
+			
 		}
 
 		
 	}
 
 	//TODO: Get error checking complete.  Design Parser.  
-
+	if (!this->storedTokens.empty())
+	{
+		if ((this->storedTokens.at(0)->getTokenValue()) != "program" &&
+			(this->storedTokens.at(0)->getTokenValue()) != "PROGRAM"
+			)
+		{
+			throw NoClosingCommentMarkException();
+		}
+	}
+	
 	return;
 }
 
@@ -664,6 +672,7 @@ void Scanner::commentCheckingIgnoringDecisionMethod(ifstream* input)
 
 	if (readNextCharacter == '\n')
 	{
+		this->incrementLineNumber();
 		return;
 	}
 
@@ -689,6 +698,7 @@ void Scanner::commentCheckingAndIgnoringAncillaryMethod(ifstream* input)
 
 	if (readNextCharacter == '\n')
 	{
+		this->incrementLineNumber();
 		return;
 	}
 	//Waste and recurse until '\n' is encountered, then return.
@@ -701,8 +711,13 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 {
 	char readNextCharacter = this->readCharacterFromFile(input);
 
+	
+	if(input->eof())
+	{
+		throw NoClosingCommentMarkException();
 
-	if (readNextCharacter == '*')
+	}
+	else if (readNextCharacter == '*')
 	{
 		//We have to do another peek to see if we have a closing */  Otherwise, we will probably parse bullshit again.
 		char peekChar = this->peekNextCharacterInFile(input);

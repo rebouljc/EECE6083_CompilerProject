@@ -4,6 +4,13 @@ Token::Token()
 {
 	this->tokenType = "IDENTIFIER";
 }
+
+Token::Token(string tokenType, string tokenValue, int tokenLineNumber)
+{
+	this->tokenType = tokenType;
+	this->tokenValue = tokenValue;
+	this->tokenLineNumber = tokenLineNumber;
+}
 Token::Token(string tokenType, string tokenValue)
 {
 	this->tokenType = tokenType;
@@ -18,11 +25,22 @@ Token::Token(string tokenType, double numberValue)
 	this->integerNumberTokenValue = numberValue;
 }
 
-Token::Token(Token* token)
+Token::Token(string tokenType, double numberValue, int tokenLineNumber)
+{
+	this->tokenType = tokenType;
+	this->tokenValue = "INTEGER_LITERAL";
+	this->integerNumberTokenValue = numberValue;
+	this->tokenLineNumber = tokenLineNumber;
+}
+
+Token::Token(Token* token, int tokLineNumber)
 {
 	this->tokenType = token->getTokenType();
 	this->tokenValue = token->getTokenValue();
+	this->tokenLineNumber = tokLineNumber;
 }
+
+
 
 bool Token::operator ==(Token* tok)
 {
@@ -52,10 +70,6 @@ void Token::setTokenOccurrence(int occurrence)
 	this->tokenOccurrence = occurrence;
 }
 
-void Token::setTokenLineNumber(string lineNumber)
-{
-	this->tokenLineNumber = lineNumber;
-}
 
 void Token::setTokenIsPeriodStatus(bool setting)
 {
@@ -74,5 +88,10 @@ void Token::setDoubleNumberTokenValue(double value)
 double Token::getIntegerDoubleNumberTokenValue()
 {
 	return this->integerNumberTokenValue;
+}
+
+int Token::getTokenLineNumber()
+{
+	return this->tokenLineNumber;
 }
 

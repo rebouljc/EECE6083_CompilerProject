@@ -10,9 +10,11 @@ class Token
 {
 public:
 	Token();
+	Token(string tokenType, string tokenValue, int tokenLineNumber);
 	Token(string tokenType, string tokenValue);
-	Token(Token* token);
+	Token(Token* token, int tokLineNumber);
 	Token(string tokenType, double numberValue);
+	Token(string tokenType, double numberValue, int tokenLineNumber);
 	bool operator == (Token* tok);
 	string getTokenType();
 	string getTokenValue();
@@ -22,16 +24,18 @@ public:
 	bool getIsPeriodStatus();
 	void setDoubleNumberTokenValue(double value);
 	double getIntegerDoubleNumberTokenValue();
+	int getTokenLineNumber();
+	
 	
 protected:
 	string tokenType;
 	string tokenValue;
 	double integerNumberTokenValue;
-	string tokenLineNumber;
+	int tokenLineNumber;
 	int tokenOccurrence;
 	void setTokenOccurrence(int occurrence);
-	void setTokenLineNumber(string lineNumber);
 	bool isPeriod = false;
+	
 	
 	
 };
