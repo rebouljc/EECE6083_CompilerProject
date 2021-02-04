@@ -26,6 +26,7 @@ public:
 	void setDoubleNumberTokenValue(double value);
 	double getIntegerDoubleNumberTokenValue();
 	int getTokenLineNumber();
+	void setTokenLineNumber(int tokLineNumber);
 	
 	
 protected:

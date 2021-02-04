@@ -12,7 +12,7 @@ Scanner* scan = new Scanner();
 
 int main()
 {
-    
+
     try
     {
         scan->init();
@@ -32,5 +32,5 @@ int main()
     {
         cout << endl << e.what() << scan->getLineNumber();
     }
-}
-
+    
+} 

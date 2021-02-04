@@ -146,8 +146,6 @@ void Scanner::createReservedWordToken(Token* tokenToAdd)
 	
 	this->storedTokens.push_back(new Token(tokenToAdd, this->lineNumber));
 	
-
-	
 }
 void Scanner::createIdentifierToken()
 {
@@ -554,7 +552,16 @@ void Scanner::readFile(ifstream* input)
 
 	else //Not a letter or a digit, so perform an alternative action.  
 	{
+	
 		performOtherAction(input, character);
+
+		//We have to put a corrective hack in to prevent the line number on a token from being incorrectly incremented when it has
+		//an '\n' after it.  For instance, after the reserved word "is" or the identifier "is".  This only took about 4 hours to figure out.
+
+		if (!(this->storedTokens.empty()) && character == '\n')
+		{
+			this->storedTokens.at(this->storedTokens.size() - 1)->setTokenLineNumber(this->lineNumber - 1);
+		}
 	}
 	this->readFile(input); //The recursive call is made until EOF is encountered.
 	

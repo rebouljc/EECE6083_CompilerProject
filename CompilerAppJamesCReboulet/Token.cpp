@@ -103,3 +103,8 @@ int Token::getTokenLineNumber()
 	return this->tokenLineNumber;
 }
 
+void Token::setTokenLineNumber(int tokLineNumber)
+{
+	this->tokenLineNumber = tokLineNumber;
+}
+
