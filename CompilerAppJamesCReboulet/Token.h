@@ -10,6 +10,7 @@ class Token
 {
 public:
 	Token();
+	Token(int tokLineNumber);
 	Token(string tokenType, string tokenValue, int tokenLineNumber);
 	Token(string tokenType, string tokenValue);
 	Token(Token* token, int tokLineNumber);

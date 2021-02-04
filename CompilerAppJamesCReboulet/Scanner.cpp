@@ -9,7 +9,7 @@
 
 Scanner::Scanner()
 {
-	
+	this->lineNumber = 1;
 }
 
 void Scanner::init()
@@ -143,15 +143,16 @@ void Scanner::createSingleCharacterToken(Token* token)
 
 void Scanner::createReservedWordToken(Token* tokenToAdd)
 {
-	//Creates a token for an identified reserved word
+	
 	this->storedTokens.push_back(new Token(tokenToAdd, this->lineNumber));
+	
 
 	
 }
 void Scanner::createIdentifierToken()
 {
 
-	this->storedTokens.push_back(new Token());
+	this->storedTokens.push_back(new Token(this->lineNumber));
 	Token* recentToken = this->storedTokens.at(this->storedTokens.size()-1);
 	string identifier;
 
@@ -193,8 +194,11 @@ void Scanner::createNumberToken(string type, double value)
 char Scanner::readCharacterFromFile(ifstream* inputStream)
 {
 	char currentCharacter;
-
 	inputStream->get(currentCharacter);
+	if (currentCharacter == '\n')
+	{
+		this->incrementLineNumber();
+	}
 	return currentCharacter;
 }
 
@@ -494,7 +498,7 @@ void Scanner::matchStringLiteral(ifstream* input)
 	}
 
 	
-	if (isalpha(character))
+	if (isalpha(character) || character == '_')
 	{
 		this->createLetterCharacter(character);
 	
@@ -533,7 +537,7 @@ void Scanner::readFile(ifstream* input)
 	}
 
 	
-	else if (isalpha(character))
+	else if (isalpha(character) || character == '_')
 	{
 		this->createLetterCharacter(character);
 		
@@ -579,10 +583,6 @@ void Scanner::performOtherAction(ifstream* input, char character)
 	{
 		//We either need to create the token as a letter, number, reserved word, or identifier.  How do we decide?
 		//We need to call Scanner::matchReservedWord() which will start checking the reservedWords list for a match;
-		if (character == '\n')
-		{
-			this->incrementLineNumber();
-		}
 		this->matchReservedWord(input);
 	}
 	
@@ -655,10 +655,12 @@ void Scanner::performOtherAction(ifstream* input, char character)
 
 bool Scanner::isWhitespace(char character)
 {
+
 	for (unsigned int i = 0; i < this->whitespaceSymbols.size(); ++i)
 	{
 		if (this->whitespaceSymbols.at(i) == character)
 		{
+
 			return true;
 		}
 	}
@@ -672,7 +674,7 @@ void Scanner::commentCheckingIgnoringDecisionMethod(ifstream* input)
 
 	if (readNextCharacter == '\n')
 	{
-		this->incrementLineNumber();
+		
 		return;
 	}
 
@@ -698,7 +700,7 @@ void Scanner::commentCheckingAndIgnoringAncillaryMethod(ifstream* input)
 
 	if (readNextCharacter == '\n')
 	{
-		this->incrementLineNumber();
+		
 		return;
 	}
 	//Waste and recurse until '\n' is encountered, then return.
@@ -711,7 +713,6 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 {
 	char readNextCharacter = this->readCharacterFromFile(input);
 
-	
 	if(input->eof())
 	{
 		throw NoClosingCommentMarkException();
@@ -732,7 +733,7 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 
 	}
 
-	//Waste and recurse until '\n' is encountered, then return.  I forgot to waste.
+	//Waste and recurse until '*' is encountered, then return.  I forgot to waste.
 	char wasteChar = this->readCharacterFromFile(input);
 	this->embeddedCommentsCheckingAndIgnoringAncillaryMethod(input);
 

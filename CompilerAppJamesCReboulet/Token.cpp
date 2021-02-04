@@ -3,6 +3,12 @@
 Token::Token()
 {
 	this->tokenType = "IDENTIFIER";
+	
+}
+Token::Token(int tokLineNumber)
+{
+	this->tokenType = "IDENTIFIER";
+	this->tokenLineNumber = tokLineNumber;
 }
 
 Token::Token(string tokenType, string tokenValue, int tokenLineNumber)
@@ -16,6 +22,13 @@ Token::Token(string tokenType, string tokenValue)
 	this->tokenType = tokenType;
 	this->tokenValue = tokenValue;
 
+}
+
+Token::Token(Token* token, int tokLineNumber)
+{
+	this->tokenType = token->getTokenType();
+	this->tokenValue = token->getTokenValue();
+	this->tokenLineNumber = tokLineNumber;
 }
 
 Token::Token(string tokenType, double numberValue)
@@ -33,12 +46,7 @@ Token::Token(string tokenType, double numberValue, int tokenLineNumber)
 	this->tokenLineNumber = tokenLineNumber;
 }
 
-Token::Token(Token* token, int tokLineNumber)
-{
-	this->tokenType = token->getTokenType();
-	this->tokenValue = token->getTokenValue();
-	this->tokenLineNumber = tokLineNumber;
-}
+
 
 
 

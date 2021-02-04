@@ -8,5 +8,5 @@ struct NoClosingCommentMarkException
 		return "Illegal Comment Closing/Opening: Missing either (* or /) on /* or */ Comment.\n  Comments must be surrounded by /*...*/ - close to line number: ";
 	}
 
-
+	
 };
