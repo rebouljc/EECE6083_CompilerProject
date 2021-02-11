@@ -582,11 +582,11 @@ void Scanner::readFile(ifstream* input)
 
 	
 	else if (character == '~' || character == '!' ||
-		character == '?' || character == '@'      ||
-		character == '\''|| character == '`'      ||
-		character == '$' || character == '%'      ||
-		character == '#'
-		)
+		     character == '?' || character == '@' ||
+		     character == '\''|| character == '`' ||
+		     character == '$' || character == '%' ||
+		     character == '#'
+		    )
 	{
 		string charToPush(1, character);
 		this->storedCharacters.push_back(new Character("BAD_BOY", charToPush));

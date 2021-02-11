@@ -19,5 +19,5 @@ if(c == "A") then
 else
 	tmp := putString("F");
 end if;
-
+ifthen;
 end program.
