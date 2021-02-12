@@ -13,6 +13,7 @@ class Scanner
 {
    public:
 	   Scanner();
+	   
 	   int getLineNumber();
 	   int getFirstCommentLineNumber();
 	   void init();
@@ -85,11 +86,14 @@ class Scanner
    set<pair<string, Token*>> relationOperator;
    set<pair<string, Token*>> booleanOperator;
    vector<char> whitespaceSymbols;
-   vector<Token*> storedTokens;
+   
    vector<Character*> storedCharacters;
    int lineNumber;
    int firstCommentLineNumber;
 
+protected:
+   void cleanUp();
+   vector<Token*> storedTokens;
 
 };
 

@@ -5,6 +5,7 @@ Token::Token()
 	this->tokenType = "IDENTIFIER";
 	
 }
+
 Token::Token(int tokLineNumber)
 {
 	this->tokenType = "IDENTIFIER";

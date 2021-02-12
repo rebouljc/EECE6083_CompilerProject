@@ -18,11 +18,52 @@
 
 Scanner::Scanner()
 {
-	this->lineNumber = 1;
+	
 }
+
+void Scanner::cleanUp()
+{
+	for (set<pair<string, Token*>>::iterator it= this->reserved.begin(); it != this->reserved.end(); ++it)
+	{
+		delete(it->second);
+	}
+
+	for (set<pair<string, Token*>>::iterator it = this->punctuation.begin(); it != this->punctuation.end(); ++it)
+	{
+		delete(it->second);
+	}
+
+	for (set<pair<string, Token*>>::iterator it = this->assignment.begin(); it != this->assignment.end(); ++it)
+	{
+		delete(it->second);
+	}
+
+	for (set<pair<string, Token*>>::iterator it = this->arithOperator.begin(); it != this->arithOperator.end(); ++it)
+	{
+		delete(it->second);
+	}
+
+	for (set<pair<string, Token*>>::iterator it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
+	{
+		delete(it->second);
+	}
+
+	for (set<pair<string, Token*>>::iterator it = this->booleanOperator.begin(); it != this->booleanOperator.end(); ++it)
+	{
+		delete(it->second);
+	}
+
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		delete(this->storedCharacters.at(i));
+	}
+
+}
+
 
 void Scanner::init()
 {
+	this->lineNumber = 1;
 	this->populateReservedList();
 	this->populatePunctuationList();
 	this->populateAssignmentList();
@@ -36,8 +77,11 @@ void Scanner::init()
 	std::cout << "\nEnter a filename to be scanned.\n";
 	string filename;
 	std::cin >> filename;
-	ifstream* input = new ifstream(filename);
+    ifstream* input = new ifstream(filename);
 	this->readFile(input);
+	input->close();
+	delete input;
+	
 }
 
 void Scanner::incrementLineNumber()
@@ -195,6 +239,10 @@ void Scanner::createIdentifierToken()
 		recentToken->setTokenValue(identifier);
 	}
 	//make sure to clear the stored characters list or a pile will form.
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		delete (this->storedCharacters.at(i));
+	}
 	this->storedCharacters.clear();
 }
 
@@ -216,6 +264,10 @@ void Scanner::createStringLiteralToken()
 	//Oh yeah!  We need to actually set the token value too..  I forgot.
 	this->storedTokens.at(this->storedTokens.size() - 1)->setTokenValue(newString);
 	//Now, as always, we need to clear the character list
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		delete (this->storedCharacters.at(i));
+	}
 	this->storedCharacters.clear();
 }
 
@@ -379,6 +431,10 @@ void Scanner::matchReservedWord(ifstream* input)
 		this->createReservedWordToken(resultTok);
 
 		//if we have identified a lexeme as a reserved word, make sure to empty the character vector.
+		for (int i = 0; i < this->storedCharacters.size(); ++i)
+		{
+			delete (this->storedCharacters.at(i));
+		}
 		this->storedCharacters.clear();
 		
 	}
@@ -488,6 +544,10 @@ void Scanner::matchNumber(ifstream* input)
 	}
 
 	//Remember to clear the characters
+	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	{
+		delete (this->storedCharacters.at(i));
+	}
 	this->storedCharacters.clear();
 	
 	return;

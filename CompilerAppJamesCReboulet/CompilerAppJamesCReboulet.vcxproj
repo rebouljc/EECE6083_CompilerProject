@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CompilerAppJamesCReboulet.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Scanner.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="IllegalEqualsSignException.h" />
     <ClInclude Include="IllegalIdentifierException.h" />
     <ClInclude Include="NoClosingCommentMarkException.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="StringLiteralException.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Scanner.h" />
