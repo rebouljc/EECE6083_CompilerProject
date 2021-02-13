@@ -13,7 +13,8 @@ class Parser: public Scanner
 public:
 	Parser();
 	~Parser();
+	vector<Token*>* getStoredTokensList();
 	
 private:
-	void parseTokensLoop(Token* tok);
+	void parseTokensLoop();
 };

@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "Program.h"
 
 
 Parser::Parser()
@@ -32,6 +33,11 @@ Parser::Parser()
     {
         cout << endl << e.what() << this->getLineNumber();
     }
+
+   
+     this->parseTokensLoop();
+    
+
 }
 
 Parser::~Parser()
@@ -43,8 +49,14 @@ Parser::~Parser()
     }
    
 }
-
-void Parser::parseTokensLoop(Token* tok)
+vector<Token*>* Parser::getStoredTokensList()
 {
+    return &this->storedTokens;
+}
+void Parser::parseTokensLoop()
+{
+    //create the parse tree
+    ParseTreeNode* parseTree = new Program(this); //This is the first node of the linked list.  I will create a class for each of the non-terminals in the grammar.
+    //Now program will contain its terminal tokens and non-terminal classes which all inherit from ParseTreeNode* abstract class.
 
 }

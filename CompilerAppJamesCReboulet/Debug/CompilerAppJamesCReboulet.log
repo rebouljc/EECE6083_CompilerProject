@@ -1,7 +1,11 @@
 ﻿  Character.cpp
   CompilerAppJamesCReboulet.cpp
   Parser.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parser.cpp(40,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parser.cpp(46,23): warning C4018: '<': signed/unsigned mismatch
+  ParseTreeNode.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(7,27): warning C4018: '<': signed/unsigned mismatch
+  Program.cpp
+  ProgramHeader.cpp
   Token.cpp
   Scanner.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(56,20): warning C4018: '<': signed/unsigned mismatch
