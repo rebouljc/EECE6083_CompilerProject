@@ -145,6 +145,7 @@
     <ClCompile Include="ParseTreeNode.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramHeader.cpp" />
+    <ClCompile Include="TerminalNode.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Scanner.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramHeader.h" />
     <ClInclude Include="StringLiteralException.h" />
+    <ClInclude Include="TerminalNode.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Scanner.h" />
   </ItemGroup>

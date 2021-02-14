@@ -3,9 +3,12 @@
   Parser.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parser.cpp(46,23): warning C4018: '<': signed/unsigned mismatch
   ParseTreeNode.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(7,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(15,27): warning C4018: '<': signed/unsigned mismatch
   Program.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Program.cpp(33,20): warning C4018: '<': signed/unsigned mismatch
   ProgramHeader.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProgramHeader.cpp(35,20): warning C4018: '<': signed/unsigned mismatch
+  TerminalNode.cpp
   Token.cpp
   Scanner.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(56,20): warning C4018: '<': signed/unsigned mismatch

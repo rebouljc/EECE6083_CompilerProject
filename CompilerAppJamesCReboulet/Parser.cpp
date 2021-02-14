@@ -58,5 +58,10 @@ void Parser::parseTokensLoop()
     //create the parse tree
     ParseTreeNode* parseTree = new Program(this); //This is the first node of the linked list.  I will create a class for each of the non-terminals in the grammar.
     //Now program will contain its terminal tokens and non-terminal classes which all inherit from ParseTreeNode* abstract class.
+    //If I want to now search the entire tree, I will create a separate pointer and cast the Program Pointer to a parseTree. 
+    //create a virtual search method in each class and return a pointer to that object when the 
+                                          //search method is called.  
+    
 
+    vector<ParseTreeNode*>* searchResultsList = parseTree->getSearchResultsList(parseTree);
 }

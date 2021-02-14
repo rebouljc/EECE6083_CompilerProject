@@ -1,6 +1,14 @@
 #include "ParseTreeNode.h"
 
-
+vector<ParseTreeNode*>* ParseTreeNode::getSearchResultsList(ParseTreeNode* currentProgramNodePtr)
+{
+    currentProgramNodePtr->populateSearchResultsList();
+    return &(this->searchResultsList);
+}
+void ParseTreeNode::addToSearchResultsList(ParseTreeNode* nodeToAdd)
+{
+    this->searchResultsList.push_back(nodeToAdd);
+}
 Token* ParseTreeNode::readNextToken()
 {   
     Token* tokToReturn;
