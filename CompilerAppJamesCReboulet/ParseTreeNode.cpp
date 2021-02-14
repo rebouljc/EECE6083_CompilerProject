@@ -15,6 +15,7 @@ Token* ParseTreeNode::readNextToken()
     if (this->indexToRead < this->parserPtr->getStoredTokensList()->size())
     {
         tokToReturn = this->parserPtr->getStoredTokensList()->at(this->indexToRead);
+        ++ this->indexToRead;
     }
 
     else

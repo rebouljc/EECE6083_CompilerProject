@@ -9,7 +9,7 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
 private:
-	void verifySyntaxCreateParseTree() override;
+	void verifySyntaxCreateParseTree(int tokenCounter) override;
 	vector<ParseTreeNode*> linkedMemberNonterminals;
 	
 

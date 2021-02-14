@@ -11,7 +11,7 @@ public:
 	
 	
 private:
-	void verifySyntaxCreateParseTree() override;
+	void verifySyntaxCreateParseTree(int tokenCounter) override;
 	vector<ParseTreeNode*> linkedMemberNonterminals;
 	
 	

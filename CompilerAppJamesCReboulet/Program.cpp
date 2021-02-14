@@ -5,10 +5,10 @@
 Program::Program(Parser* parser)
 {
 	this->setParserPtr(parser);
-	this->verifySyntaxCreateParseTree();
+	this->verifySyntaxCreateParseTree(0);
 }
 
-void Program::verifySyntaxCreateParseTree()
+void Program::verifySyntaxCreateParseTree(int tokenCounter)
 {
 	//always make sure to pass the parser ptr.
 	//create a program header.

@@ -3,6 +3,7 @@
 #include "Parser.h"
 #include "Token.h"
 
+
 class ParseTreeNode
 {
 public:
@@ -13,7 +14,7 @@ public:
 protected:
 	//methods
 	void setParserPtr(Parser* parserPtr);
-	virtual void verifySyntaxCreateParseTree() { return; };
+	virtual void verifySyntaxCreateParseTree(int tokenCounter) { return; };
 	
 	Token* readNextToken();
 
