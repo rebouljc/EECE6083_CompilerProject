@@ -1,13 +1,13 @@
 #include "ProgramHeader.h"
 #include "TerminalNode.h"
 
-ProgramHeader::ProgramHeader(Parser* parser)
+ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode)
 {
 	this->setParserPtr(parser);
-	this->verifySyntaxCreateParseTree(0);
+	this->verifySyntaxCreateParseTree(0, motherNode);
 }
 
-void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter)
+void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	Token* currentToken = this->readNextToken();
 	if (currentToken != nullptr)
@@ -31,7 +31,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter)
 		{
 			if (currentToken->getTokenType() == "IDENTIFIER")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, motherNode, "GLOBAL"));
 			}
 
 			else
@@ -54,7 +54,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter)
 			}
 		}
 		++tokenCounter;
-		this->verifySyntaxCreateParseTree(tokenCounter);
+		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	}
 
 	return;
@@ -68,10 +68,12 @@ ParseTreeNode* ProgramHeader::getNodePtr()
 
 void ProgramHeader::populateSearchResultsList(ParseTreeNode* motherNode)
 {
-	motherNode->addToSearchResultsList(this->getNodePtr());
+	
 
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
+
+	motherNode->addToSearchResultsList(this->getNodePtr());
 }

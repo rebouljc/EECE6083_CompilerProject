@@ -7,6 +7,7 @@
 #include "Token.h"
 #include <fstream>
 #include "Character.h"
+
 using namespace std;
 
 class Scanner

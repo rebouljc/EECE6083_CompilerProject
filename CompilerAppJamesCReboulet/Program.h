@@ -1,5 +1,4 @@
 #pragma once
-
 #include "ParseTreeNode.h"
 
 class Program: public ParseTreeNode
@@ -11,7 +10,7 @@ public:
 	
 	
 private:
-	void verifySyntaxCreateParseTree(int tokenCounter) override;
+	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
 	vector<ParseTreeNode*> linkedMemberNonterminals;
 	
 	

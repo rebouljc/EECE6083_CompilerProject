@@ -1,5 +1,7 @@
 #include "ParseTreeNode.h"
 
+
+
 vector<ParseTreeNode*>* ParseTreeNode::getSearchResultsList(ParseTreeNode* currentProgramNodePtr)
 {
     currentProgramNodePtr->populateSearchResultsList();
@@ -31,4 +33,13 @@ Token* ParseTreeNode::readNextToken()
 void ParseTreeNode::setParserPtr(Parser* parserPtr)
 {
     this->parserPtr = parserPtr;
+}
+
+void ParseTreeNode::addToSymbolTable(ParseTreeNode* nodeToAdd)
+{
+    this->symbolTable.push_back(nodeToAdd);
+}
+vector<ParseTreeNode*>* ParseTreeNode::getSymbolTable()
+{
+    return &(this->symbolTable);
 }

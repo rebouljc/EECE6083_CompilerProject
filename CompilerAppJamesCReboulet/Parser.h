@@ -8,13 +8,18 @@
 #include "IllegalEqualsSignException.h"
 #include "IllegalIdentifierException.h"
 
+
+
 class Parser: public Scanner
 {
 public:
 	Parser();
 	~Parser();
 	vector<Token*>* getStoredTokensList();
+
 	
 private:
 	void parseTokensLoop();
+	
+	
 };

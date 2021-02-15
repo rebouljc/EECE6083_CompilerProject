@@ -1,5 +1,7 @@
 #include "Parser.h"
 #include "Program.h"
+#include "TerminalNode.h"
+#include "IntermediateCodeGenerator.h"
 
 
 Parser::Parser()
@@ -64,4 +66,14 @@ void Parser::parseTokensLoop()
     
 
     vector<ParseTreeNode*>* searchResultsList = parseTree->getSearchResultsList(parseTree);
+    //Currently, search is a depth-first search of the parseTree.  Put this in intermediate code generator.   
+
+    //Call the intermediate code generator from here.  This is all we can do, since we can't store the linked list globally. 
+    //We need this dependency, unfortunately or we risk violating the encapsulation principle of OOP.  
+    
+    IntermediateCodeGenerator* intermediate = new IntermediateCodeGenerator(parseTree);
+    
+    
 }
+
+    
