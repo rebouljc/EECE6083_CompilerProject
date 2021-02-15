@@ -1,5 +1,5 @@
 #include "ProgramHeader.h"
-#include "TerminalNode.h"
+#include "Identifier.h"
 
 ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode)
 {
@@ -31,7 +31,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		{
 			if (currentToken->getTokenType() == "IDENTIFIER")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, motherNode, "GLOBAL"));
+				this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
 			}
 
 			else

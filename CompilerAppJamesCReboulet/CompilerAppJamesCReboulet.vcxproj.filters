@@ -39,10 +39,13 @@
     <ClCompile Include="ProgramHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IntermediateCodeGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TerminalNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IntermediateCodeGenerator.cpp">
+    <ClCompile Include="Identifier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,10 +86,13 @@
     <ClInclude Include="ProgramHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IntermediateCodeGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="TerminalNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IntermediateCodeGenerator.h">
+    <ClInclude Include="Identifier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
