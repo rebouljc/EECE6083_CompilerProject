@@ -55,6 +55,25 @@ vector<Token*>* Parser::getStoredTokensList()
 {
     return &this->storedTokens;
 }
+
+Token* Parser::readNextToken()
+{
+    Token* tokToReturn;
+    if (this->indexToRead < this->getStoredTokensList()->size())
+    {
+        tokToReturn = this->getStoredTokensList()->at(this->indexToRead);
+        ++ this->indexToRead;
+    }
+
+    else
+    {
+        tokToReturn = nullptr;
+    }
+
+    return tokToReturn;
+
+
+}
 void Parser::parseTokensLoop()
 {
     //create the parse tree

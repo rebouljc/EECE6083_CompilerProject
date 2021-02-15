@@ -20,10 +20,9 @@ protected:
 	
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
 	
-	Token* readNextToken();
 
 	//member variables
-	int indexToRead = 0;
+	
 	Parser* parserPtr;
 	vector<ParseTreeNode*> searchResultsList;
 	vector<ParseTreeNode*> symbolTable;

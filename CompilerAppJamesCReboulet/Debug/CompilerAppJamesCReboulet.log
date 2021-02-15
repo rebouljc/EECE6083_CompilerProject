@@ -1,16 +1,22 @@
 ﻿  Character.cpp
   CompilerAppJamesCReboulet.cpp
+  Declaration.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
   Identifier.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Identifier.cpp(8,20): warning C4018: '<': signed/unsigned mismatch
   IntermediateCodeGenerator.cpp
   Parser.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parser.cpp(48,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parser.cpp(62,27): warning C4018: '<': signed/unsigned mismatch
   ParseTreeNode.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(17,27): warning C4018: '<': signed/unsigned mismatch
   Program.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Program.cpp(33,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Program.cpp(52,20): warning C4018: '<': signed/unsigned mismatch
+  ProgramBody.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProgramBody.cpp(82,20): warning C4018: '<': signed/unsigned mismatch
   ProgramHeader.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProgramHeader.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
+  Statement.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Statement.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
   TerminalNode.cpp
   Token.cpp
   Scanner.cpp

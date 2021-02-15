@@ -9,7 +9,7 @@ ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode)
 
 void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
-	Token* currentToken = this->readNextToken();
+	Token* currentToken = this->parserPtr->readNextToken();
 	if (currentToken != nullptr)
 	{
 		//Note:  We need to throw the applicable exceptions if we don't get what is expected

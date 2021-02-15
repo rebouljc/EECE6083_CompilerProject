@@ -11,24 +11,7 @@ void ParseTreeNode::addToSearchResultsList(ParseTreeNode* nodeToAdd)
 {
     this->searchResultsList.push_back(nodeToAdd);
 }
-Token* ParseTreeNode::readNextToken()
-{   
-    Token* tokToReturn;
-    if (this->indexToRead < this->parserPtr->getStoredTokensList()->size())
-    {
-        tokToReturn = this->parserPtr->getStoredTokensList()->at(this->indexToRead);
-        ++ this->indexToRead;
-    }
 
-    else
-    {
-        tokToReturn = nullptr;
-    }
-    
-    return tokToReturn;
-   
-
-}
 
 void ParseTreeNode::setParserPtr(Parser* parserPtr)
 {

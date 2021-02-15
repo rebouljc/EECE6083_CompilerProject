@@ -13,7 +13,7 @@ public:
 	virtual string getNodeSymbolIdentifierType() { return NULL; };
     double getNodeTokenIntegerDoubleNumberTokenValue();
 	int    getNodeTokenLineNumber();
-	ParseTreeNode*  getNodePtr() override;
+	
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
 
@@ -21,6 +21,7 @@ protected:
 
 	Token* token;
 	
-
+private:
+	ParseTreeNode* getNodePtr() override;
 
 };
