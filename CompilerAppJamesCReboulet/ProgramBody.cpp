@@ -38,6 +38,12 @@ void ProgramBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* mo
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Declaration(this->parserPtr, motherNode));
+		Declaration* decl = dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
+		if (!decl->getIsValid())
+		{
+			this->linkedMemberNonterminals.pop_back();
+		}
+		
 	}
 	this->verifySyntaxCreateParseTreeDeclarationParser(motherNode);
 }
@@ -65,6 +71,11 @@ void ProgramBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* moth
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
+		Statement* stmt = dynamic_cast<Statement*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
+		if (!stmt->getIsValid())
+		{
+			this->linkedMemberNonterminals.pop_back();
+		}
 	}
 	this->verifySyntaxCreateParseTreeStatementParser(motherNode);
 }

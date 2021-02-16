@@ -57,6 +57,15 @@
     <ClCompile Include="Statement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProcedureDeclaration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableDeclaration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeDeclaration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scanner.h">
@@ -111,6 +120,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Statement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcedureDeclaration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableDeclaration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDeclaration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
