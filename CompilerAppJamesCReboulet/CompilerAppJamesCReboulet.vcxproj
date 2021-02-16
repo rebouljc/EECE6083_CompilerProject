@@ -157,6 +157,7 @@
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="TypeDeclaration.cpp" />
+    <ClCompile Include="TypeMark.cpp" />
     <ClCompile Include="VariableDeclaration.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="Token.h" />
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="TypeDeclaration.h" />
+    <ClInclude Include="TypeMark.h" />
     <ClInclude Include="VariableDeclaration.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

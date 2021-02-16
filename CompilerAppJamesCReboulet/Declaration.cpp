@@ -68,7 +68,11 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 
 	//Else, we will return with a value of false and the Program Body class will pop the declaration off of the stack.
 	//We will do the same thing here for statements, since there is the option of having a program with neither declarations or statements.
-	this->parserPtr->backupIndexToRead(); //We need to backup the index, so that it is available to future methods.
+	//We need to backup the index, so that it is available to future methods.  
+	//Not totally sure if this is correct, but I will keep it in for now.  The truth will come out during the final testing/debugging.
+	
+	this->parserPtr->backupIndexToRead(); 
+	
 	return;
 
 }
