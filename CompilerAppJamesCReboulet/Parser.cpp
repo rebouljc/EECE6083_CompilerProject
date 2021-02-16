@@ -4,6 +4,7 @@
 #include "IntermediateCodeGenerator.h"
 
 
+
 Parser::Parser()
 {
     try
@@ -44,7 +45,9 @@ Parser::Parser()
 
 Parser::~Parser()
 {
+    
     this->cleanUp();
+    
     for (int i = 0; i < this->storedTokens.size(); ++i)
     {
         delete (this->storedTokens.at(i));
@@ -92,7 +95,17 @@ void Parser::parseTokensLoop()
     
     IntermediateCodeGenerator* intermediate = new IntermediateCodeGenerator(parseTree);
     
+    //Now, we have to clean up the memory to fix memory leaks.
+    for (int i = 0; i < searchResultsList->size(); ++i)
+    {
+        delete(searchResultsList->at(i));
+       
+    }
+
+    
+    delete (intermediate);
     
 }
+
 
     

@@ -5,7 +5,7 @@ class ProgramBody : public ParseTreeNode
 {
 public:
 	ProgramBody(Parser* parser, ParseTreeNode* motherNode);
-	
+	~ProgramBody() {};
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
 private:
@@ -14,5 +14,6 @@ private:
 	void verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* motherNode);
 	vector<ParseTreeNode*> linkedMemberNonterminals;
 	ParseTreeNode* getNodePtr() override;
+	
 
 };

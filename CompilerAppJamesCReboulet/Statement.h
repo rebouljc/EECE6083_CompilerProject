@@ -7,8 +7,8 @@ public:
 	Statement(Parser* parser, ParseTreeNode* motherNode);
 	void setIsValid(bool isValid) { this->isValid = isValid; };
 	bool getIsValid() { return this->isValid; };
-
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	~Statement() {};
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;

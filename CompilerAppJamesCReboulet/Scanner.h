@@ -18,6 +18,7 @@ class Scanner
 	   int getLineNumber();
 	   int getFirstCommentLineNumber();
 	   void init();
+	  
 
    private:
 
@@ -91,7 +92,8 @@ class Scanner
    vector<Character*> storedCharacters;
    int lineNumber;
    int firstCommentLineNumber;
-
+   
+   
 protected:
    void cleanUp();
    vector<Token*> storedTokens;

@@ -6,8 +6,8 @@ public:
 	ProcedureDeclaration(Parser* parser, ParseTreeNode* motherNode);
 	void setIsValid(bool isValid) { this->isValid = isValid; };
 	bool getIsValid() { return this->isValid; };
-
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	~ProcedureDeclaration() {};
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;

@@ -10,6 +10,7 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode)
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
 
+
 void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	Token* currentToken = this->parserPtr->readNextToken();

@@ -15,6 +15,7 @@ public:
 	void addToSearchResultsList(ParseTreeNode* nodeToAdd);
 	void addToSymbolTable(ParseTreeNode* nodeToAdd);
 	vector<ParseTreeNode*>* getSymbolTable();
+	virtual ~ParseTreeNode() {};
 protected:
 	//methods
 	

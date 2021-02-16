@@ -9,19 +9,21 @@
 #include "IllegalIdentifierException.h"
 
 
+   
 
-class Parser: public Scanner
-{
-public:
-	Parser();
-	~Parser();
-	vector<Token*>* getStoredTokensList();
-	Token* readNextToken();
-	
-private:
-	void parseTokensLoop();
-	int indexToRead = 0;
-	
-	
-	
-};
+	class Parser : public Scanner
+	{
+	public:
+		Parser();
+		~Parser();
+		vector<Token*>* getStoredTokensList();
+		Token* readNextToken();
+
+
+	private:
+		void parseTokensLoop();
+		int indexToRead = 0;
+
+
+
+	};

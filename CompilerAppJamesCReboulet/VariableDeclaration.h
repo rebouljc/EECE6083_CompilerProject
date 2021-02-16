@@ -7,6 +7,7 @@ public:
 	void setIsValid(bool isValid) { this->isValid = isValid; }; //I am too lazy to add these functions to the .cpp file.
 	bool getIsValid() { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	~VariableDeclaration(){};
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;

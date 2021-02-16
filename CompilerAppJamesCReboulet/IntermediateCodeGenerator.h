@@ -5,6 +5,7 @@ class IntermediateCodeGenerator
 {
 public:
 	IntermediateCodeGenerator(ParseTreeNode*);
+	~IntermediateCodeGenerator() {};
 private:
 	ParseTreeNode* parseTree;
 };

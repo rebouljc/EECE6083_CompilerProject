@@ -7,6 +7,7 @@ public:
 	void setIsValid(bool isValid) { this->isValid = isValid; };
 	bool getIsValid() { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	~TypeDeclaration() {};
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
