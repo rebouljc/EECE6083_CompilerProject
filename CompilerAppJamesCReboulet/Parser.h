@@ -18,6 +18,7 @@
 		~Parser();
 		vector<Token*>* getStoredTokensList();
 		Token* readNextToken();
+		void backupIndexToRead();
 
 
 	private:

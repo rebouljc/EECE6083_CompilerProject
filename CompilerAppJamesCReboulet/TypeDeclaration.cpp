@@ -5,6 +5,7 @@ TypeDeclaration::TypeDeclaration(Parser* parser, ParseTreeNode* motherNode)
 {
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	
 }
 
 void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

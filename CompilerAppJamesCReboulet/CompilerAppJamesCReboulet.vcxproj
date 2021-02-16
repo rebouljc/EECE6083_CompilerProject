@@ -146,7 +146,9 @@
     <ClCompile Include="IntermediateCodeGenerator.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParseTreeNode.cpp" />
+    <ClCompile Include="ProcedureBody.cpp" />
     <ClCompile Include="ProcedureDeclaration.cpp" />
+    <ClCompile Include="ProcedureHeader.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramBody.cpp" />
     <ClCompile Include="ProgramHeader.cpp" />
@@ -168,7 +170,9 @@
     <ClInclude Include="NoClosingCommentMarkException.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParseTreeNode.h" />
+    <ClInclude Include="ProcedureBody.h" />
     <ClInclude Include="ProcedureDeclaration.h" />
+    <ClInclude Include="ProcedureHeader.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramBody.h" />
     <ClInclude Include="ProgramHeader.h" />

@@ -8,14 +8,15 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	for (int i = 0; i < motherNode->getSymbolTable()->size(); ++i)
 	{
 		Identifier* currentNode = dynamic_cast<Identifier*>(motherNode->getSymbolTable()->at(i));
-		if (currentNode->getNodeTokenValue() == token->getTokenValue())
+		if (currentNode->getNodeTokenValue() == token->getTokenValue() &&
+			currentNode->getNodeSymbolIdentifierType() == "GLOBAL")
 
 		{
-			if (currentNode->getNodeSymbolIdentifierType() == "GLOBAL")
+			/*if (currentNode->getNodeSymbolIdentifierType() == "GLOBAL")
 			{
 				//Throw the exception!  We have a redeclaration of a global variable which is bad.
 				//We do nothing for now, but this will be a future exception.
-			}
+			}*/
 			alreadyInTable = true;
 			break;
 		}

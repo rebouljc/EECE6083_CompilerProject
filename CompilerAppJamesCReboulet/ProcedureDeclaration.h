@@ -14,5 +14,6 @@ private:
 	vector<ParseTreeNode*> linkedMemberNonterminals;
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
+	
 
 };

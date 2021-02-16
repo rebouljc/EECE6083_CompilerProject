@@ -1,5 +1,5 @@
 #include "VariableDeclaration.h"
-
+#include "Token.h"
 
 VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNode)
 {

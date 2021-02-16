@@ -43,6 +43,13 @@ Parser::Parser()
 
 }
 
+void Parser::backupIndexToRead()
+{
+    if (indexToRead > 0)
+    {
+        --indexToRead;
+    }
+}
 Parser::~Parser()
 {
     
