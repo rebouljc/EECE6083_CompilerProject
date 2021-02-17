@@ -28,8 +28,8 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 	}
 	this->linkedMemberNonterminals.push_back(new ProcedureBody(this->parserPtr, motherNode));
 
-	ProcedureBody* procBody = dynamic_cast<ProcedureBody*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
-	if (procBody->getIsValid())
+	ParseTreeNode* procBody = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!procBody->getIsValid())
 	{
 		this->linkedMemberNonterminals.pop_back();
 

@@ -11,7 +11,7 @@ ProcedureHeader::ProcedureHeader(Parser* parser, ParseTreeNode* motherNode)
 void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	//Read the next token here.
-	Token* currentToken = parserPtr->readNextToken();
+	Token* currentToken = parserPtr->getCurrentlyReadToken();
 	if (tokenCounter == 0)
 	{
 		if (currentToken->getTokenValue() == "procedure")
@@ -22,7 +22,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 		else
 		{
 			//get out of here and backup the token index.
-			parserPtr->backupIndexToRead();
+			//parserPtr->backupIndexToRead();
 			return;
 		}
 	}
@@ -36,7 +36,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 		else
 		{
 			//Throw an exception.  Return for now.
-			parserPtr->backupIndexToRead();
+			//parserPtr->backupIndexToRead();
 			return;
 		}
 	}
@@ -50,7 +50,6 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 		else
 		{
 			//Throw an exception.  Return for now.
-			parserPtr->backupIndexToRead();
 			return;
 		}
 	}
@@ -62,11 +61,12 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	else
 	{
 		//Throw an exception and/or generate an error.
-		this->parserPtr->backupIndexToRead();
 		return;
 		
 	}
 	++tokenCounter;
+	//Read in the next token now, if we get here, before recursion.
+	currentToken = parserPtr->readNextToken();
 	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	return;
 

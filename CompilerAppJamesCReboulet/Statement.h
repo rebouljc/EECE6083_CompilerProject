@@ -5,8 +5,8 @@ class Statement : public ParseTreeNode
 {
 public:
 	Statement(Parser* parser, ParseTreeNode* motherNode);
-	void setIsValid(bool isValid) { this->isValid = isValid; };
-	bool getIsValid() { return this->isValid; };
+	void setIsValid(bool isValid) override { this->isValid = isValid; };
+	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	~Statement() {};
 

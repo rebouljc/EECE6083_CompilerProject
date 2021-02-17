@@ -27,7 +27,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 			}
 		}
 
-		if (tokenCounter == 1)
+		else if (tokenCounter == 1)
 		{
 			if (currentToken->getTokenType() == "IDENTIFIER")
 			{

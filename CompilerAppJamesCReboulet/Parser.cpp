@@ -43,12 +43,9 @@ Parser::Parser()
 
 }
 
-void Parser::backupIndexToRead()
+Token* Parser::getCurrentlyReadToken()
 {
-    if (indexToRead > 0)
-    {
-        --indexToRead;
-    }
+    return this->currentReadToken;
 }
 Parser::~Parser()
 {
@@ -80,6 +77,7 @@ Token* Parser::readNextToken()
         tokToReturn = nullptr;
     }
 
+    this->currentReadToken = tokToReturn;
     return tokToReturn;
 
 

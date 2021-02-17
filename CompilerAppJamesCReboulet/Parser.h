@@ -18,13 +18,13 @@
 		~Parser();
 		vector<Token*>* getStoredTokensList();
 		Token* readNextToken();
-		void backupIndexToRead();
+		Token* getCurrentlyReadToken();
 
 
 	private:
 		void parseTokensLoop();
 		int indexToRead = 0;
-
+		Token* currentReadToken;
 
 
 	};

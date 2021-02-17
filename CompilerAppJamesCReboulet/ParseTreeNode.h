@@ -16,6 +16,8 @@ public:
 	void addToSymbolTable(ParseTreeNode* nodeToAdd);
 	vector<ParseTreeNode*>* getSymbolTable();
 	virtual ~ParseTreeNode() {};
+	virtual void setIsValid(bool isValid) {};
+	virtual bool getIsValid() { return false; };
 protected:
 	//methods
 	

@@ -21,7 +21,9 @@ void Program::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mothe
 	                                                                              //failures and throw one giant exception at the end with all of the errors.
 
 	this->linkedMemberNonterminals.push_back(new ProgramBody(this->parserPtr, motherNode));
+
 	Token* currentToken = this->parserPtr->readNextToken();
+
 	if (currentToken->getTokenValue() == ".") //Note, this isn't going to work correctly until we have defined the program body.  Never will be hit!
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));

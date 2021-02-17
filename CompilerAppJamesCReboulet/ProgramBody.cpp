@@ -37,16 +37,13 @@ void ProgramBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* mo
 	}
 	else
 	{
-		//Backup the read index, so the word "procedure" is not ignored.
-		this->parserPtr->backupIndexToRead();
+		
 		this->linkedMemberNonterminals.push_back(new Declaration(this->parserPtr, motherNode));
-		Declaration* decl = dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
+		ParseTreeNode* decl= this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 		if (!decl->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
-			
-			//We have to backup the readIndex, so that the current token can be read by a future method.  Otherwise, "global" is ignored.
-			
+		
 		}
 		
 	}
@@ -76,8 +73,8 @@ void ProgramBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* moth
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
-		Statement* stmt = dynamic_cast<Statement*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
-		if (!stmt->getIsValid())
+		ParseTreeNode* testNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		if (!testNode->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
 			

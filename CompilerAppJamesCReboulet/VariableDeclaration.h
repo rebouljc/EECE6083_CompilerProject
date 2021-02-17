@@ -4,8 +4,8 @@ class VariableDeclaration : public ParseTreeNode
 {
 public:
 	VariableDeclaration(Parser* parser, ParseTreeNode* motherNode);
-	void setIsValid(bool isValid) { this->isValid = isValid; }; //I am too lazy to add these functions to the .cpp file.
-	bool getIsValid() { return this->isValid; };
+	void setIsValid(bool isValid) override { this->isValid = isValid; }; //I am too lazy to add these functions to the .cpp file.
+	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	~VariableDeclaration(){};
 
