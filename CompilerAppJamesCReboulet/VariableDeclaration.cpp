@@ -1,6 +1,7 @@
 #include "VariableDeclaration.h"
 #include "Token.h"
 
+
 VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNode)
 {
 	this->setParserPtr(parser);
@@ -9,7 +10,7 @@ VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNo
 
 void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
-
+	//TODO:  Start here....
 
 }
 

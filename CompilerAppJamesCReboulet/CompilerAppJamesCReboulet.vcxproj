@@ -144,6 +144,8 @@
     <ClCompile Include="Declaration.cpp" />
     <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="IntermediateCodeGenerator.cpp" />
+    <ClCompile Include="Parameter.cpp" />
+    <ClCompile Include="ParameterList.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParseTreeNode.cpp" />
     <ClCompile Include="ProcedureBody.cpp" />
@@ -169,6 +171,8 @@
     <ClInclude Include="IllegalIdentifierException.h" />
     <ClInclude Include="IntermediateCodeGenerator.h" />
     <ClInclude Include="NoClosingCommentMarkException.h" />
+    <ClInclude Include="Parameter.h" />
+    <ClInclude Include="ParameterList.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParseTreeNode.h" />
     <ClInclude Include="ProcedureBody.h" />

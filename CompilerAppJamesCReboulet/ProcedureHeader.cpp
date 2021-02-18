@@ -1,6 +1,7 @@
 #include "ProcedureHeader.h"
 #include "Identifier.h"
 #include "TypeMark.h"
+#include "ParameterList.h"
 
 ProcedureHeader::ProcedureHeader(Parser* parser, ParseTreeNode* motherNode)
 {
@@ -21,10 +22,10 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 		else
 		{
-			//get out of here and backup the token index.
-			//parserPtr->backupIndexToRead();
+			this->setIsValid(false);
 			return;
 		}
+
 	}
 	else if (tokenCounter == 1)
 	{
@@ -35,10 +36,10 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 		else
 		{
-			//Throw an exception.  Return for now.
-			//parserPtr->backupIndexToRead();
+			//Throw an exception and return.
 			return;
 		}
+
 	}
 	else if (tokenCounter == 2)
 	{
@@ -49,21 +50,59 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 		else
 		{
-			//Throw an exception.  Return for now.
+			//Throw an exception and return.
 			return;
 		}
+
 	}
 
 	else if (tokenCounter == 3) //If it is equal to 3 and we have made it this far, we need a type mark.
 	{
 		this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode));
 	}
-	else
+
+	else if (tokenCounter == 4)
 	{
-		//Throw an exception and/or generate an error.
-		return;
-		
+		if (currentToken->getTokenValue() == "(")
+		{
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		}
+
+		else
+		{
+			//Throw an exception.
+			return;
+		}
 	}
+
+	else if (tokenCounter == 5)
+	{
+		this->linkedMemberNonterminals.push_back(new ParameterList(this->parserPtr, motherNode));
+		//If there are no parameters, then pop_back() the vector.
+		ParseTreeNode* param = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		if (!param->getIsValid())
+		{
+			this->linkedMemberNonterminals.pop_back();
+		}
+	}
+
+	else if (tokenCounter == 6)
+	{
+		if (currentToken->getTokenValue() == ")")
+		{
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		}
+
+		else
+		{
+			//Throw an exception and return;
+			
+		}
+
+		//Right here, we return now, if this recursive method is complete.
+		return;
+	}
+
 	++tokenCounter;
 	//Read in the next token now, if we get here, before recursion.
 	currentToken = parserPtr->readNextToken();

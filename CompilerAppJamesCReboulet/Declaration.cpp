@@ -24,12 +24,13 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 		currentToken = this->parserPtr->readNextToken();  //This will store the currently read token in parserPtr, even though it returns a useless Token* here.
+		++tokenCounter; //Increment the token counter, so that if the word "global" is present, there should be at least 1 declaration.
 		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	}
 
 	else
 	{   
-
+		
 		this->linkedMemberNonterminals.push_back(new ProcedureDeclaration(this->parserPtr, motherNode));
 		//Get rid of the node if there is nothing there, so it doesn't have to be included in the parse tree.
 		ParseTreeNode* decl = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
@@ -73,6 +74,11 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	if (procDeclFlag || varDeclFlag || typeDeclFlag)
 	{
 		this->setIsValid(true);
+	}
+
+	else if (tokenCounter == 1 && !this->getIsValid())
+	{
+		//We throw an exception here.  The word "global" was used without actually declaring anything.
 	}
 
 	//Else, we will return with a value of false and the Program Body class will pop the declaration off of the stack.
