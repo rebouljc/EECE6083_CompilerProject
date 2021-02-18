@@ -12,7 +12,9 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	//TODO:  Start here....
 
+
 }
+
 
 ParseTreeNode* VariableDeclaration::getNodePtr()
 {

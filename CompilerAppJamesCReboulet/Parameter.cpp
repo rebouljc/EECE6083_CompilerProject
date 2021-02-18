@@ -1,15 +1,17 @@
 #include "Parameter.h"
-
+#include "VariableDeclaration.h"
 
 Parameter::Parameter(Parser* parser, ParseTreeNode* motherNode)
 {
-	static_cast<ParseTreeNode*>(this)->setParserPtr(parser); //We have to do this crazy crap, because this class has multiple inheritance.
+	this->setParserPtr(parser); 
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
 
 void Parameter::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {  
-	dynamic_cast<VariableDeclaration*>(this)->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+	//dynamic_cast takes more work.  Do static_cast.
+	this->linkedMemberNonterminals.push_back(new VariableDeclaration(this->parserPtr, motherNode));
+	
 }
 
 ParseTreeNode* Parameter::getNodePtr()
