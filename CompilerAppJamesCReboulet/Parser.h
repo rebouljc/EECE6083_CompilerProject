@@ -15,6 +15,7 @@
 	{
 	public:
 		Parser();
+		void init();
 		~Parser();
 		vector<Token*>* getStoredTokensList();
 		Token* readNextToken();
@@ -25,6 +26,7 @@
 		void parseTokensLoop();
 		int indexToRead = 0;
 		Token* currentReadToken;
+		
 
 
 	};

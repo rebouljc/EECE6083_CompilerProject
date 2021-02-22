@@ -1,11 +1,13 @@
 #pragma once
 #include "ParseTreeNode.h"
 
-class IntermediateCodeGenerator
+class IntermediateCodeGenerator: public Parser
 {
 public:
-	IntermediateCodeGenerator(ParseTreeNode*);
-	~IntermediateCodeGenerator() {};
+	IntermediateCodeGenerator();
+	void init();
+	void setParseTreePtr(ParseTreeNode* parseTree);
+	~IntermediateCodeGenerator();
 private:
 	ParseTreeNode* parseTree;
 };

@@ -1,15 +1,20 @@
 #include "Parser.h"
 #include "Program.h"
-#include "TerminalNode.h"
 #include "IntermediateCodeGenerator.h"
 
 
 
 Parser::Parser()
 {
+   
+    
+
+}
+void Parser::init()
+{
     try
     {
-       this->init();
+        ((Scanner*)(this))->init();
     }
 
     catch (StringLiteralException& e)
@@ -37,10 +42,8 @@ Parser::Parser()
         cout << endl << e.what() << this->getLineNumber();
     }
 
-   
-     this->parseTokensLoop();
-    
 
+    this->parseTokensLoop();
 }
 
 Token* Parser::getCurrentlyReadToken()
@@ -92,23 +95,20 @@ void Parser::parseTokensLoop()
                                           //search method is called.  
     
 
-    vector<ParseTreeNode*>* searchResultsList = parseTree->getSearchResultsList(parseTree);
+    
+    ((IntermediateCodeGenerator*)(this))->setParseTreePtr(parseTree);
     //Currently, search is a depth-first search of the parseTree.  Put this in intermediate code generator.   
 
     //Call the intermediate code generator from here.  This is all we can do, since we can't store the linked list globally. 
     //We need this dependency, unfortunately or we risk violating the encapsulation principle of OOP.  
     
-    IntermediateCodeGenerator* intermediate = new IntermediateCodeGenerator(parseTree);
+    //IntermediateCodeGenerator* intermediate = new IntermediateCodeGenerator(parseTree);
     
     //Now, we have to clean up the memory to fix memory leaks.
-    for (int i = 0; i < searchResultsList->size(); ++i)
-    {
-        delete(searchResultsList->at(i));
-       
-    }
+    
 
     
-    delete (intermediate);
+    //delete (intermediate);
     
 }
 
