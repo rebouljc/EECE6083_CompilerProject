@@ -30,6 +30,7 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	}
 
 	this->identifierType = identifierType;
+
 }
 
 //Now, we will add a couple of duplicate methods from Token* here to streamline the process.  There are a lot of unnecessary public methods in token 

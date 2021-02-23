@@ -11,7 +11,6 @@ public:
 	string getNodeTokenType();
 	string getNodeTokenValue();
 	virtual string getNodeSymbolIdentifierType() { return NULL; };
-    double getNodeTokenIntegerDoubleNumberTokenValue();
 	int    getNodeTokenLineNumber();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	virtual ~TerminalNode() {};

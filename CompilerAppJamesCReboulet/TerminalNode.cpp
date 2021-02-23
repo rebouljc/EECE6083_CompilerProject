@@ -22,11 +22,6 @@ string TerminalNode::getNodeTokenValue()
 	return this->token->getTokenValue();
 }
 
-
-double TerminalNode::getNodeTokenIntegerDoubleNumberTokenValue()
-{
-	return this->token->getIntegerDoubleNumberTokenValue();
-}
 int TerminalNode::getNodeTokenLineNumber()
 {
 	return this->token->getTokenLineNumber();
