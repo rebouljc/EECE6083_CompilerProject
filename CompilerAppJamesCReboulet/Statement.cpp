@@ -1,4 +1,8 @@
 #include "Statement.h"
+#include "AssignmentStatement.h"
+#include "IfStatement.h"
+#include "LoopStatement.h"
+#include "ReturnStatement.h"
 
 Statement::Statement(Parser* parser, ParseTreeNode* motherNode)
 {
@@ -7,8 +11,67 @@ Statement::Statement(Parser* parser, ParseTreeNode* motherNode)
 }
 
 void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
-{   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
+{   //Completed 2-23-2021
 
+	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	bool assnStmtFlag = false;
+	bool ifStmtFlag = false;
+	bool loopStmtFlag = false;
+	bool returnStmtFlag = false;
+	
+
+	this->linkedMemberNonterminals.push_back(new AssignmentStatement(this->parserPtr, motherNode));
+	//Get rid of the node if there is nothing there, so it doesn't have to be included in the parse tree.
+	ParseTreeNode* stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!stmt->getIsValid())
+	{
+		this->linkedMemberNonterminals.pop_back();
+	}
+	else
+	{
+		assnStmtFlag = true;
+	}
+	this->linkedMemberNonterminals.push_back(new IfStatement(this->parserPtr, motherNode));
+	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!stmt->getIsValid())
+	{
+		this->linkedMemberNonterminals.pop_back();
+	}
+	else
+	{
+		ifStmtFlag = true;
+	}
+	this->linkedMemberNonterminals.push_back(new LoopStatement(this->parserPtr, motherNode));
+	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!stmt->getIsValid())
+	{
+		this->linkedMemberNonterminals.pop_back();
+	}
+	else
+	{
+		loopStmtFlag = true;
+	}
+
+	this->linkedMemberNonterminals.push_back(new ReturnStatement(this->parserPtr, motherNode));
+	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!stmt->getIsValid())
+	{
+		this->linkedMemberNonterminals.pop_back();
+	}
+	else
+	{
+		returnStmtFlag = true;
+	}
+
+	if (assnStmtFlag || ifStmtFlag || loopStmtFlag || returnStmtFlag)
+	{
+		this->setIsValid(true);
+	}
+
+	//Else, we will return with a value of false and the Program Body class will pop the declaration off of the stack.
+	//We will do the same thing here for statements, since there is the option of having a program with neither declarations or statements.
+
+	return;
 
 }
 

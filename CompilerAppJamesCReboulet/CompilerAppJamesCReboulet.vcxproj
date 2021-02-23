@@ -139,23 +139,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssignmentStatement.cpp" />
     <ClCompile Include="Bound.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CompilerAppJamesCReboulet.cpp" />
     <ClCompile Include="Declaration.cpp" />
+    <ClCompile Include="Destination.cpp" />
+    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Identifier.cpp" />
+    <ClCompile Include="IfStatement.cpp" />
     <ClCompile Include="IntermediateCodeGenerator.cpp" />
+    <ClCompile Include="LoopStatement.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Parameter.cpp" />
     <ClCompile Include="ParameterList.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParseTreeNode.cpp" />
     <ClCompile Include="ProcedureBody.cpp" />
+    <ClCompile Include="ProcedureCall.cpp" />
     <ClCompile Include="ProcedureDeclaration.cpp" />
     <ClCompile Include="ProcedureHeader.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramBody.cpp" />
     <ClCompile Include="ProgramHeader.cpp" />
+    <ClCompile Include="ReturnStatement.cpp" />
     <ClCompile Include="Statement.cpp" />
     <ClCompile Include="TerminalNode.cpp" />
     <ClCompile Include="Token.cpp" />
@@ -165,14 +172,19 @@
     <ClCompile Include="VariableDeclaration.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssignmentStatement.h" />
     <ClInclude Include="Bound.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Declaration.h" />
+    <ClInclude Include="Destination.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="Identifier.h" />
     <ClInclude Include="IdentifierBeginsWithNumberException.h" />
+    <ClInclude Include="IfStatement.h" />
     <ClInclude Include="IllegalEqualsSignException.h" />
     <ClInclude Include="IllegalIdentifierException.h" />
     <ClInclude Include="IntermediateCodeGenerator.h" />
+    <ClInclude Include="LoopStatement.h" />
     <ClInclude Include="NoClosingCommentMarkException.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Parameter.h" />
@@ -180,11 +192,13 @@
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParseTreeNode.h" />
     <ClInclude Include="ProcedureBody.h" />
+    <ClInclude Include="ProcedureCall.h" />
     <ClInclude Include="ProcedureDeclaration.h" />
     <ClInclude Include="ProcedureHeader.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramBody.h" />
     <ClInclude Include="ProgramHeader.h" />
+    <ClInclude Include="ReturnStatement.h" />
     <ClInclude Include="Statement.h" />
     <ClInclude Include="StringLiteralException.h" />
     <ClInclude Include="TerminalNode.h" />

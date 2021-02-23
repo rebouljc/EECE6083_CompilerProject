@@ -1,13 +1,23 @@
-﻿  Bound.cpp
+﻿  AssignmentStatement.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\AssignmentStatement.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
+  Bound.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Bound.cpp(37,20): warning C4018: '<': signed/unsigned mismatch
   Character.cpp
   CompilerAppJamesCReboulet.cpp
   Declaration.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(101,20): warning C4018: '<': signed/unsigned mismatch
+  Destination.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Destination.cpp(96,20): warning C4018: '<': signed/unsigned mismatch
+  Expression.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Expression.cpp(95,20): warning C4018: '<': signed/unsigned mismatch
   Identifier.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Identifier.cpp(8,20): warning C4018: '<': signed/unsigned mismatch
+  IfStatement.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\IfStatement.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
   IntermediateCodeGenerator.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\IntermediateCodeGenerator.cpp(12,20): warning C4018: '<': signed/unsigned mismatch
+  LoopStatement.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\LoopStatement.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
   Number.cpp
   Parameter.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parameter.cpp(27,20): warning C4018: '<': signed/unsigned mismatch
@@ -19,22 +29,26 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJam
   ParseTreeNode.cpp
   ProcedureBody.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProcedureBody.cpp(89,20): warning C4018: '<': signed/unsigned mismatch
+  ProcedureCall.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProcedureCall.cpp(96,20): warning C4018: '<': signed/unsigned mismatch
   ProcedureDeclaration.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProcedureDeclaration.cpp(52,20): warning C4018: '<': signed/unsigned mismatch
   ProcedureHeader.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProcedureHeader.cpp(124,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
   Program.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Program.cpp(54,20): warning C4018: '<': signed/unsigned mismatch
   ProgramBody.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProgramBody.cpp(96,20): warning C4018: '<': signed/unsigned mismatch
   ProgramHeader.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProgramHeader.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
+  ReturnStatement.cpp
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ReturnStatement.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
   Statement.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Statement.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Statement.cpp(88,20): warning C4018: '<': signed/unsigned mismatch
   TerminalNode.cpp
   Token.cpp
-  Generating Code...
-  Compiling...
   Scanner.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(56,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Scanner.cpp(242,20): warning C4018: '<': signed/unsigned mismatch
