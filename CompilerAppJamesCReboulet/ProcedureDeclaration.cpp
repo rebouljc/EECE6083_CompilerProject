@@ -20,10 +20,11 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 
 	this->linkedMemberNonterminals.push_back(new ProcedureHeader(this->parserPtr, motherNode));
 
-	ProcedureHeader* procHead = dynamic_cast<ProcedureHeader*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
-	if (procHead->getIsValid())
+	ParseTreeNode* procHead = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!procHead->getIsValid())
 	{
 		this->linkedMemberNonterminals.pop_back();
+		return;  //If we don't have a procedure header, there is no reason to check for a procedure body, or else we continue to recurse back to declaration.  
 
 	}
 	this->linkedMemberNonterminals.push_back(new ProcedureBody(this->parserPtr, motherNode));

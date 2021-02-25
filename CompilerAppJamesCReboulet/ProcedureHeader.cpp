@@ -22,7 +22,6 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 		else
 		{
-			this->setIsValid(false);
 			return;
 		}
 
@@ -100,6 +99,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 		}
 
 		//Right here, we return now, if this recursive method is complete.
+		this->setIsValid(true);
 		return;
 	}
 
