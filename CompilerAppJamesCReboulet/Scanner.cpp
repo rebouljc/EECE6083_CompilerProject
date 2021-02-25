@@ -322,7 +322,7 @@ Token* Scanner::searchAssignmentList(string character, ifstream* input)
 	{
 		if (checkPeekString == it->first)
 		{
-			//We need to read and disguard that character, so it doesn't screw things up in the input stream later.
+			//We need to read and discard that character, so it doesn't screw things up in the input stream later.
 			char byteWaste = this->readCharacterFromFile(input);
 			return it->second;
 		}
@@ -359,7 +359,7 @@ Token* Scanner::searchRelationOperatorList(string character,ifstream* input)
 			{
 				throw IllegalEqualsSignException();
 			}
-			//We need to read and disguard that character, so it doesn't screw things up in the input stream later.
+			//We need to read and discard that character, so it doesn't screw things up in the input stream later.
 			char byteWaste = this->readCharacterFromFile(input);
 			//Now, we need to read letters into the stored character array until we encounter a space character
 			return it->second;
