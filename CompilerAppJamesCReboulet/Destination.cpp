@@ -1,6 +1,7 @@
 #include "Destination.h"
 #include "TerminalNode.h"
 #include "Identifier.h"
+#include "Expression.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 
@@ -46,41 +47,37 @@ void Destination::createEnumList(ParseTreeNode* motherNode)
 }
 
 void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
-{   //This is not to be a recursive function.  It can't be, since it is an | situation.
-	/*Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	if (currentToken->getTokenValue() == "integer" ||
-		currentToken->getTokenValue() == "float" ||
-		currentToken->getTokenValue() == "string" ||
-		currentToken->getTokenValue() == "bool"
-		)
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-
-	}
-
-	else if (currentToken->getTokenValue() == "enum")
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-		this->createEnumList(motherNode);
-		this->setIsValid(true);
-
-
-	}
-
-	else if (currentToken->getTokenType() == "IDENTIFIER")
+{   
+	//Defining as of 2/26/2021
+	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
-		this->setIsValid(true);
-
+		//recurse
+		++tokenCounter;
+		currentToken = this->parserPtr->readNextToken();
+		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	}
 
-	else
+	else if (tokenCounter == 1)
 	{
-		//Here, we would probably throw some type of exception, since every procedure requires a <type_mark>.
+		//The option of having an expression here is optional, so if we don't have an expression, we need to get rid of the pointer
+		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
+
+		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr,motherNode));
+		bool isValid = !this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
+		if (!isValid)
+		{
+			this->linkedMemberNonterminals.pop_back();
+		}
+
 	}
 
+	//Otherwise, we return.
 	return;
-	*/
+
+	
+	
 }
 
 ParseTreeNode* Destination::getNodePtr()
