@@ -1,12 +1,80 @@
 #include "IfStatement.h"
 #include "Expression.h"
 #include "Identifier.h"
+#include "Statement.h"
+#include "TerminalNode.h"
 
 
 IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode)
 {
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
+}
+void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter)
+{
+	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+
+	if (currentToken->getTokenValue() == "then" || currentToken->getTokenValue() == "else")
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+	}
+
+	else
+	{
+		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		if (!isValid)
+		{
+			this->linkedMemberNonterminals.pop_back();
+			return; //Here, we return at the first point that there is no valid statement, or we will infinitely recurse here.
+		}
+
+		currentToken = this->parserPtr->readNextToken();
+		if (currentToken->getTokenValue() == ";")
+		{
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		}
+	}
+	++tokenCounter;
+	currentToken = this->parserPtr->readNextToken();
+	this->dealWithThenOrElse(motherNode, tokenCounter);
+	return;
+}
+
+void IfStatement::dealWithIf(ParseTreeNode* motherNode, int tokenCounter)
+{
+	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+
+	if (currentToken->getTokenValue() == "if")
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+	}
+
+	else if (currentToken->getTokenValue() == "(")
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+	}
+	else if (currentToken->getTokenValue() == ")")
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		return;
+	}
+
+	else
+	{
+		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		if (!isValid)
+		{
+			//We throw an error here, since an expression is required.
+			//Right now, we will return, though to prevent infinite recursion.
+			return;
+		}
+	}
+	++tokenCounter;
+	currentToken = this->parserPtr->readNextToken();
+	this->dealWithIf(motherNode, tokenCounter);
+	return;
 }
 
 void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
@@ -15,27 +83,34 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 
 	if (currentToken->getTokenValue() == "if")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+		this->dealWithIf(motherNode, 0);
 	}
 
-	else if (tokenCounter == 1 && currentToken->getTokenValue() == "then")
+	if (currentToken->getTokenValue() == "then")
 	{
-		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
-		//Check if it is valid.  If it is not, remove it.
-		bool isValid = !this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
-		if (!isValid)
+		this->dealWithThenOrElse(motherNode, 0);
+	}
+
+	else if (currentToken->getTokenValue() == "else")
+	{
+		this->dealWithThenOrElse(motherNode, 0);
+	}
+
+	else if (currentToken->getTokenValue() == "end") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		currentToken = this->parserPtr->readNextToken();
+
+		if (currentToken->getTokenValue() == "if")
 		{
-			//Here, we throw an error, since every if statement is required to have an expression, so we had better have a valid expression.
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			return;
 		}
-	}
 
-	else if (tokenCounter == 2 && currentToken->getTokenValue() == "then")
-	{
-		//TODO: START HERE!
 	}
-
-	currentToken = this->parserPtr->readNextToken();
+	//Need to remember to recurse.
 	++tokenCounter;
+	this->parserPtr->readNextToken();
 	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 
 }
