@@ -139,6 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArgumentList.cpp" />
+    <ClCompile Include="ArithOp.cpp" />
+    <ClCompile Include="ArithOp_.cpp" />
     <ClCompile Include="AssignmentStatement.cpp" />
     <ClCompile Include="Bound.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -146,10 +149,14 @@
     <ClCompile Include="Declaration.cpp" />
     <ClCompile Include="Destination.cpp" />
     <ClCompile Include="Expression.cpp" />
+    <ClCompile Include="Expression_.cpp" />
+    <ClCompile Include="Factor.cpp" />
+    <ClCompile Include="Factor_.cpp" />
     <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="IfStatement.cpp" />
     <ClCompile Include="IntermediateCodeGenerator.cpp" />
     <ClCompile Include="LoopStatement.cpp" />
+    <ClCompile Include="Name.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Parameter.cpp" />
     <ClCompile Include="ParameterList.cpp" />
@@ -162,9 +169,13 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramBody.cpp" />
     <ClCompile Include="ProgramHeader.cpp" />
+    <ClCompile Include="Relation.cpp" />
+    <ClCompile Include="Relation_.cpp" />
     <ClCompile Include="ReturnStatement.cpp" />
     <ClCompile Include="Statement.cpp" />
+    <ClCompile Include="Term.cpp" />
     <ClCompile Include="TerminalNode.cpp" />
+    <ClCompile Include="Term_.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="TypeDeclaration.cpp" />
@@ -172,12 +183,18 @@
     <ClCompile Include="VariableDeclaration.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArgumentList.h" />
+    <ClInclude Include="ArithOp.h" />
+    <ClInclude Include="ArithOp_.h" />
     <ClInclude Include="AssignmentStatement.h" />
     <ClInclude Include="Bound.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Declaration.h" />
     <ClInclude Include="Destination.h" />
     <ClInclude Include="Expression.h" />
+    <ClInclude Include="Expression_.h" />
+    <ClInclude Include="Factor.h" />
+    <ClInclude Include="Factor_.h" />
     <ClInclude Include="Identifier.h" />
     <ClInclude Include="IdentifierBeginsWithNumberException.h" />
     <ClInclude Include="IfStatement.h" />
@@ -185,6 +202,7 @@
     <ClInclude Include="IllegalIdentifierException.h" />
     <ClInclude Include="IntermediateCodeGenerator.h" />
     <ClInclude Include="LoopStatement.h" />
+    <ClInclude Include="Name.h" />
     <ClInclude Include="NoClosingCommentMarkException.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Parameter.h" />
@@ -198,10 +216,14 @@
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramBody.h" />
     <ClInclude Include="ProgramHeader.h" />
+    <ClInclude Include="Relation.h" />
+    <ClInclude Include="Relation_.h" />
     <ClInclude Include="ReturnStatement.h" />
     <ClInclude Include="Statement.h" />
     <ClInclude Include="StringLiteralException.h" />
+    <ClInclude Include="Term.h" />
     <ClInclude Include="TerminalNode.h" />
+    <ClInclude Include="Term_.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="TypeDeclaration.h" />
