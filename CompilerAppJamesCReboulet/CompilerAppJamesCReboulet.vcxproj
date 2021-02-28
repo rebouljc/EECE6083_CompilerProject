@@ -151,7 +151,6 @@
     <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Expression_.cpp" />
     <ClCompile Include="Factor.cpp" />
-    <ClCompile Include="Factor_.cpp" />
     <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="IfStatement.cpp" />
     <ClCompile Include="IntermediateCodeGenerator.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="Expression.h" />
     <ClInclude Include="Expression_.h" />
     <ClInclude Include="Factor.h" />
-    <ClInclude Include="Factor_.h" />
     <ClInclude Include="Identifier.h" />
     <ClInclude Include="IdentifierBeginsWithNumberException.h" />
     <ClInclude Include="IfStatement.h" />

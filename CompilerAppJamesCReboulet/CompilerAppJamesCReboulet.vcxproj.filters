@@ -132,9 +132,6 @@
     <ClCompile Include="Factor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Factor_.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Name.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -270,9 +267,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Factor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Factor_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Name.h">
