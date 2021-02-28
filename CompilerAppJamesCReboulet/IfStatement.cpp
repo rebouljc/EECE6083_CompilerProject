@@ -68,6 +68,7 @@ void IfStatement::dealWithIf(ParseTreeNode* motherNode, int tokenCounter)
 		{
 			//We throw an error here, since an expression is required.
 			//Right now, we will return, though to prevent infinite recursion.
+			this->linkedMemberNonterminals.pop_back();
 			return;
 		}
 	}

@@ -11,41 +11,6 @@ Destination::Destination(Parser* parser, ParseTreeNode* motherNode)
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
 
-void Destination::createEnumList(ParseTreeNode* motherNode)
-{
-	/*
-	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	//Create the new identifier and check its validity.
-	if (currentToken->getTokenValue() == "{")
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-	}
-
-	if (currentToken->getTokenType() == "IDENTIFIER")
-	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
-	}
-
-	else if (currentToken->getTokenValue() == ",")
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-	}
-
-	else if (currentToken->getTokenValue() == "}")
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-		return;
-	}
-	else
-	{
-		return;  //Here, again, we will have to throw some type of syntax error, depending on what is missing.
-				 //We need to prevent infinite recursion here.
-	}
-	currentToken = this->parserPtr->readNextToken();
-	this->createEnumList(motherNode);
-	*/
-}
-
 void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   
 	//Defining as of 2/26/2021
@@ -54,9 +19,20 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
 		//recurse
-		++tokenCounter;
-		currentToken = this->parserPtr->readNextToken();
-		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+		
+	}
+
+	else if (currentToken->getTokenValue() == "[")
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		//recurse
+	}
+
+	else if (currentToken->getTokenValue() == "]")
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->setIsValid(true);
+		return;
 	}
 
 	else if (tokenCounter == 1)
@@ -71,9 +47,14 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 			this->linkedMemberNonterminals.pop_back();
 		}
 
+		//recurse
+
 	}
 
 	//Otherwise, we return.
+	++tokenCounter;
+	currentToken = this->parserPtr->readNextToken();
+	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	return;
 
 	
