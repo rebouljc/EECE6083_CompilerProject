@@ -7,7 +7,6 @@ class TerminalNode : public ParseTreeNode
 public:
 	TerminalNode();
 	TerminalNode(Token* token);
-	
 	string getNodeTokenType();
 	string getNodeTokenValue();
 	virtual string getNodeSymbolIdentifierType() { return NULL; };

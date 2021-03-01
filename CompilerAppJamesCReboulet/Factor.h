@@ -11,6 +11,7 @@ public:
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
+	void dealWithExpression(ParseTreeNode* motherNode, int tokenCounter);
 	vector<ParseTreeNode*> linkedMemberNonterminals;
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;

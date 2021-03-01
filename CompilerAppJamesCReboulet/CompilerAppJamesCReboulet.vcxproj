@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArgumentList.cpp" />
+    <ClCompile Include="ArgumentList_.cpp" />
     <ClCompile Include="ArithOp.cpp" />
     <ClCompile Include="ArithOp_.cpp" />
     <ClCompile Include="AssignmentStatement.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Relation_.cpp" />
     <ClCompile Include="ReturnStatement.cpp" />
     <ClCompile Include="Statement.cpp" />
+    <ClCompile Include="StringLiteral.cpp" />
     <ClCompile Include="Term.cpp" />
     <ClCompile Include="TerminalNode.cpp" />
     <ClCompile Include="Term_.cpp" />
@@ -183,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArgumentList.h" />
+    <ClInclude Include="ArgumentList_.h" />
     <ClInclude Include="ArithOp.h" />
     <ClInclude Include="ArithOp_.h" />
     <ClInclude Include="AssignmentStatement.h" />
@@ -218,6 +221,7 @@
     <ClInclude Include="Relation_.h" />
     <ClInclude Include="ReturnStatement.h" />
     <ClInclude Include="Statement.h" />
+    <ClInclude Include="StringLiteral.h" />
     <ClInclude Include="StringLiteralException.h" />
     <ClInclude Include="Term.h" />
     <ClInclude Include="TerminalNode.h" />
