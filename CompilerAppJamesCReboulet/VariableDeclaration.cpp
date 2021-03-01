@@ -65,20 +65,24 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		else if (tokenCounter == 3) //If it is equal to 3 and we have made it this far, we need a type mark.
 		{
 			this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode));
+		    //If we have successfully gotten this far, we can return with bool isValid = true.
+			this->setIsValid(true);
 		}
 
-		else if (tokenCounter == 4)
+		else if (tokenCounter == 4 && currentToken->getTokenValue() == "[")
 		{
-			if (currentToken->getTokenValue() == "[")
-			{
+			
 				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-			}
+			
+		}
 
-			else
-			{
-				//Throw an exception.
-				return;
-			}
+		else if (tokenCounter == 4 && !(currentToken->getTokenValue() == "["))
+		{
+		   //We assume we do not have the optional <bound> portion and return early.  However, typemark will have already set bool isValid = true;.
+		   //I believe we also have to back up the index, since it will have read the next token and that one will be ignored by future methods.
+			//Let's try it.
+			this->parserPtr->resetTokenReadIndexToPrevious();
+			return;
 		}
 
 		else if (tokenCounter == 5)

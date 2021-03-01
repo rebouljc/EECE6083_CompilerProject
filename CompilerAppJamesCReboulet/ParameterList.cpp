@@ -19,27 +19,26 @@ void ParameterList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		return;  //We definitely do not have a parameterList if there is no <parameter>
 	}
 	
+	
+	else if (currentToken->getTokenValue() == ",")
+	{
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+	}
+
 	else
 	{
-		if (currentToken->getTokenValue() == ",")
-		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-		}
-
-		else if (tokenCounter == 2 && dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1))->getNodeTokenValue() != ",")
-		{
-			//We know that the user forgot the comma and we throw an exception, and/or generate an error and return.
-			return;
-		}
-		this->linkedMemberNonterminals.push_back(new ParameterList(this->parserPtr, motherNode));
-		lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
-		if (!lastNode->getIsValid())
-		{
-			this->linkedMemberNonterminals.pop_back(); 
-		}
-
+		//There is no comma, so we return.  Do not set index back to previous.  Be careful with doing this in <Name> and <Destination> too.
 		return;
 	}
+	this->linkedMemberNonterminals.push_back(new ParameterList(this->parserPtr, motherNode));
+	lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!lastNode->getIsValid())
+	{
+		this->linkedMemberNonterminals.pop_back(); 
+	}
+
+		return;
+	
 	currentToken = parserPtr->readNextToken();
 	++tokenCounter;
 	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);

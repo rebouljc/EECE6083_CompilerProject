@@ -31,7 +31,7 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		      dynamic_cast<ArithOp*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
 	{
 		this->linkedMemberNonterminals.push_back(new Expression_(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
@@ -47,7 +47,7 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new ArithOp(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

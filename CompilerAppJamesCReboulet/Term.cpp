@@ -21,7 +21,7 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	{
 		this->linkedMemberNonterminals.push_back(new Term_(this->parserPtr, motherNode));
 		//Expression_ can possibly be empty, so if it is, we just remove it from the parse tree to eliminate confusion.
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
@@ -35,7 +35,7 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Factor(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

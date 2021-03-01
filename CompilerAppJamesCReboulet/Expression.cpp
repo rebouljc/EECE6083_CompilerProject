@@ -27,7 +27,7 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 	{
 		this->linkedMemberNonterminals.push_back(new Expression_(this->parserPtr, motherNode));
 		//Expression_ can possibly be empty, so if it is, we just remove it from the parse tree to eliminate confusion.
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
@@ -41,7 +41,7 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new ArithOp(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

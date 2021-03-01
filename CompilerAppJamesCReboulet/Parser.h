@@ -20,6 +20,7 @@
 		vector<Token*>* getStoredTokensList();
 		Token* readNextToken();
 		Token* getCurrentlyReadToken();
+		void resetTokenReadIndexToPrevious();
 
 
 	private:

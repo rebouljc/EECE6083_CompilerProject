@@ -12,14 +12,13 @@ Name::Name(Parser* parser, ParseTreeNode* motherNode)
 
 void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
-	//This is exactly the same as <destination> class, so we will simply copy the method.  These changes are as of 2/28/2021.
-	//Originally destination was defined on 2/26/2021.
-
+	//Defining as of 2/26/2021
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
 		//recurse
+		this->setIsValid(true);
 
 	}
 
@@ -29,6 +28,15 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 		//recurse
 	}
 
+	else if (tokenCounter == 1 && !(currentToken->getTokenValue() == "["))
+	{
+		//We don't have a valid "[", so we return early, but it will still be set as valid, since the expression is optional.
+		//We will have to back up the read index or this token will be ignored by furture methods.
+		//this->parserPtr->resetTokenReadIndexToPrevious(); //Take out for now.
+		return;
+
+	}
+
 	else if (currentToken->getTokenValue() == "]")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
@@ -36,13 +44,13 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 		return;
 	}
 
-	else if (tokenCounter == 1)
+	else if (tokenCounter == 2)
 	{
 		//The option of having an expression here is optional, so if we don't have an expression, we need to get rid of the pointer
 		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
 
 		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
-		bool isValid = !this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

@@ -43,7 +43,7 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
 
 		this->linkedMemberNonterminals.push_back(new ArgumentList(this->parserPtr, motherNode));
-		bool isValid = !this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

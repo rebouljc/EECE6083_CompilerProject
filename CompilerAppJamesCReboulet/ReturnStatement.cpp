@@ -19,7 +19,7 @@ void ReturnStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			//We throw an error here, since an expression is required.

@@ -26,7 +26,7 @@ void Term_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherN
 		dynamic_cast<Factor*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
 	{
 		this->linkedMemberNonterminals.push_back(new Term_(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
@@ -42,7 +42,7 @@ void Term_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherN
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Factor(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

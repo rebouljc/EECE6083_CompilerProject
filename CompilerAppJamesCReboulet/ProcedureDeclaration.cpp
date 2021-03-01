@@ -33,8 +33,13 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 	if (!procBody->getIsValid())
 	{
 		this->linkedMemberNonterminals.pop_back();
+		return; //We return with bool isValid = false; by default;
 
 	}
+	//If we get here, we have definitely created a valid <ProcedureDeclaration>, so we set its isValid = true;
+	this->setIsValid(true);
+	return;
+
 
 
 

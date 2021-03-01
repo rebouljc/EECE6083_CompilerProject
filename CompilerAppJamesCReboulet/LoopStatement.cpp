@@ -66,7 +66,7 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 	else if(tokenCounter == 3)
 	{
 		this->linkedMemberNonterminals.push_back(new AssignmentStatement(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			//We throw an error here, since an expression is required.
@@ -92,7 +92,7 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			//We throw an error here, since an expression is required.
@@ -112,7 +112,7 @@ void LoopStatement::dealWithForBody(ParseTreeNode* motherNode, int tokenCounter)
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
 
 	this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
-	bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 	if (!isValid)
 	{
 		this->linkedMemberNonterminals.pop_back();

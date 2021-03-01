@@ -11,6 +11,15 @@ void Parameter::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 {  
 	//dynamic_cast takes more work.  Do static_cast.
 	this->linkedMemberNonterminals.push_back(new VariableDeclaration(this->parserPtr, motherNode));
+	bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
+	if (!isValid)
+	{
+		this->linkedMemberNonterminals.pop_back();
+		return; //This will not be a valid parameter then.
+	}
+
+	this->setIsValid(true);
+	return;
 	
 }
 

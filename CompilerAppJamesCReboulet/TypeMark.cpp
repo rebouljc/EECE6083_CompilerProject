@@ -50,6 +50,7 @@ void TypeMark::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 		currentToken->getTokenValue() == "bool"
 	   )
 	{
+
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 		
 	}

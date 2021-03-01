@@ -25,7 +25,7 @@ void ArithOp_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 		      dynamic_cast<Relation*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
 	{
 		this->linkedMemberNonterminals.push_back(new ArithOp_(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
@@ -41,7 +41,7 @@ void ArithOp_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Relation(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

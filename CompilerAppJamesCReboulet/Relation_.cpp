@@ -29,7 +29,7 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		dynamic_cast<Term*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
 	{
 		this->linkedMemberNonterminals.push_back(new Relation_(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
@@ -45,7 +45,7 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Term(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

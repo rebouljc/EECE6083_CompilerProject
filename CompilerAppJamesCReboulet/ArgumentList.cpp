@@ -40,7 +40,7 @@ void ArgumentList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* 
 		//want to keep coming back here until we blow the stack.
 
 		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();

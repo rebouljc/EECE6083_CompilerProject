@@ -82,8 +82,14 @@ Token* Parser::readNextToken()
 
     this->currentReadToken = tokToReturn;
     return tokToReturn;
+}
 
-
+void Parser::resetTokenReadIndexToPrevious()
+{
+    if (this->indexToRead > 0)
+    {
+        -- this->indexToRead;
+    }
 }
 void Parser::parseTokensLoop()
 {
