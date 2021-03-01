@@ -1,6 +1,7 @@
 #include "ProcedureCall.h"
 #include "TerminalNode.h"
 #include "Identifier.h"
+#include "ArgumentList.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 
@@ -10,77 +11,53 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode)
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
 
-void ProcedureCall::createEnumList(ParseTreeNode* motherNode)
-{
-	/*
-	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	//Create the new identifier and check its validity.
-	if (currentToken->getTokenValue() == "{")
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-	}
+void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
+{   
+	//This is exactly the same as <destination> class, so we will simply copy the method.  These changes are as of 2/28/2021.
+	//Originally destination was defined on 2/26/2021.
 
+	Token* currentToken = parserPtr->getCurrentlyReadToken();
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+		//recurse
+
 	}
 
-	else if (currentToken->getTokenValue() == ",")
+	else if (currentToken->getTokenValue() == "(")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		//recurse
 	}
 
-	else if (currentToken->getTokenValue() == "}")
+	else if (currentToken->getTokenValue() == ")")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->setIsValid(true);
 		return;
 	}
-	else
+
+	else if (tokenCounter == 1)
 	{
-		return;  //Here, again, we will have to throw some type of syntax error, depending on what is missing.
-				 //We need to prevent infinite recursion here.
+		//The option of having an ArgumentList here is optional, so if we don't have an expression, we need to get rid of the pointer
+		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
+
+		this->linkedMemberNonterminals.push_back(new ArgumentList(this->parserPtr, motherNode));
+		bool isValid = !this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
+		if (!isValid)
+		{
+			this->linkedMemberNonterminals.pop_back();
+		}
+
+		//recurse
+
 	}
+
+	//Otherwise, we return.
+	++tokenCounter;
 	currentToken = this->parserPtr->readNextToken();
-	this->createEnumList(motherNode);
-	*/
-}
-
-void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
-{   //This is not to be a recursive function.  It can't be, since it is an | situation.
-	/*Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	if (currentToken->getTokenValue() == "integer" ||
-		currentToken->getTokenValue() == "float" ||
-		currentToken->getTokenValue() == "string" ||
-		currentToken->getTokenValue() == "bool"
-		)
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-
-	}
-
-	else if (currentToken->getTokenValue() == "enum")
-	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-		this->createEnumList(motherNode);
-		this->setIsValid(true);
-
-
-	}
-
-	else if (currentToken->getTokenType() == "IDENTIFIER")
-	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
-		this->setIsValid(true);
-
-	}
-
-	else
-	{
-		//Here, we would probably throw some type of exception, since every procedure requires a <type_mark>.
-	}
-
+	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	return;
-	*/
 }
 
 ParseTreeNode* ProcedureCall::getNodePtr()

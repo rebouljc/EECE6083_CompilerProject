@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArgumentList.cpp" />
-    <ClCompile Include="ArgumentList_.cpp" />
     <ClCompile Include="ArithOp.cpp" />
     <ClCompile Include="ArithOp_.cpp" />
     <ClCompile Include="AssignmentStatement.cpp" />
@@ -185,7 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArgumentList.h" />
-    <ClInclude Include="ArgumentList_.h" />
     <ClInclude Include="ArithOp.h" />
     <ClInclude Include="ArithOp_.h" />
     <ClInclude Include="AssignmentStatement.h" />
