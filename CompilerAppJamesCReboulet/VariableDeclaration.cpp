@@ -81,7 +81,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		   //We assume we do not have the optional <bound> portion and return early.  However, typemark will have already set bool isValid = true;.
 		   //I believe we also have to back up the index, since it will have read the next token and that one will be ignored by future methods.
 			//Let's try it.
-			this->parserPtr->resetTokenReadIndexToPrevious();
+			this->parserPtr->resetTokenReadIndexToPrevious();  //Take this out for now.  It is causing problems, as I had expected.
 			return;
 		}
 

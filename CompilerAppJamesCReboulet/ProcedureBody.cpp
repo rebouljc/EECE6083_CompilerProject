@@ -30,7 +30,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 	else if (currentToken->getTokenValue() == "begin")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-		return;
+		
 	}
 	else
 	{
@@ -39,6 +39,8 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 		if (!decl->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
+			//If we have no declaration, we need to return or else this method will recurse forever and ever.
+			return;
 		}
 	}
 
@@ -63,6 +65,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 	else if (currentToken->getTokenValue() == "procedure")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->setIsValid(true);
 		return;
 	}
 

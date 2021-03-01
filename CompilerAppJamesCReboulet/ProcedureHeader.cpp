@@ -90,6 +90,8 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 		if (currentToken->getTokenValue() == ")")
 		{
 			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			//Read the next token, for now.  Since this is causing issues.
+			currentToken = this->parserPtr->readNextToken();
 		}
 
 		else
