@@ -32,6 +32,8 @@ void ProgramBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* mo
 	else if (currentToken->getTokenValue() == "begin")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		//We need to return here as well, so we can stop parsing declarations and begin parsing statements.
+		return;
 		
 		
 	}

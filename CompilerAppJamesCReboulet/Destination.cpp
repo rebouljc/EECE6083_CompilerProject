@@ -20,7 +20,7 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
 		//recurse
 		this->setIsValid(true);
-		
+
 	}
 
 	else if (currentToken->getTokenValue() == "[")
@@ -33,9 +33,9 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	{
 		//We don't have a valid "[", so we return early, but it will still be set as valid, since the expression is optional.
 		//We will have to back up the read index or this token will be ignored by furture methods.
-		//this->parserPtr->resetTokenReadIndexToPrevious();  //Take out for now.  I may add it in later, if needed.
+		this->parserPtr->resetTokenReadIndexToPrevious(); //Take out for now.
 		return;
-		
+
 	}
 
 	else if (currentToken->getTokenValue() == "]")
@@ -50,7 +50,7 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		//The option of having an expression here is optional, so if we don't have an expression, we need to get rid of the pointer
 		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
 
-		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr,motherNode));
+		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
@@ -66,7 +66,6 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	currentToken = this->parserPtr->readNextToken();
 	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	return;
-
 	
 	
 }

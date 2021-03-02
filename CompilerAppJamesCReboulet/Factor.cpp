@@ -3,6 +3,8 @@
 #include "Expression.h"
 #include "Number.h"
 #include "StringLiteral.h"
+#include "Name.h"
+#include "ProcedureCall.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 Factor::Factor(Parser* parser, ParseTreeNode* motherNode)
@@ -64,14 +66,43 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	{
 		//Well, now we have a number, so we create one.
 		this->linkedMemberNonterminals.push_back(new Number(currentToken));
+		this->setIsValid(true);
+	}
+	//Forgot to add this and things were again blowing up.
+	else if (currentToken->getTokenType() == "IDENTIFIER")
+	{
+		this->linkedMemberNonterminals.push_back(new Name(this->parserPtr, motherNode));
+		this->setIsValid(true);
 	}
 
 	else if (currentToken->getTokenType() == "STRING_LITERAL")
 	{
 		//We have a string literal, so we create one.
 		this->linkedMemberNonterminals.push_back(new StringLiteral(currentToken));
+		this->setIsValid(true);
+
 	}
 
+	else
+	{
+		this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode));
+		ParseTreeNode* lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		if (!lastNode->getIsValid())
+		{
+			this->linkedMemberNonterminals.pop_back();
+			this->parserPtr->resetTokenReadIndexToPrevious();  //Try giving it back. 3/1/2021.  Here lies the issue.  Fix this!.
+			                                                   //Somewhere along the line, there is some unneccessary recursion going on.
+			return;  //We definitely do not have a parameterList if there is no <parameter>
+		}
+
+		this->setIsValid(true);
+		
+	
+	}
+
+
+
+	
 	return;
 
 	

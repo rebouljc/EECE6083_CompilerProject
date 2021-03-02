@@ -30,6 +30,11 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 	else if (currentToken->getTokenValue() == "begin")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		//If we see begin, we should stop parsing Declarations, return now, and start parsing statements.  If we do not, we will 
+		//get improper parsing and eventually, the application will blow the stack somewhere.
+		//Have to read the next token, so we don't mess up the statement method.
+		currentToken = this->parserPtr->readNextToken();
+		return;
 		
 	}
 	else
@@ -39,8 +44,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 		if (!decl->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
-			//If we have no declaration, we need to return or else this method will recurse forever and ever.
-			return;
+			
 		}
 	}
 
@@ -76,6 +80,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 		if (!testNode->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
+			
 		}
 	}
 	currentToken = this->parserPtr->readNextToken();

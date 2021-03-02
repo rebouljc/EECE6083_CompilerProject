@@ -18,34 +18,29 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 	bool procBodyFlag = false;
 	//No reason to read the next token here.  It is not used and makes everything else confusing.  DON'T FRICKING DO IT!!
 	//If we do not check for this, we will get a problem of infinite recursion.
-	if (this->linkedMemberNonterminals.empty())
+	
+	this->linkedMemberNonterminals.push_back(new ProcedureHeader(this->parserPtr, motherNode));
+
+	ParseTreeNode* procHead = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!procHead->getIsValid())
 	{
-		this->linkedMemberNonterminals.push_back(new ProcedureHeader(this->parserPtr, motherNode));
-
-		ParseTreeNode* procHead = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
-		if (!procHead->getIsValid())
-		{
-			this->linkedMemberNonterminals.pop_back();
-			return;  //If we don't have a procedure header, there is no reason to check for a procedure body, or else we continue to recurse back to declaration.  
-
-		}
-
-		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+		this->linkedMemberNonterminals.pop_back();
+		return;  //If we don't have a procedure header, there is no reason to check for a procedure body, or else we continue to recurse back to declaration.  
 
 	}
-	else if (dynamic_cast<ProcedureHeader*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
+
+	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+
+	this->linkedMemberNonterminals.push_back(new ProcedureBody(this->parserPtr, motherNode));
+
+	ParseTreeNode* procBody = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+	if (!procBody->getIsValid())
 	{
-		this->linkedMemberNonterminals.push_back(new ProcedureBody(this->parserPtr, motherNode));
-
-		ParseTreeNode* procBody = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
-		if (!procBody->getIsValid())
-		{
-			this->linkedMemberNonterminals.pop_back();
-			return; //We return with bool isValid = false; by default;
-
-		}
+		this->linkedMemberNonterminals.pop_back();
+		return; //We return with bool isValid = false; by default;
 
 	}
+
 	//If we get here, we have definitely created a valid <ProcedureDeclaration>, so we set its isValid = true;
 	this->setIsValid(true);
 	return;

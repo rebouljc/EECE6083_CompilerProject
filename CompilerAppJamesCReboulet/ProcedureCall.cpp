@@ -53,7 +53,11 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 
 	}
 
-	//Otherwise, we return.
+	//Otherwise, we return.  We forgot to return here.
+	else
+	{
+		return;
+	}
 	++tokenCounter;
 	currentToken = this->parserPtr->readNextToken();
 	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
