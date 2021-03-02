@@ -15,6 +15,7 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 {
 	//Note:  This same code will now work with relation, term, and factor.  It just needs to be modified for each of those non-terminal classes.
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	printf("\nExpression_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (currentToken->getTokenValue() == "not")
 	{
@@ -31,6 +32,8 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
+			//Every time we get here, we need to give back the token, since a token gets burned up every time we arrive here.  It has to happen.
+			this->parserPtr->resetTokenReadIndexToPrevious();
 		}
 
 		//Note:  If we ever get here, we know that we have seen a correctly added ArithOp, so we set isValid(true);

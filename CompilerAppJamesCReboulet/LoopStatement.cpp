@@ -32,10 +32,18 @@ void LoopStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		if (currentToken->getTokenValue() == "for")
 		{
 			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->setIsValid(true);
 			return;
 		}
 
 	}
+
+	else
+	{
+		return;  //If you don't return here and the input is a ";" at the end of an assignment statement, this will blow up as well.
+	}
+
+
 	//Need to remember to recurse.
 	++tokenCounter;
 	this->parserPtr->readNextToken();

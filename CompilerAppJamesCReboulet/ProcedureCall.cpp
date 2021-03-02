@@ -17,6 +17,7 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 	//Originally destination was defined on 2/26/2021.
 
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	printf("\nProcedureCall_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));

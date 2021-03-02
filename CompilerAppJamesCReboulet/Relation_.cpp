@@ -33,6 +33,8 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
+			//Every time we get here, we need to give back the token, since a token gets burned up every time we arrive here.  It has to happen.
+			this->parserPtr->resetTokenReadIndexToPrevious();
 		}
 		//If we ever get here, we can set the isValid flag to true, since we know we have had an ArithOp added at least.
 		//No reason to check the size of the linkedMemberNonterminals each time and waste more CPU clock cycles and memory accesses.

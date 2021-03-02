@@ -15,6 +15,7 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method
 	//That will probably cause a memory access violation to occur at runtime, because we are accessing a non-existent element in our vector.
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	printf("\nTerm_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (!this->linkedMemberNonterminals.empty() &&
 		dynamic_cast<Factor*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
@@ -25,6 +26,9 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
+
+			//Every time we get here, we need to give back the token, since a token gets burned up every time we arrive here.  It has to happen.
+			this->parserPtr->resetTokenReadIndexToPrevious();
 		}
 
 		//Note:  If we ever get here, we know that we have seen a correctly added ArithOp, so we set isValid(true);
@@ -40,6 +44,8 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 		{
 			this->linkedMemberNonterminals.pop_back();
 			//Here, we return early, since there is no reason to continue if we don't have an arithOp.  It is a waste of resources.
+			//Give the term back
+			//this->parserPtr->resetTokenReadIndexToPrevious();
 			return;
 		}
 

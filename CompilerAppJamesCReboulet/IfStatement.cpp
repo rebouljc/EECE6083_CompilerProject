@@ -105,9 +105,18 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		if (currentToken->getTokenValue() == "if")
 		{
 			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->setIsValid(true);
 			return;
 		}
 
+	}
+
+	//Else, EXPLODE!  This is what happens when you forget to add an else{} in this recursive method, return statement.  Need to add it.
+	//This statement can be reached, even if it is not a valid if-statement, because the method is always tested for each program, regardless if it is correct.
+
+	else
+	{
+		return;
 	}
 	//Need to remember to recurse.
 	++tokenCounter;

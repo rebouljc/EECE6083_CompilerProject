@@ -16,7 +16,9 @@ void ReturnStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 	}
-	else
+	else if (   !this->linkedMemberNonterminals.empty() &&
+		        dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr
+		    )
 	{
 		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
@@ -27,6 +29,13 @@ void ReturnStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 			this->linkedMemberNonterminals.pop_back();
 			return;
 		}
+
+		this->setIsValid(true);
+	}
+
+	else
+	{
+		return;
 	}
 	++tokenCounter;
 	currentToken = this->parserPtr->readNextToken();

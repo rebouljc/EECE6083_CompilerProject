@@ -14,6 +14,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 {
 	//Defining as of 2/26/2021
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	printf("\nName_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));

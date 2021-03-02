@@ -16,6 +16,7 @@ Factor::Factor(Parser* parser, ParseTreeNode* motherNode)
 void Factor::dealWithExpression(ParseTreeNode* motherNode, int tokenCounter)
 {
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenValue() == ")") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
@@ -37,6 +38,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	//Doing this with modified code from If_Statement.  This method is PARTIALLY RECURSIVE, though.  However, this->dealWithExpression(...) IS.
 	
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (currentToken->getTokenValue() == "true" ||
 		currentToken->getTokenValue() == "false")
@@ -90,7 +92,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 		if (!lastNode->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
-			this->parserPtr->resetTokenReadIndexToPrevious();  //Try giving it back. 3/1/2021.  Here lies the issue.  Fix this!.
+			//this->parserPtr->resetTokenReadIndexToPrevious();  //Try giving it back. 3/1/2021.  Here lies the issue.  Fix this!.
 			                                                   //Somewhere along the line, there is some unneccessary recursion going on.
 			return;  //We definitely do not have a parameterList if there is no <parameter>
 		}
@@ -100,12 +102,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	
 	}
 
-
-
-	
-	return;
-
-	
+	return;	
 }
 
 ParseTreeNode* Factor::getNodePtr()
@@ -116,8 +113,6 @@ ParseTreeNode* Factor::getNodePtr()
 
 void Factor::populateSearchResultsList(ParseTreeNode* motherNode)
 {
-
-
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);

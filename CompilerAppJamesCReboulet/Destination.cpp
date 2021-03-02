@@ -61,6 +61,10 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 
 	}
 
+	else
+	{
+		return;  //In case we come back here again without a valid symbol.
+	}
 	//Otherwise, we return.
 	++tokenCounter;
 	currentToken = this->parserPtr->readNextToken();
