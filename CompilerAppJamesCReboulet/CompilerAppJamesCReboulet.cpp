@@ -5,8 +5,8 @@
 
 int main()
 {
-	IntermediateCodeGenerator* parse = new IntermediateCodeGenerator();
-	delete parse;
+	unique_ptr<IntermediateCodeGenerator> parse(new IntermediateCodeGenerator());
+	//delete parse;
 
 	/*Currently, as of 2/22/2021, almost all of the grammar on page 1 has been completed.
 	We still have to complete <procedure_body> and <statement>, I believe.  
