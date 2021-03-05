@@ -11,7 +11,7 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\
   Character.cpp
   CompilerAppJamesCReboulet.cpp
   Declaration.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Declaration.cpp(101,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Declaration.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
   Destination.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Destination.cpp(87,20): warning C4018: '<': signed/unsigned mismatch
   Expression.cpp
@@ -42,17 +42,17 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Parser.cpp(72,27): warning C4018: '<': signed/unsigned mismatch
   ParseTreeNode.cpp
   ProcedureBody.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProcedureBody.cpp(97,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProcedureBody.cpp(101,20): warning C4018: '<': signed/unsigned mismatch
   ProcedureCall.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProcedureCall.cpp(78,20): warning C4018: '<': signed/unsigned mismatch
   ProcedureDeclaration.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProcedureDeclaration.cpp(63,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProcedureDeclaration.cpp(66,20): warning C4018: '<': signed/unsigned mismatch
   ProcedureHeader.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProcedureHeader.cpp(126,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProcedureHeader.cpp(127,20): warning C4018: '<': signed/unsigned mismatch
   Program.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Program.cpp(54,20): warning C4018: '<': signed/unsigned mismatch
   ProgramBody.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProgramBody.cpp(99,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProgramBody.cpp(100,20): warning C4018: '<': signed/unsigned mismatch
   ProgramHeader.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ProgramHeader.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
   Relation.cpp
@@ -60,9 +60,9 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\
   Relation_.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Relation_.cpp(78,20): warning C4018: '<': signed/unsigned mismatch
   ReturnStatement.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ReturnStatement.cpp(57,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\ReturnStatement.cpp(61,20): warning C4018: '<': signed/unsigned mismatch
   Statement.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Statement.cpp(88,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Statement.cpp(89,20): warning C4018: '<': signed/unsigned mismatch
   StringLiteral.cpp
   Term.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Term.cpp(69,20): warning C4018: '<': signed/unsigned mismatch
@@ -79,12 +79,12 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Scanner.cpp(470,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Scanner.cpp(547,20): warning C4018: '<': signed/unsigned mismatch
   TypeDeclaration.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\TypeDeclaration.cpp(99,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\TypeDeclaration.cpp(100,20): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   Compiling...
   TypeMark.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\TypeMark.cpp(92,20): warning C4018: '<': signed/unsigned mismatch
   VariableDeclaration.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\VariableDeclaration.cpp(132,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\VariableDeclaration.cpp(133,20): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   CompilerAppJamesCReboulet.vcxproj -> C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProjectCurrentVersion\CompilerAppJamesCReboulet\Debug\CompilerAppJamesCReboulet.exe

@@ -23,6 +23,7 @@ void ProgramBody::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 void ProgramBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* motherNode)
 {
 	Token* currentToken = this->parserPtr->readNextToken();
+	printf("\nProgramBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	
 	if (currentToken->getTokenValue() == ";")
 	{

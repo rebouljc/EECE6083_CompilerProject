@@ -35,6 +35,10 @@ void ReturnStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 	else
 	{
+		if (this->isValid) //This means that we have recursed once again and read the next token, so we have to give it back
+		{
+			this->parserPtr->resetTokenReadIndexToPrevious();
+		}
 		return;
 	}
 	++tokenCounter;

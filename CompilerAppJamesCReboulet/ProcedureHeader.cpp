@@ -13,6 +13,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	//Read the next token here.
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	printf("\nProcedureHeader_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (tokenCounter == 0)
 	{
 		if (currentToken->getTokenValue() == "procedure")

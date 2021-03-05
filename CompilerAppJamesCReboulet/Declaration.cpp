@@ -17,6 +17,8 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode)
 void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	printf("\nDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	
 	bool varDeclFlag = false;
 	bool procDeclFlag = false;
 	bool typeDeclFlag = false;
@@ -43,6 +45,7 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		else
 		{
 			procDeclFlag = true;
+
 		}
 		this->linkedMemberNonterminals.push_back(new VariableDeclaration(this->parserPtr, motherNode));
 		decl = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);

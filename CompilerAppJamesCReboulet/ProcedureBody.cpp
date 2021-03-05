@@ -21,6 +21,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 {   //Same as program body with a few changes to the reserved words.
 
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (currentToken->getTokenValue() == ";")
 	{
@@ -54,6 +55,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* motherNode)
 {
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (currentToken->getTokenValue() == ";")
 	{
@@ -70,6 +72,8 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 		this->setIsValid(true);
+		printf("-------->END PROCEDURE<--------------");
+		//currentToken = this->parserPtr->readNextToken(); //Hopefully, if we read here, this will fix the infinite recursion back into <Factor>
 		return;
 	}
 

@@ -20,6 +20,9 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 	//If we do not check for this, we will get a problem of infinite recursion.
 	
 	this->linkedMemberNonterminals.push_back(new ProcedureHeader(this->parserPtr, motherNode));
+	//Test
+	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	printf("\nProcedureDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	ParseTreeNode* procHead = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!procHead->getIsValid())
@@ -29,8 +32,7 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 
 	}
 
-	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
-
+	
 	this->linkedMemberNonterminals.push_back(new ProcedureBody(this->parserPtr, motherNode));
 
 	ParseTreeNode* procBody = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
@@ -43,6 +45,7 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 
 	//If we get here, we have definitely created a valid <ProcedureDeclaration>, so we set its isValid = true;
 	this->setIsValid(true);
+		
 	return;
 
 
