@@ -3,16 +3,16 @@ program MultipleProcs is
 global variable y : integer;
 variable tmp : bool;
 
-procedure Proc1 : integer(variable val : integer)
-	procedure Proc2 : integer(variable val : integer)
-		procedure Proc1 : integer(variable val : integer)
-			begin
-				val := val + 1;
-                return val;
-		end procedure;
-		begin
-			val := val + 1;
-			val := Proc1(val);
+procedure Proc1 : integer(variable val : integer) //Declaration -> Procedure Declaration -> <Procedure_Header><Procedure Body_1>
+	procedure Proc2 : integer(variable val : integer) // <Procedure Body_1>-><Declaration>; -><Procedure_Header><Procedure Body_2>
+		procedure Proc1 : integer(variable val : integer) //<Procedure Body_2> -> <Declaration>; -> <Procedure_Header><Procedure_Body_3>
+	                  begin //<Procedure_Body_3>
+		          val := val + 1;
+                          return val;
+		          end procedure;
+		  begin
+		  val := val + 1;
+		  val := Proc1(val);
             return val;
 	end procedure;
 	begin

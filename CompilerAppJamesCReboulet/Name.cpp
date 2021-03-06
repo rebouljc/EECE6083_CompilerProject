@@ -13,7 +13,7 @@ Name::Name(Parser* parser, ParseTreeNode* motherNode)
 void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	//Defining as of 2/26/2021
-	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
 	printf("\nName_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
@@ -31,13 +31,26 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 
 	else if (tokenCounter == 1 && !(currentToken->getTokenValue() == "["))
 	{
+		if (currentToken->getTokenValue() == "(")
+		{
+			this->setIsValid(false);
+		}
 		//We don't have a valid "[", so we return early, but it will still be set as valid, since the expression is optional.
 		//We will have to back up the read index or this token will be ignored by furture methods.
 		this->parserPtr->resetTokenReadIndexToPrevious(); //Do not give it back.  We don't want it triggering other methods as it moves up the chain.
+		//Identifier* ident = dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
+		/*if (ident != nullptr && ident->getNodeTokenType() == "IDENTIFIER")
+		{
+			//We have to back up the index again because it was stolen.
+			this->parserPtr->resetTokenReadIndexToPrevious();
+		}*/
 
+		
 		return;
 
 	}
+
+	
 
 	else if (currentToken->getTokenValue() == "]")
 	{

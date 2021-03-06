@@ -23,7 +23,10 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
 	printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
-	if (currentToken->getTokenValue() == ";")
+	if (!this->linkedMemberNonterminals.empty() &&
+		dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
+		currentToken->getTokenValue() == ";"
+	   )
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 	}
@@ -57,7 +60,22 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
 	printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
-	if (currentToken->getTokenValue() == ";")
+	bool nested = false;
+	/*for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		TerminalNode* testNode = dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(i));
+		if (testNode != nullptr &&
+			testNode->getNodeTokenValue() == "begin"
+			)
+		{
+			//If the statement is nested 
+			nested = true;
+			break;
+		}
+	}*/
+	if (!this->linkedMemberNonterminals.empty() &&
+		dynamic_cast<Statement*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
+		currentToken->getTokenValue() == ";")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 	}
@@ -73,7 +91,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 		this->setIsValid(true);
 		printf("-------->END PROCEDURE<--------------");
-		//currentToken = this->parserPtr->readNextToken(); //Hopefully, if we read here, this will fix the infinite recursion back into <Factor>
+		
 		return;
 	}
 

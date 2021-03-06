@@ -44,7 +44,8 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		}
 		else
 		{
-			procDeclFlag = true;
+			this->setIsValid(true);
+			return; //If one is true, there is no reason to test any more of them.  The call stack gets way too big.
 
 		}
 		this->linkedMemberNonterminals.push_back(new VariableDeclaration(this->parserPtr, motherNode));
@@ -57,7 +58,8 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		}
 		else
 		{
-			varDeclFlag = true;
+			this->setIsValid(true);
+			return;
 		}
 		this->linkedMemberNonterminals.push_back(new TypeDeclaration(this->parserPtr, motherNode));
 		decl = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
@@ -69,19 +71,10 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		}
 		else
 		{
-			typeDeclFlag = true;
+			this->setIsValid(true);
+			return;
 		}
 		
-	}
-
-	if (procDeclFlag || varDeclFlag || typeDeclFlag)
-	{
-		this->setIsValid(true);
-	}
-
-	else if (tokenCounter == 1 && !this->getIsValid())
-	{
-		//We throw an exception here.  The word "global" was used without actually declaring anything.
 	}
 
 	//Else, we will return with a value of false and the Program Body class will pop the declaration off of the stack.

@@ -70,12 +70,6 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 		this->linkedMemberNonterminals.push_back(new Number(currentToken));
 		this->setIsValid(true);
 	}
-	//Forgot to add this and things were again blowing up.
-	else if (currentToken->getTokenType() == "IDENTIFIER")
-	{
-		this->linkedMemberNonterminals.push_back(new Name(this->parserPtr, motherNode));
-		this->setIsValid(true);
-	}
 
 	else if (currentToken->getTokenType() == "STRING_LITERAL")
 	{
@@ -85,10 +79,33 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 
 	}
 
-	else
+	else if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Name(this->parserPtr, motherNode));
 		ParseTreeNode* lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool stolenToken = false;
+		if (!lastNode->getIsValid())
+		{
+			this->linkedMemberNonterminals.pop_back();
+			stolenToken = true;
+		
+			//this->parserPtr->resetTokenReadIndexToPrevious();  //Try giving it back. 3/1/2021.  Here lies the issue.  Fix this!.
+															   //Somewhere along the line, there is some unneccessary recursion going on.
+			 //We definitely do not have a parameterList if there is no <parameter>
+		}
+		else
+		{
+			this->setIsValid(true);
+		}
+		if (stolenToken)
+		{
+			this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode, currentToken));
+		}
+		else
+		{
+			this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode));
+		}
+		lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 		if (!lastNode->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
@@ -96,10 +113,11 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 			                                                   //Somewhere along the line, there is some unneccessary recursion going on.
 			return;  //We definitely do not have a parameterList if there is no <parameter>
 		}
+		else
+		{
+			this->setIsValid(true);
+		}
 
-		this->setIsValid(true);
-		
-	
 	}
 
 	return;	

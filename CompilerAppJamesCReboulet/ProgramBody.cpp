@@ -25,7 +25,9 @@ void ProgramBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* mo
 	Token* currentToken = this->parserPtr->readNextToken();
 	printf("\nProgramBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	
-	if (currentToken->getTokenValue() == ";")
+	if (!this->linkedMemberNonterminals.empty() &&
+		dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
+		currentToken->getTokenValue() == ";")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 	}
@@ -57,7 +59,9 @@ void ProgramBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* moth
 {
 	Token* currentToken = this->parserPtr->readNextToken();
 
-	if (currentToken->getTokenValue() == ";")
+	if (!this->linkedMemberNonterminals.empty() &&
+		dynamic_cast<Statement*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
+		currentToken->getTokenValue() == ";")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 	}

@@ -11,12 +11,24 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode)
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
 
+ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, Token* stolenToken)
+{
+	this->setParserPtr(parser);
+	this->setStolenToken(stolenToken);
+	this->verifySyntaxCreateParseTree(0, motherNode);
+}
+
 void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   
 	//This is exactly the same as <destination> class, so we will simply copy the method.  These changes are as of 2/28/2021.
 	//Originally destination was defined on 2/26/2021.
 
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
+	if (tokenCounter == 0 && this->stolenToken != nullptr)
+	{
+		currentToken = this->stolenToken;
+	}
+	
 	printf("\nProcedureCall_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
