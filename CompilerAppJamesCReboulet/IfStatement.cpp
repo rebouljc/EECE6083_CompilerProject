@@ -57,6 +57,8 @@ void IfStatement::dealWithIf(ParseTreeNode* motherNode, int tokenCounter)
 	else if (currentToken->getTokenValue() == ")")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		//We have to read the next token, so we don't mess up the "then" portion when this returns back
+		//to the verifySyntaxCreateParseTreeMethod.
 		return;
 	}
 
@@ -85,25 +87,40 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	if (currentToken->getTokenValue() == "if")
 	{
 		this->dealWithIf(motherNode, 0);
+		++tokenCounter;
+		this->parserPtr->readNextToken();
+		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+	
 	}
 
 	if (currentToken->getTokenValue() == "then")
 	{
+		
 		this->dealWithThenOrElse(motherNode, 0);
+		++tokenCounter;
+		this->parserPtr->readNextToken();
+		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	}
 
 	else if (currentToken->getTokenValue() == "else")
 	{
+		
 		this->dealWithThenOrElse(motherNode, 0);
+		++tokenCounter;
+		this->parserPtr->readNextToken();
+		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+		//TODO:  Fix this after informational interview.
 	}
 
 	else if (currentToken->getTokenValue() == "end") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
+		
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 		currentToken = this->parserPtr->readNextToken();
 
 		if (currentToken->getTokenValue() == "if")
 		{
+			currentToken = parserPtr->getCurrentlyReadToken();
 			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 			this->setIsValid(true);
 			return;
@@ -119,9 +136,7 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		return;
 	}
 	//Need to remember to recurse.
-	++tokenCounter;
-	this->parserPtr->readNextToken();
-	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+
 
 }
 
