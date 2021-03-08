@@ -29,7 +29,9 @@ void ArgumentList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* 
 
 	}
 
-	else if (dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
+	else if (!this->linkedMemberNonterminals.empty() &&
+		     dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr
+		     )
 	{
 		this->linkedMemberNonterminals.push_back(new ArgumentList(this->parserPtr, motherNode));
 		//recurse

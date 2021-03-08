@@ -19,7 +19,7 @@ void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 	}
 
-	else
+	else if (tokenCounter == 1)
 	{
 		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
@@ -34,6 +34,13 @@ void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter
 		{
 			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
 		}
+
+		return;
+	}
+
+	else
+	{
+		return;
 	}
 	++tokenCounter;
 	currentToken = this->parserPtr->readNextToken();
@@ -87,19 +94,13 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	if (currentToken->getTokenValue() == "if")
 	{
 		this->dealWithIf(motherNode, 0);
-		++tokenCounter;
-		this->parserPtr->readNextToken();
-		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
-	
+		
 	}
 
-	if (currentToken->getTokenValue() == "then")
+	else if (currentToken->getTokenValue() == "then")
 	{
 		
 		this->dealWithThenOrElse(motherNode, 0);
-		++tokenCounter;
-		this->parserPtr->readNextToken();
-		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 	}
 
 	else if (currentToken->getTokenValue() == "else")
@@ -107,9 +108,6 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		
 		this->dealWithThenOrElse(motherNode, 0);
 		++tokenCounter;
-		this->parserPtr->readNextToken();
-		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
-		//TODO:  Fix this after informational interview.
 	}
 
 	else if (currentToken->getTokenValue() == "end") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
@@ -137,6 +135,9 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	}
 	//Need to remember to recurse.
 
+	++tokenCounter;
+	this->parserPtr->readNextToken();
+	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 
 }
 

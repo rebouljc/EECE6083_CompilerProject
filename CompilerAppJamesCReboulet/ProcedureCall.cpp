@@ -50,7 +50,7 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		return;
 	}
 
-	else if (tokenCounter == 1)
+	else if (tokenCounter == 2)
 	{
 		//The option of having an ArgumentList here is optional, so if we don't have an expression, we need to get rid of the pointer
 		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
@@ -61,6 +61,8 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		{
 			this->linkedMemberNonterminals.pop_back();
 		}
+
+		this->parserPtr->resetTokenReadIndexToPrevious();  //Try this to see what happens.
 
 		//recurse
 

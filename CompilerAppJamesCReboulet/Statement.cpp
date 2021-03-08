@@ -31,6 +31,8 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	else
 	{
 		assnStmtFlag = true;
+		this->setIsValid(true);
+		return;
 	}
 	this->linkedMemberNonterminals.push_back(new IfStatement(this->parserPtr, motherNode));
 	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
@@ -41,6 +43,8 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	else
 	{
 		ifStmtFlag = true;
+		this->setIsValid(true);
+		return;
 	}
 	this->linkedMemberNonterminals.push_back(new LoopStatement(this->parserPtr, motherNode));
 	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
@@ -51,6 +55,8 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	else
 	{
 		loopStmtFlag = true;
+		this->setIsValid(true);
+		return;
 	}
 
 	this->linkedMemberNonterminals.push_back(new ReturnStatement(this->parserPtr, motherNode));
@@ -62,17 +68,19 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	else
 	{
 		returnStmtFlag = true;
+		this->setIsValid(true);
+		return;
 	}
 
-	if (assnStmtFlag || ifStmtFlag || loopStmtFlag || returnStmtFlag)
-	{
-		this->setIsValid(true);
-	}
+	//if (assnStmtFlag || ifStmtFlag || loopStmtFlag || returnStmtFlag)
+	//{
+	//	this->setIsValid(true);
+	//}
 
 	//Else, we will return with a value of false and the Program Body class will pop the declaration off of the stack.
 	//We will do the same thing here for statements, since there is the option of having a program with neither declarations or statements.
 
-	return;
+	//return;
 
 }
 
