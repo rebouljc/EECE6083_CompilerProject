@@ -31,10 +31,13 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 
 	else if (tokenCounter == 1 && !(currentToken->getTokenValue() == "["))
 	{
-		if (currentToken->getTokenValue() == "(")
+		if (currentToken->getTokenValue() == "("
+		    )
 		{
 			this->setIsValid(false);
 		}
+
+	
 		//We don't have a valid "[", so we return early, but it will still be set as valid, since the expression is optional.
 		//We will have to back up the read index or this token will be ignored by furture methods.
 		this->parserPtr->resetTokenReadIndexToPrevious(); //Do not give it back.  We don't want it triggering other methods as it moves up the chain.
@@ -55,6 +58,8 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	else if (currentToken->getTokenValue() == "]")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		//I believe here we need to consume the next token, since it messes other methods up.
+		
 		this->setIsValid(true);
 		return;
 	}
@@ -69,6 +74,8 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 		if (!isValid)
 		{
 			this->linkedMemberNonterminals.pop_back();
+			//We need to return here!  This is messing up everything and making me MAD!
+			
 		}
 
 		//recurse

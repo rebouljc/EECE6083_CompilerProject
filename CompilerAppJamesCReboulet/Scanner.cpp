@@ -366,7 +366,14 @@ Token* Scanner::searchRelationOperatorList(string character,ifstream* input)
 		}
 
 		
-		
+	}
+	for (set<pair<string, Token*>>::iterator it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
+	{
+		string checkRelationChar = character;
+		if (checkRelationChar == it->first && it->second->getTokenType() == "RELATION_OP")
+		{
+			return it->second;
+		}
 	}
 	return nullptr;
 }

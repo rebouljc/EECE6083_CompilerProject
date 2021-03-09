@@ -14,7 +14,7 @@ void LoopStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 {    //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
 
-	if (currentToken->getTokenValue() == "for")
+	if (tokenCounter == 0 && currentToken->getTokenValue() == "for")
 	{
 		this->dealWithForHeader(motherNode, 0);
 	}
@@ -22,19 +22,20 @@ void LoopStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 	else if (tokenCounter == 1)
 	{
 		this->dealWithForBody(motherNode, 0);
+	    
 	}
 
 	else if (currentToken->getTokenValue() == "end") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{                                                //We can, but it would require using tokenCounter.  Easier just to add a couple of lines of code.
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-		currentToken = this->parserPtr->readNextToken();
-
-		if (currentToken->getTokenValue() == "for")
-		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
-			this->setIsValid(true);
-			return;
-		}
+	}
+	else if (tokenCounter == 3 && currentToken->getTokenValue() == "for")
+	{
+		
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->setIsValid(true);
+		return;
+		
 
 	}
 
@@ -71,7 +72,7 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 		return;
 	}
 
-	else if(tokenCounter == 3)
+	else if(tokenCounter == 2)
 	{
 		this->linkedMemberNonterminals.push_back(new AssignmentStatement(this->parserPtr, motherNode));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
@@ -91,13 +92,9 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 
 	}
 
-	else if (tokenCounter == 4 && currentToken->getTokenValue() != ";")
-	{
-		//We throw an error.  Return for now.
-		return;
-	}
+	
 
-	else
+	else if (tokenCounter == 4)
 	{
 		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
@@ -109,6 +106,12 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 			return;
 		}
 	}
+
+	else 
+	{
+		//We throw an error.  Return for now.
+		return;
+	}
 	++tokenCounter;
 	currentToken = this->parserPtr->readNextToken();
 	this->dealWithForHeader(motherNode, tokenCounter);
@@ -118,12 +121,20 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 void LoopStatement::dealWithForBody(ParseTreeNode* motherNode, int tokenCounter)
 {
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	//If we see an "end", just get out of here.  If we continue, it messes everything up
+	if (currentToken->getTokenValue() == "end")
+	{
+		this->parserPtr->resetTokenReadIndexToPrevious();
+		return;
+	}
 
 	this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
 	bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 	if (!isValid)
 	{
 		this->linkedMemberNonterminals.pop_back();
+		//If we ever get here, we reset the token
+		
 		return; //Here, we return at the first point that there is no valid statement, or we will infinitely recurse here.
 	}
 

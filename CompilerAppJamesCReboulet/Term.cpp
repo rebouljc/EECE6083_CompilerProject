@@ -49,6 +49,9 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 			return;
 		}
 
+		this->setIsValid(true);
+		return;
+
 	}
 
 	currentToken = this->parserPtr->readNextToken();
