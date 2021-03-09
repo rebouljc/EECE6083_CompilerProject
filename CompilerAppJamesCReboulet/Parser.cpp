@@ -112,6 +112,8 @@ void Parser::parseTokensLoop()
     
     //Now, we have to clean up the memory to fix memory leaks.
     
+    
+    
 
     
     //delete (intermediate);

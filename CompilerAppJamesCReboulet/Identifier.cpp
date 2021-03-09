@@ -26,7 +26,7 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	if (!alreadyInTable)
 	{
 
-		motherNode->addToSymbolTable((ParseTreeNode*)this);
+		motherNode->addToSymbolTable(this);
 	}
 
 	this->identifierType = identifierType;
