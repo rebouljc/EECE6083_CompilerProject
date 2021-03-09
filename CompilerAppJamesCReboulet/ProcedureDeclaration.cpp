@@ -70,3 +70,12 @@ void ProcedureDeclaration::populateSearchResultsList(ParseTreeNode* motherNode)
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
+
+void ProcedureDeclaration::populateLocalSearchResultsList()
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->populateSearchResultsList();
+	}
+
+}

@@ -7,6 +7,7 @@ public:
 	ProgramBody(Parser* parser, ParseTreeNode* motherNode);
 	~ProgramBody() {};
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void populateLocalSearchResultsList() override;
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;

@@ -12,6 +12,7 @@ public:
 	virtual string getNodeSymbolIdentifierType() { return NULL; };
 	int    getNodeTokenLineNumber();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void populateLocalSearchResultsList() override;
 	virtual ~TerminalNode() {};
 
 

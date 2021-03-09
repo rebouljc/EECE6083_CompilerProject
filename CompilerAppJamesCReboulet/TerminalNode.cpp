@@ -38,5 +38,11 @@ void TerminalNode::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
+void TerminalNode::populateLocalSearchResultsList()
+{
+	this->searchResultsList.push_back(this->getNodePtr());
+
+}
+
 
 

@@ -27,3 +27,9 @@ void Number::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
+
+void Number::populateLocalSearchResultsList()
+{
+	this->addToSearchResultsList(this->getNodePtr());
+
+}

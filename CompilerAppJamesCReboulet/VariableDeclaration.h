@@ -8,6 +8,7 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; }; //I am too lazy to add these functions to the .cpp file.
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void populateLocalSearchResultsList() override;
 	~VariableDeclaration(){};
 	
 	

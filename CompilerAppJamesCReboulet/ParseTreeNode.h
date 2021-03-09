@@ -27,6 +27,8 @@ protected:
 	
 	virtual ParseTreeNode* getNodePtr() { return nullptr; };
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
+	virtual void populateLocalSearchResultsList() { return; };
+	void searchAndAddIdentifierToLocalSymbolTable(ParseTreeNode* localObjectPtr);
 	
 	
 

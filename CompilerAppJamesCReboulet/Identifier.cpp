@@ -51,3 +51,9 @@ void Identifier::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
+
+void Identifier::populateLocalSearchResultsList()
+{
+	this->addToSearchResultsList(this->getNodePtr());
+
+}

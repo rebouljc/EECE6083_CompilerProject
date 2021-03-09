@@ -7,6 +7,7 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void populateLocalSearchResultsList() override;
 	~ProcedureDeclaration() {};
 
 private:

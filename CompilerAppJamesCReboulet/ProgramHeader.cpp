@@ -77,3 +77,12 @@ void ProgramHeader::populateSearchResultsList(ParseTreeNode* motherNode)
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
+
+void ProgramHeader::populateLocalSearchResultsList()
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->populateSearchResultsList();
+	}
+
+}

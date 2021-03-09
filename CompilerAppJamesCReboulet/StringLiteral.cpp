@@ -16,3 +16,8 @@ void StringLiteral::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
+
+void StringLiteral::populateLocalSearchResultsList()
+{
+	this->addToSearchResultsList(this->getNodePtr());
+}

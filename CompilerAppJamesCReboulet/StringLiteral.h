@@ -8,6 +8,7 @@ public:
 	StringLiteral(Token* token);
 	ParseTreeNode* getNodePtr() override;
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void populateLocalSearchResultsList() override;
 	~StringLiteral() {};
 
 private:

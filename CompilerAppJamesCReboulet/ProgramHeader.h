@@ -6,6 +6,7 @@ class ProgramHeader : public ParseTreeNode
 public:
 	ProgramHeader(Parser* parser, ParseTreeNode* motherNode);
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void populateLocalSearchResultsList() override;
 	~ProgramHeader() {};
 	
 

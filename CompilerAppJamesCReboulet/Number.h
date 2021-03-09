@@ -10,6 +10,7 @@ public:
 	ParseTreeNode* getNodePtr() override;
 	string getNumberTokenType();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void populateLocalSearchResultsList() override;
 	~Number() {};
 
 private:
