@@ -8,7 +8,9 @@ IntermediateCodeGenerator::IntermediateCodeGenerator()
 
 IntermediateCodeGenerator::~IntermediateCodeGenerator()
 {
-	vector<ParseTreeNode*>* searchResultsList = parseTree->getSearchResultsList(parseTree);
+	vector<ParseTreeNode*>* searchResultsList = this->parseTree->getSearchResultsList(this->parseTree);
+	//Try this just for fun to test local populate search results list;
+	
 	for (int i = 0; i < searchResultsList->size(); ++i)
 	{
 		delete(searchResultsList->at(i));

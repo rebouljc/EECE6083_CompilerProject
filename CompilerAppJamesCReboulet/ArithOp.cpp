@@ -74,7 +74,7 @@ void ArithOp::populateLocalSearchResultsList()
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList();
+		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
 	}
 
 }
