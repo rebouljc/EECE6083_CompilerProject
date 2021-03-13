@@ -2,8 +2,10 @@
 #include "TerminalNode.h"
 #include "Number.h"
 
-Bound::Bound(Token* token, Parser* parser, ParseTreeNode* motherNode)
+Bound::Bound(Token* token, Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->token = token;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
@@ -14,7 +16,7 @@ void Bound::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherN
 	
 	if (this->token->getTokenValue() == "NUMBER")
 	{
-		this->linkedMemberNonterminals.push_back(new Number(this->token));
+		this->linkedMemberNonterminals.push_back(new Number(this->token, this));
 	}
 
 	else
@@ -34,7 +36,7 @@ void Bound::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
@@ -42,11 +44,3 @@ void Bound::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-void Bound::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
-}

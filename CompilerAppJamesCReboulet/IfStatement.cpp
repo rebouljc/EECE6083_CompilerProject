@@ -5,8 +5,10 @@
 #include "TerminalNode.h"
 
 
-IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode)
+IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -16,12 +18,12 @@ void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter
 
 	if (currentToken->getTokenValue() == "then" || currentToken->getTokenValue() == "else")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	else if (tokenCounter == 1)
 	{
-		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode, this));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
@@ -32,7 +34,7 @@ void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter
 		currentToken = this->parserPtr->readNextToken();
 		if (currentToken->getTokenValue() == ";")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		}
 
 		return;
@@ -54,16 +56,16 @@ void IfStatement::dealWithIf(ParseTreeNode* motherNode, int tokenCounter)
 
 	if (currentToken->getTokenValue() == "if")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	else if (currentToken->getTokenValue() == "(")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 	else if (currentToken->getTokenValue() == ")")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		//We have to read the next token, so we don't mess up the "then" portion when this returns back
 		//to the verifySyntaxCreateParseTreeMethod.
 		return;
@@ -71,7 +73,7 @@ void IfStatement::dealWithIf(ParseTreeNode* motherNode, int tokenCounter)
 
 	else
 	{
-		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode, this));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
@@ -113,13 +115,13 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	else if (currentToken->getTokenValue() == "end") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
 		
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		currentToken = this->parserPtr->readNextToken();
 
 		if (currentToken->getTokenValue() == "if")
 		{
 			currentToken = parserPtr->getCurrentlyReadToken();
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 			this->setIsValid(true);
 			return;
 		}
@@ -151,19 +153,10 @@ void IfStatement::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void IfStatement::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

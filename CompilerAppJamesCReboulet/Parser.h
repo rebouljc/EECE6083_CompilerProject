@@ -25,7 +25,7 @@
 
 	private:
 		void parseTokensLoop();
-		int indexToRead = 0;
+		unsigned int indexToRead = 0;
 		Token* currentReadToken;
 		
 

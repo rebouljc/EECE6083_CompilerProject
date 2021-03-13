@@ -4,8 +4,10 @@
 #include "Expression.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
-Name::Name(Parser* parser, ParseTreeNode* motherNode)
+Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -17,7 +19,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	printf("\nName_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 		//recurse
 		this->setIsValid(true);
 
@@ -25,7 +27,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 
 	else if (currentToken->getTokenValue() == "[")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		//recurse
 	}
 
@@ -57,7 +59,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 
 	else if (currentToken->getTokenValue() == "]")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		//I believe here we need to consume the next token, since it messes other methods up.
 		
 		this->setIsValid(true);
@@ -69,7 +71,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 		//The option of having an expression here is optional, so if we don't have an expression, we need to get rid of the pointer
 		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
 
-		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode, this));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
@@ -99,19 +101,10 @@ void Name::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void Name::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

@@ -1,8 +1,10 @@
 #include "ProgramHeader.h"
 #include "Identifier.h"
 
-ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode)
+ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -18,7 +20,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		{
 			if (currentToken->getTokenValue() == "program")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken)); //TerminalNode inherits from both ParseTreeNode and Token.  
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this)); //TerminalNode inherits from both ParseTreeNode and Token.  
 			}
 
 			else
@@ -31,7 +33,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		{
 			if (currentToken->getTokenType() == "IDENTIFIER")
 			{
-				this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+				this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 			}
 
 			else
@@ -44,7 +46,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		{
 			if (currentToken->getTokenValue() == "is")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 				return;
 			}
 
@@ -70,19 +72,10 @@ void ProgramHeader::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 	
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void ProgramHeader::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

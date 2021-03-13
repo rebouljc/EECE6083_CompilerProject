@@ -3,11 +3,10 @@
 class ProcedureBody : public ParseTreeNode
 {
 public:
-	ProcedureBody(Parser* parser, ParseTreeNode* motherNode);
+	ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr);
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void populateLocalSearchResultsList() override;
 	~ProcedureBody() {};
 
 private:

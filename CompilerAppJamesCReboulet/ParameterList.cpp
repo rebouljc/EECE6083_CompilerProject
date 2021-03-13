@@ -2,8 +2,10 @@
 #include "Parameter.h"
 #include "TerminalNode.h"
 
-ParameterList::ParameterList(Parser* parser, ParseTreeNode* motherNode)
+ParameterList::ParameterList(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -11,7 +13,7 @@ ParameterList::ParameterList(Parser* parser, ParseTreeNode* motherNode)
 void ParameterList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
-	this->linkedMemberNonterminals.push_back(new Parameter(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new Parameter(this->parserPtr, motherNode, this));
 	ParseTreeNode* lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!lastNode->getIsValid())
 	{
@@ -22,7 +24,7 @@ void ParameterList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 	
 	else if (currentToken->getTokenValue() == ",")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	else
@@ -31,7 +33,7 @@ void ParameterList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		this->setIsValid(true); //We know that if we have gotten here, we at least have a valid <parameter> or else we would have returned then.
 		return;
 	}
-	this->linkedMemberNonterminals.push_back(new ParameterList(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new ParameterList(this->parserPtr, motherNode, this));
 	lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!lastNode->getIsValid())
 	{
@@ -55,19 +57,10 @@ void ParameterList::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void ParameterList::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

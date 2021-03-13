@@ -5,14 +5,18 @@
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 
-ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode)
+ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
 
-ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, Token* stolenToken)
+ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr, Token* stolenToken)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->setStolenToken(stolenToken);
 	this->verifySyntaxCreateParseTree(0, motherNode);
@@ -32,20 +36,20 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 	printf("\nProcedureCall_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 		//recurse
 
 	}
 
 	else if (currentToken->getTokenValue() == "(")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		//recurse
 	}
 
 	else if (currentToken->getTokenValue() == ")")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		this->setIsValid(true);
 		return;
 	}
@@ -55,7 +59,7 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		//The option of having an ArgumentList here is optional, so if we don't have an expression, we need to get rid of the pointer
 		//to the class within the parse tree, since it makes things more confusing.  First we have to add it to the tree and then check.
 
-		this->linkedMemberNonterminals.push_back(new ArgumentList(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new ArgumentList(this->parserPtr, motherNode, this));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
@@ -89,19 +93,10 @@ void ProcedureCall::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void ProcedureCall::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

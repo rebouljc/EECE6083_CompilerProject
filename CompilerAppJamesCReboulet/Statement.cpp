@@ -4,8 +4,10 @@
 #include "LoopStatement.h"
 #include "ReturnStatement.h"
 
-Statement::Statement(Parser* parser, ParseTreeNode* motherNode)
+Statement::Statement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -21,7 +23,7 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	printf("\nStatement_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	
 
-	this->linkedMemberNonterminals.push_back(new AssignmentStatement(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new AssignmentStatement(this->parserPtr, motherNode, this));
 	//Get rid of the node if there is nothing there, so it doesn't have to be included in the parse tree.
 	ParseTreeNode* stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!stmt->getIsValid())
@@ -34,7 +36,7 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		this->setIsValid(true);
 		return;
 	}
-	this->linkedMemberNonterminals.push_back(new IfStatement(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new IfStatement(this->parserPtr, motherNode, this));
 	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!stmt->getIsValid())
 	{
@@ -46,7 +48,7 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		this->setIsValid(true);
 		return;
 	}
-	this->linkedMemberNonterminals.push_back(new LoopStatement(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new LoopStatement(this->parserPtr, motherNode, this));
 	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!stmt->getIsValid())
 	{
@@ -59,7 +61,7 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		return;
 	}
 
-	this->linkedMemberNonterminals.push_back(new ReturnStatement(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new ReturnStatement(this->parserPtr, motherNode, this));
 	stmt = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!stmt->getIsValid())
 	{
@@ -94,19 +96,10 @@ void Statement::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void Statement::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

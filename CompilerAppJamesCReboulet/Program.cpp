@@ -7,6 +7,7 @@
 
 Program::Program(Parser* parser)
 {
+	
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, (ParseTreeNode*) this);
 }
@@ -15,18 +16,18 @@ void Program::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mothe
 {
 	//always make sure to pass the parser ptr.
 	//create a program header.
-	this->linkedMemberNonterminals.push_back(new ProgramHeader(this->parserPtr, motherNode)); //If any of these operations fail, an exception will be thrown and 
+	this->linkedMemberNonterminals.push_back(new ProgramHeader(this->parserPtr, motherNode, this)); //If any of these operations fail, an exception will be thrown and 
 	                                                                              //this method won't complete.  At the first instance of failure,
 	                                                                              //exceptions will be thrown, unless we can detect and recover from all
 	                                                                              //failures and throw one giant exception at the end with all of the errors.
 
-	this->linkedMemberNonterminals.push_back(new ProgramBody(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new ProgramBody(this->parserPtr, motherNode, this));
 
 	Token* currentToken = this->parserPtr->readNextToken();
 
 	if (currentToken->getTokenValue() == ".") //Note, this isn't going to work correctly until we have defined the program body.  Never will be hit!
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	else
@@ -51,7 +52,7 @@ void Program::populateSearchResultsList(ParseTreeNode* motherNode)
 
 	
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
@@ -59,11 +60,3 @@ void Program::populateSearchResultsList(ParseTreeNode* motherNode)
 	this->searchResultsList.push_back(this->getNodePtr());
 }
 
-void Program::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
-}

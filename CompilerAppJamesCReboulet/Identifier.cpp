@@ -1,11 +1,13 @@
 #include "Identifier.h"
 
-Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType)
+Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->token = token;
 	//If this constructor is called, this terminal node is an <identifier>
 	bool alreadyInTable = false;
-	for (int i = 0; i < motherNode->getSymbolTable()->size(); ++i)
+	for (unsigned int i = 0; i < motherNode->getSymbolTable()->size(); ++i)
 	{
 		Identifier* currentNode = dynamic_cast<Identifier*>(motherNode->getSymbolTable()->at(i));
 		if (currentNode->getNodeTokenValue() == token->getTokenValue() &&
@@ -52,8 +54,3 @@ void Identifier::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-void Identifier::populateLocalSearchResultsList()
-{
-	this->addToSearchResultsList(this->getNodePtr());
-
-}

@@ -3,11 +3,10 @@
 class Relation_: public ParseTreeNode
 {
 public:
-	Relation_(Parser* parser, ParseTreeNode* motherNode);
+	Relation_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr);
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void populateLocalSearchResultsList() override;
 	~Relation_() {};
 
 private:

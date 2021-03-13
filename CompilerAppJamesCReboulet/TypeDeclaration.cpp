@@ -4,8 +4,10 @@
 #include "Identifier.h"
 #include "Bound.h"
 
-TypeDeclaration::TypeDeclaration(Parser* parser, ParseTreeNode* motherNode)
+TypeDeclaration::TypeDeclaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 	
@@ -24,7 +26,7 @@ void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == "type")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		}
 
 		else
@@ -38,7 +40,7 @@ void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenType() == "IDENTIFIER")
 		{
-			this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+			this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 		}
 
 		else
@@ -52,7 +54,7 @@ void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == "is")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		}
 
 		else
@@ -65,7 +67,7 @@ void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 	else if (tokenCounter == 3) //If it is equal to 3 and we have made it this far, we need a type mark.
 	{
-		this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode, this));
 		this->setIsValid(true);
 		return;
 	}
@@ -97,7 +99,7 @@ void TypeDeclaration::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
@@ -105,11 +107,3 @@ void TypeDeclaration::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-void TypeDeclaration::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
-}

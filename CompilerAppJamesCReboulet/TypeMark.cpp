@@ -2,8 +2,10 @@
 #include "TerminalNode.h"
 #include "Identifier.h"
 
-TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode)
+TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -14,22 +16,22 @@ void TypeMark::createEnumList(ParseTreeNode* motherNode)
 	//Create the new identifier and check its validity.
 	if (currentToken->getTokenValue() == "{")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 	}
 
 	else if (currentToken->getTokenValue() == ",")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	else if (currentToken->getTokenValue() == "}")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		return;
 	}
 	else
@@ -51,13 +53,13 @@ void TypeMark::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 	   )
 	{
 
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		
 	}
 
 	else if (currentToken->getTokenValue() == "enum")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		this->createEnumList(motherNode);
 		this->setIsValid(true);
 		
@@ -66,7 +68,7 @@ void TypeMark::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 
 	else if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 		this->setIsValid(true);
 		
 	}
@@ -89,7 +91,7 @@ void TypeMark::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
@@ -97,11 +99,3 @@ void TypeMark::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-void TypeMark::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
-}

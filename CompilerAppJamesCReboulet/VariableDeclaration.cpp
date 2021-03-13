@@ -6,8 +6,10 @@
 #include "Bound.h"  //This is used instead of Parameter List;
 
 
-VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNode)
+VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -24,7 +26,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		{
 			if (currentToken->getTokenValue() == "variable")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 			}
 
 			else
@@ -38,7 +40,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		{
 			if (currentToken->getTokenType() == "IDENTIFIER")
 			{
-				this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+				this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 			}
 
 			else
@@ -52,7 +54,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		{
 			if (currentToken->getTokenValue() == ":")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 			}
 
 			else
@@ -65,7 +67,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 
 		else if (tokenCounter == 3) //If it is equal to 3 and we have made it this far, we need a type mark.
 		{
-			this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode));
+			this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode, this));
 		    //If we have successfully gotten this far, we can return with bool isValid = true.
 			this->setIsValid(true);
 		}
@@ -73,7 +75,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		else if (tokenCounter == 4 && currentToken->getTokenValue() == "[")
 		{
 			
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 			
 		}
 
@@ -88,7 +90,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 
 		else if (tokenCounter == 5)
 		{
-			this->linkedMemberNonterminals.push_back(new Bound(currentToken, this->parserPtr, motherNode));
+			this->linkedMemberNonterminals.push_back(new Bound(currentToken, this->parserPtr, motherNode, this));
 			//If there are no parameters, then pop_back() the vector.
 		}
 
@@ -96,7 +98,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		{
 			if (currentToken->getTokenValue() == "]")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 			}
 
 			else
@@ -130,7 +132,7 @@ void VariableDeclaration::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
@@ -138,11 +140,3 @@ void VariableDeclaration::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-void VariableDeclaration::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
-}

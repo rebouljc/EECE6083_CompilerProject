@@ -7,7 +7,6 @@ public:
 	Program(Parser* parser);
 	
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void populateLocalSearchResultsList() override;
 	~Program() {};
 	
 	

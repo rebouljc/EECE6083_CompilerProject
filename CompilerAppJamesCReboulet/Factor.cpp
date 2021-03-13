@@ -7,8 +7,10 @@
 #include "ProcedureCall.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
-Factor::Factor(Parser* parser, ParseTreeNode* motherNode)
+Factor::Factor(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -19,14 +21,14 @@ void Factor::dealWithExpression(ParseTreeNode* motherNode, int tokenCounter)
 	printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenValue() == ")") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		//We need to return out of here, so we can stop the recursion.
 		return;
 	}
 
 	else
 	{
-		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode, this));
 	}
 	++tokenCounter;
 	currentToken = parserPtr->readNextToken();
@@ -48,7 +50,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 
 	else if (currentToken->getTokenValue() == "(") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		currentToken = this->parserPtr->readNextToken();
 		this->dealWithExpression(motherNode, 0);
 		this->setIsValid(true);
@@ -58,7 +60,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	else if (currentToken->getTokenValue() == "-")
 	{
 		//Here, we need to recurse, since either a name or a number will be coming after it.
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		++tokenCounter;
 		currentToken = this->parserPtr->readNextToken();
 		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
@@ -67,21 +69,21 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	else if (currentToken->getTokenType() == "NUMBER")
 	{
 		//Well, now we have a number, so we create one.
-		this->linkedMemberNonterminals.push_back(new Number(currentToken));
+		this->linkedMemberNonterminals.push_back(new Number(currentToken, this));
 		this->setIsValid(true);
 	}
 
 	else if (currentToken->getTokenType() == "STRING_LITERAL")
 	{
 		//We have a string literal, so we create one.
-		this->linkedMemberNonterminals.push_back(new StringLiteral(currentToken));
+		this->linkedMemberNonterminals.push_back(new StringLiteral(currentToken, this));
 		this->setIsValid(true);
 
 	}
 
 	else if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Name(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Name(this->parserPtr, motherNode, this));
 		ParseTreeNode* lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 		bool stolenToken = false;
 		if (!lastNode->getIsValid())
@@ -102,11 +104,11 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 		}
 		if (stolenToken)
 		{
-			this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode, currentToken));
+			this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode,this, currentToken));
 		}
 		else
 		{
-			this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode));
+			this->linkedMemberNonterminals.push_back(new ProcedureCall(this->parserPtr, motherNode, this));
 		}
 		lastNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 		if (!lastNode->getIsValid())
@@ -134,19 +136,10 @@ ParseTreeNode* Factor::getNodePtr()
 
 void Factor::populateSearchResultsList(ParseTreeNode* motherNode)
 {
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void Factor::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

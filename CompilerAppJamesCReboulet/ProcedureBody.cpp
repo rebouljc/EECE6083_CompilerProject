@@ -3,8 +3,10 @@
 #include "Statement.h"
 #include "TerminalNode.h"
 
-ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode)
+ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
     //Create the symbol table
@@ -30,12 +32,12 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 		currentToken->getTokenValue() == ";"
 	   )
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	else if (currentToken->getTokenValue() == "begin")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		//If we see begin, we should stop parsing Declarations, return now, and start parsing statements.  If we do not, we will 
 		//get improper parsing and eventually, the application will blow the stack somewhere.
 		//Have to read the next token, so we don't mess up the statement method.
@@ -45,7 +47,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 	}
 	else
 	{
-		this->linkedMemberNonterminals.push_back(new Declaration(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Declaration(this->parserPtr, motherNode, this));
 		ParseTreeNode* decl = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 		if (!decl->getIsValid())
 		{
@@ -79,18 +81,18 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 		dynamic_cast<Statement*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
 		currentToken->getTokenValue() == ";")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	else if (currentToken->getTokenValue() == "end")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 
 	}
 
 	else if (currentToken->getTokenValue() == "procedure")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		this->setIsValid(true);
 		printf("-------->END PROCEDURE<--------------");
 		
@@ -99,7 +101,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 
 	else
 	{
-		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode, this));
 		ParseTreeNode* testNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 		if (!testNode->getIsValid())
 		{
@@ -118,19 +120,10 @@ ParseTreeNode* ProcedureBody::getNodePtr()
 
 void ProcedureBody::populateSearchResultsList(ParseTreeNode* motherNode)
 {
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void ProcedureBody::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

@@ -4,8 +4,10 @@
 #include "Term.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
-Relation_::Relation_(Parser* parser, ParseTreeNode* motherNode)
+Relation_::Relation_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -20,7 +22,7 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		currentToken->getTokenValue() == "==" ||
 		currentToken->getTokenValue() == "!=" )
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method
@@ -28,7 +30,7 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	else if (!this->linkedMemberNonterminals.empty() &&
 		dynamic_cast<Term*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
 	{
-		this->linkedMemberNonterminals.push_back(new Relation_(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Relation_(this->parserPtr, motherNode, this));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
@@ -46,7 +48,7 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 
 	else
 	{
-		this->linkedMemberNonterminals.push_back(new Term(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new Term(this->parserPtr, motherNode, this));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
 		if (!isValid)
 		{
@@ -75,19 +77,10 @@ void Relation_::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void Relation_::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

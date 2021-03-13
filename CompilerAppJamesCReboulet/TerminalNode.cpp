@@ -4,8 +4,10 @@ TerminalNode::TerminalNode()
 {
 
 }
-TerminalNode::TerminalNode(Token* token)
+TerminalNode::TerminalNode(Token* token, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->token = token;
 							 
 }
@@ -38,11 +40,6 @@ void TerminalNode::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-void TerminalNode::populateLocalSearchResultsList()
-{
-	this->searchResultsList.push_back(this->getNodePtr());
-
-}
 
 
 

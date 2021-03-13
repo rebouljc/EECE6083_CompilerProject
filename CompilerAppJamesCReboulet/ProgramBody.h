@@ -4,10 +4,9 @@
 class ProgramBody : public ParseTreeNode
 {
 public:
-	ProgramBody(Parser* parser, ParseTreeNode* motherNode);
+	ProgramBody(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr);
 	~ProgramBody() {};
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void populateLocalSearchResultsList() override;
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;

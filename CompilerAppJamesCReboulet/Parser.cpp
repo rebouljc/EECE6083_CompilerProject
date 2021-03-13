@@ -55,7 +55,7 @@ Parser::~Parser()
     
     this->cleanUp();
     
-    for (int i = 0; i < this->storedTokens.size(); ++i)
+    for (unsigned int i = 0; i < this->storedTokens.size(); ++i)
     {
         delete (this->storedTokens.at(i));
     }

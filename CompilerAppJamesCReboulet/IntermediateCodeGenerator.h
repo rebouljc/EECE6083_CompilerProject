@@ -8,6 +8,8 @@ public:
 	void init();
 	void setParseTreePtr(ParseTreeNode* parseTree);
 	~IntermediateCodeGenerator();
+
 private:
 	ParseTreeNode* parseTree;
+
 };

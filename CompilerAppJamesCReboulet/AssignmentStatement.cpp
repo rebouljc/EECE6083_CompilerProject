@@ -3,8 +3,10 @@
 #include "Identifier.h"
 #include "Expression.h"
 
-AssignmentStatement::AssignmentStatement(Parser* parser, ParseTreeNode* motherNode)
+AssignmentStatement::AssignmentStatement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -14,7 +16,7 @@ void AssignmentStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
 
 
-	this->linkedMemberNonterminals.push_back(new Destination(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new Destination(this->parserPtr, motherNode, this));
 	ParseTreeNode* dest = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 
 	if (!dest->getIsValid())
@@ -31,13 +33,13 @@ void AssignmentStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 
 	if (currentToken->getTokenType() == "ASSIGNMENT")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		
 	}
 
 	currentToken = this->parserPtr->readNextToken();
 	
-	this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode));
+	this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode, this));
 	ParseTreeNode* expr = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!expr->getIsValid())
 	{
@@ -61,19 +63,10 @@ void AssignmentStatement::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void AssignmentStatement::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

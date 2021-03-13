@@ -6,16 +6,17 @@
 class Identifier : public TerminalNode
 {
 public:
-	Identifier(Token* token, ParseTreeNode* motherNode, string identifierType);
+	Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr);
 	string getNodeSymbolIdentifierType();
 	ParseTreeNode* getNodePtr() override;
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void populateLocalSearchResultsList() override;
 	~Identifier() {};
+
 
 private:
 
 	string identifierType;
+	
 
 
 };

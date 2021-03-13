@@ -5,12 +5,11 @@
 class Number : public TerminalNode
 {
 public:
-	Number(Token* token);
+	Number(Token* token, ParseTreeNode* parentNodePtr);
 	double getNodeTokenIntegerDoubleNumberTokenValue();
 	ParseTreeNode* getNodePtr() override;
 	string getNumberTokenType();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void populateLocalSearchResultsList() override;
 	~Number() {};
 
 private:

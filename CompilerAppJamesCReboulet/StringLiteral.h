@@ -5,10 +5,9 @@
 class StringLiteral : public TerminalNode
 {
 public:
-	StringLiteral(Token* token);
+	StringLiteral(Token* token, ParseTreeNode* parentNodePtr);
 	ParseTreeNode* getNodePtr() override;
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void populateLocalSearchResultsList() override;
 	~StringLiteral() {};
 
 private:

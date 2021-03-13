@@ -53,7 +53,7 @@ void Scanner::cleanUp()
 		delete(it->second);
 	}
 
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		delete(this->storedCharacters.at(i));
 	}
@@ -239,7 +239,7 @@ void Scanner::createIdentifierToken()
 		recentToken->setTokenValue(identifier);
 	}
 	//make sure to clear the stored characters list or a pile will form.
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		delete (this->storedCharacters.at(i));
 	}
@@ -256,7 +256,7 @@ void Scanner::createStringLiteralToken()
 
 	//Read the character from the file.
 
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		newString = newString + this->storedCharacters.at(i)->getTokenValue();
 	}
@@ -264,7 +264,7 @@ void Scanner::createStringLiteralToken()
 	//Oh yeah!  We need to actually set the token value too..  I forgot.
 	this->storedTokens.at(this->storedTokens.size() - 1)->setTokenValue(newString);
 	//Now, as always, we need to clear the character list
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		delete (this->storedCharacters.at(i));
 	}
@@ -438,7 +438,7 @@ void Scanner::matchReservedWord(ifstream* input)
 		this->createReservedWordToken(resultTok);
 
 		//if we have identified a lexeme as a reserved word, make sure to empty the character vector.
-		for (int i = 0; i < this->storedCharacters.size(); ++i)
+		for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 		{
 			delete (this->storedCharacters.at(i));
 		}
@@ -474,7 +474,7 @@ bool Scanner::matchIdentifier()
 	//search the whole damn list, since this doesn't work if the character is in the middle of the list.
 	//It is slightly inefficient, but what do you do??
 
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		if (this->storedCharacters.at(i)->getTokenType() == "BAD_BOY")
 		{
@@ -551,7 +551,7 @@ void Scanner::matchNumber(ifstream* input)
 	}
 
 	//Remember to clear the characters
-	for (int i = 0; i < this->storedCharacters.size(); ++i)
+	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		delete (this->storedCharacters.at(i));
 	}

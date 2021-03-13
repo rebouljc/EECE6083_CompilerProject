@@ -3,8 +3,10 @@
 #include "TypeMark.h"
 #include "ParameterList.h"
 
-ProcedureHeader::ProcedureHeader(Parser* parser, ParseTreeNode* motherNode)
+ProcedureHeader::ProcedureHeader(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 }
@@ -18,7 +20,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == "procedure")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		}
 
 		else
@@ -31,7 +33,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenType() == "IDENTIFIER")
 		{
-			this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL"));
+			this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
 		}
 
 		else
@@ -45,7 +47,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == ":")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		}
 
 		else
@@ -58,14 +60,14 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 	else if (tokenCounter == 3) //If it is equal to 3 and we have made it this far, we need a type mark.
 	{
-		this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new TypeMark(this->parserPtr, motherNode, this));
 	}
 
 	else if (tokenCounter == 4)
 	{
 		if (currentToken->getTokenValue() == "(")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		}
 
 		else
@@ -77,7 +79,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 
 	else if (tokenCounter == 5)
 	{
-		this->linkedMemberNonterminals.push_back(new ParameterList(this->parserPtr, motherNode));
+		this->linkedMemberNonterminals.push_back(new ParameterList(this->parserPtr, motherNode, this));
 		//If there are no parameters, then pop_back() the vector.
 		ParseTreeNode* param = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 		if (!param->getIsValid())
@@ -90,7 +92,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == ")")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 			//Read the next token, for now.  Since this is causing issues.
 			currentToken = this->parserPtr->readNextToken();
 		}
@@ -124,19 +126,10 @@ void ProcedureHeader::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 
 
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
-}
-
-void ProcedureHeader::populateLocalSearchResultsList()
-{
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		this->linkedMemberNonterminals.at(i)->populateSearchResultsList((ParseTreeNode*)this);
-	}
-
 }

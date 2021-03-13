@@ -20,6 +20,7 @@ public:
 	virtual bool getIsValid() { return false; };
 	void setParserPtr(Parser* parserPtr);
 	virtual ~ParseTreeNode() {};
+	void climbTreeAndPopulateSymbolTable(int identifierId, string identifierType, ParseTreeNode* identifierNode);
 	
 	
 protected:
@@ -31,11 +32,15 @@ protected:
 	void searchAndAddIdentifierToLocalSymbolTable(ParseTreeNode* localObjectPtr);
 	
 	
+	
 
 	//member variables
 	
-	Parser* parserPtr;
+	Parser* parserPtr = nullptr;
+	ParseTreeNode* parentNodePtr;
 	vector<ParseTreeNode*> searchResultsList;
 	vector<ParseTreeNode*> symbolTable;
+	string localClassType;
+	unsigned int localIdentifierID;
 	
 };
