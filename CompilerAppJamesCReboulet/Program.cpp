@@ -9,7 +9,7 @@ Program::Program(Parser* parser)
 {
 	
 	this->setParserPtr(parser);
-	this->verifySyntaxCreateParseTree(0, (ParseTreeNode*) this);
+	this->verifySyntaxCreateParseTree(0, this);
 }
 
 void Program::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

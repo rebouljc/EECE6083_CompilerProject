@@ -5,33 +5,7 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
 	this->parentNodePtr = parentNodePtr;
 	this->token = token;
-	//If this constructor is called, this terminal node is an <identifier>
-	bool alreadyInTable = false;
-	for (unsigned int i = 0; i < motherNode->getSymbolTable()->size(); ++i)
-	{
-		Identifier* currentNode = dynamic_cast<Identifier*>(motherNode->getSymbolTable()->at(i));
-		if (currentNode->getNodeTokenValue() == token->getTokenValue() &&
-			currentNode->getNodeSymbolIdentifierType() == "GLOBAL")
-
-		{
-			/*if (currentNode->getNodeSymbolIdentifierType() == "GLOBAL")
-			{
-				//Throw the exception!  We have a redeclaration of a global variable which is bad.
-				//We do nothing for now, but this will be a future exception.
-			}*/
-			alreadyInTable = true;
-			break;
-		}
-
-	}
-
-	if (!alreadyInTable)
-	{
-
-		motherNode->addToSymbolTable(this);
-	}
-
-	this->identifierType = identifierType;
+	this->climbTreeAndPopulateSymbolTable(identifierType, this);
 
 }
 
