@@ -7,7 +7,9 @@ TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
 	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
+	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	
 }
 
 void TypeMark::createEnumList(ParseTreeNode* motherNode)
@@ -21,7 +23,7 @@ void TypeMark::createEnumList(ParseTreeNode* motherNode)
 
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
 	}
 
 	else if (currentToken->getTokenValue() == ",")
@@ -68,7 +70,7 @@ void TypeMark::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 
 	else if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
 		this->setIsValid(true);
 		
 	}

@@ -8,7 +8,9 @@ ArithOp::ArithOp(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* paren
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
 	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
+	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	
 }
 
 void ArithOp::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

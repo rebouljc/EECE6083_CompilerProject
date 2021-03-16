@@ -10,7 +10,9 @@ Destination::Destination(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
 	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
+	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	
 }
 
 void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
@@ -19,7 +21,7 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
 		//recurse
 		this->setIsValid(true);
 

@@ -9,6 +9,7 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	~Declaration() {};
+	bool checkGlobalTerminalNodePresent() override;
 
 
 private:
@@ -16,6 +17,6 @@ private:
 	vector<ParseTreeNode*> linkedMemberNonterminals;
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
-
+	
 	
 };

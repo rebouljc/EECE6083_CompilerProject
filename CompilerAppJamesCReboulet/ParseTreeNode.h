@@ -22,6 +22,7 @@ public:
 	void setParserPtr(Parser* parserPtr);
 	virtual ~ParseTreeNode() {};
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
+	virtual bool checkGlobalTerminalNodePresent() { return false; };
 	
 	
 protected:
@@ -43,6 +44,6 @@ protected:
 	//vector<ParseTreeNode*> symbolTable;
 	string localClassType;
 	vector<ParseTreeNode*> symbolTable; //symbolTable.first = TablePtr symbolTable.second == IdentifierPtr 
-	
+	ParseTreeNode* programNode_motherNode = nullptr;
 	
 };

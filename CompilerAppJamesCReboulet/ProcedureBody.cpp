@@ -8,9 +8,9 @@ ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
 	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
+	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
-    //Create the symbol table
-	//this->populateLocalSearchResultsList();
+
 }
 
 void ProcedureBody::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

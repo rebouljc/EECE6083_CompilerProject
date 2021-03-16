@@ -12,10 +12,23 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
 	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
+	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	
 }
 
-
+bool Declaration::checkGlobalTerminalNodePresent()
+{
+	TerminalNode* termNode;
+	if (!this->linkedMemberNonterminals.empty() && 
+		(termNode = dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(0))) != nullptr &&
+		 termNode->getNodeTokenValue() == "global"
+	   )
+	{
+		return true;
+	}
+	return false;
+}
 void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();

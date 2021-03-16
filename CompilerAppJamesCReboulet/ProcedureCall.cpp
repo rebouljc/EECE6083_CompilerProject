@@ -10,7 +10,9 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
 	this->parentNodePtr = parentNodePtr;
 	this->setParserPtr(parser);
+	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	
 }
 
 ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr, Token* stolenToken)
@@ -36,7 +38,7 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 	printf("\nProcedureCall_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "GLOBAL", this));
+		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
 		//recurse
 
 	}

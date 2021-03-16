@@ -8,7 +8,9 @@ Bound::Bound(Token* token, Parser* parser, ParseTreeNode* motherNode, ParseTreeN
 	this->parentNodePtr = parentNodePtr;
 	this->token = token;
 	this->setParserPtr(parser);
+	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	
 }
 
 void Bound::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
