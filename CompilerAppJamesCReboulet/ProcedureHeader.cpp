@@ -135,3 +135,8 @@ void ProcedureHeader::populateSearchResultsList(ParseTreeNode* motherNode)
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
+
+unsigned int ProcedureHeader::getLinkedMemberNonterminalsSize()
+{
+	return this->linkedMemberNonterminals.size();
+}

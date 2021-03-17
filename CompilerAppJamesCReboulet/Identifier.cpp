@@ -6,9 +6,15 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	this->parentNodePtr = parentNodePtr;
 	this->token = token;
 	this->programNode_motherNode = motherNode;
-	this->climbTreeAndPopulateSymbolTable(identifierType, this);
+	this->identifierType = identifierType;
+	this->climbTreeAndPopulateSymbolTable(this->identifierType, this);
 	
 
+}
+
+void Identifier::setIdentifierTypeToGlobal()
+{
+	this->identifierType = "GLOBAL";
 }
 
 //Now, we will add a couple of duplicate methods from Token* here to streamline the process.  There are a lot of unnecessary public methods in token 

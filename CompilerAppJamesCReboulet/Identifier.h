@@ -10,6 +10,7 @@ public:
 	string getNodeSymbolIdentifierType();
 	ParseTreeNode* getNodePtr() override;
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void setIdentifierTypeToGlobal();
 	~Identifier() {};
 
 
