@@ -42,7 +42,9 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 		{
 			if (currentToken->getTokenType() == "IDENTIFIER")
 			{
-				this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
+				
+				this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this, true));
+				
 			}
 
 			else

@@ -44,7 +44,7 @@ bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd)
         }
     }
 
-    if (!match)
+    if (!match && dynamic_cast<Identifier*>(symbolToAdd)->getIdentifierIsValidDeclaration())
     {
         this->symbolTable.push_back(symbolToAdd);
     }
@@ -52,8 +52,9 @@ bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd)
     return !match;
 }
 
-ParseTreeNode* ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol)
+bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol)
 {
+    
     for (vector<ParseTreeNode*>::iterator it = this->symbolTable.begin(); it < this->symbolTable.end(); ++it)
     {
         if (dynamic_cast<Identifier*>(*it)->getNodeTokenValue() ==
@@ -61,11 +62,20 @@ ParseTreeNode* ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol)
             )
         {
 
-            return *it;
+            return true;
         }
     }
 
-    return nullptr;
+    //We should never get here if the symbol is found in either a local or global table of a parseTree while climbing it.
+
+    if (this->parentNodePtr == nullptr)
+    {
+        return false;
+    }
+
+    this->parentNodePtr->searchSymbolTable(searchSymbol);
+
+    
 }
 vector<ParseTreeNode*>* ParseTreeNode::getSymbolTable()
 {
@@ -92,7 +102,7 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
         return;
     }
   
-    else if (identifierType == "LOCAL")
+    else if (identifierType == "LOCAL" || identifierType == "GLOBAL_EMBEDDED")
     {
         Identifier* ident = dynamic_cast<Identifier*>(identifierNode);
         
@@ -105,6 +115,12 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
                 identifierType = "GLOBAL";
                 ident->setIdentifierTypeToGlobal();
                 //We will keep climbing the tree until we hit the "GLOBAL" portion.
+            }
+
+            else if (identifierType == "GLOBAL_EMBEDDED")
+            {
+                //Kick the football up again so it will be caught by top declaration.
+                identifierType ="LOCAL";
             }
 
             else 
@@ -131,6 +147,11 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
                 ident->setIdentifierTypeToGlobal();
                 //Keep climbing the tree and it will be caught by the if (identifierType == "GLOBAL") statement.
 
+            }
+
+            else if (dynamic_cast<ProcedureHeader*>(this)->getLinkedMemberNonterminalsSize() == 1)
+            {
+                identifierType = "GLOBAL_EMBEDDED";
             }
 
 

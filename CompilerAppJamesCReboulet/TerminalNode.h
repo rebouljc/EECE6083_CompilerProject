@@ -9,7 +9,6 @@ public:
 	TerminalNode(Token* token, ParseTreeNode* parentNodePtr);
 	string getNodeTokenType();
 	string getNodeTokenValue();
-	virtual string getNodeSymbolIdentifierType() { return NULL; };
 	int    getNodeTokenLineNumber();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	virtual ~TerminalNode() {};

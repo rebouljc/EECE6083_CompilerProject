@@ -22,6 +22,17 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
+		//check to see if the identifier is present in the symbol table
+		bool identPresent = this->searchSymbolTable(this->linkedMemberNonterminals.at(0));
+		if (identPresent)
+		{
+			printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
+		}
+
+		else
+		{
+			//We throw an exception.  Identifier is being assigned, but has not been declared locally or globally.
+		}
 		//recurse
 		this->setIsValid(true);
 

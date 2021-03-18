@@ -8,6 +8,7 @@ procedure Proc1 : integer(variable val : integer) //Declaration -> Procedure Dec
 		procedure Proc1 : integer(variable val : integer) //<Procedure Body_2> -> <Declaration>; -> <Procedure_Header><Procedure_Body_3>
 	                  begin //<Procedure_Body_3>
 		          val := val + 1;
+                          val1 := val + 1;
                           return val;
 		          end procedure;
 		  begin

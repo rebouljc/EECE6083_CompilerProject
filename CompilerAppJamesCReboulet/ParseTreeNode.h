@@ -14,7 +14,7 @@ public:
 	
 	void addToSearchResultsList(ParseTreeNode* nodeToAdd);
 	bool addToSymbolTable(ParseTreeNode* symbolToAdd);
-	ParseTreeNode* searchSymbolTable(ParseTreeNode* searchSymbol);
+	bool searchSymbolTable(ParseTreeNode* searchSymbol);
 	virtual void populateSearchResultsList(ParseTreeNode* motherNode = nullptr) { return; };
 	vector<ParseTreeNode*>* getSymbolTable();
 	virtual void setIsValid(bool isValid) {};

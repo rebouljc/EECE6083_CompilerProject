@@ -12,6 +12,17 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 
 }
 
+Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr, bool isValidDeclaration)
+{
+	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
+	this->parentNodePtr = parentNodePtr;
+	this->token = token;
+	this->programNode_motherNode = motherNode;
+	this->identifierType = identifierType;
+	this->isValidDeclaration = isValidDeclaration;
+	this->climbTreeAndPopulateSymbolTable(this->identifierType, this);
+}
+
 void Identifier::setIdentifierTypeToGlobal()
 {
 	this->identifierType = "GLOBAL";

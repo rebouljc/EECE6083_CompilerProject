@@ -52,9 +52,6 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 		
 	return;
 
-
-
-
 }
 
 ParseTreeNode* ProcedureDeclaration::getNodePtr()
