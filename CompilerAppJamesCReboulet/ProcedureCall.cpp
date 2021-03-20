@@ -52,6 +52,8 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 	else if (currentToken->getTokenValue() == ")")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		//Semantic Check
+		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
 		this->setIsValid(true);
 		return;
 	}
@@ -101,4 +103,22 @@ void ProcedureCall::populateSearchResultsList(ParseTreeNode* motherNode)
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
+}
+
+bool ProcedureCall::checkIdentifierFollowsScopingRules()
+{
+	ParseTreeNode* identifierToCheck = nullptr;
+	bool identPresent = this->searchSymbolTable(this->linkedMemberNonterminals.at(0), identifierToCheck);
+	if (identPresent)
+	{
+		printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
+
+	}
+
+	else
+	{
+		//We throw an exception.  Identifier is being assigned, but has not been declared locally or globally.
+	}
+
+	return identPresent;
 }

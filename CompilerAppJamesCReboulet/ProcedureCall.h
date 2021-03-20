@@ -19,4 +19,8 @@ private:
 	bool isValid = false;
 	Token* stolenToken;
 
+	//Semantic checking methods.
+
+	bool checkIdentifierFollowsScopingRules();
+
 };

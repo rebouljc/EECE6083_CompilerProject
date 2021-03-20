@@ -14,7 +14,7 @@ public:
 	
 	void addToSearchResultsList(ParseTreeNode* nodeToAdd);
 	bool addToSymbolTable(ParseTreeNode* symbolToAdd);
-	bool searchSymbolTable(ParseTreeNode* searchSymbol);
+	bool searchSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol);
 	virtual void populateSearchResultsList(ParseTreeNode* motherNode = nullptr) { return; };
 	vector<ParseTreeNode*>* getSymbolTable();
 	virtual void setIsValid(bool isValid) {};
@@ -23,6 +23,7 @@ public:
 	virtual ~ParseTreeNode() {};
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	virtual bool checkGlobalTerminalNodePresent() { return false; };
+
 	
 	
 protected:
@@ -31,6 +32,10 @@ protected:
 	virtual ParseTreeNode* getNodePtr() { return nullptr; };
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
 	virtual void populateLocalSearchResultsList() { return; };
+	
+	
+
+	
 	
 	
 	

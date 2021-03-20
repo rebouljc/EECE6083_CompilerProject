@@ -52,7 +52,7 @@ bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd)
     return !match;
 }
 
-bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol)
+bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol)
 {
     
     for (vector<ParseTreeNode*>::iterator it = this->symbolTable.begin(); it < this->symbolTable.end(); ++it)
@@ -61,7 +61,7 @@ bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol)
             dynamic_cast<Identifier*>(searchSymbol)->getNodeTokenValue()
             )
         {
-
+            returnSymbol = dynamic_cast<Identifier*>(*it);
             return true;
         }
     }
@@ -70,10 +70,12 @@ bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol)
 
     if (this->parentNodePtr == nullptr)
     {
+        returnSymbol = nullptr;
         return false;
+       
     }
 
-    this->parentNodePtr->searchSymbolTable(searchSymbol);
+    this->parentNodePtr->searchSymbolTable(searchSymbol, returnSymbol);
 
     
 }
@@ -129,14 +131,21 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
                 return;
             }
         }
-        else if (dynamic_cast<VariableDeclaration*>(this) != nullptr && 
-                 dynamic_cast<ProgramBody*>(this->parentNodePtr->parentNodePtr) != nullptr
-                )
+        else if (dynamic_cast<VariableDeclaration*>(this) != nullptr)
         {
-            identifierType = "GLOBAL";
-            ident->setIdentifierTypeToGlobal();
-            //Climb the tree again and this time, it will be caught correctly by the if (identifierType == "GLOBAL") statement.
+            if (dynamic_cast<ProgramBody*>(this->parentNodePtr->parentNodePtr) != nullptr)
+            {
+                identifierType = "GLOBAL";
+                ident->setIdentifierTypeToGlobal();
+                //Climb the tree again and this time, it will be caught correctly by the if (identifierType == "GLOBAL") statement.
+            }
+
+            else if (dynamic_cast<ProcedureBody*>(this->parentNodePtr->parentNodePtr) != nullptr)
+            {
+                identifierType = "GLOBAL_EMBEDDED";
+            }
         }
+
         else if (dynamic_cast<ProcedureHeader*>(this) != nullptr)
         {
             if (dynamic_cast<ProcedureHeader*>(this)->getLinkedMemberNonterminalsSize() == 1 &&
@@ -154,14 +163,12 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
                 identifierType = "GLOBAL_EMBEDDED";
             }
 
-
-            
-           
-
             //Otherwise, the variable is local and we climb the tree and it will be caught by declaration.
             //If the identifier happens to be global in declaration, the identifier/procedure type will be set to "GLOBAL"
         }
+
         
+   
     }
    
     this->parentNodePtr->climbTreeAndPopulateSymbolTable(identifierType, identifierNode); //Do the recursive call here.

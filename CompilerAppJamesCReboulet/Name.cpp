@@ -23,6 +23,10 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
 		//recurse
+
+		//Semantic Check
+		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+
 		this->setIsValid(true);
 
 	}
@@ -109,4 +113,22 @@ void Name::populateSearchResultsList(ParseTreeNode* motherNode)
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
+}
+
+bool Name::checkIdentifierFollowsScopingRules()
+{
+	ParseTreeNode* identifierToCheck = nullptr;
+	bool identPresent = this->searchSymbolTable(this->linkedMemberNonterminals.at(0), identifierToCheck);
+	if (identPresent)
+	{
+		printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
+
+	}
+
+	else
+	{
+		//We throw an exception.  Identifier is being assigned, but has not been declared locally or globally.
+	}
+
+	return identPresent;
 }

@@ -16,6 +16,10 @@ private:
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
 
+	//Semantic checking methods.
+
+	bool checkIdentifierFollowsScopingRules();
+
 	
 
 
