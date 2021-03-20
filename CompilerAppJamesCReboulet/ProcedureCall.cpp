@@ -2,6 +2,7 @@
 #include "TerminalNode.h"
 #include "Identifier.h"
 #include "ArgumentList.h"
+#include "IdentifierNotDeclaredException.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 
@@ -12,6 +13,15 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	this->setParserPtr(parser);
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	//Semantic Check
+	if (this->getIsValid())
+	{
+		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+		if (!checkScopeResult)
+		{
+			cout << "\nScoping Rule violation.";
+		}
+	}
 	
 }
 
@@ -22,6 +32,15 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	this->setParserPtr(parser);
 	this->setStolenToken(stolenToken);
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	//Semantic Check
+	if (this->getIsValid())
+	{
+		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+		if (!checkScopeResult)
+		{
+			cout << "\nScoping Rule violation.";
+		}
+	}
 }
 
 void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
@@ -52,8 +71,6 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 	else if (currentToken->getTokenValue() == ")")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
-		//Semantic Check
-		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
 		this->setIsValid(true);
 		return;
 	}

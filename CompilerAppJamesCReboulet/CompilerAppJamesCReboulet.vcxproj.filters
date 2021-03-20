@@ -281,5 +281,11 @@
     <ClInclude Include="StringLiteral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IdentifierNotDeclaredException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainCompileErrorException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

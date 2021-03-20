@@ -2,6 +2,7 @@
 #include "TerminalNode.h"
 #include "Identifier.h"
 #include "Expression.h"
+#include "IdentifierNotDeclaredException.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -11,6 +12,15 @@ Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodeP
 	this->setParserPtr(parser);
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	//Semantic Check
+	if (this->getIsValid())
+	{
+		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+		if (!checkScopeResult)
+		{
+			cout << "\nScoping Rule violation.";
+		}
+	}
 	
 }
 
@@ -24,9 +34,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
 		//recurse
 
-		//Semantic Check
-		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
-
+	
 		this->setIsValid(true);
 
 	}

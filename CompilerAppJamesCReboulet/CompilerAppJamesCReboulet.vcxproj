@@ -196,11 +196,13 @@
     <ClInclude Include="Factor.h" />
     <ClInclude Include="Identifier.h" />
     <ClInclude Include="IdentifierBeginsWithNumberException.h" />
+    <ClInclude Include="IdentifierNotDeclaredException.h" />
     <ClInclude Include="IfStatement.h" />
     <ClInclude Include="IllegalEqualsSignException.h" />
     <ClInclude Include="IllegalIdentifierException.h" />
     <ClInclude Include="IntermediateCodeGenerator.h" />
     <ClInclude Include="LoopStatement.h" />
+    <ClInclude Include="MainCompileErrorException.h" />
     <ClInclude Include="Name.h" />
     <ClInclude Include="NoClosingCommentMarkException.h" />
     <ClInclude Include="Number.h" />
