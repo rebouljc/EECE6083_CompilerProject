@@ -350,24 +350,46 @@ Token* Scanner::searchRelationOperatorList(string character,ifstream* input)
 	char peekChar = this->peekNextCharacterInFile(input);
 	string checkPeekString = character;
 	checkPeekString.push_back(peekChar);
-
-	for (set<pair<string, Token*>>::iterator it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
+	set<pair<string, Token*>>::iterator it;
+	try
 	{
-		if (checkPeekString == it->first)
+		for ( it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
 		{
-			if (it->second->getTokenType() == "ILLEGAL_ASSIGNMENT_OP")
+			if (checkPeekString == it->first)
 			{
-				throw IllegalEqualsSignException();
+				if (it->second->getTokenType() == "ILLEGAL_ASSIGNMENT_OP")
+				{
+					throw IllegalEqualsSignException();
+				}
+				//We need to read and discard that character, so it doesn't screw things up in the input stream later.
+				char byteWaste = this->readCharacterFromFile(input);
+				//Now, we need to read letters into the stored character array until we encounter a space character
+				return it->second;
 			}
-			//We need to read and discard that character, so it doesn't screw things up in the input stream later.
-			char byteWaste = this->readCharacterFromFile(input);
-			//Now, we need to read letters into the stored character array until we encounter a space character
-			return it->second;
-		}
 
-		
+
+		}
 	}
-	for (set<pair<string, Token*>>::iterator it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
+	catch (IllegalEqualsSignException& e)
+	{
+		cout << endl << e.what() << this->getLineNumber();
+		
+		for (set<pair<string, Token*>>::iterator punctIt = this->punctuation.begin(); punctIt != this->punctuation.end(); ++punctIt)
+		{
+			if (punctIt->first == ":")
+			{   
+				char byteWaste = this->readCharacterFromFile(input);
+				punctIt->second->setTokenType("ASSIGNMENT");
+				punctIt->second->setTokenValue(":=");
+				return punctIt->second;
+			}
+		}
+		
+
+		//it = i - 1; //Get the address of the character before the illegal equals sign.
+		//this->storedCharacters.insert(i, new Character())
+	}
+	for (it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
 	{
 		string checkRelationChar = character;
 		if (checkRelationChar == it->first && it->second->getTokenType() == "RELATION_OP")
@@ -473,14 +495,24 @@ bool Scanner::matchIdentifier()
 {
 	//search the whole damn list, since this doesn't work if the character is in the middle of the list.
 	//It is slightly inefficient, but what do you do??
-
-	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
+	vector<Character*>::iterator i;
+	try
 	{
-		if (this->storedCharacters.at(i)->getTokenType() == "BAD_BOY")
+		for (i = this->storedCharacters.begin(); i != this->storedCharacters.end(); ++i)
 		{
-			throw IllegalIdentifierException();
-			return false;
+		
+			if ((*i)->getTokenType()  == "BAD_BOY")
+			{
+				throw IllegalIdentifierException();
+				return false;
+			}
 		}
+	}
+
+	catch (IllegalIdentifierException &e)
+	{
+		cout << endl << e.what() << this->getLineNumber();
+		this->storedCharacters.erase(i);
 	}
 
      if (this->storedCharacters.at(0)->getTokenType() == "DIGIT")
@@ -496,22 +528,40 @@ bool Scanner::matchIdentifier()
 void Scanner::matchNumber(ifstream* input)
 {
 	//verify that everything is a digit first.
-	
-	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
+	vector<Character*>::iterator i;
+	try
 	{
-		if (this->storedCharacters.at(i)->getTokenType() == "LETTER")
+		for (i = this->storedCharacters.begin(); i != this->storedCharacters.end(); ++i)
 		{
-			//Here is where we throw the exception.  We obviously have an identifier that starts with a digit and contains a letter.  BAD!
+			if ((*i)->getTokenType() == "LETTER")
+			{
+				//Here is where we throw the exception.  We obviously have an identifier that starts with a digit and contains a letter.  BAD!
 
-			throw IdentifierBeginsWithNumberException();
-			return;
-		}
+				throw IdentifierBeginsWithNumberException();
+				return;
+			}
 
-		else if (this->storedCharacters.at(i)->getTokenType() == "BAD_BOY")
-		{
-			throw IllegalEqualsSignException();
+			else if ((*i)->getTokenType() == "BAD_BOY")
+			{
+				throw IllegalEqualsSignException();
+			}
 		}
 	}
+
+	catch (IdentifierBeginsWithNumberException &e)
+	{
+		cout << endl << e.what() << this->getLineNumber();
+
+		//Remove the DIGIT from the identifier and insert it at the end of the variable name.
+		//Then continue.  But throw the error.  
+		//If there are any errors present, the compiler will halt before Intermediate Code generation.
+
+		Character* oldChar = new Character((*i)->getTokenType(), (*i)->getTokenValue());
+		this->storedCharacters.erase(i);
+		this->storedCharacters.push_back(new Character(oldChar->getTokenType(), oldChar->getTokenValue()));
+	}
+
+	
 	
 	//First, we convert all characters to integers.
 	
