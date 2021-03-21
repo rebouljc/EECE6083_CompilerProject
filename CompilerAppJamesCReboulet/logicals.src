@@ -8,7 +8,7 @@ begin
 
 x := getBool();
 if(x) then
-	tmp := putString("T");
+	tmp := putString("T);
 else
 	tmp := putString("F");
 end if;

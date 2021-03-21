@@ -703,7 +703,7 @@ void Scanner::matchStringLiteral(ifstream* input)
 	
 	else if (character == '"')
 	{
-		
+		this->firstQuotationMarkLineNumber = this->lineNumber;
 		this->createStringLiteralToken();
 		
 		
