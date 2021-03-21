@@ -812,7 +812,7 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 		throw NoClosingCommentMarkException();
 	}
 	
-	if (readNextCharacter == '*')
+	else if (readNextCharacter == '*')
 	{
 		//We have to do another peek to see if we have a closing */  Otherwise, we will probably parse bullshit again.
 		char peekChar = this->peekNextCharacterInFile(input);
@@ -821,6 +821,11 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 			char wasteToken = this->readCharacterFromFile(input);
 			return;
 		}
+	}
+	//Takes care of case where there is a '/' within the embedded comment.
+	else if (readNextCharacter == '/')
+	{
+		this->commentCheckingAndIgnoringAncillaryMethod(input);
 	}
 
 	//Waste and recurse until '*' is encountered, then return.  I forgot to waste.
