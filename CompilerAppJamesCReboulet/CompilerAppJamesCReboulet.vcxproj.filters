@@ -287,5 +287,8 @@
     <ClInclude Include="MainCompileErrorException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NoPeriodAtEndOfProgramException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

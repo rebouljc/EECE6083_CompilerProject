@@ -27,6 +27,14 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
+	//This synchronizes the change made by the IllegalEqualsSign Exception in the Scanner Module.
+	else if (currentToken->getTokenValue() == ":=")
+	{
+		currentToken->setTokenType("RELATION_OP");
+		currentToken->setTokenValue("==");
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+	}
+
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method
 	//That will probably cause a memory access violation to occur at runtime, because we are accessing a non-existent element in our vector.
 	else if (!this->linkedMemberNonterminals.empty() &&

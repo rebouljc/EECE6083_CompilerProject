@@ -12,13 +12,19 @@ IntermediateCodeGenerator::IntermediateCodeGenerator()
 
 IntermediateCodeGenerator::~IntermediateCodeGenerator()
 {
-	vector<ParseTreeNode*>* searchResultsList = this->parseTree->getSearchResultsList(this->parseTree);
-	
-	
-	for (unsigned int i = 0; i < searchResultsList->size(); ++i)
-	{
-		delete(searchResultsList->at(i));
+	vector<ParseTreeNode*>* searchResultsList = nullptr;
 
+	if (this->parseTree != nullptr)
+	{
+		searchResultsList = this->parseTree->getSearchResultsList(this->parseTree);
+
+
+
+		for (unsigned int i = 0; i < searchResultsList->size(); ++i)
+		{
+			delete(searchResultsList->at(i));
+
+		}
 	}
 }
 

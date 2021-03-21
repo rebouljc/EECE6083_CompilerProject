@@ -20,32 +20,32 @@ void Parser::init()
     }
 
     //Scanner Exceptions
-    catch (StringLiteralException& e)
+    catch (MainCompileErrorException& e)
     {
-        cout << endl << e.what() << this->getLineNumber();
-    }
+        cout << endl << e.what() << endl;
+        //This is also a bad error - forgetting to surround a string literal with " marks.
+        //We must crap out on this as well, since it can't be determined until the scanner reads the entire file
+        //with an eof() and the tokens are not parsed correctly at all.
 
-    catch (IdentifierBeginsWithNumberException& e)
-    {
-        cout << endl << e.what() << this->getLineNumber();
+        return;
     }
 
     catch (NoClosingCommentMarkException& e)
     {
         cout << endl << e.what() << this->getFirstCommentLineNumber();
+        //This is bad: We cannot recover or synchronize from this error,
+        //since it cannot be detected until scanning is complete and 
+        //there is nothing in the token list, so we must throw a main exception and stop everything altogether, or things will turn ugly.
+        //Don't make this error, or this compiler will have something to say about it!
+
+        
+        //Here, we crap out, but we clean up the memory mess first, since we cannot recover with this type of error.
+        return;
+
     }
 
-    catch (IllegalEqualsSignException& e)
-    {
-        cout << endl << e.what() << this->getLineNumber();
-    }
+    //Other exceptions can be fixed and resynchronization can take place, but the two above are unrecoverable.
 
-    catch (IllegalIdentifierException& e)
-    {
-        cout << endl << e.what() << this->getLineNumber();
-    }
-
-    
     this->parseTokensLoop();
   
     

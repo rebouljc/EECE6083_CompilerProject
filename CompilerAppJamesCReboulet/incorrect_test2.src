@@ -16,11 +16,12 @@ program test_program is
         variable a : integer;
         variable b : integer;
     begin
+       
         if (n < 0) then
             result := -1;
             return result;
         end if;
-        if (n = 0) then
+        if (n == 0) then
             result := 0;
             return result;
         end if;

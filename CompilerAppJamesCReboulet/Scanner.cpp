@@ -7,6 +7,8 @@
 #include "NoClosingCommentMarkException.h"
 #include "IllegalEqualsSignException.h"
 #include "IllegalIdentifierException.h"
+#include "NoPeriodAtEndOfProgramException.h"
+#include "MainCompileErrorException.h"
 
 
 //This scanner is guaranteed not to crap out.  If something is wrong, it will immediately stop at the line of the first instance of
@@ -81,7 +83,23 @@ void Scanner::init()
 	this->readFile(input);
 	input->close();
 	delete input;
-	
+	try
+	{
+		if (!this->storedTokens.empty())
+		{
+			Token* checkPeriod = this->storedTokens.at(this->storedTokens.size() - 1);
+			if (checkPeriod->getTokenValue() != ".")
+			{
+				throw NoPeriodAtEndOfProgramException();
+			}
+		}
+	}
+	catch (NoPeriodAtEndOfProgramException& e)
+	{
+		cout << endl << e.what() << this->getLineNumber();
+		//Now, we have to add that token.
+		this->storedTokens.push_back(new Token("PUNCTUATION", "."));
+	}
 }
 
 void Scanner::incrementLineNumber()
@@ -645,18 +663,31 @@ double Scanner::computeIntegerLiteralResult(vector<int>* inputVector, int vecSta
 	return currentValue + (this->computeIntegerLiteralResult(inputVector, vecStartElement, vectorSize));
 }
 
+int Scanner::getFirstQuotationMarkLineNumber()
+{
+	return this->firstQuotationMarkLineNumber;
+}
+
 void Scanner::matchStringLiteral(ifstream* input)
 {
 	char character = readCharacterFromFile(input);
-
-	if (input->eof()) //Prevents infinite recursion if user forgets to end string literal with "
+	try
 	{
-		throw StringLiteralException();
-	//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
-	//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
-    //if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
+		if (input->eof()) //Prevents infinite recursion if user forgets to end string literal with "
+		{
+			throw StringLiteralException();
+			//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
+			//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
+			//if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
+
+			return;
+		}
+	}
+	catch (StringLiteralException& e)
+	{
+		cout << endl << e.what() << this->getFirstQuotationMarkLineNumber();
+		throw MainCompileErrorException();
 		
-		return;
 	}
 
 	if (isalpha(character) || character == '_')
@@ -672,7 +703,9 @@ void Scanner::matchStringLiteral(ifstream* input)
 	
 	else if (character == '"')
 	{
+		
 		this->createStringLiteralToken();
+		
 		
 		return;
 	}
@@ -770,6 +803,7 @@ void Scanner::performOtherAction(ifstream* input, char character)
 
 		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "\"")
 		{
+			this->firstQuotationMarkLineNumber = this->lineNumber;
 			this->matchStringLiteral(input);
 		}
 		//Else, we consider it a comment and we start ignoring comments
@@ -859,7 +893,9 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 	
 	if(input->eof())
 	{
+		
 		throw NoClosingCommentMarkException();
+		
 	}
 	
 	else if (readNextCharacter == '*')

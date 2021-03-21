@@ -23,23 +23,31 @@ void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
 
-	else if (tokenCounter == 1)
+	else if (tokenCounter >= 1)
 	{
-		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode, this));
-		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
-		if (!isValid)
+		if (currentToken->getTokenValue() != "end")
 		{
-			this->linkedMemberNonterminals.pop_back();
-			return; //Here, we return at the first point that there is no valid statement, or we will infinitely recurse here.
-		}
+			this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode, this));
 
-		currentToken = this->parserPtr->readNextToken();
-		if (currentToken->getTokenValue() == ";")
+			bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
+			if (!isValid)
+			{
+				this->linkedMemberNonterminals.pop_back();
+				return; //Here, we return at the first point that there is no valid statement, or we will infinitely recurse here.
+			}
+
+			currentToken = this->parserPtr->readNextToken();
+			if (currentToken->getTokenValue() == ";")
+			{
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			}
+		}
+		else
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			//We need to give back the token, so that the if-statement can begin with "end" instead of "if" and mess things up.
+			this->parserPtr->resetTokenReadIndexToPrevious();
+			return;
 		}
-
-		return;
 	}
 
 	else
@@ -105,6 +113,8 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	{
 		
 		this->dealWithThenOrElse(motherNode, 0);
+		
+		
 	}
 
 	else if (currentToken->getTokenValue() == "else")

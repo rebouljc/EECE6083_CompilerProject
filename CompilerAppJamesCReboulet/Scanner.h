@@ -14,9 +14,11 @@ class Scanner
 {
    public:
 	   Scanner();
+	  
 	   
 	   int getLineNumber();
 	   int getFirstCommentLineNumber();
+	   int getFirstQuotationMarkLineNumber();
 	   void init();
 	  
 
@@ -92,6 +94,7 @@ class Scanner
    vector<Character*> storedCharacters;
    int lineNumber;
    int firstCommentLineNumber;
+   int firstQuotationMarkLineNumber;
    
    
 protected:
