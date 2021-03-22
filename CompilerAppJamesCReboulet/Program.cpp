@@ -52,7 +52,7 @@ ParseTreeNode* Program::getNodePtr()
 
 void Program::populateSearchResultsList(ParseTreeNode* motherNode)
 {
-	motherNode = (ParseTreeNode*)(this);
+	motherNode = this;
 
 	
 
@@ -61,6 +61,6 @@ void Program::populateSearchResultsList(ParseTreeNode* motherNode)
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
 
-	this->searchResultsList.push_back(this->getNodePtr());
+	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
