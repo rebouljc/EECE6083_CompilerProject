@@ -13,13 +13,17 @@ Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodeP
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
 	//Semantic Check
-	if (this->getIsValid())
+	try
 	{
-		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
-		if (!checkScopeResult)
+		if (this->getIsValid())
 		{
-			cout << "\nScoping Rule violation.";
+			bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
 		}
+	}
+	catch (IdentifierNotDeclaredException& e)
+	{
+		cout << endl << endl << e.what() << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenLineNumber()
+			 << " Identifier Name: "     << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue() << endl;
 	}
 	
 }
@@ -28,7 +32,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 {
 	//Defining as of 2/26/2021
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	printf("\nName_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nName_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
@@ -129,13 +133,14 @@ bool Name::checkIdentifierFollowsScopingRules()
 	bool identPresent = this->searchSymbolTable(this->linkedMemberNonterminals.at(0), identifierToCheck);
 	if (identPresent)
 	{
-		printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
+		//printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
 
 	}
 
 	else
 	{
 		//We throw an exception.  Identifier is being assigned, but has not been declared locally or globally.
+		throw IdentifierNotDeclaredException();
 	}
 
 	return identPresent;

@@ -290,5 +290,8 @@
     <ClInclude Include="NoPeriodAtEndOfProgramException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalIdentifierIsNotUniqueException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ Factor::Factor(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentN
 void Factor::dealWithExpression(ParseTreeNode* motherNode, int tokenCounter)
 {
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
-	printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenValue() == ")") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
@@ -42,7 +42,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	//Doing this with modified code from If_Statement.  This method is PARTIALLY RECURSIVE, though.  However, this->dealWithExpression(...) IS.
 	
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
-	printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (currentToken->getTokenValue() == "true" ||
 		currentToken->getTokenValue() == "false")

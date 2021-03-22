@@ -23,7 +23,7 @@ void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 	  //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	//Read the next token here.
 		Token* currentToken = parserPtr->getCurrentlyReadToken();
-		printf("\nVariableDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
+		//printf("\nVariableDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
 		if (tokenCounter == 0)
 		{
 			if (currentToken->getTokenValue() == "variable")

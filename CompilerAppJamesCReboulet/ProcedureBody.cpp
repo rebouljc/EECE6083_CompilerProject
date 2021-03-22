@@ -25,7 +25,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 {   //Same as program body with a few changes to the reserved words.
 
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (!this->linkedMemberNonterminals.empty() &&
 		dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
@@ -62,7 +62,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* motherNode)
 {
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	bool nested = false;
 	/*for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
@@ -94,7 +94,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		this->setIsValid(true);
-		printf("-------->END PROCEDURE<--------------");
+		//printf("-------->END PROCEDURE<--------------");
 		
 		return;
 	}

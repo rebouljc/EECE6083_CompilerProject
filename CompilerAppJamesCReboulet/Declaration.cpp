@@ -32,7 +32,7 @@ bool Declaration::checkGlobalTerminalNodePresent()
 void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	printf("\nDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	
 	bool varDeclFlag = false;
 	bool procDeclFlag = false;

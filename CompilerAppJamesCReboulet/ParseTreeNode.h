@@ -13,7 +13,7 @@ public:
 	vector<ParseTreeNode*>* getSearchResultsList(ParseTreeNode* currentProgramNodePtr);
 	
 	void addToSearchResultsList(ParseTreeNode* nodeToAdd);
-	bool addToSymbolTable(ParseTreeNode* symbolToAdd);
+	bool addToSymbolTable(ParseTreeNode* symbolToAdd, bool checkUnique);
 	bool searchSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol);
 	virtual void populateSearchResultsList(ParseTreeNode* motherNode = nullptr) { return; };
 	vector<ParseTreeNode*>* getSymbolTable();

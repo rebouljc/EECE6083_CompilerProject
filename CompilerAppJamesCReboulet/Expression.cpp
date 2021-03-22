@@ -19,7 +19,7 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 {
 	//Note:  This same code will now work with relation, term, and factor.  It just needs to be modified for each of those non-terminal classes.
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	printf("\nExpression_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nExpression_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (currentToken->getTokenValue() == "not")
 	{

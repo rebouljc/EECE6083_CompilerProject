@@ -14,14 +14,19 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
 	//Semantic Check
-	if (this->getIsValid())
+	try
 	{
-		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
-		if (!checkScopeResult)
+		if (this->getIsValid())
 		{
-			cout << "\nScoping Rule violation.";
+			bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
 		}
 	}
+	catch (IdentifierNotDeclaredException& e)
+	{
+		cout << endl << endl << e.what() << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenLineNumber()
+			 << " Identifier Name: "     << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue() << endl;
+	}
+
 	
 }
 
@@ -33,14 +38,19 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	this->setStolenToken(stolenToken);
 	this->verifySyntaxCreateParseTree(0, motherNode);
 	//Semantic Check
-	if (this->getIsValid())
+	try
 	{
-		bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
-		if (!checkScopeResult)
+		if (this->getIsValid())
 		{
-			cout << "\nScoping Rule violation.";
+			bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
 		}
 	}
+	catch (IdentifierNotDeclaredException& e)
+	{
+		cout << endl << endl << e.what() << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenLineNumber()
+			 << " Identifier Name: "     << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue() << endl;
+	}
+
 }
 
 void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
@@ -54,7 +64,7 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		currentToken = this->stolenToken;
 	}
 	
-	printf("\nProcedureCall_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nProcedureCall_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenType() == "IDENTIFIER")
 	{
 		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
@@ -128,13 +138,14 @@ bool ProcedureCall::checkIdentifierFollowsScopingRules()
 	bool identPresent = this->searchSymbolTable(this->linkedMemberNonterminals.at(0), identifierToCheck);
 	if (identPresent)
 	{
-		printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
+		//printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
 
 	}
 
 	else
 	{
 		//We throw an exception.  Identifier is being assigned, but has not been declared locally or globally.
+		throw IdentifierNotDeclaredException();
 	}
 
 	return identPresent;

@@ -22,7 +22,7 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	bool ifStmtFlag = false;
 	bool loopStmtFlag = false;
 	bool returnStmtFlag = false;
-	printf("\nStatement_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nStatement_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	
 
 	this->linkedMemberNonterminals.push_back(new AssignmentStatement(this->parserPtr, motherNode, this));

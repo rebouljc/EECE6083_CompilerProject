@@ -9,6 +9,7 @@
 #include "ProcedureHeader.h"
 #include "Identifier.h"
 #include "VariableDeclaration.h"
+#include "GlobalIdentifierIsNotUniqueException.h"
 
 
 
@@ -28,7 +29,7 @@ void ParseTreeNode::setParserPtr(Parser* parserPtr)
     this->parserPtr = parserPtr;
 }
 
-bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd)
+bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd, bool checkUnique)
 {
     bool match = false;
     
@@ -47,6 +48,12 @@ bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd)
     if (!match && dynamic_cast<Identifier*>(symbolToAdd)->getIdentifierIsValidDeclaration())
     {
         this->symbolTable.push_back(symbolToAdd);
+    }
+
+    else if (match && checkUnique)
+    {
+        //We throw an exception.  Global Identifiers must be unique.
+        throw GlobalIdentifierIsNotUniqueException();
     }
 
     return !match;
@@ -86,91 +93,99 @@ vector<ParseTreeNode*>* ParseTreeNode::getSymbolTable()
 
 void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode)
 {
-  
-    ParseTreeNode* decl;
+    try
+    {
+        ParseTreeNode* decl;
 
-    //Now, we can have local symbol tables for 
-     //We reference our LOCAL symbol table to the "lowest hanging fruit" in our parseTree - i.e. whatever we encounter first,
-        //since we have no clue where a given identifier will be placed in a given program's parse tree.
-    if (this->parentNodePtr == nullptr)
-    {
-        
-        return;
-    }
-
-    else if (identifierType == "GLOBAL")
-    {
-        this->programNode_motherNode->addToSymbolTable(identifierNode);
-        return;
-    }
-  
-    else if (identifierType == "LOCAL" || identifierType == "GLOBAL_EMBEDDED")
-    {
-        Identifier* ident = dynamic_cast<Identifier*>(identifierNode);
-        
-        if ((decl = dynamic_cast<Declaration*>(this)) != nullptr)
+        //Now, we can have local symbol tables for 
+         //We reference our LOCAL symbol table to the "lowest hanging fruit" in our parseTree - i.e. whatever we encounter first,
+            //since we have no clue where a given identifier will be placed in a given program's parse tree.
+        if (this->parentNodePtr == nullptr)
         {
-            //This will check to see if a terminal node was created for "global" within the <declaration> parse subtree.
 
-            if (decl->checkGlobalTerminalNodePresent())
-            {
-                identifierType = "GLOBAL";
-                ident->setIdentifierTypeToGlobal();
-                //We will keep climbing the tree until we hit the "GLOBAL" portion.
-            }
-
-            else if (identifierType == "GLOBAL_EMBEDDED")
-            {
-                //Kick the football up again so it will be caught by top declaration.
-                identifierType ="LOCAL";
-            }
-
-            else 
-            {
-                this->addToSymbolTable(identifierNode);
-                return;
-            }
-        }
-        else if (dynamic_cast<VariableDeclaration*>(this) != nullptr)
-        {
-            if (dynamic_cast<ProgramBody*>(this->parentNodePtr->parentNodePtr) != nullptr)
-            {
-                identifierType = "GLOBAL";
-                ident->setIdentifierTypeToGlobal();
-                //Climb the tree again and this time, it will be caught correctly by the if (identifierType == "GLOBAL") statement.
-            }
-
-            else if (dynamic_cast<ProcedureBody*>(this->parentNodePtr->parentNodePtr) != nullptr)
-            {
-                identifierType = "GLOBAL_EMBEDDED";
-            }
+            return;
         }
 
-        else if (dynamic_cast<ProcedureHeader*>(this) != nullptr)
+        else if (identifierType == "GLOBAL")
         {
-            if (dynamic_cast<ProcedureHeader*>(this)->getLinkedMemberNonterminalsSize() == 1 &&
-                dynamic_cast<ProgramBody*>(this->parentNodePtr->parentNodePtr->parentNodePtr) != nullptr
-                )
-            {
-                identifierType = "GLOBAL";
-                ident->setIdentifierTypeToGlobal();
-                //Keep climbing the tree and it will be caught by the if (identifierType == "GLOBAL") statement.
 
-            }
+            this->programNode_motherNode->addToSymbolTable(identifierNode, true);
+            return;
 
-            else if (dynamic_cast<ProcedureHeader*>(this)->getLinkedMemberNonterminalsSize() == 1)
-            {
-                identifierType = "GLOBAL_EMBEDDED";
-            }
 
-            //Otherwise, the variable is local and we climb the tree and it will be caught by declaration.
-            //If the identifier happens to be global in declaration, the identifier/procedure type will be set to "GLOBAL"
         }
 
-        
-   
+        else if (identifierType == "LOCAL" || identifierType == "GLOBAL_EMBEDDED")
+        {
+            Identifier* ident = dynamic_cast<Identifier*>(identifierNode);
+
+            if ((decl = dynamic_cast<Declaration*>(this)) != nullptr)
+            {
+                //This will check to see if a terminal node was created for "global" within the <declaration> parse subtree.
+
+                if (decl->checkGlobalTerminalNodePresent())
+                {
+                    identifierType = "GLOBAL";
+                    ident->setIdentifierTypeToGlobal();
+                    //We will keep climbing the tree until we hit the "GLOBAL" portion.
+                }
+
+                else if (identifierType == "GLOBAL_EMBEDDED")
+                {
+                    //Kick the football up again so it will be caught by top declaration.
+                    identifierType = "LOCAL";
+                }
+
+                else
+                {
+                    this->addToSymbolTable(identifierNode, false);
+                    return;
+                }
+            }
+            else if (dynamic_cast<VariableDeclaration*>(this) != nullptr)
+            {
+                if (dynamic_cast<ProgramBody*>(this->parentNodePtr->parentNodePtr) != nullptr)
+                {
+                    identifierType = "GLOBAL";
+                    ident->setIdentifierTypeToGlobal();
+                    //Climb the tree again and this time, it will be caught correctly by the if (identifierType == "GLOBAL") statement.
+                }
+
+                else if (dynamic_cast<ProcedureBody*>(this->parentNodePtr->parentNodePtr) != nullptr)
+                {
+                    identifierType = "GLOBAL_EMBEDDED";
+                }
+            }
+
+            else if (dynamic_cast<ProcedureHeader*>(this) != nullptr)
+            {
+                if (dynamic_cast<ProcedureHeader*>(this)->getLinkedMemberNonterminalsSize() == 1 &&
+                    dynamic_cast<ProgramBody*>(this->parentNodePtr->parentNodePtr->parentNodePtr) != nullptr
+                    )
+                {
+                    identifierType = "GLOBAL";
+                    ident->setIdentifierTypeToGlobal();
+                    //Keep climbing the tree and it will be caught by the if (identifierType == "GLOBAL") statement.
+
+                }
+
+                else if (dynamic_cast<ProcedureHeader*>(this)->getLinkedMemberNonterminalsSize() == 1)
+                {
+                    identifierType = "GLOBAL_EMBEDDED";
+                }
+
+                //Otherwise, the variable is local and we climb the tree and it will be caught by declaration.
+                //If the identifier happens to be global in declaration, the identifier/procedure type will be set to "GLOBAL"
+            }
+        }
     }
-   
+        catch (GlobalIdentifierIsNotUniqueException& e)
+        {
+            cout << endl << endl << e.what() << dynamic_cast<Identifier*>(identifierNode)->getNodeTokenLineNumber()
+                << " Identifier Name: " << dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue() << endl;
+            return;
+        }
+    
     this->parentNodePtr->climbTreeAndPopulateSymbolTable(identifierType, identifierNode); //Do the recursive call here.
     return;
 }

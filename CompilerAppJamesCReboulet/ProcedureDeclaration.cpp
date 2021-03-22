@@ -26,7 +26,7 @@ void ProcedureDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTr
 	this->linkedMemberNonterminals.push_back(new ProcedureHeader(this->parserPtr, motherNode, this));
 	//Test
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
-	printf("\nProcedureDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nProcedureDeclaration_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	ParseTreeNode* procHead = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
 	if (!procHead->getIsValid())

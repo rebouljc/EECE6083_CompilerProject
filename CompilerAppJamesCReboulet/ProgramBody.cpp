@@ -27,7 +27,7 @@ void ProgramBody::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 void ProgramBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* motherNode)
 {
 	Token* currentToken = this->parserPtr->readNextToken();
-	printf("\nProgramBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nProgramBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	
 	if (!this->linkedMemberNonterminals.empty() &&
 		dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 

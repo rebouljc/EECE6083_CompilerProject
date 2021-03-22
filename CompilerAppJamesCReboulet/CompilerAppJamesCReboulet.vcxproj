@@ -194,6 +194,7 @@
     <ClInclude Include="Expression.h" />
     <ClInclude Include="Expression_.h" />
     <ClInclude Include="Factor.h" />
+    <ClInclude Include="GlobalIdentifierIsNotUniqueException.h" />
     <ClInclude Include="Identifier.h" />
     <ClInclude Include="IdentifierBeginsWithNumberException.h" />
     <ClInclude Include="IdentifierNotDeclaredException.h" />

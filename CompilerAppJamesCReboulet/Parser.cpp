@@ -8,9 +8,7 @@
 
 Parser::Parser()
 {
-   
-    
-
+  
 }
 void Parser::init()
 {

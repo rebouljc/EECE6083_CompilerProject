@@ -21,7 +21,7 @@ void ArgumentList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* 
 	//Originally destination was defined on 2/26/2021.
 
 	Token* currentToken = parserPtr->getCurrentlyReadToken();
-	printf("\nArgumentList_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	//printf("\nArgumentList_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	//We have to make sure this->linkedMemberNonterminals is not empty, or else we will get a memory access violation, crash and burn.
 	//Lazy way to do this, but it will work.  We want to make sure that the last character added was a "Terminal Symbol" and it was a ","
