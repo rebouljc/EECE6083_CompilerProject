@@ -266,6 +266,7 @@ void Scanner::createIdentifierToken()
 
 void Scanner::createStringLiteralToken()
 {
+	
 	//Else, we get down to business and then return.
 	this->storedTokens.at(this->storedTokens.size() - 1)->setTokenType("STRING_LITERAL");
 
@@ -671,23 +672,15 @@ int Scanner::getFirstQuotationMarkLineNumber()
 void Scanner::matchStringLiteral(ifstream* input)
 {
 	char character = readCharacterFromFile(input);
-	try
+	
+	if (input->eof()) //Prevents infinite recursion if user forgets to end string literal with "
 	{
-		if (input->eof()) //Prevents infinite recursion if user forgets to end string literal with "
-		{
-			throw StringLiteralException();
-			//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
-			//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
-			//if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
+		throw StringLiteralException();
+		//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
+		//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
+		//if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
 
-			return;
-		}
-	}
-	catch (StringLiteralException& e)
-	{
-		cout << endl << e.what() << this->getFirstQuotationMarkLineNumber();
-		throw MainCompileErrorException();
-		
+		return;
 	}
 
 	if (isalpha(character) || character == '_')
@@ -703,12 +696,40 @@ void Scanner::matchStringLiteral(ifstream* input)
 	
 	else if (character == '"')
 	{
-		this->firstQuotationMarkLineNumber = this->lineNumber;
+		
+		
+		++ this->quotationMarkSeenCounter;
 		this->createStringLiteralToken();
 		
 		
 		return;
 	}
+	
+	else if (character == ';')
+	{ 
+		try
+		{
+			if (this->quotationMarkSeenCounter == 0 || this->quotationMarkSeenCounter / 2 == 1)
+			{
+				this->quotationMarkSeenCounter = 0;
+				this->firstQuotationMarkLineNumber = this->lineNumber;
+
+			}
+			else
+			{
+				throw StringLiteralException();
+				return;
+			}
+		}
+
+		catch (StringLiteralException& e)
+		{
+			cout << endl << e.what() << this->getFirstQuotationMarkLineNumber();
+			throw MainCompileErrorException();
+
+		}
+	}
+	
 	
 	this->matchStringLiteral(input); //recurse back.
 }
@@ -750,6 +771,7 @@ void Scanner::readFile(ifstream* input)
 	else //Not a letter or a digit, so perform an alternative action.  
 	{
 		performOtherAction(input, character);
+		
 
 		//We have to put a corrective hack in to prevent the line number on a token from being incorrectly incremented when it has
 		//an '\n' after it.  For instance, after the reserved word "is" or the identifier "is".  This only took about 4 hours to figure out.
@@ -803,7 +825,7 @@ void Scanner::performOtherAction(ifstream* input, char character)
 
 		else if (this->storedTokens.at(this->storedTokens.size() - 1)->getTokenValue() == "\"")
 		{
-			this->firstQuotationMarkLineNumber = this->lineNumber;
+			
 			this->matchStringLiteral(input);
 		}
 		//Else, we consider it a comment and we start ignoring comments

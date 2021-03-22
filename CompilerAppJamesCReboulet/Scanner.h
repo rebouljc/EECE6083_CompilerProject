@@ -95,6 +95,7 @@ class Scanner
    int lineNumber;
    int firstCommentLineNumber;
    int firstQuotationMarkLineNumber;
+   int quotationMarkSeenCounter = 0;
    
    
 protected:
