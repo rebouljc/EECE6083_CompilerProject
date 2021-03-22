@@ -8,6 +8,10 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	~Bound() {};
+
+	//Semantic checking methods.
+	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
+	void checkArrayIndexWithinRange(ParseTreeNode numberNode);
 	
 
 private:

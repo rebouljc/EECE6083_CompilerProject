@@ -1,5 +1,6 @@
 #pragma once
 #include "ParseTreeNode.h"
+
 class Expression : public ParseTreeNode
 {
 public:
@@ -7,6 +8,7 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	
 	~Expression() {};
 	
 

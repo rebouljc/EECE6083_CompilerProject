@@ -46,3 +46,13 @@ void Bound::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
+vector<ParseTreeNode*>& Bound::getLinkedMemberNonterminalsList()
+{
+	return this->linkedMemberNonterminals;
+}
+
+void Bound::checkArrayIndexWithinRange(ParseTreeNode numberNode)
+{
+
+}
+

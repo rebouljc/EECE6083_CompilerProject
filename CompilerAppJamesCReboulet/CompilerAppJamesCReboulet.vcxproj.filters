@@ -293,5 +293,8 @@
     <ClInclude Include="GlobalIdentifierIsNotUniqueException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ArrayIndexNotAnIntegerLiteralException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

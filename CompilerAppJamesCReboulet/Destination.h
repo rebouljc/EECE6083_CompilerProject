@@ -8,6 +8,12 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	~Destination() {};
+	
+	//Get linkedNonterminals for semantic check
+	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
+	//Semantic Checking Methods
+	void checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode);
+	
 
 
 private:

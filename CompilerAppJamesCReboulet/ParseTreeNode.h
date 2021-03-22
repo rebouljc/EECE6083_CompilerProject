@@ -21,11 +21,12 @@ public:
 	virtual bool getIsValid() { return false; };
 	void setParserPtr(Parser* parserPtr);
 	virtual ~ParseTreeNode() {};
-	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	virtual bool checkGlobalTerminalNodePresent() { return false; };
 
-	
-	
+	//Tree climbing methods for semantic verification.
+	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
+	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
+
 protected:
 	//methods
 	
@@ -33,14 +34,6 @@ protected:
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
 	virtual void populateLocalSearchResultsList() { return; };
 	
-	
-
-	
-	
-	
-	
-	
-
 	//member variables
 	
 	Parser* parserPtr = nullptr;

@@ -3,6 +3,8 @@
 #include "Identifier.h"
 #include "Expression.h"
 #include "IdentifierNotDeclaredException.h"
+#include "Number.h"
+#include "ArrayIndexNotAnIntegerLiteralException.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 
@@ -129,4 +131,22 @@ void Destination::populateSearchResultsList(ParseTreeNode* motherNode)
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
+}
+
+vector<ParseTreeNode*>& Destination::getLinkedMemberNonterminalsList()
+{
+	return this->linkedMemberNonterminals;
+}
+
+void Destination::checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode)
+{
+	Number* number = nullptr;
+	if ((number = dynamic_cast<Number*>(numberNode)) != nullptr)
+	{
+		if (number->getNumberTokenType() != "INTEGER_LITERAL")
+		{
+			//Throw an exception
+			throw ArrayIndexNotAnIntegerLiteralException();
+		}
+	}
 }

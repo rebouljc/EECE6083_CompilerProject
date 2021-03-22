@@ -186,6 +186,7 @@
     <ClInclude Include="ArgumentList.h" />
     <ClInclude Include="ArithOp.h" />
     <ClInclude Include="ArithOp_.h" />
+    <ClInclude Include="ArrayIndexNotAnIntegerLiteralException.h" />
     <ClInclude Include="AssignmentStatement.h" />
     <ClInclude Include="Bound.h" />
     <ClInclude Include="Character.h" />

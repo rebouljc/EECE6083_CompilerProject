@@ -10,7 +10,9 @@
 #include "Identifier.h"
 #include "VariableDeclaration.h"
 #include "GlobalIdentifierIsNotUniqueException.h"
-
+#include "Destination.h"
+#include "ArrayIndexNotAnIntegerLiteralException.h"
+#include "Number.h"
 
 
 vector<ParseTreeNode*>* ParseTreeNode::getSearchResultsList(ParseTreeNode* currentProgramNodePtr)
@@ -186,6 +188,48 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
             return;
         }
     
+    //recurse
     this->parentNodePtr->climbTreeAndPopulateSymbolTable(identifierType, identifierNode); //Do the recursive call here.
     return;
+}
+
+void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
+{
+    try
+    {
+        Destination* dest = nullptr;
+
+        if (this->parentNodePtr == nullptr)
+        {
+            return;
+        }
+
+        else if ((dest = dynamic_cast<Destination*>(this)) != nullptr)
+        {
+            //We are currently at <Destination*> non-terminal, and we have to check to see if we have an expression.
+            //We search the non-terminals.
+            vector<ParseTreeNode*> resultList = dest->getLinkedMemberNonterminalsList();
+            for (int i = 0; i < resultList.size(); ++i)
+            {
+                TerminalNode* termNode = nullptr;
+                if ((termNode = dynamic_cast<TerminalNode*>(resultList.at(i))) != nullptr && termNode->getNodeTokenValue() == "[")
+                {
+                    dest->checkArrayIndexIsIntegerLiteral(numberNode);
+                }
+            }
+
+        }
+
+        //Now, we have to climb the tree until we reach a <VariableDeclaration>.  We then search for a <bound> non-terminal and 
+        //We have bounds do a bounds check.  But we have to add a method to access its linkedMemberNonterminalsList() first.
+        //Then, we add a method to do the bounds check.  That method will throw an exception and arrive here if bounds is out of range.
+        //We will catch it here and report the results.
+    }
+    catch (ArrayIndexNotAnIntegerLiteralException& e)
+    {
+        cout << endl << endl << e.what() << dynamic_cast<Number*>(numberNode)->getNodeTokenLineNumber();
+        return;
+    }
+    //recurse
+    this->parentNodePtr->climbTreeAndVerifyArrayIndices(numberNode);
 }
