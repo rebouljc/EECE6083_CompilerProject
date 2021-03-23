@@ -133,10 +133,6 @@ void Destination::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-vector<ParseTreeNode*>& Destination::getLinkedMemberNonterminalsList()
-{
-	return this->linkedMemberNonterminals;
-}
 
 void Destination::checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode)
 {

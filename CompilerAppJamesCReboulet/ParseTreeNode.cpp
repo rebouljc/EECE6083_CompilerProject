@@ -88,6 +88,7 @@ bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode
 
     
 }
+
 vector<ParseTreeNode*>* ParseTreeNode::getSymbolTable()
 {
     return &(this->symbolTable);
@@ -140,7 +141,7 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
 
                 else
                 {
-                    this->addToSymbolTable(identifierNode, false);
+                    decl->addToSymbolTable(identifierNode, false);
                     return;
                 }
             }
@@ -232,4 +233,14 @@ void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
     }
     //recurse
     this->parentNodePtr->climbTreeAndVerifyArrayIndices(numberNode);
+}
+
+void ParseTreeNode::climbTreeAndPerformArrayBoundsCheck(ParseTreeNode* numberNode, ParseTreeNode* identifierNode)
+{
+    
+}
+
+vector<ParseTreeNode*>& ParseTreeNode::getLinkedMemberNonterminalsList()
+{
+    return this->linkedMemberNonterminals;
 }

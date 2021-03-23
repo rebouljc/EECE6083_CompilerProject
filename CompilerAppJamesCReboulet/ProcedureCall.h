@@ -10,11 +10,12 @@ public:
 	void setStolenToken(Token* stolenToken) { this->stolenToken = stolenToken; };
 	Token* getIsStolenToken() { return this->stolenToken; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	
 	~ProcedureCall() {};
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
-	vector<ParseTreeNode*> linkedMemberNonterminals;
+	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
 	Token* stolenToken;

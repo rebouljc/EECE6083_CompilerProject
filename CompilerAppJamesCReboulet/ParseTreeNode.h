@@ -3,9 +3,6 @@
 #include "Token.h"
 #include "Parser.h"
 
-
-
-
 class ParseTreeNode
 {
 public:
@@ -26,6 +23,9 @@ public:
 	//Tree climbing methods for semantic verification.
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
+	void climbTreeAndPerformArrayBoundsCheck(ParseTreeNode* numberNode, ParseTreeNode* identifierNode);
+	//Get linkedNonterminals for semantic check
+	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 
 protected:
 	//methods
@@ -33,6 +33,8 @@ protected:
 	virtual ParseTreeNode* getNodePtr() { return nullptr; };
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
 	virtual void populateLocalSearchResultsList() { return; };
+	
+	
 	
 	//member variables
 	
@@ -43,5 +45,6 @@ protected:
 	string localClassType;
 	vector<ParseTreeNode*> symbolTable; //symbolTable.first = TablePtr symbolTable.second == IdentifierPtr 
 	ParseTreeNode* programNode_motherNode = nullptr;
+	vector<ParseTreeNode*> linkedMemberNonterminals;
 	
 };

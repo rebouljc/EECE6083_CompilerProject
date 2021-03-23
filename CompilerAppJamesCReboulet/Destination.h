@@ -9,8 +9,7 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	~Destination() {};
 	
-	//Get linkedNonterminals for semantic check
-	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
+	
 	//Semantic Checking Methods
 	void checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode);
 	
@@ -18,7 +17,7 @@ public:
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
-	vector<ParseTreeNode*> linkedMemberNonterminals;
+	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
 
