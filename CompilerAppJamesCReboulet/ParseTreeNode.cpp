@@ -13,6 +13,8 @@
 #include "Destination.h"
 #include "ArrayIndexNotAnIntegerLiteralException.h"
 #include "Number.h"
+#include "Bound.h"
+
 
 
 vector<ParseTreeNode*>* ParseTreeNode::getSearchResultsList(ParseTreeNode* currentProgramNodePtr)
@@ -216,15 +218,18 @@ void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
                 if ((termNode = dynamic_cast<TerminalNode*>(resultList.at(i))) != nullptr && termNode->getNodeTokenValue() == "[")
                 {
                     dest->checkArrayIndexIsIntegerLiteral(numberNode);
+                   
                 }
             }
-
-        }
 
         //Now, we have to climb the tree until we reach a <VariableDeclaration>.  We then search for a <bound> non-terminal and 
         //We have bounds do a bounds check.  But we have to add a method to access its linkedMemberNonterminalsList() first.
         //Then, we add a method to do the bounds check.  That method will throw an exception and arrive here if bounds is out of range.
-        //We will catch it here and report the results.
+        
+        //Update: We can't climb the tree here, since we don't have a valid symbol table or anything.
+        //We have to do this later in the <Declaration> class.  It will be a DFS, not a climb.
+
+        } 
     }
     catch (ArrayIndexNotAnIntegerLiteralException& e)
     {
@@ -235,9 +240,39 @@ void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
     this->parentNodePtr->climbTreeAndVerifyArrayIndices(numberNode);
 }
 
-void ParseTreeNode::climbTreeAndPerformArrayBoundsCheck(ParseTreeNode* numberNode, ParseTreeNode* identifierNode)
+
+bool ParseTreeNode::dfsDigToPerformArrayBoundsCheckDependency(ParseTreeNode* numberNode, ParseTreeNode* identifierNode)
 {
+    if (numberNode != nullptr && identifierNode != nullptr)
+    {
+        if (dynamic_cast<Declaration*>(this) != nullptr)
+        {
+            Identifier* ident = nullptr;
+
+            //Search, then dig if not found until we reach a leaf of the parse tree.
+            for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+            {
+                if ((ident = dynamic_cast<Identifier*>(this)) != nullptr)
+                {
+                    if (ident->getNodeTokenValue() == dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue())
+                    {
+                        //We go back up and perform a bounds check.
+                        //We basically return out of here to the climbTreeMethod.
+                        return true;
+
+                    }
+                }
+            }
+
+        }
+    }
+        else
+        {
+            return false;
+        }
     
+
+    this->dfsDigToPerformArrayBoundsCheckDependency(numberNode, identifierNode);
 }
 
 vector<ParseTreeNode*>& ParseTreeNode::getLinkedMemberNonterminalsList()

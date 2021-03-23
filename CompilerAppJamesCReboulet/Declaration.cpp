@@ -14,6 +14,7 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	this->setParserPtr(parser);
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+
 	
 }
 
@@ -60,6 +61,8 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		else
 		{
 			this->setIsValid(true);
+			
+			
 			return; //If one is true, there is no reason to test any more of them.  The call stack gets way too big.
 
 		}
@@ -74,7 +77,8 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		else
 		{
 			this->setIsValid(true);
-			return;
+
+			return; //If one is true, there is no reason to test any more of them.  The call stack gets way too big.
 		}
 		this->linkedMemberNonterminals.push_back(new TypeDeclaration(this->parserPtr, motherNode, this));
 		decl = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
@@ -87,7 +91,7 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		else
 		{
 			this->setIsValid(true);
-			return;
+			return; //If one is true, there is no reason to test any more of them.  The call stack gets way too big.
 		}
 		
 	}

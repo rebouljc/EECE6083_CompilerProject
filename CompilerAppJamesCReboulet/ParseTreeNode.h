@@ -23,7 +23,7 @@ public:
 	//Tree climbing methods for semantic verification.
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
-	void climbTreeAndPerformArrayBoundsCheck(ParseTreeNode* numberNode, ParseTreeNode* identifierNode);
+	bool dfsDigToPerformArrayBoundsCheckDependency(ParseTreeNode* numberNode, ParseTreeNode* identifierNode);
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 
@@ -46,5 +46,11 @@ protected:
 	vector<ParseTreeNode*> symbolTable; //symbolTable.first = TablePtr symbolTable.second == IdentifierPtr 
 	ParseTreeNode* programNode_motherNode = nullptr;
 	vector<ParseTreeNode*> linkedMemberNonterminals;
+
+private:
+	
+	//We don't want this function to be global, since we want to make sure we don't set numberNode and IdentifierNode
+	//to a null pointer, which could potentially happen if it is global.
+
 	
 };
