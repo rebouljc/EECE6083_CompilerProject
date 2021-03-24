@@ -14,6 +14,7 @@ class Scanner
 {
    public:
 	   Scanner();
+	   ~Scanner() {};
 	  
 	   
 	   int getLineNumber();

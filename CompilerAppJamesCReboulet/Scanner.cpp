@@ -27,39 +27,55 @@ void Scanner::cleanUp()
 {
 	for (set<pair<string, Token*>>::iterator it= this->reserved.begin(); it != this->reserved.end(); ++it)
 	{
+		
 		delete(it->second);
+		
 	}
 
 	for (set<pair<string, Token*>>::iterator it = this->punctuation.begin(); it != this->punctuation.end(); ++it)
 	{
 		delete(it->second);
+		
 	}
 
 	for (set<pair<string, Token*>>::iterator it = this->assignment.begin(); it != this->assignment.end(); ++it)
 	{
 		delete(it->second);
+		
 	}
 
 	for (set<pair<string, Token*>>::iterator it = this->arithOperator.begin(); it != this->arithOperator.end(); ++it)
 	{
 		delete(it->second);
+		
 	}
 
 	for (set<pair<string, Token*>>::iterator it = this->relationOperator.begin(); it != this->relationOperator.end(); ++it)
 	{
 		delete(it->second);
+		
 	}
 
 	for (set<pair<string, Token*>>::iterator it = this->booleanOperator.begin(); it != this->booleanOperator.end(); ++it)
 	{
 		delete(it->second);
+		
 	}
 
 	for (unsigned int i = 0; i < this->storedCharacters.size(); ++i)
 	{
 		delete(this->storedCharacters.at(i));
+		
 	}
-
+	
+	this->reserved.clear();
+	this->punctuation.clear();
+	this->assignment.clear();
+	this->arithOperator.clear();
+	this->relationOperator.clear();
+	this->booleanOperator.clear();
+	this->storedCharacters.clear();
+	this->whitespaceSymbols.clear();
 }
 
 

@@ -60,13 +60,16 @@ Token* Parser::getCurrentlyReadToken()
 }
 Parser::~Parser()
 {
-    
-    this->cleanUp();
-    
+   
+
     for (unsigned int i = 0; i < this->storedTokens.size(); ++i)
     {
         delete (this->storedTokens.at(i));
+        
     }
+    this->storedTokens.clear();
+    this->cleanUp();
+    
    
 }
 vector<Token*>* Parser::getStoredTokensList()

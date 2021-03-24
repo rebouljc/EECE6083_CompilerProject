@@ -25,6 +25,8 @@ IntermediateCodeGenerator::~IntermediateCodeGenerator()
 			delete(searchResultsList->at(i));
 
 		}
+		
+		
 	}
 }
 

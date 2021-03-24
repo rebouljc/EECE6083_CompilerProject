@@ -3,6 +3,8 @@
 #include "Identifier.h"
 #include "Expression.h"
 #include "IdentifierNotDeclaredException.h"
+#include "Number.h"
+#include "ArrayIndexNotAnIntegerLiteralException.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -144,4 +146,23 @@ bool Name::checkIdentifierFollowsScopingRules()
 	}
 
 	return identPresent;
+}
+
+void Name::checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode)
+{
+	Number* number = nullptr;
+	if ((number = dynamic_cast<Number*>(numberNode)) != nullptr)
+	{
+		if (number->getNumberTokenType() != "INTEGER_LITERAL")
+		{
+			//Throw an exception
+			throw ArrayIndexNotAnIntegerLiteralException();
+		}
+		Identifier* ident = nullptr;
+		if ((ident = dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))) != nullptr)
+		{
+			ident->setNumberPtrValue(number);
+
+		}
+	}
 }
