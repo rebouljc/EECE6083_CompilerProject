@@ -13,6 +13,8 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void setIdentifierTypeToGlobal();
 	bool getIdentifierIsValidDeclaration() { return this->isValidDeclaration; };
+	void setNumberPtrValue(ParseTreeNode* numberNode);
+	ParseTreeNode* getNumberPtrValue();
 	~Identifier() {};
 
 
@@ -20,6 +22,7 @@ private:
 
 	string identifierType;
 	bool isValidDeclaration = false;
+	ParseTreeNode* numberPtr;
 
 
 };

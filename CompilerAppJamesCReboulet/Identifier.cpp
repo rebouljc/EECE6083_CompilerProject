@@ -47,3 +47,13 @@ void Identifier::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
+void Identifier::setNumberPtrValue(ParseTreeNode* numberNode)
+{
+	this->numberPtr = numberNode;
+}
+
+ParseTreeNode* Identifier::getNumberPtrValue()
+{
+	return this->numberPtr;
+}
+

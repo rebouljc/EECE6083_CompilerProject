@@ -26,10 +26,10 @@ procedure Fib : integer(variable val :integer)
 		return ret;
 	end if; // Remove line
 	val := Sub(1);
-	tmp[0] := Fib(val);
+	tmp[3] := Fib(val);
 	val := Sub(1);
 	tmp[1] := Fib(val);
-	ret := tmp[0] + tmp[1];
+	ret := tmp[3] + tmp[1]; //We have to fix this for <Name>, I think.
 	return ret;
 end procedure;
 

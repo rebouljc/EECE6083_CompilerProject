@@ -1,5 +1,6 @@
 #pragma once
 #include "ParseTreeNode.h"
+#include "Identifier.h"
 class Destination : public ParseTreeNode
 {
 public:
@@ -17,6 +18,8 @@ public:
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
+	//Semantic-Checking Method.  Private.
+
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;

@@ -296,5 +296,8 @@
     <ClInclude Include="ArrayIndexNotAnIntegerLiteralException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ArrayIndexOutOfBoundsException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

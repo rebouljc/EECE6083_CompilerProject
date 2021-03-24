@@ -6,6 +6,7 @@
 #include "Number.h"
 #include "ArrayIndexNotAnIntegerLiteralException.h"
 
+
 //2-23-2021: Code needs to be modified.  This is type mark code.
 
 Destination::Destination(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -144,5 +145,12 @@ void Destination::checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode)
 			//Throw an exception
 			throw ArrayIndexNotAnIntegerLiteralException();
 		}
+		Identifier* ident = nullptr;
+		if ((ident = dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))) != nullptr)
+		{
+			ident->setNumberPtrValue(number);
+
+		}
 	}
 }
+

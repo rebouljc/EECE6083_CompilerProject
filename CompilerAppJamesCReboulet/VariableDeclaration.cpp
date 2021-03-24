@@ -4,6 +4,8 @@
 #include "Identifier.h"
 #include "TypeMark.h"
 #include "Bound.h"  //This is used instead of Parameter List;
+#include "Number.h"
+#include "ArrayIndexNotAnIntegerLiteralException.h"
 
 
 VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -142,5 +144,23 @@ void VariableDeclaration::populateSearchResultsList(ParseTreeNode* motherNode)
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
+}
+
+void VariableDeclaration::checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode)
+{
+	Number* number = nullptr;
+	if ((number = dynamic_cast<Number*>(numberNode)) != nullptr)
+	{
+		if (number->getNumberTokenType() != "INTEGER_LITERAL")
+		{
+			//Throw an exception
+			throw ArrayIndexNotAnIntegerLiteralException();
+		}
+		Identifier* ident = nullptr;
+		if ((ident = dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(1))) != nullptr)
+		{
+			ident->setNumberPtrValue(number);
+		}
+	}
 }
 

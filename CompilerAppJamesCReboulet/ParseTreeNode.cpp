@@ -14,6 +14,7 @@
 #include "ArrayIndexNotAnIntegerLiteralException.h"
 #include "Number.h"
 #include "Bound.h"
+#include "ArrayIndexOutOfBoundsException.h"
 
 
 
@@ -201,6 +202,7 @@ void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
     try
     {
         Destination* dest = nullptr;
+        VariableDeclaration* varDecl = nullptr;
 
         if (this->parentNodePtr == nullptr)
         {
@@ -218,18 +220,39 @@ void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
                 if ((termNode = dynamic_cast<TerminalNode*>(resultList.at(i))) != nullptr && termNode->getNodeTokenValue() == "[")
                 {
                     dest->checkArrayIndexIsIntegerLiteral(numberNode);
+                    //Now, climb the tree until we reach a <Declaration>.  Pass this pointer to that method.
+                    //However, you had better first pick up the <Identifier> and pass it up to <Declaration> so we know which variable
+                    //to look at for the bounds check.
+                    Identifier* identifierNode = dynamic_cast<Identifier*>(this->getLinkedMemberNonterminalsList().at(0));
+                    this->climbTreeToDeclarationNode(identifierNode);
+                   
+                    
                    
                 }
             }
 
-        //Now, we have to climb the tree until we reach a <VariableDeclaration>.  We then search for a <bound> non-terminal and 
-        //We have bounds do a bounds check.  But we have to add a method to access its linkedMemberNonterminalsList() first.
-        //Then, we add a method to do the bounds check.  That method will throw an exception and arrive here if bounds is out of range.
-        
-        //Update: We can't climb the tree here, since we don't have a valid symbol table or anything.
-        //We have to do this later in the <Declaration> class.  It will be a DFS, not a climb.
-
         } 
+
+        //TODO:  Now, we have to enable bounds checking in <Expression>.
+
+        else if ((varDecl = dynamic_cast<VariableDeclaration*>(this)) != nullptr)
+        {
+            //We are currently at <Destination*> non-terminal, and we have to check to see if we have an expression.
+            //We search the non-terminals.
+            vector<ParseTreeNode*> resultList = varDecl->getLinkedMemberNonterminalsList();
+            for (int i = 0; i < resultList.size(); ++i)
+            {
+                TerminalNode* termNode = nullptr;
+                if ((termNode = dynamic_cast<TerminalNode*>(resultList.at(i))) != nullptr && termNode->getNodeTokenValue() == "[")
+                {
+                    varDecl->checkArrayIndexIsIntegerLiteral(numberNode);
+                    
+
+
+                }
+            }
+
+        }
     }
     catch (ArrayIndexNotAnIntegerLiteralException& e)
     {
@@ -241,41 +264,68 @@ void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
 }
 
 
-bool ParseTreeNode::dfsDigToPerformArrayBoundsCheckDependency(ParseTreeNode* numberNode, ParseTreeNode* identifierNode)
-{
-    if (numberNode != nullptr && identifierNode != nullptr)
-    {
-        if (dynamic_cast<Declaration*>(this) != nullptr)
-        {
-            Identifier* ident = nullptr;
-
-            //Search, then dig if not found until we reach a leaf of the parse tree.
-            for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-            {
-                if ((ident = dynamic_cast<Identifier*>(this)) != nullptr)
-                {
-                    if (ident->getNodeTokenValue() == dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue())
-                    {
-                        //We go back up and perform a bounds check.
-                        //We basically return out of here to the climbTreeMethod.
-                        return true;
-
-                    }
-                }
-            }
-
-        }
-    }
-        else
-        {
-            return false;
-        }
-    
-
-    this->dfsDigToPerformArrayBoundsCheckDependency(numberNode, identifierNode);
-}
-
 vector<ParseTreeNode*>& ParseTreeNode::getLinkedMemberNonterminalsList()
 {
     return this->linkedMemberNonterminals;
+}
+
+void ParseTreeNode::climbTreeToDeclarationNode(ParseTreeNode* identifierNode)
+{
+    if (this->parentNodePtr == nullptr)
+    {
+        //We have encountered the <Program> Class, so return;
+        return;
+    }
+    else if (dynamic_cast<Declaration*>(this))
+    {
+       
+        //Now, perform the array bounds check.
+        //Search the symbol table
+        for (int s = 0; s < this->getSymbolTable()->size(); ++s)
+        {
+            Identifier* symbolTableIdent = nullptr;
+
+            if ((symbolTableIdent = dynamic_cast<Identifier*>(this->getSymbolTable()->at(s))) != nullptr &&
+                 symbolTableIdent->getNodeTokenValue() == dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue()
+               )
+            {
+                
+                this->checkArrayIndexInBounds(*identifierNode, *symbolTableIdent);
+            }
+        }
+    }
+
+    this->parentNodePtr->climbTreeToDeclarationNode(identifierNode);
+}
+
+void ParseTreeNode::checkArrayIndexInBounds(ParseTreeNode& identifier, ParseTreeNode& symbolTableIdentifier)
+{
+    Number* indexToCheck = nullptr;
+  
+    try
+    {
+        
+        if ((indexToCheck = dynamic_cast<Number*>(dynamic_cast<Identifier*>(&identifier)->getNumberPtrValue())) != nullptr)
+        {
+            if (!(indexToCheck->getNodeTokenIntegerDoubleNumberTokenValue() >= 0 &&
+                  indexToCheck->getNodeTokenIntegerDoubleNumberTokenValue() <=
+                  dynamic_cast<Number*>(dynamic_cast<Identifier*>(&symbolTableIdentifier)->getNumberPtrValue())->getNodeTokenIntegerDoubleNumberTokenValue()
+                )
+                )
+            {
+                //Throw the exception.  Array Index is out of bounds.
+                throw ArrayIndexOutOfBoundsException();
+
+            }
+        }
+    }
+    catch (ArrayIndexOutOfBoundsException& e)
+    {
+        cout << endl << endl << e.what() << dynamic_cast<Identifier*>(&identifier)->getNodeTokenLineNumber()
+            << " Identifier Name: "      << dynamic_cast<Identifier*>(&identifier)->getNodeTokenValue()
+            << " Current Bound Value: "  << dynamic_cast<Number*>(dynamic_cast<Identifier*>(&identifier)->getNumberPtrValue())->getNodeTokenIntegerDoubleNumberTokenValue()
+            << " Declared Bound Value: "
+            << dynamic_cast<Number*>(dynamic_cast<Identifier*>(&symbolTableIdentifier)->getNumberPtrValue())->getNodeTokenIntegerDoubleNumberTokenValue()
+            << endl;
+    }
 }

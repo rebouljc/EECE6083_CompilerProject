@@ -16,7 +16,7 @@ Bound::Bound(Token* token, Parser* parser, ParseTreeNode* motherNode, ParseTreeN
 void Bound::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	
-	if (this->token->getTokenValue() == "NUMBER")
+	if (this->token->getTokenType() == "NUMBER")
 	{
 		this->linkedMemberNonterminals.push_back(new Number(this->token, this));
 	}
