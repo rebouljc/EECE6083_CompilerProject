@@ -169,7 +169,7 @@ void Scanner::populatePunctuationList()
 	this->punctuation.insert(make_pair("}", new Token("PUNCTUATION", "}")));
 	this->punctuation.insert(make_pair("[", new Token("PUNCTUATION", "[")));
 	this->punctuation.insert(make_pair("]", new Token("PUNCTUATION", "]")));
-	this->punctuation.insert(make_pair("-", new Token("PUNCTUATION", "-")));
+	//this->punctuation.insert(make_pair("-", new Token("PUNCTUATION", "-")));
 	this->punctuation.insert(make_pair("\"", new Token("PUNCTUATION", "\"")));
 	this->punctuation.insert(make_pair("^\"", new Token("PUNCTUATION", "^\"")));
 	this->punctuation.insert(make_pair(":", new Token("PUNCTUATION", ":")));

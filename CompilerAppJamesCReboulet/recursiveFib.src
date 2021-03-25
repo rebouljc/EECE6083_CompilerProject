@@ -13,7 +13,7 @@ procedure Fib : integer(variable val :integer)
         variable val2 : integer;
 		begin
 			val2 := val2 - val1;
-			return val2;
+			return val2 + 6;
 		end procedure;
 
 	begin
@@ -30,7 +30,7 @@ procedure Fib : integer(variable val :integer)
 	val := Sub(1);
 	tmp[1] := Fib(val);
 	ret := tmp[3] + tmp[1]; //We have to fix this for <Name>, I think.
-	return ret;
+	return ret + 5;
 end procedure;
 
 

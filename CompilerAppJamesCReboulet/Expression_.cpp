@@ -41,7 +41,7 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 			this->linkedMemberNonterminals.pop_back();
 
 			//Every time we get here, we need to give back the token, since a token gets burned up every time we arrive here.  It has to happen.
-			this->parserPtr->resetTokenReadIndexToPrevious();
+			//this->parserPtr->resetTokenReadIndexToPrevious();
 		}
 		//If we ever get here, we can set the isValid flag to true, since we know we have had an ArithOp added at least.
 		//No reason to check the size of the linkedMemberNonterminals each time and waste more CPU clock cycles and memory accesses.
@@ -51,7 +51,8 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	}
 
 
-	else
+	else if (!this->linkedMemberNonterminals.empty() &&
+		dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr)
 	{
 		this->linkedMemberNonterminals.push_back(new ArithOp(this->parserPtr, motherNode, this));
 		bool isValid = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)->getIsValid();
@@ -61,10 +62,18 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 			//Here, we return early, since we assume that Expression_ is empty if we don't create a valid <ArithOp>.
 			//We have to stop the infinite recursion from occurring.
 			return;
-			
+
 		}
 		
 	}
+
+	else
+	{
+
+		return;
+	}
+		
+	
 
 	currentToken = this->parserPtr->readNextToken();
 	++tokenCounter;

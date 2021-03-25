@@ -33,9 +33,11 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 
 			//Every time we get here, we need to give back the token, since a token gets burned up every time we arrive here.  It has to happen.
 			this->parserPtr->resetTokenReadIndexToPrevious();
+			
 		}
 
 		//Note:  If we ever get here, we know that we have seen a correctly added ArithOp, so we set isValid(true);
+		
 		this->setIsValid(true);
 		return;
 	}
@@ -53,8 +55,8 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 			return;
 		}
 
-		this->setIsValid(true);
-		return;
+		//this->setIsValid(true);
+		//return;
 
 	}
 

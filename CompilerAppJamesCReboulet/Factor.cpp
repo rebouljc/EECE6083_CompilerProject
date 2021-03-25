@@ -100,6 +100,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 		else
 		{
 			this->setIsValid(true);
+			
 			//If Name is valid, then procedure call is not valid and we need to return or else
 			//Procedure_Call will be tested and it could be valid.
 			return;

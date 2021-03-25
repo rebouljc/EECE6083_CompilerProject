@@ -36,6 +36,8 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	{
 		assnStmtFlag = true;
 		this->setIsValid(true);
+		//Try giving back the value. 
+		//this->parserPtr->resetTokenReadIndexToPrevious();
 		return;
 	}
 	this->linkedMemberNonterminals.push_back(new IfStatement(this->parserPtr, motherNode, this));
@@ -73,6 +75,8 @@ void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	{
 		returnStmtFlag = true;
 		this->setIsValid(true);
+		//Try giving back the value. 
+		//this->parserPtr->resetTokenReadIndexToPrevious();
 		return;
 	}
 

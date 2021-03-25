@@ -15,8 +15,8 @@ ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTre
 
 void ProcedureBody::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
-	//Both of these methods are recursive methods.  But, there can only be one "Program Body" so we have to divide the 
-		//statements and the declarations up into separate methods.
+//Both of these methods are recursive methods.  But, there can only be one "Program Body" so we have to divide the 
+	//statements and the declarations up into separate methods.
 	this->verifySyntaxCreateParseTreeDeclarationParser(motherNode);
 	this->verifySyntaxCreateParseTreeStatementParser(motherNode);
 }
@@ -28,9 +28,9 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 	//printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
 
 	if (!this->linkedMemberNonterminals.empty() &&
-		dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
+		dynamic_cast<Declaration*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) &&
 		currentToken->getTokenValue() == ";"
-	   )
+		)
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 	}
@@ -43,7 +43,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 		//Have to read the next token, so we don't mess up the statement method.
 		currentToken = this->parserPtr->readNextToken();
 		return;
-		
+
 	}
 	else
 	{
@@ -52,7 +52,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeDeclarationParser(ParseTreeNode* 
 		if (!decl->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
-			
+
 		}
 	}
 
@@ -63,6 +63,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 {
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
 	//printf("\nProcedureBody_CurrentToken = %s", currentToken->getTokenValue().c_str());
+	
 
 	bool nested = false;
 	/*for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
@@ -72,13 +73,13 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 			testNode->getNodeTokenValue() == "begin"
 			)
 		{
-			//If the statement is nested 
+			//If the statement is nested
 			nested = true;
 			break;
 		}
 	}*/
 	if (!this->linkedMemberNonterminals.empty() &&
-		dynamic_cast<Statement*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) && 
+		dynamic_cast<Statement*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) &&
 		currentToken->getTokenValue() == ";")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
@@ -95,19 +96,47 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		this->setIsValid(true);
 		//printf("-------->END PROCEDURE<--------------");
-		
+
 		return;
 	}
+
+	//After we create a statement, we must add a ';'  Thus, if we have gotten here, we check for it and if it isn't there, we add it.
+	
 
 	else
 	{
 		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode, this));
 		ParseTreeNode* testNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+		bool statementCreated = false;
+		
 		if (!testNode->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
+
 			
 		}
+
+		else
+		{
+			statementCreated = true;
+		}
+
+		if (statementCreated)
+		{
+			this->parserPtr->readNextToken();
+			currentToken = this->parserPtr->getCurrentlyReadToken();
+			if (currentToken->getTokenValue() != ";")
+			{
+				TerminalNode* semicolon = new TerminalNode(new Token("PUNCTUATION", ";"), this);
+				this->linkedMemberNonterminals.push_back(semicolon);
+				this->parserPtr->resetTokenReadIndexToPrevious();
+			}
+
+
+		}
+		
+
+		
 	}
 	currentToken = this->parserPtr->readNextToken();
 	this->verifySyntaxCreateParseTreeStatementParser(motherNode);
