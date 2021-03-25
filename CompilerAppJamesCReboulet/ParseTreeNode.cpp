@@ -281,7 +281,22 @@ void ParseTreeNode::climbTreeToDeclarationNode(ParseTreeNode* identifierNode)
 {
     if (this->parentNodePtr == nullptr)
     {
-        //We have encountered the <Program> Class, so return;
+        if (dynamic_cast<Program*>(this))
+        {
+            //Now, perform the array bounds check.
+            //We search the global symbol table here.
+            for (int s = 0; s < this->getSymbolTable()->size(); ++s)
+            {
+                Identifier* symbolTableIdent = nullptr;
+
+                if ((symbolTableIdent = dynamic_cast<Identifier*>(this->getSymbolTable()->at(s))) != nullptr &&
+                    symbolTableIdent->getNodeTokenValue() == dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue()
+                    )
+                {
+                    this->checkArrayIndexInBounds(*identifierNode, *symbolTableIdent);
+                }
+            }
+        }
         return;
     }
     else if (dynamic_cast<Declaration*>(this))
