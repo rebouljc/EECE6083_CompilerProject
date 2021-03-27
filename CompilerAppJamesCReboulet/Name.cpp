@@ -69,8 +69,10 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 			//We have to back up the index again because it was stolen.
 			this->parserPtr->resetTokenReadIndexToPrevious();
 		}*/
-
-		this->parserPtr->resetTokenReadIndexToPrevious();
+		else
+		{
+			this->parserPtr->resetTokenReadIndexToPrevious();
+		}
 		return;
 
 	}

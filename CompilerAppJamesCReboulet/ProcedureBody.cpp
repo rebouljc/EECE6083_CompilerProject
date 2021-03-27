@@ -107,7 +107,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 	{
 		this->linkedMemberNonterminals.push_back(new Statement(this->parserPtr, motherNode, this));
 		ParseTreeNode* testNode = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
-		bool statementCreated = false;
+		//bool statementCreated = false;
 		
 		if (!testNode->getIsValid())
 		{
@@ -116,25 +116,26 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 			
 		}
 
-		else
-		{
-			statementCreated = true;
-		}
+		//else
+		//{
+			//statementCreated = true;
+		//}
 
-		if (statementCreated)
-		{
-			this->parserPtr->readNextToken();
-			currentToken = this->parserPtr->getCurrentlyReadToken();
-			if (currentToken->getTokenValue() != ";")
+		//if (statementCreated)
+		//{
+			//this->parserPtr->readNextToken();
+			//currentToken = this->parserPtr->getCurrentlyReadToken();
+			/*if (currentToken->getTokenValue() != ";")
 			{
 				//TerminalNode* semicolon = new TerminalNode(new Token("PUNCTUATION", ";"), this);
 				//this->linkedMemberNonterminals.push_back(semicolon);
 				this->parserPtr->resetTokenReadIndexToPrevious();
 				this->parserPtr->resetTokenReadIndexToPrevious();
-			}
+			}*/
+			
 
 
-		}
+		//}
 		
 
 		
