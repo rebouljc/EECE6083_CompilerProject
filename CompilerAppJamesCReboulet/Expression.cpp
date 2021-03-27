@@ -25,6 +25,7 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 	if (currentToken->getTokenValue() == "not")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		
 	}
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method
 	//That will probably cause a memory access violation to occur at runtime, because we are accessing a non-existent element in our vector.
@@ -38,11 +39,13 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 		{
 			this->linkedMemberNonterminals.pop_back();
 			//Every time we get here, we need to give back the token, since a token gets burned up every time we arrive here.  It has to happen.
-			this->parserPtr->resetTokenReadIndexToPrevious();
+			//this->parserPtr->resetTokenReadIndexToPrevious();
+			
 			
 		}
 
 		//Note:  If we ever get here, we know that we have seen a correctly added ArithOp, so we set isValid(true);
+		this->parserPtr->resetTokenReadIndexToPrevious();
 		this->setIsValid(true);
 		return;
 	}

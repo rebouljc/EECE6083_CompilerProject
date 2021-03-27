@@ -62,7 +62,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	
 		//We don't have a valid "[", so we return early, but it will still be set as valid, since the expression is optional.
 		//We will have to back up the read index or this token will be ignored by furture methods.
-		this->parserPtr->resetTokenReadIndexToPrevious(); //Do not give it back.  We don't want it triggering other methods as it moves up the chain.
+		//this->parserPtr->resetTokenReadIndexToPrevious(); //Do not give it back.  We don't want it triggering other methods as it moves up the chain.
 		//Identifier* ident = dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1));
 		/*if (ident != nullptr && ident->getNodeTokenType() == "IDENTIFIER")
 		{
@@ -70,7 +70,7 @@ void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 			this->parserPtr->resetTokenReadIndexToPrevious();
 		}*/
 
-		
+		this->parserPtr->resetTokenReadIndexToPrevious();
 		return;
 
 	}

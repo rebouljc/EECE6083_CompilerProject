@@ -40,16 +40,24 @@ void AssignmentStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 	}
 
 	currentToken = this->parserPtr->readNextToken();
-	
-	this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode, this));
-	ParseTreeNode* expr = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
-	if (!expr->getIsValid())
+	TerminalNode* checkNode = nullptr;
+	if ((checkNode = dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1))) != nullptr)
 	{
-		this->linkedMemberNonterminals.pop_back();
-		return;  //Set is valid will be false here.
-	}
+		if (checkNode->getNodeTokenType() == "ASSIGNMENT")
+		{
+			this->linkedMemberNonterminals.push_back(new Expression(this->parserPtr, motherNode, this));
+			ParseTreeNode* expr = this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1);
+			if (!expr->getIsValid())
+			{
+				this->linkedMemberNonterminals.pop_back();
+				return;  //Set is valid will be false here.
+			}
 
-	this->setIsValid(true);
+			this->setIsValid(true);
+		}
+	}
+	
+	
 	return;
 	
 	

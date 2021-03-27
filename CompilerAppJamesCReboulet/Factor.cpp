@@ -93,7 +93,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 			this->linkedMemberNonterminals.pop_back();
 			stolenToken = true;
 		
-			//this->parserPtr->resetTokenReadIndexToPrevious();  //Try giving it back. 3/1/2021.  Here lies the issue.  Fix this!.
+			this->parserPtr->resetTokenReadIndexToPrevious();  //Try giving it back. 3/1/2021.  Here lies the issue.  Fix this!.
 															   //Somewhere along the line, there is some unneccessary recursion going on.
 			 //We definitely do not have a parameterList if there is no <parameter>
 		}

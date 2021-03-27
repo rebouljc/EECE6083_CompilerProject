@@ -40,6 +40,7 @@ void ArithOp_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 		}
 		//If we ever get here, we can set the isValid flag to true, since we know we have had an ArithOp added at least.
 		//No reason to check the size of the linkedMemberNonterminals each time and waste more CPU clock cycles and memory accesses.
+		
 		this->setIsValid(true);
 		
 		

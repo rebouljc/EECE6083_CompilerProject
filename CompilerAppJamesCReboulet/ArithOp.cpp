@@ -30,11 +30,13 @@ void ArithOp::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mothe
 		{
 			this->linkedMemberNonterminals.pop_back();
 			//Every time we get here, we need to give back the token, since a token gets burned up every time we arrive here.  It has to happen.
-			this->parserPtr->resetTokenReadIndexToPrevious();
+			//this->parserPtr->resetTokenReadIndexToPrevious();
+			
 			
 		}
 
 		//Note:  If we ever get here, we know that we have seen a correctly added ArithOp, so we set isValid(true);
+		this->parserPtr->resetTokenReadIndexToPrevious();
 		this->setIsValid(true);
 		
 		return;

@@ -127,8 +127,9 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 			currentToken = this->parserPtr->getCurrentlyReadToken();
 			if (currentToken->getTokenValue() != ";")
 			{
-				TerminalNode* semicolon = new TerminalNode(new Token("PUNCTUATION", ";"), this);
-				this->linkedMemberNonterminals.push_back(semicolon);
+				//TerminalNode* semicolon = new TerminalNode(new Token("PUNCTUATION", ";"), this);
+				//this->linkedMemberNonterminals.push_back(semicolon);
+				this->parserPtr->resetTokenReadIndexToPrevious();
 				this->parserPtr->resetTokenReadIndexToPrevious();
 			}
 
