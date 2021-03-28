@@ -1,6 +1,7 @@
 #include "ArithOp_.h"
 #include "TerminalNode.h"
 #include "Relation.h"
+#include "Identifier.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 ArithOp_::ArithOp_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -12,6 +13,7 @@ ArithOp_::ArithOp_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 	this->verifySyntaxCreateParseTree(0, motherNode);
 	
 }
+
 
 void ArithOp_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {

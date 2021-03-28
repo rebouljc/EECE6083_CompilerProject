@@ -22,9 +22,11 @@ public:
 	virtual ~ParseTreeNode() {};
 	virtual bool checkGlobalTerminalNodePresent() { return false; };
 
-	//Tree climbing methods for semantic verification.
+	
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
+	//Tree climbing methods for semantic verification.
 	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
+	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare);
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 

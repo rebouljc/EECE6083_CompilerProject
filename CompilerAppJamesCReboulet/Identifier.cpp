@@ -9,6 +9,16 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	this->identifierType = identifierType;
 	this->climbTreeAndPopulateSymbolTable(this->identifierType, this);
 	
+	//Semantic Check
+	//1) We need to climb the parse tree until we get to <ArithOp_>. We add a pointer to <ArithOp_> to the identifier.
+	//2) We then continue to climb the tree until we get to <ArithOp>.  We add a pointer to <ArithOp> to the identifier.
+	//3) We then need to continue to climb the tree until we get to a <Declaration>.
+	//4) Once we arrive at <Declaration>.  We search for a matching identifier node.
+	//5) We then verify its type.  If it is of type "integer" or type "float", we then search <ArithOp_> to verify that
+	
+	this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this);
+	
+	
 
 }
 
@@ -21,6 +31,7 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	this->identifierType = identifierType;
 	this->isValidDeclaration = isValidDeclaration;
 	this->climbTreeAndPopulateSymbolTable(this->identifierType, this);
+	
 }
 
 void Identifier::setIdentifierTypeToGlobal()
@@ -56,4 +67,8 @@ ParseTreeNode* Identifier::getNumberPtrValue()
 {
 	return this->numberPtr;
 }
+
+
+
+
 

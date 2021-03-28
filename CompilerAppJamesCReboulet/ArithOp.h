@@ -7,7 +7,10 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	
+	void setIdentifierArithOpPtrValue(ParseTreeNode* identifier);
+	void setIdentifierArithOp_PtrValue(ParseTreeNode* identifier);
+	ParseTreeNode* getIdentifierArithOpPtrValue();
+	ParseTreeNode* getIdentifierArithOp_PtrValue();
 	~ArithOp() {};
 
 
@@ -18,6 +21,8 @@ private:
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
+	ParseTreeNode* identifierArithOpPtr = nullptr;
+	ParseTreeNode* identifierArithOp_Ptr = nullptr;
 	
 	
 

@@ -14,7 +14,7 @@ Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodeP
 	this->setParserPtr(parser);
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
-	//Semantic Check
+	
 	try
 	{
 		if (this->getIsValid())

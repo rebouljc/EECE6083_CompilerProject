@@ -16,6 +16,8 @@
 #include "Bound.h"
 #include "ArrayIndexOutOfBoundsException.h"
 #include "Name.h"
+#include "ArithOp.h"
+#include "ArithOp_.h"
 
 
 
@@ -195,6 +197,54 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
     this->parentNodePtr->climbTreeAndPopulateSymbolTable(identifierType, identifierNode); //Do the recursive call here.
     return;
 }
+
+void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare)
+{
+    //Identifier and Number will call this method.
+    //Then ArithOp_ will call this method.
+    ArithOp_* arithOp_Ptr = nullptr;
+    ArithOp* arithOpPtr = nullptr;
+    Declaration* declPtr = nullptr;
+    Identifier* identifierArithOpPtr = nullptr;
+    Identifier* identifierArithOp_Ptr = nullptr;
+
+    
+    if (this->parentNodePtr == nullptr)
+    {
+        return;
+    }
+    else if ((arithOpPtr = dynamic_cast<ArithOp*>(this)) != nullptr)
+    {
+        //Identifier will set its ArithOpPtr to arithOpPtr.
+        arithOpPtr->setIdentifierArithOpPtrValue(tokenToCompare);
+        //If both ArithOp ptr values are not equal to nullptr, we will continue to climb the tree to declaration.
+        //When we get there, we will do the type checking portion.
+        //We have to pass both pointers up to <Declaration>, search <Declaration> for the respective Identifier
+        //and then do the check.  
+        //We will start this either late tomorrow or on Monday, since I have another project to work on tomorrow after 
+        //I am finally able to go to church with mask, since I received my first dose of the COVID-19 Pfizer vaccine!
+        //I still wear a KN-95 mask though, until the week following my second dose.  Then I will downgrade to a cloth mask!
+    }
+
+    else if (dynamic_cast<ArithOp_*>(this) != nullptr)
+    {
+        //Identifier will set its ArithOpPtr to arithOpPtr.
+        ArithOp* arithOpPtr = nullptr;
+        if ((arithOpPtr = dynamic_cast<ArithOp*>(this->parentNodePtr)) != nullptr)
+        {
+            arithOpPtr->setIdentifierArithOp_PtrValue(tokenToCompare);
+        }
+        
+    }
+
+    
+   
+
+    this->parentNodePtr->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompare);
+    
+}
+
+
 
 void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
 {

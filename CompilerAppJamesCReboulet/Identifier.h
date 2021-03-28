@@ -15,6 +15,8 @@ public:
 	bool getIdentifierIsValidDeclaration() { return this->isValidDeclaration; };
 	void setNumberPtrValue(ParseTreeNode* numberNode);
 	ParseTreeNode* getNumberPtrValue();
+	ParseTreeNode* getArithOpPtrValue();
+	ParseTreeNode* getArithOp_PtrValue();
 	~Identifier() {};
 
 
