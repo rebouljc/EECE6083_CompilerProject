@@ -19,6 +19,8 @@
 #include "ArithOp.h"
 #include "ArithOp_.h"
 #include "TypeMark.h"
+#include "Program.h"
+#include "Declaration.h"
 
 
 
@@ -302,7 +304,7 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                         if (ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue())
                         {
                             leftValue =  ident->getNodeTokenValue().c_str();
-                            return;
+                            
                             
                             
                         }
@@ -310,7 +312,7 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                         else if (ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue())
                         {
                             rightValue = ident->getNodeTokenValue().c_str();
-                            return;
+                            
 
 
                         }
@@ -338,27 +340,33 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
 {
     Identifier* identifierArithOpPtr = nullptr;
     Identifier* identifierArithOp_Ptr = nullptr;
-    Declaration* decl = nullptr;
     Program* prog;
+    Declaration* decl;
 
     if ((prog = dynamic_cast<Program*>(this)) != nullptr)
     {
-        if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
+        
+            if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
             (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
             )
         {
+                prog->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
+                                                                    dynamic_cast<Identifier*>(tokenToCompareRight));
             return;
         }
     }
-    
+
     else if ((decl = dynamic_cast<Declaration*>(this)) != nullptr)
     {
+
         if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
             (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
             )
         {
             decl->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
                                                                 dynamic_cast<Identifier*>(tokenToCompareRight));
+            //We don't want to return.  We want to visit every declaration up until we visit the global symbol table, and
+            //add what we have to every set.
         }
     }
 

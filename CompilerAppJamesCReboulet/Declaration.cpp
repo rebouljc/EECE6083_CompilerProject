@@ -15,9 +15,11 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	this->setParserPtr(parser);
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
-	this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(this->tokenToCompareLeft, this->tokenToCompareRight);
 
-	
+	for (set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin(); it != this->tokenToCompare.end(); ++it)
+	{
+		this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+	}
 }
 
 bool Declaration::checkGlobalTerminalNodePresent()
@@ -131,26 +133,31 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* toke
 	string tokenToCompareLeftValue;
 	string tokenToCompareRightValue;
 
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
 
 	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
 	{
-		
-		if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() == 
+
+		if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
 			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
-		   )
+			)
 		{
-		
-			this->tokenToCompareLeft = tokenToCompareLeft;
-			
+
+			pair.first = tokenToCompareLeft;
+
 		}
 
 		else if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
 			     dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
-			    )
+			)
 		{
-			this->tokenToCompareRight = tokenToCompareRight;
+			pair.second = tokenToCompareRight;
 		}
 	}
+
+	this->tokenToCompare.insert(pair);
+	cout << "\nTokenToCompare->first = " << pair.first;
+	cout << "\nTokenToCompare->second = " << pair.second;
 }
 
 void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
@@ -161,10 +168,10 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(P
 		//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
 		std::string leftValue = "";
 		std::string rightValue = "";
-		this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue );
-	    
-		
-		
+		this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue);
+
+
+
 	}
 
 	else

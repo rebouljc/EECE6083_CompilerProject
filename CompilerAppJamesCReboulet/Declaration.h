@@ -2,6 +2,7 @@
 #include "ParseTreeNode.h"
 #include "Identifier.h"
 
+
 class Declaration : public ParseTreeNode
 {
 public:
@@ -10,7 +11,6 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight);
-	void verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight);
 	
 	~Declaration() {};
 	bool checkGlobalTerminalNodePresent() override;
@@ -18,11 +18,13 @@ public:
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
-	
+	void verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight);
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
-	ParseTreeNode* tokenToCompareLeft = nullptr;
-	ParseTreeNode* tokenToCompareRight = nullptr;
+	//ParseTreeNode* tokenToCompareLeft = nullptr;
+	//ParseTreeNode* tokenToCompareRight = nullptr;
+	
+	
 	
 	
 };

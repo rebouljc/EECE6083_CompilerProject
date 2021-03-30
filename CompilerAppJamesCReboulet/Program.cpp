@@ -11,6 +11,12 @@ Program::Program(Parser* parser)
 	
 	this->setParserPtr(parser);
 	this->verifySyntaxCreateParseTree(0, this);
+
+	for (set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin(); it != this->tokenToCompare.end(); ++it)
+	{
+		this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+	}
+	
 }
 
 void Program::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
@@ -64,6 +70,61 @@ void Program::populateSearchResultsList(ParseTreeNode* motherNode)
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
+
+void Program::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight)
+{
+
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+
+		if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
+			)
+		{
+
+			pair.first = tokenToCompareLeft;
+
+		}
+
+		else if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
+			)
+		{
+			pair.second = tokenToCompareRight;
+		}
+	}
+
+	this->tokenToCompare.insert(pair);
+}
+
+void Program::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
+{
+	if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
+	{
+		//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
+		//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
+		std::string leftValue = "";
+		std::string rightValue = "";
+		this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue);
+
+
+
+	}
+
+	else
+	{
+		//We 
+	}
+}
+
+
 
 
 

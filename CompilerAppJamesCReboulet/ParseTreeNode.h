@@ -2,7 +2,7 @@
 #include <vector>
 #include "Token.h"
 #include "Parser.h"
-
+#include "stdlib.h"
 
 
 class ParseTreeNode
@@ -53,6 +53,7 @@ protected:
 	vector<ParseTreeNode*> symbolTable; //symbolTable.first = TablePtr symbolTable.second == IdentifierPtr 
 	ParseTreeNode* programNode_motherNode = nullptr;
 	vector<ParseTreeNode*> linkedMemberNonterminals;
+	std::set<pair<ParseTreeNode*, ParseTreeNode*>> tokenToCompare;
 
 private:
 	
@@ -64,6 +65,6 @@ private:
 	void climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
 		                                                                        ParseTreeNode* tokenToCompareRight);
 	
-
+	
 	
 };
