@@ -36,6 +36,10 @@ protected:
 	virtual ParseTreeNode* getNodePtr() { return nullptr; };
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
 	virtual void populateLocalSearchResultsList() { return; };
+
+	//Protected Semantic-Checking Methods.
+	void verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
+		                                                                    std::string &leftValue, std::string &rightValue);
 	
 	
 	
@@ -57,6 +61,9 @@ private:
 	void climbTreeToDeclarationNode(ParseTreeNode* identifierNode);
 	//Private Semantic Checking Methods
 	void checkArrayIndexInBounds(ParseTreeNode &identifier, ParseTreeNode &symbolTableIdentifier);
+	void climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
+		                                                                        ParseTreeNode* tokenToCompareRight);
+	
 
 	
 };

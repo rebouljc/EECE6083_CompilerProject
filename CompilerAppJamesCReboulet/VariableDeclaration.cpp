@@ -164,3 +164,5 @@ void VariableDeclaration::checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberN
 	}
 }
 
+
+

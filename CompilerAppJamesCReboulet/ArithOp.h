@@ -18,6 +18,9 @@ private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
 	void dealWithForHeader(ParseTreeNode* motherNode, int tokenCounter);
 	void dealWithForBody(ParseTreeNode* motherNode, int tokenCounter);
+
+	//Semantic Analysis Methods
+	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined();
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;

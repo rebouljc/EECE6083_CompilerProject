@@ -4,6 +4,7 @@
 #include "VariableDeclaration.h"
 #include "TypeDeclaration.h"
 
+
 /*NOTE:  REMEMBER TO CALL this->parserPtr->backupIndexToRead() if a recursive function pops a newly created object from the vector.
   Otherwise, that particular token will have already been read and it will be ignored in future methods/classes that need it.*/
 
@@ -14,6 +15,7 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	this->setParserPtr(parser);
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+	this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(this->tokenToCompareLeft, this->tokenToCompareRight);
 
 	
 }
@@ -119,4 +121,54 @@ void Declaration::populateSearchResultsList(ParseTreeNode* motherNode)
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
+}
+
+void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight)
+{
+
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+		
+		if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() == 
+			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
+		   )
+		{
+		
+			this->tokenToCompareLeft = tokenToCompareLeft;
+			
+		}
+
+		else if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			     dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
+			    )
+		{
+			this->tokenToCompareRight = tokenToCompareRight;
+		}
+	}
+}
+
+void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
+{
+	if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
+	{
+		//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
+		//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
+		std::string leftValue = "";
+		std::string rightValue = "";
+		this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue );
+	    
+		
+		
+	}
+
+	else
+	{
+		//We 
+	}
 }

@@ -6,6 +6,9 @@
   Character.cpp
   CompilerAppJamesCReboulet.cpp
   Declaration.cpp
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(135,22): warning C4018: '<': signed/unsigned mismatch
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(130,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(129,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
   Destination.cpp
   Expression.cpp
   Expression_.cpp
@@ -22,11 +25,12 @@
   Compiling...
   Parser.cpp
   ParseTreeNode.cpp
-C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(267,31): warning C4018: '<': signed/unsigned mismatch
-C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(286,31): warning C4018: '<': signed/unsigned mismatch
-C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(306,31): warning C4018: '<': signed/unsigned mismatch
-C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(338,31): warning C4018: '<': signed/unsigned mismatch
-C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(356,27): warning C4018: '<': signed/unsigned mismatch
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(268,27): warning C4018: '<': signed/unsigned mismatch
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(386,31): warning C4018: '<': signed/unsigned mismatch
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(405,31): warning C4018: '<': signed/unsigned mismatch
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(425,31): warning C4018: '<': signed/unsigned mismatch
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(457,31): warning C4018: '<': signed/unsigned mismatch
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(475,27): warning C4018: '<': signed/unsigned mismatch
   ProcedureBody.cpp
   ProcedureCall.cpp
   ProcedureDeclaration.cpp
@@ -46,9 +50,9 @@ C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTr
   Scanner.cpp
   TypeDeclaration.cpp
   Generating Code...
-C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(96): warning C4715: 'ParseTreeNode::searchSymbolTable': not all control paths return a value
+C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(97): warning C4715: 'ParseTreeNode::searchSymbolTable': not all control paths return a value
   Compiling...
   TypeMark.cpp
   VariableDeclaration.cpp
   Generating Code...
-  CompilerAppJamesCReboulet.vcxproj -> C:\GitHubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Debug\CompilerAppJamesCReboulet.exe
+  CompilerAppJamesCReboulet.vcxproj -> C:\BackupGithubRepositories\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Debug\CompilerAppJamesCReboulet.exe

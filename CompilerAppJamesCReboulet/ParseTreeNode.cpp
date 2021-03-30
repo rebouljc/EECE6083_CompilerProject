@@ -18,6 +18,7 @@
 #include "Name.h"
 #include "ArithOp.h"
 #include "ArithOp_.h"
+#include "TypeMark.h"
 
 
 
@@ -224,6 +225,15 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
         //We will start this either late tomorrow or on Monday, since I have another project to work on tomorrow after 
         //I am finally able to go to church with mask, since I received my first dose of the COVID-19 Pfizer vaccine!
         //I still wear a KN-95 mask though, until the week following my second dose.  Then I will downgrade to a cloth mask!
+        Identifier* tokenToCompareLeft = nullptr;
+        Identifier* tokenToCompareRight = nullptr;
+
+        if ((tokenToCompareLeft = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOpPtrValue())) != nullptr &&
+            (tokenToCompareRight = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOp_PtrValue())) != nullptr
+           )
+        {
+            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight);
+        }
     }
 
     else if (dynamic_cast<ArithOp_*>(this) != nullptr)
@@ -233,18 +243,127 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
         if ((arithOpPtr = dynamic_cast<ArithOp*>(this->parentNodePtr)) != nullptr)
         {
             arithOpPtr->setIdentifierArithOp_PtrValue(tokenToCompare);
+            
         }
         
     }
-
-    
-   
 
     this->parentNodePtr->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompare);
     
 }
 
+void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
+                                                                                       std::string &leftValue, std::string &rightValue)
+{
+    
+    //Here, we dig until we can find a <VariableDeclaration> class.
+    if (this->linkedMemberNonterminals.empty())
+    {
+        //We have reached a leaf, so we need to return.  Prevents infinite recursion.
+        return;
+    }
 
+    else
+    {
+        for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+        {
+            VariableDeclaration* varDecl = nullptr;
+            
+
+            if ((varDecl = dynamic_cast<VariableDeclaration*>(this->linkedMemberNonterminals.at(i))) != nullptr)
+            {
+                //We check for the identifier.
+                //Otherwise, we dig, arrive here or a leaf, and repeat again.
+                //If we arrive at a leaf and don't find anything, we jump back to <Declaration>, climb the tree to the
+                //<Program> class, then dig again. 
+                //Then, if we really don't come up lucky, we are basically screwed.  We should have already thrown a 
+                //Variable not defined exception, but only time will tell whether this occurred before this check was completed and
+                //tested .  We could throw more exceptions, though, just to make the user's life more miserable and stab him/her a 
+                //few more times.
+
+                cout << "\nWe have arrived at a DECLARATION!  Digging was successful!";
+
+                //Jesus!  Now, we can actually check to determine whether the <Identifier>s match and the <TypeMark>s match.
+                Identifier* ident = nullptr;
+                TypeMark* identType = nullptr;
+
+                if ( (ident = dynamic_cast<Identifier*>(varDecl->linkedMemberNonterminals.at(1))) != nullptr &&
+                     ((identType = dynamic_cast<TypeMark*>(varDecl->linkedMemberNonterminals.at(3))) != nullptr)
+                   )
+                {
+                    //We check their types.
+                    string symbolTableTest;
+                    
+                    if ((symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "integer" ||
+                        (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "float"
+                        )
+                    {
+                        //We can set either the right hand or left-hand values.
+                        if (ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue())
+                        {
+                            leftValue =  ident->getNodeTokenValue().c_str();
+                            return;
+                            
+                            
+                        }
+
+                        else if (ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue())
+                        {
+                            rightValue = ident->getNodeTokenValue().c_str();
+                            return;
+
+
+                        }
+
+
+                    }
+                }
+                
+                //Now, we check the values somewhere along the line and then decide what to do.  TODO!
+            }
+
+            //And in all of this fun, I forgot to recurse.  This should be really fun.  Multiple recursion!  We should
+            //make it more confusing and put each recursive method on its own thread.
+
+           this->linkedMemberNonterminals.at(i)->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight,
+                                                                                                                           leftValue, rightValue);
+           
+        }
+    }
+
+   
+}
+void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
+                                                                                           ParseTreeNode* tokenToCompareRight)
+{
+    Identifier* identifierArithOpPtr = nullptr;
+    Identifier* identifierArithOp_Ptr = nullptr;
+    Declaration* decl = nullptr;
+    Program* prog;
+
+    if ((prog = dynamic_cast<Program*>(this)) != nullptr)
+    {
+        if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
+            (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
+            )
+        {
+            return;
+        }
+    }
+    
+    else if ((decl = dynamic_cast<Declaration*>(this)) != nullptr)
+    {
+        if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
+            (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
+            )
+        {
+            decl->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
+                                                                dynamic_cast<Identifier*>(tokenToCompareRight));
+        }
+    }
+
+    this->parentNodePtr->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight);
+}
 
 void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
 {

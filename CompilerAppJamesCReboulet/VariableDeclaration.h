@@ -1,5 +1,6 @@
 #pragma once
 #include "ParseTreeNode.h"
+
 class VariableDeclaration : public ParseTreeNode
 {
 public:
@@ -9,6 +10,7 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode);
+	
 	
 	~VariableDeclaration(){};
 	
