@@ -306,16 +306,13 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                             leftValue =  ident->getNodeTokenValue().c_str();
                             
                             
-                            
                         }
 
                         else if (ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue())
                         {
                             rightValue = ident->getNodeTokenValue().c_str();
-                            
-
-
                         }
+
 
 
                     }
@@ -351,7 +348,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
             )
         {
                 prog->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
-                                                                    dynamic_cast<Identifier*>(tokenToCompareRight));
+                                                                    dynamic_cast<Identifier*>(tokenToCompareRight), nullptr, nullptr);
             return;
         }
     }
@@ -364,7 +361,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
             )
         {
             decl->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
-                                                                dynamic_cast<Identifier*>(tokenToCompareRight));
+                                                                dynamic_cast<Identifier*>(tokenToCompareRight), nullptr, nullptr);
             //We don't want to return.  We want to visit every declaration up until we visit the global symbol table, and
             //add what we have to every set.
         }

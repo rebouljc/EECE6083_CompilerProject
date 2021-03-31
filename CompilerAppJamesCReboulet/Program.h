@@ -10,7 +10,8 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
 	//Semantic Analysis Public Methods
-	void verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight);
+	void verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight,
+		                                               Identifier* prevTokenToCompareLeft, Identifier* prevTokenToCompareRight);
 	
 	~Program() {};
 	

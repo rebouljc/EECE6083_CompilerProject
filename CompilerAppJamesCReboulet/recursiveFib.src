@@ -29,7 +29,8 @@ procedure Fib : integer(variable val :integer)
 	tmp[3] := Fib(val);
 	val := Sub(1);
 	tmp[1] := Fib(val);
-	ret := tmp[3] + tmp[1]; //We have to fix this for <Name>, I think.
+	//Change to out ret := tmp[3] + tmp[1]; //We have to fix this for <Name>, I think.
+        ret := tmp[3] + out;
 	return ret + 5;
 end procedure;
 

@@ -3,6 +3,7 @@
 #include "ProcedureDeclaration.h"
 #include "VariableDeclaration.h"
 #include "TypeDeclaration.h"
+#include "ArithOperatorsAreNotAValidTypeException.h"
 
 
 /*NOTE:  REMEMBER TO CALL this->parserPtr->backupIndexToRead() if a recursive function pops a newly created object from the vector.
@@ -20,6 +21,8 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	{
 		this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
 	}
+
+	this->tokenToCompare.clear();
 }
 
 bool Declaration::checkGlobalTerminalNodePresent()
@@ -125,7 +128,8 @@ void Declaration::populateSearchResultsList(ParseTreeNode* motherNode)
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }
 
-void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight)
+void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight,
+	                                                            Identifier* prevTokenToCompareLeft, Identifier* prevTokenToCompareRight)
 {
 
 	Identifier* symbolTableLeftTokValue;
@@ -142,40 +146,78 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* toke
 			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
 			)
 		{
-
 			pair.first = tokenToCompareLeft;
-
+			prevTokenToCompareLeft = tokenToCompareLeft;
+			cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Identifier*>(pair.first)->getNodeTokenValue();
 		}
 
 		else if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
 			     dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
-			)
+			    )
 		{
 			pair.second = tokenToCompareRight;
+			prevTokenToCompareRight = tokenToCompareRight;
+			cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue();
 		}
+
 	}
 
-	this->tokenToCompare.insert(pair);
-	cout << "\nTokenToCompare->first = " << pair.first;
-	cout << "\nTokenToCompare->second = " << pair.second;
+	if (prevTokenToCompareLeft != nullptr)
+	{
+		pair.first = tokenToCompareLeft;
+
+	}
+
+	if (prevTokenToCompareRight != nullptr)
+	{
+		pair.second = tokenToCompareRight;
+	}
+
+	if (prevTokenToCompareLeft != nullptr && prevTokenToCompareRight != nullptr)
+	{
+		this->tokenToCompare.insert(pair);
+	}
+	
+	
+	
 }
 
 void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
 {
-	if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
+	std::string leftValue = "";
+	std::string rightValue = "";
+	try
 	{
-		//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
-		//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
-		std::string leftValue = "";
-		std::string rightValue = "";
-		this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue);
+		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
+		{
+			//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
+			//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
+			
 
+			this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue);
 
+			if (leftValue == "" || rightValue == "")
+			{
+				//throw an exception
+				throw ArithOperatorsAreNotAValidTypeException();
+			}
 
+		}
+	}
+	catch (ArithOperatorsAreNotAValidTypeException &e)
+	{
+		if (leftValue == "")
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+				 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+		}
+
+		if (rightValue == "")
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
+				 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+		}
+			
 	}
 
-	else
-	{
-		//We 
-	}
 }

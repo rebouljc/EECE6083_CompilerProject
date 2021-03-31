@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="ArgumentList.h" />
     <ClInclude Include="ArithOp.h" />
+    <ClInclude Include="ArithOperatorsAreNotAValidTypeException.h" />
     <ClInclude Include="ArithOp_.h" />
     <ClInclude Include="ArrayIndexNotAnIntegerLiteralException.h" />
     <ClInclude Include="ArrayIndexOutOfBoundsException.h" />

@@ -299,5 +299,8 @@
     <ClInclude Include="ArrayIndexOutOfBoundsException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ArithOperatorsAreNotAValidTypeException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

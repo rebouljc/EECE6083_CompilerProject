@@ -10,7 +10,8 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
-	void verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight);
+	void verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight,
+		                                               Identifier* prevTokenToCompareLeft, Identifier* prevTokenToCompareRight);
 	
 	~Declaration() {};
 	bool checkGlobalTerminalNodePresent() override;
