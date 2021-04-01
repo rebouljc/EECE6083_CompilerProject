@@ -2,6 +2,7 @@
 #include "ArithOp_.h"
 #include "Relation.h"
 #include "Identifier.h"
+#include "Number.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 ArithOp::ArithOp(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -69,6 +70,36 @@ void ArithOp::setIdentifierArithOpPtrValue(ParseTreeNode* identifier)
 		//If the pointer value has previously been set, do not reset it!
 		this->identifierArithOpPtr = identifier;
 	}
+}
+
+void ArithOp::setNumberArithOpPtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = num;
+	}
+}
+
+void ArithOp::setNumberArithOp_PtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = num;
+	}
+}
+
+ParseTreeNode* ArithOp::getNumberArithOpPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* ArithOp::getNumberArithOp_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
 }
 
 ParseTreeNode* ArithOp::getIdentifierArithOpPtrValue()

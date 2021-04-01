@@ -16,7 +16,7 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	//4) Once we arrive at <Declaration>.  We search for a matching identifier node.
 	//5) We then verify its type.  If it is of type "integer" or type "float", we then search <ArithOp_> to verify that
 	
-	this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this);
+	this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this, false);
 	
 	
 

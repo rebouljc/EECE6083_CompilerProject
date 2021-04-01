@@ -9,19 +9,19 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void setIdentifierArithOpPtrValue(ParseTreeNode* identifier);
 	void setIdentifierArithOp_PtrValue(ParseTreeNode* identifier);
+	void setNumberArithOpPtrValue(ParseTreeNode* numberToken);
+	void setNumberArithOp_PtrValue(ParseTreeNode* numberToken);
+	
 	ParseTreeNode* getIdentifierArithOpPtrValue();
 	ParseTreeNode* getIdentifierArithOp_PtrValue();
+	ParseTreeNode* getNumberArithOpPtrValue();
+	ParseTreeNode* getNumberArithOp_PtrValue();
 	~ArithOp() {};
 
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
-	void dealWithForHeader(ParseTreeNode* motherNode, int tokenCounter);
-	void dealWithForBody(ParseTreeNode* motherNode, int tokenCounter);
 
-	//Semantic Analysis Methods
-	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined();
-	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
 	ParseTreeNode* identifierArithOpPtr = nullptr;

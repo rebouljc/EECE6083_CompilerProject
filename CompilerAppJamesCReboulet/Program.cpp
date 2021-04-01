@@ -95,7 +95,7 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToC
 		{
 			pair.first = tokenToCompareLeft;
 			
-			cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Identifier*>(pair.first)->getNodeTokenValue();
+			//cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Identifier*>(pair.first)->getNodeTokenValue();
 			leftTokInserted = true;
 			
 		
@@ -108,7 +108,7 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToC
 		{
 			pair.second = tokenToCompareRight;
 			
-			cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue();
+			//cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue();
 			rightTokInserted = true;
 		}
 	}
@@ -136,11 +136,111 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToC
 	
 }
 
+void Program::verifyArithmeticOperationsAreCorrectlyDefinedNumberLeft(Number* tokenToCompareLeft, Identifier* tokenToCompareRight,
+	bool& leftTokInserted, bool& rightTokInserted)
+{
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+
+		if (
+			dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
+			)
+		{
+			pair.first = tokenToCompareLeft;
+			//cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Number*>(pair.first)->getNodeTokenValue() << "\n\n";
+			leftTokInserted = true;
+
+			pair.second = tokenToCompareRight;
+			//cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue() << "\n\n";
+			rightTokInserted = true;
+
+		}
+
+	}
+	if (leftTokInserted)
+	{
+		pair.first = tokenToCompareLeft;
+
+	}
+
+	if (rightTokInserted)
+	{
+		pair.second = tokenToCompareRight;
+
+	}
+
+	if (leftTokInserted && rightTokInserted)
+	{
+		this->tokenToCompare.insert(pair);
+		leftTokInserted = false;
+		rightTokInserted = false;
+	}
+}
+
+void Program::verifyArithmeticOperationsAreCorrectlyDefinedNumberRight(Identifier* tokenToCompareLeft, Number* tokenToCompareRight,
+	bool& leftTokInserted, bool& rightTokInserted)
+{
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+
+		if (
+			dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
+			)
+		{
+			pair.first = tokenToCompareLeft;
+			//cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Identifier*>(pair.first)->getNodeTokenValue() << "\n\n";
+			leftTokInserted = true;
+
+			pair.second = tokenToCompareRight;
+			//cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Number*>(pair.second)->getNodeTokenValue() << "\n\n";
+			rightTokInserted = true;
+
+		}
+
+	}
+	if (leftTokInserted)
+	{
+		pair.first = tokenToCompareLeft;
+
+	}
+
+	if (rightTokInserted)
+	{
+		pair.second = tokenToCompareRight;
+
+	}
+
+	if (leftTokInserted && rightTokInserted)
+	{
+		this->tokenToCompare.insert(pair);
+		leftTokInserted = false;
+		rightTokInserted = false;
+	}
+}
+
 void Program::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
 {
 	std::string leftValue = "";
 	std::string rightValue = "";
-
+	bool numberSet = false;
 	try
 	{
 		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
@@ -148,7 +248,7 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(Parse
 			//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
 			//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
 			
-			this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue);
+			this->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet);
 
 			if (leftValue == "" || rightValue == "")
 			{

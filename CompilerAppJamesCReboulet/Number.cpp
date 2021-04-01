@@ -6,6 +6,7 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 	this->parentNodePtr = parentNodePtr;
 	this->token = token;
 	this->climbTreeAndVerifyArrayIndices(this);
+	this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this, false);
 
 }
 

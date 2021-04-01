@@ -26,7 +26,7 @@ public:
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	//Tree climbing methods for semantic verification.
 	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
-	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare);
+	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 
@@ -39,7 +39,7 @@ protected:
 
 	//Protected Semantic-Checking Methods.
 	void verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
-		                                                                    std::string &leftValue, std::string &rightValue);
+		                                                                    std::string &leftValue, std::string &rightValue, bool& numberSet);
 	
 	
 	
