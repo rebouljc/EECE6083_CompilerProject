@@ -17,6 +17,8 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
 
+	bool leftTokInserted = false;
+	bool rightTokInserted = false;
 	for (set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin(); it != this->tokenToCompare.end(); ++it)
 	{
 		this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
@@ -129,7 +131,7 @@ void Declaration::populateSearchResultsList(ParseTreeNode* motherNode)
 }
 
 void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight,
-	                                                            Identifier* prevTokenToCompareLeft, Identifier* prevTokenToCompareRight)
+	                                                            bool& leftTokInserted, bool& rightTokInserted)
 {
 
 	Identifier* symbolTableLeftTokValue;
@@ -138,45 +140,54 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* toke
 	string tokenToCompareRightValue;
 
 	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+	
 
 	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
 	{
 
-		if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+		if (
+			dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
 			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
 			)
 		{
 			pair.first = tokenToCompareLeft;
-			prevTokenToCompareLeft = tokenToCompareLeft;
 			cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Identifier*>(pair.first)->getNodeTokenValue();
+			leftTokInserted = true;
+			
 		}
 
-		else if (dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
-			     dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
+		else if (
+			     dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			     dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue() 
 			    )
 		{
 			pair.second = tokenToCompareRight;
-			prevTokenToCompareRight = tokenToCompareRight;
 			cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue();
+			rightTokInserted = true;
 		}
 
 	}
-
-	if (prevTokenToCompareLeft != nullptr)
+	if (leftTokInserted)
 	{
 		pair.first = tokenToCompareLeft;
-
+		
 	}
 
-	if (prevTokenToCompareRight != nullptr)
+	if (rightTokInserted)
 	{
 		pair.second = tokenToCompareRight;
+		
 	}
 
-	if (prevTokenToCompareLeft != nullptr && prevTokenToCompareRight != nullptr)
+	if (leftTokInserted && rightTokInserted)
 	{
 		this->tokenToCompare.insert(pair);
+		leftTokInserted = false;
+		rightTokInserted = false;
 	}
+
+
+        
 	
 	
 	

@@ -210,6 +210,7 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
     Declaration* declPtr = nullptr;
     Identifier* identifierArithOpPtr = nullptr;
     Identifier* identifierArithOp_Ptr = nullptr;
+    
 
     
     if (this->parentNodePtr == nullptr)
@@ -226,15 +227,18 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
         //and then do the check.  
         //We will start this either late tomorrow or on Monday, since I have another project to work on tomorrow after 
         //I am finally able to go to church with mask, since I received my first dose of the COVID-19 Pfizer vaccine!
-        //I still wear a KN-95 mask though, until the week following my second dose.  Then I will downgrade to a cloth mask!
-        Identifier* tokenToCompareLeft = nullptr;
-        Identifier* tokenToCompareRight = nullptr;
+        //I still wear a KN-95 mask though, until the week following my second dose.  Then I will downgrade to a cloth mask.
 
+        ParseTreeNode* tokenToCompareLeft = nullptr;
+        ParseTreeNode* tokenToCompareRight = nullptr;
+        bool leftTokInserted = false;
+        bool rightTokInserted = false;
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOpPtrValue())) != nullptr &&
             (tokenToCompareRight = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOp_PtrValue())) != nullptr
            )
         {
-            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight);
+            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+                                                                                         rightTokInserted);
         }
     }
 
@@ -333,22 +337,27 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
    
 }
 void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
-                                                                                           ParseTreeNode* tokenToCompareRight)
+                                                                                           ParseTreeNode* tokenToCompareRight,
+                                                                                           bool &leftTokInserted, bool &rightTokInserted)
 {
     Identifier* identifierArithOpPtr = nullptr;
     Identifier* identifierArithOp_Ptr = nullptr;
     Program* prog;
     Declaration* decl;
+   
+    
+    
 
     if ((prog = dynamic_cast<Program*>(this)) != nullptr)
     {
-        
-            if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
+
+        if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
             (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
             )
         {
-                prog->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
-                                                                    dynamic_cast<Identifier*>(tokenToCompareRight), nullptr, nullptr);
+            prog->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
+                                                                dynamic_cast<Identifier*>(tokenToCompareRight),
+                                                                leftTokInserted, rightTokInserted);
             return;
         }
     }
@@ -360,14 +369,22 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
             (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
             )
         {
+            
+            
             decl->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
-                                                                dynamic_cast<Identifier*>(tokenToCompareRight), nullptr, nullptr);
+                                                                dynamic_cast<Identifier*>(tokenToCompareRight), 
+                                                                leftTokInserted, rightTokInserted);
+            set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin();
+           
+            
+            
             //We don't want to return.  We want to visit every declaration up until we visit the global symbol table, and
             //add what we have to every set.
         }
     }
 
-    this->parentNodePtr->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight);
+    this->parentNodePtr->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight,
+                                                                                                leftTokInserted, rightTokInserted);
 }
 
 void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)

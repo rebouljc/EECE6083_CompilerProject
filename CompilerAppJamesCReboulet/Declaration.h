@@ -11,8 +11,7 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeft, Identifier* tokenToCompareRight,
-		                                               Identifier* prevTokenToCompareLeft, Identifier* prevTokenToCompareRight);
-	
+		                                               bool& leftTokInserted, bool& rightTokInserted);
 	~Declaration() {};
 	bool checkGlobalTerminalNodePresent() override;
 

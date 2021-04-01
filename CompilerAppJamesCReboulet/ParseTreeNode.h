@@ -63,7 +63,8 @@ private:
 	//Private Semantic Checking Methods
 	void checkArrayIndexInBounds(ParseTreeNode &identifier, ParseTreeNode &symbolTableIdentifier);
 	void climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
-		                                                                        ParseTreeNode* tokenToCompareRight);
+		                                                                        ParseTreeNode* tokenToCompareRight,
+		                                                                        bool& leftTokInserted, bool& rightTokInserted);
 	
 	
 	
