@@ -162,7 +162,7 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* toke
 			    )
 		{
 			pair.second = tokenToCompareRight;
-			cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue();
+			cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue() << "\n\n";
 			rightTokInserted = true;
 		}
 

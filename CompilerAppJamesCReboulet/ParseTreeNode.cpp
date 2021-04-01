@@ -352,7 +352,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
     {
 
         if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
-            (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
+            (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
             )
         {
             prog->verifyArithmeticOperationsAreCorrectlyDefined(dynamic_cast<Identifier*>(tokenToCompareLeft),
@@ -366,7 +366,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
     {
 
         if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
-            (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr
+            (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
             )
         {
             
