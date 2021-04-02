@@ -130,10 +130,6 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefined(Identifier* tokenToC
 		rightTokInserted = false;
 	}
 	
-
-	
-	
-	
 }
 
 void Program::verifyArithmeticOperationsAreCorrectlyDefinedNumberLeft(Number* tokenToCompareLeft, Identifier* tokenToCompareRight,

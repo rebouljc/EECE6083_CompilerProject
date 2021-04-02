@@ -1,6 +1,8 @@
 #include "Term.h"
 #include "Term_.h"
 #include "Factor.h"
+#include "Identifier.h"
+#include "Number.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 Term::Term(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -64,6 +66,67 @@ void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNo
 	currentToken = this->parserPtr->readNextToken();
 	++tokenCounter;
 	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
+}
+
+void Term::setIdentifierTermPtrValue(ParseTreeNode* identifier)
+{
+	Identifier* ident = nullptr;
+	if ((ident = dynamic_cast<Identifier*>(identifier)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = identifier;
+	}
+}
+
+void Term::setNumberTermPtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = num;
+	}
+}
+
+void Term::setNumberTerm_PtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = num;
+	}
+}
+
+ParseTreeNode* Term::getNumberTermPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Term::getNumberTerm_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
+}
+
+ParseTreeNode* Term::getIdentifierTermPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Term::getIdentifierTerm_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
+}
+
+
+void Term::setIdentifierTerm_PtrValue(ParseTreeNode* identifier)
+{
+	Identifier* ident = nullptr;
+	if ((ident = dynamic_cast<Identifier*>(identifier)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = identifier;
+	}
 }
 
 ParseTreeNode* Term::getNodePtr()

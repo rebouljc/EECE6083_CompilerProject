@@ -27,6 +27,7 @@ public:
 	//Tree climbing methods for semantic verification.
 	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
 	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
+	void climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 

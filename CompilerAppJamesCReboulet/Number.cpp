@@ -12,7 +12,9 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 	//this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this,false).
 	//Take this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this, false) and modify it.
 	//2) All previous methods can be used theoretically, as far as I can tell, unless there is something 
-	//   specific about those methods that only applies to arithmetic operations.  
+	//   specific about those methods that only applies to arithmetic operations. 
+
+	this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this, false);
 
 
 }

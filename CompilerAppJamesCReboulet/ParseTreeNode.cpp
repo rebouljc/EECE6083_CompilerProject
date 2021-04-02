@@ -21,6 +21,8 @@
 #include "TypeMark.h"
 #include "Program.h"
 #include "Declaration.h"
+#include "Term.h"
+#include "Term_.h"
 
 
 
@@ -296,6 +298,103 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
     this->parentNodePtr->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompare, numberSet);
     
 }
+
+void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet)
+{
+    //Identifier and Number will call this method.
+    //Then ArithOp_ will call this method.
+    Term_* term_Ptr = nullptr;
+    Term* termPtr = nullptr;
+    Declaration* declPtr = nullptr;
+    Identifier* identifierArithOpPtr = nullptr;
+    Identifier* identifierArithOp_Ptr = nullptr;
+
+
+
+    if (this->parentNodePtr == nullptr)
+    {
+        return;
+    }
+    else if ((termPtr = dynamic_cast<Term*>(this)) != nullptr)
+    {
+        //Identifier will set its ArithOpPtr to arithOpPtr.
+        if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
+        {
+            termPtr->setNumberTermPtrValue(tokenToCompare);
+        }
+        else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+        {
+            termPtr->setIdentifierTermPtrValue(tokenToCompare);
+        }
+
+        //If both ArithOp ptr values are not equal to nullptr, we will continue to climb the tree to declaration.
+        //When we get there, we will do the type checking portion.
+        //We have to pass both pointers up to <Declaration>, search <Declaration> for the respective Identifier
+        //and then do the check.  
+        //We will start this either late tomorrow or on Monday, since I have another project to work on tomorrow after 
+        //I am finally able to go to church with mask, since I received my first dose of the COVID-19 Pfizer vaccine!
+        //I still wear a KN-95 mask though, until the week following my second dose.  Then I will downgrade to a cloth mask.
+
+        ParseTreeNode* tokenToCompareLeft = nullptr;
+        ParseTreeNode* tokenToCompareRight = nullptr;
+        bool leftTokInserted = false;
+        bool rightTokInserted = false;
+        if ((tokenToCompareLeft = dynamic_cast<Identifier*>(termPtr->getIdentifierTermPtrValue())) != nullptr &&
+            (tokenToCompareRight = dynamic_cast<Identifier*>(termPtr->getIdentifierTerm_PtrValue())) != nullptr
+            )
+        {
+            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+                rightTokInserted);
+        }
+
+        else if ((tokenToCompareLeft = dynamic_cast<Number*>(termPtr->getNumberTermPtrValue())) != nullptr ||
+            (tokenToCompareRight = dynamic_cast<Number*>(termPtr->getNumberTerm_PtrValue())) != nullptr
+            )
+        {
+            if ((tokenToCompareLeft = dynamic_cast<Identifier*>(termPtr->getNumberTermPtrValue())) != nullptr)
+            {
+                tokenToCompareRight = dynamic_cast<Number*>(termPtr->getNumberTerm_PtrValue());
+            }
+
+            else if ((tokenToCompareRight = dynamic_cast<Identifier*>(termPtr->getNumberTerm_PtrValue())) != nullptr)
+            {
+                tokenToCompareLeft = dynamic_cast<Number*>(termPtr->getNumberTerm_PtrValue());
+            }
+
+
+            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+                rightTokInserted);
+        }
+    }
+
+    else if (dynamic_cast<Term_*>(this) != nullptr)
+    {
+        //Identifier will set its ArithOpPtr to arithOpPtr.
+        Term* termPtr = nullptr;
+        if ((termPtr = dynamic_cast<Term*>(this->parentNodePtr)) != nullptr)
+        {
+            if (dynamic_cast<Number*>(tokenToCompare) != nullptr)
+            {
+                termPtr->setNumberTerm_PtrValue(tokenToCompare);
+                numberSet = true;
+            }
+
+            else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+            {
+                termPtr->setIdentifierTerm_PtrValue(tokenToCompare);
+            }
+
+        }
+
+
+
+
+    }
+
+    this->parentNodePtr->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(tokenToCompare, numberSet);
+
+}
+
 
 void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
                                                                                        std::string &leftValue, std::string &rightValue, bool &numberSet)
