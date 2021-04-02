@@ -7,6 +7,13 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 	this->token = token;
 	this->climbTreeAndVerifyArrayIndices(this);
 	this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this, false);
+	
+	//1) Add method called:
+	//this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this,false).
+	//Take this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this, false) and modify it.
+	//2) All previous methods can be used theoretically, as far as I can tell, unless there is something 
+	//   specific about those methods that only applies to arithmetic operations.  
+
 
 }
 

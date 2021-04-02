@@ -7,6 +7,8 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+
+	//Semantic Arithmetic-Checking methods.
 	void setIdentifierArithOpPtrValue(ParseTreeNode* identifier);
 	void setIdentifierArithOp_PtrValue(ParseTreeNode* identifier);
 	void setNumberArithOpPtrValue(ParseTreeNode* numberToken);

@@ -135,13 +135,8 @@ bool Name::checkIdentifierFollowsScopingRules()
 {
 	ParseTreeNode* identifierToCheck = nullptr;
 	bool identPresent = this->searchSymbolTable(this->linkedMemberNonterminals.at(0), identifierToCheck);
-	if (identPresent)
-	{
-		//printf("\nIdentFound %s", dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue().c_str());
-
-	}
-
-	else
+	
+	if(!identPresent)
 	{
 		//We throw an exception.  Identifier is being assigned, but has not been declared locally or globally.
 		throw IdentifierNotDeclaredException();
