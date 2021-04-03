@@ -22,6 +22,7 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 
 }
 
+
 ParseTreeNode* Number::getNodePtr()
 {
 	return this;
@@ -32,6 +33,11 @@ string Number::getNumberTokenType()
 {
 	
 	return this->token->getTokenValue();
+}
+
+void Number::setNodeTokenIntegerDoubleNumberTokenValueToBoolean()
+{
+	this->token->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
 }
 
 double Number::getNodeTokenIntegerDoubleNumberTokenValue()

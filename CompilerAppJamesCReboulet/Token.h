@@ -27,6 +27,7 @@ public:
 	bool getIsPeriodStatus();
 	void setDoubleNumberTokenValue(double value);
 	double getIntegerDoubleNumberTokenValue();
+	void setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
 	int getTokenLineNumber();
 	void setTokenLineNumber(int tokLineNumber);
 	

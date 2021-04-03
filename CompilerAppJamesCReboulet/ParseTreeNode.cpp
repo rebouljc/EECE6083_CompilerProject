@@ -422,7 +422,27 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
     else if ((expressionPtr = dynamic_cast<Expression*>(this)) != nullptr)
     {
         //Identifier will set its ArithOpPtr to arithOpPtr.
-        if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
+
+        if (!expressionPtr->getLinkedMemberNonterminalsList().empty() &&
+            dynamic_cast<TerminalNode*>(expressionPtr->getLinkedMemberNonterminalsList().at(0)) != nullptr &&
+            dynamic_cast<TerminalNode*>(expressionPtr->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue() == "not"
+           )
+        {
+            cout << "\nNot Found.";
+            //Figure out what to do about this later.  TODO!!
+
+            if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
+            {
+                expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
+            }
+
+            else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+            {
+                expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
+            }
+        }
+
+        else if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
         {
             expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
         }
@@ -500,10 +520,9 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
                 expressionPtr->setIdentifierExpression_PtrValue(tokenToCompare);
             }
 
+          
+
         }
-
-
-
 
     }
 
@@ -655,20 +674,57 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                 Identifier* ident = nullptr;
                 TypeMark* identType = nullptr;
 
+                Number* numberLeft = nullptr;
+                Number* numberRight = nullptr;
+
+                if (!numberSet && ((numberLeft = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr ||
+                    (numberRight = dynamic_cast<Number*>(tokenToCompareRight)) != nullptr)
+                    )
+                {
+                    //We can't use else-if if both numberLeft and numberRight happen to be defined.  
+                    //Then, only one will be set to its boolean equivalent.
+
+                    if (numberLeft != nullptr)
+                    {
+                        leftValue = numberLeft->getNumberTokenType();
+                        if (leftValue == "INTEGER_LITERAL")
+                        {
+                            numberLeft->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
+                        }
+                        
+                        numberSet = true;
+
+                    }
+
+                    if (numberRight != nullptr)
+                    {
+                        rightValue = numberRight->getNumberTokenType();
+                        if (rightValue == "INTEGER_LITERAL")
+                        {
+                            numberRight->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
+                        }
+                        numberSet = true;
+
+                    }
+
+                }
 
 
-                if ((ident = dynamic_cast<Identifier*>(varDecl->linkedMemberNonterminals.at(1))) != nullptr &&
+
+                else if ((ident = dynamic_cast<Identifier*>(varDecl->linkedMemberNonterminals.at(1))) != nullptr &&
                     ((identType = dynamic_cast<TypeMark*>(varDecl->linkedMemberNonterminals.at(3))) != nullptr)
                     )
                 {
                     //We check their types.
                     string symbolTableTest;
 
-                    if ((symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "integer"
+
+
+                    if ((symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "integer" ||
+                        (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "bool"
                         )
                     {
-                        Number* numberLeft = nullptr;
-                        Number* numberRight = nullptr;
+                        
 
                         if (!numberSet && ((numberLeft = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr ||
                             (numberRight = dynamic_cast<Number*>(tokenToCompareRight)) != nullptr)
@@ -696,6 +752,19 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                             )
                         {
                             leftValue = ident->getNodeTokenValue().c_str();
+                            if (symbolTableTest == "integer")
+                            {
+                                //We have to convert that identifier to a booleanValue
+                                cout << "\nIdentifier is integer.";
+                                //We need to tag the Identifier as a "convert to boolean result", so it can
+                                //Automatically occur during intermediate-code generation.  We can't really
+                                //do the conversion until we actually write the IR code for the Expression.  
+                                //However, we can signal our compiler to do this when it gets to this point,
+                                //by setting a flag on that Identifier/Number within this method.
+
+                                dynamic_cast<Identifier*>(tokenToCompareLeft)->setreadIntegerAsBooleanValueFlagValue(true);
+
+                            }
                         }
 
                         else if (dynamic_cast<Number*>(tokenToCompareRight) == nullptr &&
@@ -703,8 +772,18 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                             )
                         {
                             rightValue = ident->getNodeTokenValue().c_str();
+
+                            if (symbolTableTest == "integer")
+                            {
+                                //We have to convert that identifier to a booleanValue
+                                cout << "\nIdentifier is integer.";
+
+                                dynamic_cast<Identifier*>(tokenToCompareRight)->setreadIntegerAsBooleanValueFlagValue(true);
+                            }
+                            
                         }
 
+                        
 
                     }
 
@@ -768,6 +847,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                 {
                     
                     dynamic_cast<Identifier*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
+                    dynamic_cast<Number*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                    
                 }
                 return;
@@ -782,6 +862,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                 {
 
                     dynamic_cast<Identifier*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
+                    dynamic_cast<Number*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
                 }
                 return;
             }
@@ -826,6 +907,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                 {
                     
                     dynamic_cast<Identifier*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
+                    dynamic_cast<Number*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                 }
                 //We don't return here.
             }
@@ -840,6 +922,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                 {
 
                     dynamic_cast<Identifier*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
+                    dynamic_cast<Number*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
                 }
                 //We don't return here.
             }

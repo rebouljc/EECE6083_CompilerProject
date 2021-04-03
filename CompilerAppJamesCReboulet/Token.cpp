@@ -90,6 +90,14 @@ void Token::setDoubleNumberTokenValue(double value)
 	this->integerNumberTokenValue = value;
 }
 
+void Token::setNodeTokenIntegerDoubleNumberTokenValueToBoolean()
+{
+	if (this->integerNumberTokenValue > 0)
+	{
+		this->integerNumberTokenValue = 1;
+	}
+}
+
 double Token::getIntegerDoubleNumberTokenValue()
 {
 	return this->integerNumberTokenValue;

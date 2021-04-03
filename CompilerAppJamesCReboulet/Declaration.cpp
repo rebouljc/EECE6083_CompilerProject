@@ -34,20 +34,41 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 			}
 		}
 
+		else if (dynamic_cast<Number*>(it->first) != nullptr)
+		{
+			if (dynamic_cast<Number*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itFirstIsIdentifier = true;
+			}
+		}
+
 		if (dynamic_cast<Identifier*>(it->second) != nullptr)
 		{
 			if (dynamic_cast<Identifier*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
 			{
 				itSecondIsIdentifier = true;
 			}
-			
+
 		}
 
+		else if (dynamic_cast<Number*>(it->second) != nullptr)
+		{
+			if (dynamic_cast<Number*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itSecondIsIdentifier = true;
+			}
+
+		}
 		if (itSecondIsIdentifier || itFirstIsIdentifier)
 		{
 			this->verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
 		}
-		
+
+		else
+		{
+			this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+		}
+
 	}
 
 	this->tokenToCompare.clear();

@@ -16,8 +16,13 @@ public:
 	bool getIdentifierIsValidDeclaration() { return this->isValidDeclaration; };
 	void setNumberPtrValue(ParseTreeNode* numberNode);
 	ParseTreeNode* getNumberPtrValue();
+	//Flag methods
 	void setBitwiseAndOrOperationDefinedFlagValue(bool flagValue) { this->bitwiseAndOrOperationDefined = flagValue; };
 	bool getBitwiseAndOrOperationDefinedFlagValue() { return this->bitwiseAndOrOperationDefined; };
+
+	void setreadIntegerAsBooleanValueFlagValue(bool flagValue) { this->readIntegerAsBooleanValueFlag = flagValue; };
+	bool getreadIntegerAsBooleanValueFlagValue() { return this->readIntegerAsBooleanValueFlag; };
+
 	~Identifier() {};
 
 
@@ -27,6 +32,7 @@ private:
 	bool isValidDeclaration = false;
 	ParseTreeNode* numberPtr;
 	bool bitwiseAndOrOperationDefined = false;
+	bool readIntegerAsBooleanValueFlag = false;
 
 
 };
