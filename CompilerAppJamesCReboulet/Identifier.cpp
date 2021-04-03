@@ -19,6 +19,9 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	this->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(this, false);
 
 	this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this, false);
+
+	bool expressionDefinedFlag = false;
+	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this,false,expressionDefinedFlag);
 	
 	
 

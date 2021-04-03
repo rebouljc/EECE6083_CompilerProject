@@ -17,6 +17,8 @@ public:
 		                                                         bool& leftTokInserted, bool& rightTokInserted);
 	void verifyArithmeticOperationsAreCorrectlyDefinedNumberRight(Identifier* tokenToCompareLeft, Number* tokenToCompareRight,
 		                                                          bool& leftTokInserted, bool& rightTokInserted);
+
+	
 	
 	~Program() {};
 	
@@ -26,6 +28,7 @@ private:
 
 	//Semantic Analysis Private Methods
 	void verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight);
+	void verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight);
 	ParseTreeNode* getNodePtr() override;
 	
 };

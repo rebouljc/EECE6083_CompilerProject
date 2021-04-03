@@ -4,6 +4,7 @@
 #include "VariableDeclaration.h"
 #include "TypeDeclaration.h"
 #include "ArithOperatorsAreNotAValidTypeException.h"
+#include "ExpressionOperatorsAreNotAValidTypeException.h"
 
 
 /*NOTE:  REMEMBER TO CALL this->parserPtr->backupIndexToRead() if a recursive function pops a newly created object from the vector.
@@ -22,6 +23,31 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	for (set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin(); it != this->tokenToCompare.end(); ++it)
 	{
 		this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+		bool itFirstIsIdentifier = false;
+		bool itSecondIsIdentifier = false;
+		//Need to check the value of tokenToCompare.
+		if (dynamic_cast<Identifier*>(it->first) != nullptr)
+		{
+			if (dynamic_cast<Identifier*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itFirstIsIdentifier = true;
+			}
+		}
+
+		if (dynamic_cast<Identifier*>(it->second) != nullptr)
+		{
+			if (dynamic_cast<Identifier*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itSecondIsIdentifier = true;
+			}
+			
+		}
+
+		if (itSecondIsIdentifier || itFirstIsIdentifier)
+		{
+			this->verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+		}
+		
 	}
 
 	this->tokenToCompare.clear();
@@ -292,6 +318,8 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(P
 	std::string leftValue = "";
 	std::string rightValue = "";
 	bool numberSet = false;
+	
+	
 	try
 	{
 		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
@@ -324,6 +352,47 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(P
 				 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
 		}
 			
+	}
+
+}
+
+void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
+{
+	std::string leftValue = "";
+	std::string rightValue = "";
+	bool numberSet = false;
+	try
+	{
+		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
+		{
+			//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
+			//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
+
+
+			this->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet);
+
+			if (leftValue == "" || rightValue == "")
+			{
+				//throw an exception
+				throw ExpressionOperatorsAreNotAValidTypeException();
+			}
+
+		}
+	}
+	catch (ExpressionOperatorsAreNotAValidTypeException& e)
+	{
+		if (leftValue == "")
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+		}
+
+		if (rightValue == "")
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
+				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+		}
+
 	}
 
 }

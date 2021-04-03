@@ -16,8 +16,8 @@ public:
 	bool getIdentifierIsValidDeclaration() { return this->isValidDeclaration; };
 	void setNumberPtrValue(ParseTreeNode* numberNode);
 	ParseTreeNode* getNumberPtrValue();
-	ParseTreeNode* getArithOpPtrValue();
-	ParseTreeNode* getArithOp_PtrValue();
+	void setBitwiseAndOrOperationDefinedFlagValue(bool flagValue) { this->bitwiseAndOrOperationDefined = flagValue; };
+	bool getBitwiseAndOrOperationDefinedFlagValue() { return this->bitwiseAndOrOperationDefined; };
 	~Identifier() {};
 
 
@@ -26,6 +26,7 @@ private:
 	string identifierType;
 	bool isValidDeclaration = false;
 	ParseTreeNode* numberPtr;
+	bool bitwiseAndOrOperationDefined = false;
 
 
 };

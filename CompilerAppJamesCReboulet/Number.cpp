@@ -16,6 +16,9 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 
 	this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this, false);
 
+	bool expressionDefinedFlag = false;
+	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
+
 
 }
 

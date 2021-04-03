@@ -195,6 +195,7 @@
     <ClInclude Include="Declaration.h" />
     <ClInclude Include="Destination.h" />
     <ClInclude Include="Expression.h" />
+    <ClInclude Include="ExpressionOperatorsAreNotAValidTypeException.h" />
     <ClInclude Include="Expression_.h" />
     <ClInclude Include="Factor.h" />
     <ClInclude Include="GlobalIdentifierIsNotUniqueException.h" />

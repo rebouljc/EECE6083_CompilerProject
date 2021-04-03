@@ -32,7 +32,9 @@ procedure Fib : integer(variable val :integer)
 	//Change to out ret := tmp[3] + tmp[1]; //We have to fix this for <Name>, I think.
         ret := tmp[3] + out;
 	//Change to return ret * 5 return ret + 5;
-        return ret * out
+        //return ret * 5;
+        
+        return ret & out;
         
 end procedure;
 

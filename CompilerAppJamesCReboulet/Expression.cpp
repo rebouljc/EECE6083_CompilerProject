@@ -3,6 +3,7 @@
 #include "Identifier.h"
 #include "Expression_.h"
 #include "ArithOp.h"
+#include "Number.h"
 
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
@@ -68,6 +69,68 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 	this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
 
 }
+
+void Expression::setIdentifierExpressionPtrValue(ParseTreeNode* identifier)
+{
+	Identifier* ident = nullptr;
+	if ((ident = dynamic_cast<Identifier*>(identifier)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = identifier;
+	}
+}
+
+void Expression::setNumberExpressionPtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = num;
+	}
+}
+
+void Expression::setNumberExpression_PtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = num;
+	}
+}
+
+ParseTreeNode* Expression::getNumberExpressionPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Expression::getNumberExpression_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
+}
+
+ParseTreeNode* Expression::getIdentifierExpressionPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Expression::getIdentifierExpression_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
+}
+
+
+void Expression::setIdentifierExpression_PtrValue(ParseTreeNode* identifier)
+{
+	Identifier* ident = nullptr;
+	if ((ident = dynamic_cast<Identifier*>(identifier)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = identifier;
+	}
+}
+
 
 ParseTreeNode* Expression::getNodePtr()
 {

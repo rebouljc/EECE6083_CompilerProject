@@ -28,6 +28,9 @@ public:
 	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
 	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
 	void climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
+	void climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet,
+		                                                           bool& expressionPresentFlag
+	                                                              );
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 
@@ -41,6 +44,8 @@ protected:
 	//Protected Semantic-Checking Methods.
 	void verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
 		                                                                    std::string &leftValue, std::string &rightValue, bool& numberSet);
+	void verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
+		std::string& leftValue, std::string& rightValue, bool& numberSet);
 	
 	
 	
@@ -65,7 +70,9 @@ private:
 	void checkArrayIndexInBounds(ParseTreeNode &identifier, ParseTreeNode &symbolTableIdentifier);
 	void climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
 		                                                                        ParseTreeNode* tokenToCompareRight,
-		                                                                        bool& leftTokInserted, bool& rightTokInserted);
+		                                                                        bool& leftTokInserted, bool& rightTokInserted,
+		                                                                        bool& expressionPresentFlag
+	                                                                           );
 	
 	
 	
