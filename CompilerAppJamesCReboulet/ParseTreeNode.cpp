@@ -362,7 +362,7 @@ void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTre
 
             else if ((tokenToCompareRight = dynamic_cast<Identifier*>(termPtr->getNumberTerm_PtrValue())) != nullptr)
             {
-                tokenToCompareLeft = dynamic_cast<Number*>(termPtr->getNumberTerm_PtrValue());
+                tokenToCompareLeft = dynamic_cast<Number*>(termPtr->getNumberTermPtrValue());
             }
 
 
