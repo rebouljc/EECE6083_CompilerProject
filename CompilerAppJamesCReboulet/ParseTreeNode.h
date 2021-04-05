@@ -46,7 +46,11 @@ protected:
 		                                                                    std::string &leftValue, std::string &rightValue, bool& numberSet);
 	void verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
 		std::string& leftValue, std::string& rightValue, bool& numberSet);
-	
+
+#define OUT 0
+#ifndef OUT
+	void climbTreeToNearestExpressionAndSetParenthesesFlag();
+#endif	
 	
 	
 	//member variables

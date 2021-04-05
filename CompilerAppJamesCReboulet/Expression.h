@@ -19,8 +19,7 @@ public:
 	ParseTreeNode* getIdentifierExpression_PtrValue();
 	ParseTreeNode* getNumberExpressionPtrValue();
 	ParseTreeNode* getNumberExpression_PtrValue();
-	
-	
+
 	~Expression() {};
 	
 
@@ -35,6 +34,7 @@ private:
 
 	ParseTreeNode* identifierArithOpPtr = nullptr;
 	ParseTreeNode* identifierArithOp_Ptr = nullptr;
+	
 	
 
 

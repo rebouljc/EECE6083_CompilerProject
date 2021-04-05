@@ -401,6 +401,33 @@ void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTre
 
 }
 
+#define OUT 0
+#ifndef OUT
+void ParseTreeNode::climbTreeToNearestExpressionAndSetParenthesesFlag()
+{
+    TerminalNode* term = nullptr;
+    Expression* expr = nullptr;
+    if ((expr = dynamic_cast<Expression*>(this)) != nullptr)
+    {
+        if ((term = dynamic_cast<TerminalNode*>(expr->getLinkedMemberNonterminalsList().at(0))) != nullptr &&
+             term->getNodeTokenValue() == "not")
+        {
+            term->setParenthesesPresentFlag(true);
+        }
+        
+        return;
+    }
+
+    else if (this->parentNodePtr == nullptr)
+    {
+        return;
+    }
+
+    parentNodePtr->climbTreeToNearestExpressionAndSetParenthesesFlag();
+}
+
+#endif
+
 void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet,
                                                                               bool &expressionPresentFlag
                                                                              )
@@ -428,23 +455,49 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
             dynamic_cast<TerminalNode*>(expressionPtr->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue() == "not"
            )
         {
-            cout << "\nNot Found.";
+            //cout << "\nNot Found.";
+            
             //Figure out what to do about this later.  TODO!!
-
-            if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
+            Number* num = nullptr;
+            Identifier* ident = nullptr;
+            if ((num = dynamic_cast<Number*>(tokenToCompare)) != nullptr && !numberSet)
             {
                 expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
+
+                //We need this because this will be hit for each value in expression and we
+                //don't want it to set the not flag for every identifier that is hit, if it is not preceded by "not"
+                
+                if (!expressionPresentFlag)
+                {
+                    num->setConvertToNotValue(true);
+                    
+                }
+                    
+                    
+                
+                
+
             }
 
-            else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+            else if ((ident = dynamic_cast<Identifier*>(tokenToCompare)) != nullptr)
             {
                 expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
+               
+                if (!expressionPresentFlag)
+                {
+                    ident->setConvertToNotValue(true);
+                }
+                  
+                
             }
         }
 
         else if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
         {
             expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
+            
+           
+            
         }
         else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
         {
@@ -502,22 +555,32 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
         Expression* expressionPtr = nullptr;
         if ((expressionPtr = dynamic_cast<Expression*>(this->parentNodePtr)) != nullptr)
         {
-            if (dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue() == "&" ||
-                dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue() == "|"
+            TerminalNode* term = nullptr;
+            Number* num = nullptr;
+            Identifier* ident = nullptr;
+
+            if ((term = dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0)))->getNodeTokenValue() == "&" ||
+                (term = dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0)))->getNodeTokenValue() == "|"
                 )
             {
                 expressionPresentFlag = true;
+                
             }
 
-            if (dynamic_cast<Number*>(tokenToCompare) != nullptr)
+            if ((num = dynamic_cast<Number*>(tokenToCompare)) != nullptr)
             {
                 expressionPtr->setNumberExpression_PtrValue(tokenToCompare);
                 numberSet = true;
+                if (num->getConvertToNotValue())
+                {
+                    num->setNodeTokenIntegerDoubleNumberTokenValueToNotValue();
+                }
             }
 
-            else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+            else if ((ident = dynamic_cast<Identifier*>(tokenToCompare)) != nullptr)
             {
                 expressionPtr->setIdentifierExpression_PtrValue(tokenToCompare);
+               
             }
 
           
@@ -776,7 +839,7 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                             if (symbolTableTest == "integer")
                             {
                                 //We have to convert that identifier to a booleanValue
-                                cout << "\nIdentifier is integer.";
+                                //cout << "\nIdentifier is integer.";
 
                                 dynamic_cast<Identifier*>(tokenToCompareRight)->setreadIntegerAsBooleanValueFlagValue(true);
                             }

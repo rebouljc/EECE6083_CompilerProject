@@ -96,6 +96,34 @@ void Token::setNodeTokenIntegerDoubleNumberTokenValueToBoolean()
 	{
 		this->integerNumberTokenValue = 1;
 	}
+
+	else if (this->getTokenValue() == "true")
+	{
+		this->integerNumberTokenValue = 0;
+	}
+
+	else if (this->getTokenValue() == "false")
+	{
+		this->integerNumberTokenValue = 1;
+	}
+
+}
+
+void Token::flipExpressionTokenTypeToAndOrForNotOperation()
+{
+	if (this->getTokenValue() == "&")
+	{
+		this->setTokenValue("|");
+	}
+
+	else if (this->getTokenValue() == "|")
+	{
+		this->setTokenValue("&");
+	}
+}
+void Token::setNodeTokenIntegerDoubleNumberTokenValueToNotValue()
+{
+	this->integerNumberTokenValue = -(this->integerNumberTokenValue);
 }
 
 double Token::getIntegerDoubleNumberTokenValue()

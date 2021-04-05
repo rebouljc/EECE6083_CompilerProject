@@ -17,6 +17,8 @@ Expression::Expression(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode*
 	
 }
 
+
+
 void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	//Note:  This same code will now work with relation, term, and factor.  It just needs to be modified for each of those non-terminal classes.

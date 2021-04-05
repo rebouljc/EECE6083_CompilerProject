@@ -21,7 +21,8 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this, false);
 
 	bool expressionDefinedFlag = false;
-	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this,false,expressionDefinedFlag);
+	
+	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
 	
 	
 

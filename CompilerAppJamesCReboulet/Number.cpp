@@ -17,6 +17,7 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 	this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this, false);
 
 	bool expressionDefinedFlag = false;
+	
 	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
 
 
@@ -38,6 +39,26 @@ string Number::getNumberTokenType()
 void Number::setNodeTokenIntegerDoubleNumberTokenValueToBoolean()
 {
 	this->token->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
+
+	if (this->getConvertToNotValue())
+	{
+		if (this->token->getIntegerDoubleNumberTokenValue() == 0)
+		{
+			this->token->setDoubleNumberTokenValue(1);
+			this->token->setTokenValue("true");
+		}
+
+		else
+		{
+			this->token->setDoubleNumberTokenValue(0);
+			this->token->setTokenValue("false");
+		}
+	}
+}
+
+void Number::setNodeTokenIntegerDoubleNumberTokenValueToNotValue()
+{
+	this->token->setNodeTokenIntegerDoubleNumberTokenValueToNotValue();
 }
 
 double Number::getNodeTokenIntegerDoubleNumberTokenValue()

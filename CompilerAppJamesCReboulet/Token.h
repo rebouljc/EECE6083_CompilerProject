@@ -28,6 +28,8 @@ public:
 	void setDoubleNumberTokenValue(double value);
 	double getIntegerDoubleNumberTokenValue();
 	void setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
+	void setNodeTokenIntegerDoubleNumberTokenValueToNotValue();
+	void flipExpressionTokenTypeToAndOrForNotOperation();
 	int getTokenLineNumber();
 	void setTokenLineNumber(int tokLineNumber);
 	

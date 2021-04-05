@@ -23,6 +23,8 @@ public:
 	void setreadIntegerAsBooleanValueFlagValue(bool flagValue) { this->readIntegerAsBooleanValueFlag = flagValue; };
 	bool getreadIntegerAsBooleanValueFlagValue() { return this->readIntegerAsBooleanValueFlag; };
 
+	void setConvertToNotValue(bool flagValue) { this->convertToNotValue= flagValue; };
+	bool getConvertToNotValue() { return this->convertToNotValue; };
 	~Identifier() {};
 
 
@@ -33,6 +35,7 @@ private:
 	ParseTreeNode* numberPtr;
 	bool bitwiseAndOrOperationDefined = false;
 	bool readIntegerAsBooleanValueFlag = false;
+	bool convertToNotValue = false;
 
 
 };
