@@ -4,7 +4,8 @@ global variable x : integer;
 variable i : integer;
 variable max : integer;
 variable out: bool;
-variable bullshit : string;
+variable bullshit:string;
+
 
 procedure Fib : integer(variable val :integer)
     variable ret : integer;
@@ -14,7 +15,7 @@ procedure Fib : integer(variable val :integer)
         variable val2 : integer;
 		begin
 			val2 := val2 - val1;
-			return val2 + 6;
+			return 6 + bullshit;
 		end procedure;
 
 	begin
@@ -35,7 +36,7 @@ procedure Fib : integer(variable val :integer)
 	//Change to return ret * 5 return ret + 5;
         //return ret * 5;
         
-        return bullshit & 5;
+        return not 5 & bullshit;
         
 end procedure;
 

@@ -266,7 +266,7 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
 
             else if ((tokenToCompareRight = dynamic_cast<Identifier*>(arithOpPtr->getNumberArithOp_PtrValue())) != nullptr)
             {
-                tokenToCompareLeft = dynamic_cast<Number*>(arithOpPtr->getNumberArithOp_PtrValue());
+                tokenToCompareLeft = dynamic_cast<Number*>(arithOpPtr->getNumberArithOpPtrValue());
             }
 
             
@@ -293,10 +293,7 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
             }
             
         }
-
-       
-
-        
+   
     }
 
     this->parentNodePtr->climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompare, numberSet);
@@ -449,60 +446,63 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
     else if ((expressionPtr = dynamic_cast<Expression*>(this)) != nullptr)
     {
         //Identifier will set its ArithOpPtr to arithOpPtr.
-
+        TerminalNode* term = nullptr;
         if (!expressionPtr->getLinkedMemberNonterminalsList().empty() &&
-            dynamic_cast<TerminalNode*>(expressionPtr->getLinkedMemberNonterminalsList().at(0)) != nullptr &&
-            dynamic_cast<TerminalNode*>(expressionPtr->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue() == "not"
-           )
+            (term = dynamic_cast<TerminalNode*>(expressionPtr->getLinkedMemberNonterminalsList().at(0))) != nullptr
+
+            )
         {
-            //cout << "\nNot Found.";
-            
-            //Figure out what to do about this later.  TODO!!
-            Number* num = nullptr;
-            Identifier* ident = nullptr;
-            if ((num = dynamic_cast<Number*>(tokenToCompare)) != nullptr && !numberSet)
+            if (term->getNodeTokenValue() == "not")
             {
-                expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
+                //cout << "\nNot Found.";
 
-                //We need this because this will be hit for each value in expression and we
-                //don't want it to set the not flag for every identifier that is hit, if it is not preceded by "not"
-                
-                if (!expressionPresentFlag)
+                //Figure out what to do about this later.  TODO!!
+                Number* num = nullptr;
+                Identifier* ident = nullptr;
+                if ((num = dynamic_cast<Number*>(tokenToCompare)) != nullptr && !numberSet)
                 {
-                    num->setConvertToNotValue(true);
-                    
-                }
-                    
-                    
-                
-                
+                    expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
 
-            }
+                    //We need this because this will be hit for each value in expression and we
+                    //don't want it to set the not flag for every identifier that is hit, if it is not preceded by "not"
+                    if (term->getNodeTokenValue() == "not")
+                    {
+                        if (!expressionPresentFlag)
+                        {
+                            num->setConvertToNotValue(true);
 
-            else if ((ident = dynamic_cast<Identifier*>(tokenToCompare)) != nullptr)
-            {
-                expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
-               
-                if (!expressionPresentFlag)
-                {
-                    ident->setConvertToNotValue(true);
+                        }
+
+                        else if ((ident = dynamic_cast<Identifier*>(tokenToCompare)) != nullptr)
+                        {
+                            expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
+
+                            if (!expressionPresentFlag)
+                            {
+                                ident->setConvertToNotValue(true);
+                            }
+                        }
+                    }
                 }
-                  
-                
             }
         }
+
 
         else if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
         {
             expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
-            
-           
-            
+            numberSet = true;
+
+
+
         }
-        else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+        else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr && !numberSet)
         {
             expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
         }
+
+
+
 
         //If both ArithOp ptr values are not equal to nullptr, we will continue to climb the tree to declaration.
         //When we get there, we will do the type checking portion.
@@ -516,24 +516,24 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
         ParseTreeNode* tokenToCompareRight = nullptr;
         bool leftTokInserted = false;
         bool rightTokInserted = false;
-        
+
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpressionPtrValue())) != nullptr &&
             (tokenToCompareRight = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpression_PtrValue())) != nullptr
-           )
+            )
         {
-            
-            
+
+
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-            rightTokInserted, expressionPresentFlag);
+                rightTokInserted, expressionPresentFlag);
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(expressionPtr->getNumberExpressionPtrValue())) != nullptr ||
             (tokenToCompareRight = dynamic_cast<Number*>(expressionPtr->getNumberExpression_PtrValue())) != nullptr
             )
         {
-           
-         
+
+
             if ((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getNumberExpressionPtrValue())) != nullptr)
             {
                 tokenToCompareRight = dynamic_cast<Number*>(expressionPtr->getNumberExpression_PtrValue());
@@ -541,13 +541,14 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
 
             else if ((tokenToCompareRight = dynamic_cast<Identifier*>(expressionPtr->getNumberExpression_PtrValue())) != nullptr)
             {
-                tokenToCompareLeft = dynamic_cast<Number*>(expressionPtr->getNumberExpression_PtrValue());
+                tokenToCompareLeft = dynamic_cast<Number*>(expressionPtr->getNumberExpressionPtrValue());
             }
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
                 rightTokInserted, expressionPresentFlag);
         }
     }
+    
 
     else if (dynamic_cast<Expression_*>(this) != nullptr)
     {
