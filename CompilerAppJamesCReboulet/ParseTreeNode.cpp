@@ -25,6 +25,7 @@
 #include "Term_.h"
 #include "Expression.h"
 #include "Expression_.h"
+#include "ExpressionOperatorsAreNotAValidTypeException.h"
 
 
 
@@ -755,6 +756,12 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                         {
                             numberLeft->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
                         }
+
+                        else if(leftValue == "FLOATING_POINT_LITERAL")
+                        {
+                            //throw the exception.  It must be a FLOATING_POINT_LITERAL.
+                            throw ExpressionOperatorsAreNotAValidTypeException();
+                        }
                         
                         numberSet = true;
 
@@ -766,6 +773,12 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                         if (rightValue == "INTEGER_LITERAL")
                         {
                             numberRight->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
+                        }
+
+                        else if (leftValue == "FLOATING_POINT_LITERAL")
+                        {
+                            //throw the exception.  It must be a FLOATING_POINT_LITERAL.
+                            throw ExpressionOperatorsAreNotAValidTypeException();
                         }
                         numberSet = true;
 

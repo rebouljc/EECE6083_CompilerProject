@@ -36,7 +36,7 @@ procedure Fib : integer(variable val :integer)
 	//Change to return ret * 5 return ret + 5;
         //return ret * 5;
         
-        return not 5 & bullshit;
+        return not 5.0 & ret;
         
 end procedure;
 
