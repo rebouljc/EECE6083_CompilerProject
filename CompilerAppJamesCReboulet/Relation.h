@@ -7,6 +7,16 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+
+	void setIdentifierRelationPtrValue(ParseTreeNode* identifier);
+	void setIdentifierRelation_PtrValue(ParseTreeNode* identifier);
+	void setNumberRelationPtrValue(ParseTreeNode* numberToken);
+	void setNumberRelation_PtrValue(ParseTreeNode* numberToken);
+
+	ParseTreeNode* getIdentifierRelationPtrValue();
+	ParseTreeNode* getIdentifierRelation_PtrValue();
+	ParseTreeNode* getNumberRelationPtrValue();
+	ParseTreeNode* getNumberRelation_PtrValue();
 	
 	~Relation() {};
 
@@ -15,6 +25,9 @@ private:
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
+
+	ParseTreeNode* identifierArithOpPtr = nullptr;
+	ParseTreeNode* identifierArithOp_Ptr = nullptr;
 
 
 };

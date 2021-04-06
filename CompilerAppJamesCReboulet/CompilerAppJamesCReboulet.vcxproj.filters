@@ -305,5 +305,8 @@
     <ClInclude Include="ExpressionOperatorsAreNotAValidTypeException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NoStringsAllowedInRelationalOperatorsException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

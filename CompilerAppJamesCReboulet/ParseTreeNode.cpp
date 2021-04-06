@@ -26,6 +26,9 @@
 #include "Expression.h"
 #include "Expression_.h"
 #include "ExpressionOperatorsAreNotAValidTypeException.h"
+#include "Relation.h"
+#include "Relation_.h"
+
 
 
 
@@ -247,13 +250,14 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
         bool leftTokInserted = false;
         bool rightTokInserted = false;
         bool expressionPresentFlag = false;
+        bool setRelationPresentFlag = false;
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOpPtrValue())) != nullptr &&
             (tokenToCompareRight = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOp_PtrValue())) != nullptr
            )
         {
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                                                                                         rightTokInserted, expressionPresentFlag);
+                                                                                         rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(arithOpPtr->getNumberArithOpPtrValue())) != nullptr ||
@@ -272,7 +276,7 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
 
             
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
         }
     }
 
@@ -342,13 +346,14 @@ void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTre
         bool leftTokInserted = false;
         bool rightTokInserted = false;
         bool expressionPresentFlag = false;
+        bool setRelationPresentFlag = false;
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(termPtr->getIdentifierTermPtrValue())) != nullptr &&
             (tokenToCompareRight = dynamic_cast<Identifier*>(termPtr->getIdentifierTerm_PtrValue())) != nullptr
             )
         {
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(termPtr->getNumberTermPtrValue())) != nullptr ||
@@ -367,7 +372,7 @@ void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTre
 
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
         }
     }
 
@@ -396,6 +401,128 @@ void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTre
     }
 
     this->parentNodePtr->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(tokenToCompare, numberSet);
+
+}
+
+//Climb Tree and Verify Relations
+void ParseTreeNode::climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet,
+                                                                            bool &relationPresentFlag, bool &setRelationPresentFlag)
+{
+    //Identifier and Number will call this method.
+    //Then ArithOp_ will call this method.
+    Relation_* rel_Ptr = nullptr;
+    Relation* relPtr = nullptr;
+    Declaration* declPtr = nullptr;
+    Identifier* identifierArithOpPtr = nullptr;
+    Identifier* identifierArithOp_Ptr = nullptr;
+
+
+
+    if (this->parentNodePtr == nullptr)
+    {
+        return;
+    }
+    else if ((relPtr = dynamic_cast<Relation*>(this)) != nullptr)
+    {
+        //Identifier will set its ArithOpPtr to arithOpPtr.
+        if (dynamic_cast<Number*>(tokenToCompare) != nullptr && !numberSet)
+        {
+            relPtr->setNumberRelationPtrValue(tokenToCompare);
+        }
+        else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+        {
+            relPtr->setIdentifierRelationPtrValue(tokenToCompare);
+        }
+
+        //If both ArithOp ptr values are not equal to nullptr, we will continue to climb the tree to declaration.
+        //When we get there, we will do the type checking portion.
+        //We have to pass both pointers up to <Declaration>, search <Declaration> for the respective Identifier
+        //and then do the check.  
+        //We will start this either late tomorrow or on Monday, since I have another project to work on tomorrow after 
+        //I am finally able to go to church with mask, since I received my first dose of the COVID-19 Pfizer vaccine!
+        //I still wear a KN-95 mask though, until the week following my second dose.  Then I will downgrade to a cloth mask.
+
+        ParseTreeNode* tokenToCompareLeft = nullptr;
+        ParseTreeNode* tokenToCompareRight = nullptr;
+        bool leftTokInserted = false;
+        bool rightTokInserted = false;
+        bool expressionPresentFlag = false;
+       
+
+        if ((tokenToCompareLeft = dynamic_cast<Identifier*>(relPtr->getIdentifierRelationPtrValue())) != nullptr &&
+            (tokenToCompareRight = dynamic_cast<Identifier*>(relPtr->getIdentifierRelation_PtrValue())) != nullptr
+            )
+        {
+            if (relationPresentFlag)
+            {
+                //Set the "noStringsAllowedFlag" on each of the identifiers.
+                dynamic_cast<Identifier*>(tokenToCompareLeft)->setNoStringsAllowedValue(true);
+                dynamic_cast<Identifier*>(tokenToCompareRight)->setNoStringsAllowedValue(true);
+            }
+
+            
+
+            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+        }
+
+        else if ((tokenToCompareLeft = dynamic_cast<Number*>(relPtr->getNumberRelationPtrValue())) != nullptr ||
+            (tokenToCompareRight = dynamic_cast<Number*>(relPtr->getNumberRelation_PtrValue())) != nullptr
+            )
+        {
+            if ((tokenToCompareLeft = dynamic_cast<Identifier*>(relPtr->getNumberRelationPtrValue())) != nullptr)
+            {
+                tokenToCompareRight = dynamic_cast<Number*>(relPtr->getNumberRelation_PtrValue());
+            }
+
+            else if ((tokenToCompareRight = dynamic_cast<Identifier*>(relPtr->getNumberRelation_PtrValue())) != nullptr)
+            {
+                tokenToCompareLeft = dynamic_cast<Number*>(relPtr->getNumberRelationPtrValue());
+            }
+
+
+            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+        }
+    }
+
+    else if (dynamic_cast<Relation_*>(this) != nullptr)
+    {
+        //Identifier will set its ArithOpPtr to arithOpPtr.
+        Relation* relPtr = nullptr;
+        TerminalNode* term = nullptr;
+
+        setRelationPresentFlag = true;
+        if ((term = dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0)))->getNodeTokenValue() != "==" ||
+            (term = dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0)))->getNodeTokenValue() != "!="
+            )
+        {
+            relationPresentFlag = true;
+
+        }
+
+        if ((relPtr = dynamic_cast<Relation*>(this->parentNodePtr)) != nullptr)
+        {
+            
+            if (dynamic_cast<Number*>(tokenToCompare) != nullptr)
+            {
+                relPtr->setNumberRelation_PtrValue(tokenToCompare);
+                numberSet = true;
+            }
+
+            else if (dynamic_cast<Identifier*>(tokenToCompare) != nullptr)
+            {
+                relPtr->setIdentifierRelation_PtrValue(tokenToCompare);
+            }
+
+        }
+
+
+
+
+    }
+
+    this->parentNodePtr->climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(tokenToCompare, numberSet, relationPresentFlag, setRelationPresentFlag);
 
 }
 
@@ -517,6 +644,7 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
         ParseTreeNode* tokenToCompareRight = nullptr;
         bool leftTokInserted = false;
         bool rightTokInserted = false;
+        bool setRelationPresentFlag = false;
 
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpressionPtrValue())) != nullptr &&
@@ -526,7 +654,7 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
 
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(expressionPtr->getNumberExpressionPtrValue())) != nullptr ||
@@ -546,7 +674,7 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
             }
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
         }
     }
     
@@ -702,7 +830,7 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
 }
 
 void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
-    std::string& leftValue, std::string& rightValue, bool& numberSet)
+    std::string& leftValue, std::string& rightValue, bool& numberSet, bool &relationSet)
 {
 
     //Here, we dig until we can find a <VariableDeclaration> class.
@@ -798,8 +926,11 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
 
 
                     if ((symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "integer" ||
-                        (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "bool"
+                        (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "bool" ||
+                        ( (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "string"  &&
+                          relationSet
                         )
+                       )
                     {
                         
 
@@ -838,10 +969,11 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                 //do the conversion until we actually write the IR code for the Expression.  
                                 //However, we can signal our compiler to do this when it gets to this point,
                                 //by setting a flag on that Identifier/Number within this method.
-
+                                
                                 dynamic_cast<Identifier*>(tokenToCompareLeft)->setreadIntegerAsBooleanValueFlagValue(true);
 
                             }
+
                         }
 
                         else if (dynamic_cast<Number*>(tokenToCompareRight) == nullptr &&
@@ -855,8 +987,10 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                 //We have to convert that identifier to a booleanValue
                                 //cout << "\nIdentifier is integer.";
 
+                           
                                 dynamic_cast<Identifier*>(tokenToCompareRight)->setreadIntegerAsBooleanValueFlagValue(true);
                             }
+
                             
                         }
 
@@ -871,7 +1005,7 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                 //make it more confusing and put each recursive method on its own thread.
             }
             this->linkedMemberNonterminals.at(i)->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight,
-                leftValue, rightValue, numberSet);
+                leftValue, rightValue, numberSet, relationSet);
         }
     }
 
@@ -879,7 +1013,8 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
 void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
                                                                                            ParseTreeNode* tokenToCompareRight,
                                                                                            bool &leftTokInserted, bool &rightTokInserted,
-                                                                                           bool &expressionPresentFlag
+                                                                                           bool &expressionPresentFlag,
+                                                                                           bool &relationPresentFlag
                                                                                           )
 {
     Identifier* identifierArithOpPtr = nullptr;
@@ -897,6 +1032,8 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
     else if ((prog = dynamic_cast<Program*>(this)) != nullptr)
     {
         
+        //Now, we need to notify the <Program*> object that a relation is being set.
+        //We set it on each identifier and number as usual.
 
         if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
             (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
@@ -909,6 +1046,12 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
             {
                 dynamic_cast<Identifier*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                 dynamic_cast<Identifier*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
+            }
+
+            else if (relationPresentFlag)
+            {
+                dynamic_cast<Identifier*>(tokenToCompareLeft)->setRelationPresentFlag(true);
+                dynamic_cast<Identifier*>(tokenToCompareRight)->setRelationPresentFlag(true);
             }
             return;
         }
@@ -927,6 +1070,12 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                     dynamic_cast<Number*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                    
                 }
+
+                else if (relationPresentFlag)
+                {
+                    dynamic_cast<Identifier*>(tokenToCompareRight)->setRelationPresentFlag(true);
+                    dynamic_cast<Number*>(tokenToCompareLeft)->setRelationPresentFlag(true);
+                }
                 return;
             }
 
@@ -940,6 +1089,12 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
 
                     dynamic_cast<Identifier*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                     dynamic_cast<Number*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
+                }
+
+                else if (relationPresentFlag)
+                {
+                    dynamic_cast<Identifier*>(tokenToCompareLeft)->setRelationPresentFlag(true);
+                    dynamic_cast<Number*>(tokenToCompareRight)->setRelationPresentFlag(true);
                 }
                 return;
             }
@@ -964,6 +1119,12 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                 dynamic_cast<Identifier*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                 dynamic_cast<Identifier*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
             }
+
+            else if (relationPresentFlag)
+            {
+                dynamic_cast<Identifier*>(tokenToCompareLeft)->setRelationPresentFlag(true);
+                dynamic_cast<Identifier*>(tokenToCompareRight)->setRelationPresentFlag(true);
+            }
             set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin();
            
             
@@ -986,6 +1147,12 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                     dynamic_cast<Identifier*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
                     dynamic_cast<Number*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                 }
+
+                else if (relationPresentFlag)
+                {
+                    dynamic_cast<Identifier*>(tokenToCompareRight)->setRelationPresentFlag(true);
+                    dynamic_cast<Number*>(tokenToCompareLeft)->setRelationPresentFlag(true);
+                }
                 //We don't return here.
             }
 
@@ -1001,13 +1168,19 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                     dynamic_cast<Identifier*>(tokenToCompareLeft)->setBitwiseAndOrOperationDefinedFlagValue(true);
                     dynamic_cast<Number*>(tokenToCompareRight)->setBitwiseAndOrOperationDefinedFlagValue(true);
                 }
+
+                else if (relationPresentFlag)
+                {
+                    dynamic_cast<Identifier*>(tokenToCompareLeft)->setRelationPresentFlag(true);
+                    dynamic_cast<Number*>(tokenToCompareRight)->setRelationPresentFlag(true);
+                }
                 //We don't return here.
             }
         }
     }
 
     this->parentNodePtr->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight,
-                                                                                                leftTokInserted, rightTokInserted, expressionPresentFlag);
+                                                                                                leftTokInserted, rightTokInserted, expressionPresentFlag, relationPresentFlag);
 }
 
 void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)

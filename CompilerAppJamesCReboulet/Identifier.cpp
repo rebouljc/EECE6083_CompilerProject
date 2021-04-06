@@ -20,6 +20,10 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 
 	this->climbTreeAndVerifyTermOperationsAreCorrectlyDefined(this, false);
 
+	bool relationPresentFlag = false;
+	bool setRelationPresentFlag = false;
+	this->climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(this, false, relationPresentFlag, setRelationPresentFlag);
+
 	bool expressionDefinedFlag = false;
 	
 	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);

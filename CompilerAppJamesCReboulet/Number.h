@@ -21,6 +21,9 @@ public:
 	void setConvertToNotValue(bool flagValue) { this->convertToNotValue = flagValue; };
 	bool getConvertToNotValue() { return this->convertToNotValue; };
 
+	void setRelationPresentFlag(bool flagValue) { this->relationPresentFlag = flagValue; };
+	bool getRelationPresentFlagValue() { return this->relationPresentFlag; };
+
 	~Number() {};
 
 private:
@@ -28,7 +31,7 @@ private:
 	bool bitwiseAndOrOperationDefined = false;
 	bool readIntegerAsBooleanValueFlag = false;
 	bool convertToNotValue = false;
-	
+	bool relationPresentFlag = false;
 
 
 };

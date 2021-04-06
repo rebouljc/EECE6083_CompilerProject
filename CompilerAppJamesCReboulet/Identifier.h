@@ -25,6 +25,12 @@ public:
 
 	void setConvertToNotValue(bool flagValue) { this->convertToNotValue= flagValue; };
 	bool getConvertToNotValue() { return this->convertToNotValue; };
+
+	void setNoStringsAllowedValue(bool flagValue) { this->noStringsAllowedFlag = flagValue; };
+	bool getNoStringsAllowedFlagValue() { return this->noStringsAllowedFlag; };
+
+	void setRelationPresentFlag(bool flagValue) { this->relationPresentFlag = flagValue; };
+	bool getRelationPresentFlagValue() { return this->relationPresentFlag; };
 	~Identifier() {};
 
 
@@ -35,6 +41,8 @@ private:
 	ParseTreeNode* numberPtr;
 	bool bitwiseAndOrOperationDefined = false;
 	bool readIntegerAsBooleanValueFlag = false;
+	bool noStringsAllowedFlag = false;
+	bool relationPresentFlag = false;
 	bool convertToNotValue = false;
 
 

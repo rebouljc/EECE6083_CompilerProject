@@ -1,6 +1,8 @@
 #include "Relation.h"
 #include "Relation_.h"
 #include "Term.h"
+#include "Number.h"
+#include "Identifier.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 Relation::Relation(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -11,6 +13,66 @@ Relation::Relation(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
 	
+}
+
+void Relation::setIdentifierRelationPtrValue(ParseTreeNode* identifier)
+{
+	Identifier* ident = nullptr;
+	if ((ident = dynamic_cast<Identifier*>(identifier)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = identifier;
+	}
+}
+
+void Relation::setIdentifierRelation_PtrValue(ParseTreeNode* identifier)
+{
+	Identifier* ident = nullptr;
+	if ((ident = dynamic_cast<Identifier*>(identifier)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = identifier;
+	}
+}
+
+void Relation::setNumberRelationPtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = num;
+	}
+}
+
+void Relation::setNumberRelation_PtrValue(ParseTreeNode* numberToken)
+{
+	Number* num = nullptr;
+	if ((num = dynamic_cast<Number*>(numberToken)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = num;
+	}
+}
+
+ParseTreeNode* Relation::getIdentifierRelationPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Relation::getIdentifierRelation_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
+}
+
+ParseTreeNode* Relation::getNumberRelationPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Relation::getNumberRelation_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
 }
 
 void Relation::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

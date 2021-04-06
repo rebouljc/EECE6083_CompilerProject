@@ -12,8 +12,7 @@ public:
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;
-	void dealWithForHeader(ParseTreeNode* motherNode, int tokenCounter);
-	void dealWithForBody(ParseTreeNode* motherNode, int tokenCounter);
+	
 
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;

@@ -211,6 +211,7 @@
     <ClInclude Include="Name.h" />
     <ClInclude Include="NoClosingCommentMarkException.h" />
     <ClInclude Include="NoPeriodAtEndOfProgramException.h" />
+    <ClInclude Include="NoStringsAllowedInRelationalOperatorsException.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Parameter.h" />
     <ClInclude Include="ParameterList.h" />
