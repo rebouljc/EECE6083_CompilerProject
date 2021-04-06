@@ -308,5 +308,8 @@
     <ClInclude Include="NoStringsAllowedInRelationalOperatorsException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

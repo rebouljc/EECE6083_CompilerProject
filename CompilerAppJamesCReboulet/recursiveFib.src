@@ -5,6 +5,7 @@ variable i : integer;
 variable max : integer;
 variable out: bool;
 variable bullshit:string;
+variable fucking:string;
 
 
 procedure Fib : integer(variable val :integer)
@@ -19,11 +20,11 @@ procedure Fib : integer(variable val :integer)
 		end procedure;
 
 	begin
-	if(val == 0) then
+	if(val == fucking) then
 		ret := 0;
 		return ret;
 	end if;
-	if(val == 1) then
+	if(val == 1.0) then
 		ret := 1;
 		return ret;
 	end if; // Remove line
@@ -35,7 +36,8 @@ procedure Fib : integer(variable val :integer)
         ret := tmp[3] + out;
 	//Change to return ret * 5 return ret + 5;
         
-        return ret & "bullshit";
+        
+        return ret & fucking;
         
         //return not ret & "bullshit";
         

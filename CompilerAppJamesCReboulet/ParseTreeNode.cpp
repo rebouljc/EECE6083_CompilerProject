@@ -29,6 +29,7 @@
 #include "Relation.h"
 #include "Relation_.h"
 #include "StringLiteral.h"
+#include "IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h"
 
 
 
@@ -535,7 +536,7 @@ void ParseTreeNode::climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(Pars
 
         setRelationPresentFlag = true;
 
-        if ((term = dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0)))->getNodeTokenValue() != "==" ||
+        if ((term = dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0)))->getNodeTokenValue() != "==" &&
             (term = dynamic_cast<TerminalNode*>(this->getLinkedMemberNonterminalsList().at(0)))->getNodeTokenValue() != "!="
             )
         {
@@ -886,11 +887,8 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
         return;
     }
 
-
     else
     {
-
-
         for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
         {
             VariableDeclaration* varDecl = nullptr;
@@ -915,6 +913,8 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
 
                 Number* numberLeft = nullptr;
                 Number* numberRight = nullptr;
+                StringLiteral* stringLeft = nullptr;
+                StringLiteral* stringRight = nullptr;
 
                 if (!numberSet && ((numberLeft = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr ||
                     (numberRight = dynamic_cast<Number*>(tokenToCompareRight)) != nullptr)
@@ -926,12 +926,12 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                     if (numberLeft != nullptr)
                     {
                         leftValue = numberLeft->getNumberTokenType();
-                        if (leftValue == "INTEGER_LITERAL")
+                        if (leftValue == "INTEGER_LITERAL" || rightValue == "INTEGER_LITERAL")
                         {
                             numberLeft->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
                         }
 
-                        else if(leftValue == "FLOATING_POINT_LITERAL")
+                        else if(leftValue == "FLOATING_POINT_LITERAL" || rightValue == "FLOATING_POINT_LITERAL")
                         {
                             //throw the exception.  It must be a FLOATING_POINT_LITERAL.
                             throw ExpressionOperatorsAreNotAValidTypeException();
@@ -960,9 +960,22 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
 
                 }
 
+                else if (!numberSet && ((stringLeft = dynamic_cast<StringLiteral*>(tokenToCompareLeft)) != nullptr ||
+                    (stringRight = dynamic_cast<StringLiteral*>(tokenToCompareRight)) != nullptr))
+                {
+                    if (stringLeft != nullptr)
+                    {
+                        leftValue = stringLeft->getNodeTokenType();
+                        
+                    }
 
+                    if (stringRight != nullptr)
+                    {
+                        rightValue = stringRight->getNodeTokenType();
+                    }
+                }
 
-                else if ((ident = dynamic_cast<Identifier*>(varDecl->linkedMemberNonterminals.at(1))) != nullptr &&
+                if ((ident = dynamic_cast<Identifier*>(varDecl->linkedMemberNonterminals.at(1))) != nullptr &&
                     ((identType = dynamic_cast<TypeMark*>(varDecl->linkedMemberNonterminals.at(3))) != nullptr)
                     )
                 {
@@ -1005,11 +1018,12 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                             ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
                             )
                         {
-                            leftValue = ident->getNodeTokenValue().c_str();
+                            //leftValue = ident->getNodeTokenValue().c_str();
+                            leftValue = symbolTableTest;
                             if (symbolTableTest == "integer")
                             {
                                 //We have to convert that identifier to a booleanValue
-                                cout << "\nIdentifier is integer.";
+                                //cout << "\nIdentifier is integer.";
                                 //We need to tag the Identifier as a "convert to boolean result", so it can
                                 //Automatically occur during intermediate-code generation.  We can't really
                                 //do the conversion until we actually write the IR code for the Expression.  
@@ -1018,15 +1032,33 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                 
                                 dynamic_cast<Identifier*>(tokenToCompareLeft)->setreadIntegerAsBooleanValueFlagValue(true);
 
+                                if (leftValue == "STRING_LITERAL" || rightValue == "STRING_LITERAL" ||
+                                    leftValue == "string"         || rightValue == "string"
+                                   )
+                                {
+                                    //Throw an exception.  Types do not match.
+                                    throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                }
+
+                            }
+
+                            else if (symbolTableTest == "float" && (leftValue == "STRING_LITERAL" || rightValue == "STRING_LITERAL" ||
+                                                                    leftValue == "string"         || rightValue == "string"
+                                                                   )
+                                    )
+                            {
+                                //Throw an exception.  Types do not match.
+                                throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
                             }
 
                         }
 
-                        else if (dynamic_cast<Number*>(tokenToCompareRight) == nullptr &&
+                        if (dynamic_cast<Number*>(tokenToCompareRight) == nullptr && dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr &&
                             ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
                             )
                         {
-                            rightValue = ident->getNodeTokenValue().c_str();
+                           // rightValue = ident->getNodeTokenValue().c_str();
+                            rightValue = symbolTableTest;
 
                             if (symbolTableTest == "integer")
                             {
@@ -1035,13 +1067,30 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
 
                            
                                 dynamic_cast<Identifier*>(tokenToCompareRight)->setreadIntegerAsBooleanValueFlagValue(true);
+
+                                if (leftValue == "STRING_LITERAL" || rightValue == "STRING_LITERAL" ||
+                                    leftValue == "string"         || rightValue == "string"
+                                    )
+                                {
+                                    //Throw an exception.  Types do not match.
+                                    throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                }
+                            }
+
+
+                            else if (symbolTableTest == "float" && (leftValue == "STRING_LITERAL" || rightValue == "STRING_LITERAL" ||
+                                                                    leftValue == "string" || rightValue == "string"
+                                                                   )
+                                    )
+                            {
+                                //Throw an exception.  Types do not match.
+                                throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
                             }
 
                             
                         }
 
-                        
-
+                       
                     }
 
                     //Now, we check the values somewhere along the line and then decide what to do.  TODO!
@@ -1271,7 +1320,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
 
             else if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
             {
-                prog->verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralLeft(dynamic_cast<StringLiteral*>(tokenToCompareLeft),
+                decl->verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralLeft(dynamic_cast<StringLiteral*>(tokenToCompareLeft),
                     dynamic_cast<Identifier*>(tokenToCompareRight),
                     leftTokInserted, rightTokInserted);
                 if (expressionPresentFlag)
@@ -1292,7 +1341,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
 
             else if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
             {
-                prog->verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralRight(dynamic_cast<Identifier*>(tokenToCompareLeft),
+                decl->verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralRight(dynamic_cast<Identifier*>(tokenToCompareLeft),
                     dynamic_cast<StringLiteral*>(tokenToCompareRight),
                     leftTokInserted, rightTokInserted);
                 if (expressionPresentFlag)

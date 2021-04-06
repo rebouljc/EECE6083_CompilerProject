@@ -7,6 +7,7 @@
 #include "ExpressionOperatorsAreNotAValidTypeException.h"
 #include "NoStringsAllowedInRelationalOperatorsException.h"
 #include "StringLiteral.h"
+#include "IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h"
 
 
 
@@ -395,6 +396,110 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedNumberRight(Ident
 	}
 }
 
+//String literal semantic checks
+void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralLeft(StringLiteral* tokenToCompareLeft, Identifier* tokenToCompareRight,
+	bool& leftTokInserted, bool& rightTokInserted)
+{
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+
+		if (
+			dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
+			)
+		{
+			pair.first = tokenToCompareLeft;
+			//cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Number*>(pair.first)->getNodeTokenValue() << "\n\n";
+			leftTokInserted = true;
+
+			pair.second = tokenToCompareRight;
+			//cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue() << "\n\n";
+			rightTokInserted = true;
+
+		}
+
+	}
+	if (leftTokInserted)
+	{
+		pair.first = tokenToCompareLeft;
+
+	}
+
+	if (rightTokInserted)
+	{
+		pair.second = tokenToCompareRight;
+
+	}
+
+	if (leftTokInserted && rightTokInserted)
+	{
+		this->tokenToCompare.insert(pair);
+		leftTokInserted = false;
+		rightTokInserted = false;
+	}
+
+
+}
+
+void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralRight(Identifier* tokenToCompareLeft, StringLiteral* tokenToCompareRight,
+	bool& leftTokInserted, bool& rightTokInserted)
+{
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+
+		if (
+			dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
+			)
+		{
+			pair.first = tokenToCompareLeft;
+			//cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Identifier*>(pair.first)->getNodeTokenValue() << "\n\n";
+			leftTokInserted = true;
+
+			pair.second = tokenToCompareRight;
+			//cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Number*>(pair.second)->getNodeTokenValue() << "\n\n";
+			rightTokInserted = true;
+
+		}
+
+	}
+	if (leftTokInserted)
+	{
+		pair.first = tokenToCompareLeft;
+
+	}
+
+	if (rightTokInserted)
+	{
+		pair.second = tokenToCompareRight;
+
+	}
+
+	if (leftTokInserted && rightTokInserted)
+	{
+		this->tokenToCompare.insert(pair);
+		leftTokInserted = false;
+		rightTokInserted = false;
+	}
+}
+
+
 void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
 {
 	std::string leftValue = "";
@@ -547,6 +652,36 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 					<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
 			}
 		}
+	}
+
+	catch (IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException& e)
+	{
+
+		if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+		}
+
+		if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
+		{
+			cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+				<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+		}
+
+		if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
+				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+		}
+
+		if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
+		{
+			cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
+				<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+		}
+
+
 	}
 
 

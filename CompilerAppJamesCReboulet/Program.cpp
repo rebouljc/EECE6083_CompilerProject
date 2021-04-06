@@ -6,6 +6,7 @@
 #include "ArithOperatorsAreNotAValidTypeException.h"
 #include "ExpressionOperatorsAreNotAValidTypeException.h"
 #include "NoStringsAllowedInRelationalOperatorsException.h"
+#include "IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h"
 
 
 
@@ -596,6 +597,35 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 				}
 			}
 			
+		}
+		catch (IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException& e)
+		{
+			
+			if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+			}
+
+			if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+					 << " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+			}
+			
+			if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
+					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+			}
+
+			if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
+					 << " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+			}
+			
+
 		}
 	
 	

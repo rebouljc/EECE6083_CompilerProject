@@ -205,6 +205,7 @@
     <ClInclude Include="IfStatement.h" />
     <ClInclude Include="IllegalEqualsSignException.h" />
     <ClInclude Include="IllegalIdentifierException.h" />
+    <ClInclude Include="IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h" />
     <ClInclude Include="IntermediateCodeGenerator.h" />
     <ClInclude Include="LoopStatement.h" />
     <ClInclude Include="MainCompileErrorException.h" />

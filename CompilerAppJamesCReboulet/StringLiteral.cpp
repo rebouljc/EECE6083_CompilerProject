@@ -9,6 +9,9 @@ StringLiteral::StringLiteral(Token* token, ParseTreeNode* parentNodePtr)
 	bool relationPresentFlag = false;
 	bool setRelationPresentFlag = true;
 	this->climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(this, false, relationPresentFlag, setRelationPresentFlag);
+	bool expressionDefinedFlag = false;
+
+	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
 
 }
 
