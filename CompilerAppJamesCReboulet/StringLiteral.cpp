@@ -6,6 +6,10 @@ StringLiteral::StringLiteral(Token* token, ParseTreeNode* parentNodePtr)
 	this->parentNodePtr = parentNodePtr;
 	this->token = token;
 
+	bool relationPresentFlag = false;
+	bool setRelationPresentFlag = true;
+	this->climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(this, false, relationPresentFlag, setRelationPresentFlag);
+
 }
 
 ParseTreeNode* StringLiteral::getNodePtr()

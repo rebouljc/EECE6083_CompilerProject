@@ -6,6 +6,7 @@
 #include "ArithOperatorsAreNotAValidTypeException.h"
 #include "ExpressionOperatorsAreNotAValidTypeException.h"
 #include "NoStringsAllowedInRelationalOperatorsException.h"
+#include "StringLiteral.h"
 
 
 
@@ -57,6 +58,19 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 				}
 			}
 
+			else if (dynamic_cast<StringLiteral*>(it->first) != nullptr)
+			{
+				if (dynamic_cast<StringLiteral*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
+				{
+					itFirstIsIdentifier = true;
+				}
+
+				else if (dynamic_cast<StringLiteral*>(it->first)->getRelationPresentFlagValue())
+				{
+					itFirstIsRelation = true;
+				}
+			}
+
 			if (dynamic_cast<Identifier*>(it->second) != nullptr)
 			{
 				if (dynamic_cast<Identifier*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
@@ -78,6 +92,20 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 				}
 
 				else if (dynamic_cast<Number*>(it->second)->getRelationPresentFlagValue())
+				{
+					itSecondIsRelation = true;
+				}
+
+			}
+
+			else if (dynamic_cast<StringLiteral*>(it->second) != nullptr)
+			{
+				if (dynamic_cast<StringLiteral*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
+				{
+					itSecondIsIdentifier = true;
+				}
+
+				else if (dynamic_cast<StringLiteral*>(it->second)->getRelationPresentFlagValue())
 				{
 					itSecondIsRelation = true;
 				}
@@ -419,26 +447,43 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 	{
 		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
 		{
-			/*
-			if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+			if (relationSet && dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
 			{
 				if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue())
 				{
-					throw new NoStringsAllowedInRelationOperatorsException();
-					
+					throw NoStringsAllowedInRelationOperatorsException();
+
 				}
 			}
 
-			if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
+			if (relationSet && dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
 			{
 				if (dynamic_cast<Identifier*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
 				{
-					throw new NoStringsAllowedInRelationOperatorsException();
+					throw NoStringsAllowedInRelationOperatorsException();
 				}
 			}
-			*/
 
+			if (relationSet && dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
+			{
+				if (dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue())
+				{
+					throw NoStringsAllowedInRelationOperatorsException();
+
+				}
+			}
+
+			if (relationSet && dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
+			{
+				if (dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
+				{
+					throw NoStringsAllowedInRelationOperatorsException();
+
+				}
+			}
+		}
 			
+		
 			//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
 			//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
 
@@ -451,8 +496,8 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 				throw ExpressionOperatorsAreNotAValidTypeException();
 			}
 
-		}
 	}
+	
 	catch (ExpressionOperatorsAreNotAValidTypeException& e)
 	{
 		
@@ -471,6 +516,37 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 			}
 		}
 
+	}
+
+	catch (NoStringsAllowedInRelationOperatorsException& e)
+	{
+		if (leftValue == "")
+		{
+			if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+			}
+			else if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+					<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+			}
+		}
+
+		if (rightValue == "")
+		{
+			if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
+					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+			}
+			else if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
+			{
+				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
+					<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+			}
+		}
 	}
 
 

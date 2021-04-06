@@ -9,6 +9,7 @@
 
 
 
+
 Program::Program(Parser* parser)
 {
 	
@@ -16,88 +17,119 @@ Program::Program(Parser* parser)
 	this->verifySyntaxCreateParseTree(0, this);
 
 	
-		for (set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin(); it != this->tokenToCompare.end(); ++it)
+	for (set<pair<ParseTreeNode*, ParseTreeNode*>>::iterator it = this->tokenToCompare.begin(); it != this->tokenToCompare.end(); ++it)
+	{
+		//this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+		bool itFirstIsIdentifier = false;
+		bool itSecondIsIdentifier = false;
+
+		bool itFirstIsRelation = false;
+		bool itSecondIsRelation = false;
+
+
+		//Need to check the value of tokenToCompare.
+		if (dynamic_cast<Identifier*>(it->first) != nullptr)
 		{
-			//this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
-			bool itFirstIsIdentifier = false;
-			bool itSecondIsIdentifier = false;
-
-			bool itFirstIsRelation = false;
-			bool itSecondIsRelation = false;
-
-			//Need to check the value of tokenToCompare.
-			if (dynamic_cast<Identifier*>(it->first) != nullptr)
+			if (dynamic_cast<Identifier*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
 			{
-				if (dynamic_cast<Identifier*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
-				{
-					itFirstIsIdentifier = true;
-				}
-
-				else if (dynamic_cast<Identifier*>(it->first)->getRelationPresentFlagValue())
-				{
-					itFirstIsRelation = true;
-				}
+				itFirstIsIdentifier = true;
 			}
 
-			else if (dynamic_cast<Number*>(it->first) != nullptr)
+			else if (dynamic_cast<Identifier*>(it->first)->getRelationPresentFlagValue())
 			{
-				if (dynamic_cast<Number*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
-				{
-					itFirstIsIdentifier = true;
-				}
+				itFirstIsRelation = true;
+			}
+		}
 
-				else if (dynamic_cast<Number*>(it->first)->getRelationPresentFlagValue())
-				{
-					itFirstIsRelation = true;
-				}
+		else if (dynamic_cast<Number*>(it->first) != nullptr)
+		{
+			if (dynamic_cast<Number*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itFirstIsIdentifier = true;
 			}
 
-			if (dynamic_cast<Identifier*>(it->second) != nullptr)
+			else if (dynamic_cast<Number*>(it->first)->getRelationPresentFlagValue())
 			{
-				if (dynamic_cast<Identifier*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
-				{
-					itSecondIsIdentifier = true;
-				}
+				itFirstIsRelation = true;
+			}
+		}
 
-				else if (dynamic_cast<Identifier*>(it->second)->getRelationPresentFlagValue())
-				{
-					itSecondIsRelation = true;
-				}
+		else if (dynamic_cast<StringLiteral*>(it->first) != nullptr)
+		{
+			if (dynamic_cast<StringLiteral*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itFirstIsIdentifier = true;
 			}
 
-			else if (dynamic_cast<Number*>(it->second) != nullptr)
+			else if (dynamic_cast<StringLiteral*>(it->first)->getRelationPresentFlagValue())
 			{
-				if (dynamic_cast<Number*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
-				{
-					itSecondIsIdentifier = true;
-				}
-
-				else if (dynamic_cast<Number*>(it->second)->getRelationPresentFlagValue())
-				{
-					itSecondIsRelation = true;
-				}
-
+				itFirstIsRelation = true;
 			}
-			if (itSecondIsIdentifier || itFirstIsIdentifier || itFirstIsRelation || itSecondIsRelation)
+		}
+
+		if (dynamic_cast<Identifier*>(it->second) != nullptr)
+		{
+			if (dynamic_cast<Identifier*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
 			{
-				bool relationSet = false;
-				if (itFirstIsRelation || itSecondIsRelation)
-				{
-					relationSet = true;
-				}
-				this->verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second, relationSet);
+				itSecondIsIdentifier = true;
 			}
 
-			else
+			else if (dynamic_cast<Identifier*>(it->second)->getRelationPresentFlagValue())
 			{
+				itSecondIsRelation = true;
+			}
+		}
 
-				this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+		else if (dynamic_cast<Number*>(it->second) != nullptr)
+		{
+			if (dynamic_cast<Number*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itSecondIsIdentifier = true;
+			}
+
+			else if (dynamic_cast<Number*>(it->second)->getRelationPresentFlagValue())
+			{
+				itSecondIsRelation = true;
 			}
 
 		}
 
-	
+		else if (dynamic_cast<StringLiteral*>(it->second) != nullptr)
+		{
+			if (dynamic_cast<StringLiteral*>(it->second)->getBitwiseAndOrOperationDefinedFlagValue())
+			{
+				itSecondIsIdentifier = true;
+			}
+
+			else if (dynamic_cast<StringLiteral*>(it->second)->getRelationPresentFlagValue())
+			{
+				itSecondIsRelation = true;
+			}
+
+		}
+
+		if (itSecondIsIdentifier || itFirstIsIdentifier || itFirstIsRelation || itSecondIsRelation)
+		{
+			bool relationSet = false;
+			if (itFirstIsRelation || itSecondIsRelation)
+			{
+				relationSet = true;
+			}
+			this->verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second, relationSet);
+		}
+
+		else
+		{
+
+			this->verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(it->first, it->second);
+		}
+	}
+			
+
+		
+
 	this->tokenToCompare.clear();
+	
 	
 }
 
@@ -311,6 +343,108 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefinedNumberRight(Identifie
 	}
 }
 
+void Program::verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralLeft(StringLiteral* tokenToCompareLeft, Identifier* tokenToCompareRight,
+	bool& leftTokInserted, bool& rightTokInserted)
+{
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+
+		if (
+			dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
+			)
+		{
+			pair.first = tokenToCompareLeft;
+			//cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Number*>(pair.first)->getNodeTokenValue() << "\n\n";
+			leftTokInserted = true;
+
+			pair.second = tokenToCompareRight;
+			//cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Identifier*>(pair.second)->getNodeTokenValue() << "\n\n";
+			rightTokInserted = true;
+
+		}
+
+	}
+	if (leftTokInserted)
+	{
+		pair.first = tokenToCompareLeft;
+
+	}
+
+	if (rightTokInserted)
+	{
+		pair.second = tokenToCompareRight;
+
+	}
+
+	if (leftTokInserted && rightTokInserted)
+	{
+		this->tokenToCompare.insert(pair);
+		leftTokInserted = false;
+		rightTokInserted = false;
+	}
+
+
+}
+
+void Program::verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralRight(Identifier* tokenToCompareLeft, StringLiteral* tokenToCompareRight,
+	bool& leftTokInserted, bool& rightTokInserted)
+{
+	Identifier* symbolTableLeftTokValue;
+	Identifier* symbolTableRightTokValue;
+	string tokenToCompareLeftValue;
+	string tokenToCompareRightValue;
+
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+
+	for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+	{
+
+		if (
+			dynamic_cast<Identifier*>(this->symbolTable.at(s1))->getNodeTokenValue() ==
+			dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
+			)
+		{
+			pair.first = tokenToCompareLeft;
+			//cout << "\nDeclaration: TokenToCompare->first = " << dynamic_cast<Identifier*>(pair.first)->getNodeTokenValue() << "\n\n";
+			leftTokInserted = true;
+
+			pair.second = tokenToCompareRight;
+			//cout << "\nDeclaration: TokenToCompare->second = " << dynamic_cast<Number*>(pair.second)->getNodeTokenValue() << "\n\n";
+			rightTokInserted = true;
+
+		}
+
+	}
+	if (leftTokInserted)
+	{
+		pair.first = tokenToCompareLeft;
+
+	}
+
+	if (rightTokInserted)
+	{
+		pair.second = tokenToCompareRight;
+
+	}
+
+	if (leftTokInserted && rightTokInserted)
+	{
+		this->tokenToCompare.insert(pair);
+		leftTokInserted = false;
+		rightTokInserted = false;
+	}
+}
+
 void Program::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight)
 {
 	std::string leftValue = "";
@@ -352,64 +486,120 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(Parse
 
 void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight, bool &relationSet)
 {
-	std::string leftValue = "";
-	std::string rightValue = "";
-	bool numberSet = false;
-	try
-	{
-		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
+	
+		std::string leftValue = "";
+		std::string rightValue = "";
+		bool numberSet = false;
+		try
 		{
-			
-				/*if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+			if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
+			{
+
+				if (relationSet && dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
 				{
 					if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue())
 					{
-						throw new NoStringsAllowedInRelationOperatorsException();
-						
-						
+						throw NoStringsAllowedInRelationOperatorsException();
+					
 					}
 				}
 
-				if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
+				if (relationSet && dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
 				{
 					if (dynamic_cast<Identifier*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
 					{
-						throw new NoStringsAllowedInRelationOperatorsException();
-						
+						throw NoStringsAllowedInRelationOperatorsException();
+
 					}
 				}
-				*/
 
-			//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
-			//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
+				if (relationSet && dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
+				{
+					if (dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue())
+					{
+						throw NoStringsAllowedInRelationOperatorsException();
 
-			this->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet, relationSet);
+					}
+				}
 
-			if (leftValue == "" || rightValue == "")
+				if (relationSet && dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
+				{
+					if (dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
+					{
+						throw NoStringsAllowedInRelationOperatorsException();
+
+					}
+				}
+
+
+
+				//Now, we have to revert back to the ParseTree Method and start digging until we find a matching variable declaration.
+				//I tried to avoid doing this, but it has to be done.  Recurse-Loop-Recurse-Loop-Repeat-Maybe crash too.
+
+				this->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet, relationSet);
+
+				if (leftValue == "" || rightValue == "")
+				{
+					throw ExpressionOperatorsAreNotAValidTypeException();
+				}
+
+			}
+		}
+		catch (ExpressionOperatorsAreNotAValidTypeException& e)
+		{
+			if (!relationSet)
 			{
-				throw ExpressionOperatorsAreNotAValidTypeException();
+				
+				if (leftValue == "")
+				{
+					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+				}
+
+				if (rightValue == "")
+				{
+					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
+						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+				}
+				
 			}
 
 		}
-	}
-	catch (ExpressionOperatorsAreNotAValidTypeException& e)
-	{
-		if (!relationSet)
+		catch (NoStringsAllowedInRelationOperatorsException& e)
 		{
 			if (leftValue == "")
 			{
-				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
-					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+				if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+				{
+					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+				}
+
+				else if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
+				{
+					cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+						<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+				}
 			}
 
 			if (rightValue == "")
 			{
-				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
-					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+				if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
+				{
+					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
+						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+				}
+				else if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
+				{
+					cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
+						<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+				}
 			}
+			
 		}
-
-	}
+	
+	
+	
 	
 	
 

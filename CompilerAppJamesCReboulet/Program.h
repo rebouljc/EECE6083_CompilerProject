@@ -2,6 +2,7 @@
 #include "ParseTreeNode.h"
 #include "Identifier.h"
 #include "Number.h"
+#include "StringLiteral.h"
 
 class Program: public ParseTreeNode
 {
@@ -17,6 +18,10 @@ public:
 		                                                         bool& leftTokInserted, bool& rightTokInserted);
 	void verifyArithmeticOperationsAreCorrectlyDefinedNumberRight(Identifier* tokenToCompareLeft, Number* tokenToCompareRight,
 		                                                          bool& leftTokInserted, bool& rightTokInserted);
+	void verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralLeft(StringLiteral* tokenToCompareLeft, Identifier* tokenToCompareRight,
+		                                                                bool& leftTokInserted, bool& rightTokInserted);
+	void verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralRight(Identifier* tokenToCompareLeft, StringLiteral* tokenToCompareRight,
+		bool& leftTokInserted, bool& rightTokInserted);
 
 	
 	

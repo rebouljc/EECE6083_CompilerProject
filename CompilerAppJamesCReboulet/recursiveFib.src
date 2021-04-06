@@ -35,9 +35,9 @@ procedure Fib : integer(variable val :integer)
         ret := tmp[3] + out;
 	//Change to return ret * 5 return ret + 5;
         
-        return 5.0 & bullshit;
+        return ret & "bullshit";
         
-        //return not 5.0 & ret;
+        //return not ret & "bullshit";
         
 end procedure;
 
@@ -45,7 +45,7 @@ end procedure;
 begin
 
 max := getInteger();
-for(i := 0; i < bullshit)
+for(i := 0; i < "bullshit")
 	x := Fib(i);
     out := putInteger(x);
 	i := i + 1;

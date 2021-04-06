@@ -12,12 +12,15 @@ public:
 	void setIdentifierRelation_PtrValue(ParseTreeNode* identifier);
 	void setNumberRelationPtrValue(ParseTreeNode* numberToken);
 	void setNumberRelation_PtrValue(ParseTreeNode* numberToken);
+	void setStringLiteralRelationPtrValue(ParseTreeNode* stringLiteral);
+	void setStringLiteralRelation_PtrValue(ParseTreeNode* stringLiteral);
 
 	ParseTreeNode* getIdentifierRelationPtrValue();
 	ParseTreeNode* getIdentifierRelation_PtrValue();
 	ParseTreeNode* getNumberRelationPtrValue();
 	ParseTreeNode* getNumberRelation_PtrValue();
-	
+	ParseTreeNode* getStringLiteralRelationPtrValue();
+	ParseTreeNode* getStringLiteralRelation_PtrValue();
 	~Relation() {};
 
 private:
@@ -28,6 +31,7 @@ private:
 
 	ParseTreeNode* identifierArithOpPtr = nullptr;
 	ParseTreeNode* identifierArithOp_Ptr = nullptr;
+
 
 
 };

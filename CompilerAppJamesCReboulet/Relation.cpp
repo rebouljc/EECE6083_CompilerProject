@@ -3,6 +3,7 @@
 #include "Term.h"
 #include "Number.h"
 #include "Identifier.h"
+#include "StringLiteral.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 Relation::Relation(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -53,6 +54,37 @@ void Relation::setNumberRelation_PtrValue(ParseTreeNode* numberToken)
 		//If the pointer value has previously been set, do not reset it!
 		this->identifierArithOp_Ptr = num;
 	}
+}
+
+
+void Relation::setStringLiteralRelationPtrValue(ParseTreeNode* stringLiteral)
+{
+	StringLiteral* str = nullptr;
+	if ((str = dynamic_cast<StringLiteral*>(stringLiteral)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = str;
+	}
+}
+
+void Relation::setStringLiteralRelation_PtrValue(ParseTreeNode* stringLiteral)
+{
+	StringLiteral* str = nullptr;
+	if ((str = dynamic_cast<StringLiteral*>(stringLiteral)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = str;
+	}
+}
+
+ParseTreeNode* Relation::getStringLiteralRelationPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Relation::getStringLiteralRelation_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
 }
 
 ParseTreeNode* Relation::getIdentifierRelationPtrValue()
