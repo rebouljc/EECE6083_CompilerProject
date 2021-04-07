@@ -133,6 +133,36 @@ void Expression::setIdentifierExpression_PtrValue(ParseTreeNode* identifier)
 	}
 }
 
+void Expression::setStringLiteralExpressionPtrValue(ParseTreeNode* stringLiteral)
+{
+	StringLiteral* str = nullptr;
+	if ((str = dynamic_cast<StringLiteral*>(stringLiteral)) != nullptr && this->identifierArithOpPtr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOpPtr = str;
+	}
+}
+
+void Expression::setStringLiteralExpression_PtrValue(ParseTreeNode* stringLiteral)
+{
+	StringLiteral* str = nullptr;
+	if ((str = dynamic_cast<StringLiteral*>(stringLiteral)) != nullptr && this->identifierArithOp_Ptr == nullptr)
+	{
+		//If the pointer value has previously been set, do not reset it!
+		this->identifierArithOp_Ptr = str;
+	}
+}
+
+ParseTreeNode* Expression::getStringLiteralExpressionPtrValue()
+{
+	return this->identifierArithOpPtr;
+}
+
+ParseTreeNode* Expression::getStringLiteralExpression_PtrValue()
+{
+	return this->identifierArithOp_Ptr;
+}
+
 
 ParseTreeNode* Expression::getNodePtr()
 {

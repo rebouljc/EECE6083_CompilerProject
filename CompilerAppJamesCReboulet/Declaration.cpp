@@ -611,13 +611,25 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 			if (leftValue == "")
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
-					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+			}
+
+			else if (leftValue == "STRING_LITERAL")
+			{
+				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+					 << " String Literal: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
 			}
 
 			if (rightValue == "")
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
-					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+			}
+
+			else if (rightValue == "STRING_LITERAL")
+			{
+				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
+					 << " String Literal: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
 			}
 		}
 
@@ -656,8 +668,10 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 
 	catch (IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException& e)
 	{
+		
+		
 
-		if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+		if ( dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
@@ -675,7 +689,7 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
 		}
 
-		if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
+		if ( dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
 		{
 			cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
 				<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();

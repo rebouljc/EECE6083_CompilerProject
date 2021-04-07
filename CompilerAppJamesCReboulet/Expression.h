@@ -1,5 +1,6 @@
 #pragma once
 #include "ParseTreeNode.h"
+#include "StringLiteral.h"
 
 class Expression : public ParseTreeNode
 {
@@ -20,6 +21,11 @@ public:
 	ParseTreeNode* getNumberExpressionPtrValue();
 	ParseTreeNode* getNumberExpression_PtrValue();
 
+	//Setters and getters for string literals.
+	void setStringLiteralExpressionPtrValue(ParseTreeNode* stringLiteral);
+	void setStringLiteralExpression_PtrValue(ParseTreeNode* stringLiteral);
+	ParseTreeNode* getStringLiteralExpressionPtrValue();
+	ParseTreeNode* getStringLiteralExpression_PtrValue();
 	~Expression() {};
 	
 

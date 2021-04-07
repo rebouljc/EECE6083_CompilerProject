@@ -600,6 +600,8 @@ void ParseTreeNode::climbTreeToNearestExpressionAndSetParenthesesFlag()
 
 #endif
 
+//Climb tree and verify Expressions are correctly defined.
+
 void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet,
                                                                               bool &expressionPresentFlag
                                                                              )
@@ -676,6 +678,14 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
             expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
         }
 
+        //Added code to handle string literals.
+
+        else if (dynamic_cast<StringLiteral*>(tokenToCompare) != nullptr && !expressionPresentFlag)
+        {
+            expressionPtr->setStringLiteralExpressionPtrValue(tokenToCompare);
+            expressionPresentFlag = true;
+        }
+
 
 
 
@@ -723,6 +733,30 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
                 rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
         }
+
+        //Added code to handle string literals.
+
+        else if ((tokenToCompareLeft = dynamic_cast<StringLiteral*>(expressionPtr->getStringLiteralExpressionPtrValue())) != nullptr ||
+            (tokenToCompareRight = dynamic_cast<StringLiteral*>(expressionPtr->getStringLiteralExpression_PtrValue())) != nullptr
+            )
+        {
+            if ((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpressionPtrValue())) != nullptr)
+            {
+                tokenToCompareRight = dynamic_cast<StringLiteral*>(expressionPtr->getStringLiteralExpression_PtrValue());
+                
+            }
+
+            else if ((tokenToCompareRight = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpression_PtrValue())) != nullptr)
+            {
+                tokenToCompareLeft = dynamic_cast<StringLiteral*>(expressionPtr->getStringLiteralExpressionPtrValue());
+               
+            }
+
+
+            this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+
+        }
     }
     
 
@@ -760,7 +794,11 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
                
             }
 
-          
+          //Added code to handle string literals.
+            else if (dynamic_cast<StringLiteral*>(tokenToCompare) != nullptr)
+            {
+                expressionPtr->setStringLiteralExpression_PtrValue(tokenToCompare);
+            }
 
         }
 
@@ -1032,12 +1070,21 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                 
                                 dynamic_cast<Identifier*>(tokenToCompareLeft)->setreadIntegerAsBooleanValueFlagValue(true);
 
+                                
                                 if (leftValue == "STRING_LITERAL" || rightValue == "STRING_LITERAL" ||
                                     leftValue == "string"         || rightValue == "string"
                                    )
                                 {
                                     //Throw an exception.  Types do not match.
-                                    throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                    if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getBitwiseAndOrOperationDefinedFlagValue())
+                                    {
+                                        throw ExpressionOperatorsAreNotAValidTypeException();
+                                    }
+
+                                    else
+                                    {
+                                        throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                    }
                                 }
 
                             }
@@ -1048,7 +1095,14 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                     )
                             {
                                 //Throw an exception.  Types do not match.
-                                throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getBitwiseAndOrOperationDefinedFlagValue())
+                                {
+                                    throw ExpressionOperatorsAreNotAValidTypeException();
+                                }
+                                else
+                                {
+                                    throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                }
                             }
 
                         }
@@ -1073,7 +1127,14 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                     )
                                 {
                                     //Throw an exception.  Types do not match.
-                                    throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                    if (dynamic_cast<Identifier*>(tokenToCompareRight)->getBitwiseAndOrOperationDefinedFlagValue())
+                                    {
+                                        throw ExpressionOperatorsAreNotAValidTypeException();
+                                    }
+                                    else
+                                    {
+                                        throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                    }
                                 }
                             }
 
@@ -1084,7 +1145,14 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                     )
                             {
                                 //Throw an exception.  Types do not match.
-                                throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                if (dynamic_cast<Identifier*>(tokenToCompareRight)->getBitwiseAndOrOperationDefinedFlagValue())
+                                {
+                                    throw ExpressionOperatorsAreNotAValidTypeException();
+                                }
+                                else
+                                {
+                                    throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
+                                }
                             }
 
                             
