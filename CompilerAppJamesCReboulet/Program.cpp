@@ -485,6 +485,7 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(Parse
 
 }
 
+
 void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight, bool &relationSet)
 {
 	
@@ -495,25 +496,6 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 		{
 			if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
 			{
-
-				if (relationSet && dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
-				{
-					if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue())
-					{
-						throw NoStringsAllowedInRelationOperatorsException();
-					
-					}
-				}
-
-				if (relationSet && dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
-				{
-					if (dynamic_cast<Identifier*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
-					{
-						throw NoStringsAllowedInRelationOperatorsException();
-
-					}
-				}
-
 				if (relationSet && dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 				{
 					if (dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue())
@@ -542,6 +524,26 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 				if (leftValue == "" || rightValue == "")
 				{
 					throw ExpressionOperatorsAreNotAValidTypeException();
+				}
+				
+
+				if (relationSet && dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+				{
+
+					if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue() && leftValue == "string")
+					{
+						throw NoStringsAllowedInRelationOperatorsException();
+
+					}
+				}
+
+				if (relationSet && dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr && rightValue == "string")
+				{
+					if (dynamic_cast<Identifier*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
+					{
+						throw NoStringsAllowedInRelationOperatorsException();
+
+					}
 				}
 
 			}

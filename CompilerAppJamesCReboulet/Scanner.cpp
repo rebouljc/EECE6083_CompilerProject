@@ -915,13 +915,14 @@ void Scanner::commentCheckingIgnoringDecisionMethod(ifstream* input)
 void Scanner::commentCheckingAndIgnoringAncillaryMethod(ifstream* input)
 {
 	char readNextCharacter = this->readCharacterFromFile(input);
-
+    
 	if (readNextCharacter == '\n')
 	{	
 		return;
 	}
 	//Waste and recurse until '\n' is encountered, then return.
 	char wasteChar = this->readCharacterFromFile(input);
+	
 	this->commentCheckingAndIgnoringAncillaryMethod(input);
 }
 

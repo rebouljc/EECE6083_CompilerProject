@@ -23,7 +23,7 @@ public:
 	void verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralRight(Identifier* tokenToCompareLeft, StringLiteral* tokenToCompareRight,
 		bool& leftTokInserted, bool& rightTokInserted);
 
-	
+
 	
 	~Program() {};
 	

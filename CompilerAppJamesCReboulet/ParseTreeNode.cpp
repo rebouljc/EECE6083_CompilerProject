@@ -810,20 +810,20 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
 
 
 void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
-                                                                                       std::string &leftValue, std::string &rightValue, bool &numberSet)
+    std::string& leftValue, std::string& rightValue, bool& numberSet)
 {
-    
+
     //Here, we dig until we can find a <VariableDeclaration> class.
     if (this->linkedMemberNonterminals.empty())
     {
         //We have reached a leaf, so we need to return.  Prevents infinite recursion.
         return;
     }
-    
+
 
     else
     {
-        
+
 
         for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
         {
@@ -846,13 +846,14 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                 //Jesus!  Now, we can actually check to determine whether the <Identifier>s match and the <TypeMark>s match.
                 Identifier* ident = nullptr;
                 TypeMark* identType = nullptr;
-                
+
 
 
                 if ((ident = dynamic_cast<Identifier*>(varDecl->linkedMemberNonterminals.at(1))) != nullptr &&
                     ((identType = dynamic_cast<TypeMark*>(varDecl->linkedMemberNonterminals.at(3))) != nullptr)
                     )
                 {
+                    
                     //We check their types.
                     string symbolTableTest;
 
@@ -860,6 +861,8 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                         (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "float"
                         )
                     {
+                        
+                        
                         Number* numberLeft = nullptr;
                         Number* numberRight = nullptr;
 
@@ -882,18 +885,18 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                             }
 
                         }
-                        
+
                         //We can set either the right hand or left-hand values.
-                        else if (dynamic_cast<Number*>(tokenToCompareLeft) == nullptr && 
-                                 ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
-                                )
+                        if (dynamic_cast<Number*>(tokenToCompareLeft) == nullptr &&
+                            ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue()
+                            )
                         {
                             leftValue = ident->getNodeTokenValue().c_str();
                         }
 
-                        else if (dynamic_cast<Number*>(tokenToCompareRight) == nullptr && 
-                                 ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
-                                )
+                        if (dynamic_cast<Number*>(tokenToCompareRight) == nullptr &&
+                            ident->getNodeTokenValue() == dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue()
+                            )
                         {
                             rightValue = ident->getNodeTokenValue().c_str();
                         }
@@ -907,11 +910,11 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                 //And in all of this fun, I forgot to recurse.  This should be really fun.  Multiple recursion!  We should
                 //make it more confusing and put each recursive method on its own thread.
             }
-                this->linkedMemberNonterminals.at(i)->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight,
-                    leftValue, rightValue, numberSet);  
+            this->linkedMemberNonterminals.at(i)->verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight,
+                leftValue, rightValue, numberSet);
         }
     }
-   
+
 }
 
 void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,

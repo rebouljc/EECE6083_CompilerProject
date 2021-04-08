@@ -552,22 +552,6 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 	{
 		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
 		{
-			if (relationSet && dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
-			{
-				if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue())
-				{
-					throw NoStringsAllowedInRelationOperatorsException();
-
-				}
-			}
-
-			if (relationSet && dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
-			{
-				if (dynamic_cast<Identifier*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
-				{
-					throw NoStringsAllowedInRelationOperatorsException();
-				}
-			}
 
 			if (relationSet && dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 			{
@@ -594,6 +578,25 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 
 
 			this->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet, relationSet);
+
+			if (relationSet && dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+			{
+
+				if (dynamic_cast<Identifier*>(tokenToCompareLeft)->getNoStringsAllowedFlagValue() && leftValue == "string")
+				{
+					throw NoStringsAllowedInRelationOperatorsException();
+
+				}
+			}
+
+			if (relationSet && dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr && rightValue == "string")
+			{
+				if (dynamic_cast<Identifier*>(tokenToCompareRight)->getNoStringsAllowedFlagValue())
+				{
+					throw NoStringsAllowedInRelationOperatorsException();
+
+				}
+			}
 
 			if (leftValue == "" || rightValue == "")
 			{
