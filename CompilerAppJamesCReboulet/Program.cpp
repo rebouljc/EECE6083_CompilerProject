@@ -180,8 +180,11 @@ void Program::populateSearchResultsList(ParseTreeNode* motherNode)
 
 	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
+
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
 	}
+
+	
 
 	motherNode->addToSearchResultsList(this->getNodePtr());
 }

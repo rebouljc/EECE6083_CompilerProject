@@ -16,7 +16,7 @@ procedure Fib : integer(variable val :integer)
         variable val2 : integer;
 		begin
 			val2 := val2 - val1;
-			return 6 + bullshit;
+			return 6 + "MotherFuckingBullshit";
 		end procedure;
 
 	begin
@@ -37,9 +37,9 @@ procedure Fib : integer(variable val :integer)
 	//Change to return ret * 5 return ret + 5;
         
         
-        return ret & "FuckingBullshit";
+        //return ret & 1.2;
         
-        //return not ret & "bullshit";
+        return not (ret & 1.2);
         
 end procedure;
 

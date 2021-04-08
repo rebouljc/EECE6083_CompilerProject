@@ -7,13 +7,6 @@ TerminalNode::TerminalNode()
 	this->token = nullptr;
 }
 
-#define OUT 0
-#ifndef OUT
-void TerminalNode::setParenthesesPresentFlag(bool flagValue)
-{
-	this->parenthesesPresentFlag = true;
-}
-#endif
 TerminalNode::TerminalNode(Token* token, ParseTreeNode* parentNodePtr)
 {
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
@@ -32,6 +25,11 @@ string TerminalNode::getNodeTokenType()
 string TerminalNode::getNodeTokenValue()
 {
 	return this->token->getTokenValue();
+}
+
+void TerminalNode::setNodeTokenValue(std::string value)
+{
+	this->token->setTokenValue(value);
 }
 
 int TerminalNode::getNodeTokenLineNumber()

@@ -2,6 +2,7 @@
 #include "TerminalNode.h"
 #include "Identifier.h"
 #include "ArithOp.h"
+#include "Expression.h"
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
 Expression_::Expression_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
@@ -22,6 +23,30 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		currentToken->getTokenValue() == "|")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		
+		Expression* expPtr = nullptr;
+
+		
+
+		if ((expPtr = dynamic_cast<Expression*>(this->parentNodePtr)) != nullptr)
+		{
+			//Do the flip flop here when "not" is present within an expression.  Changing the values of the numbers and identifiers will occur later.
+			bool calledFromExpressionRef = true;
+			bool expResult = expPtr->climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(calledFromExpressionRef);
+
+			if (expResult)
+			{
+				if (currentToken->getTokenValue() == "&")
+				{
+					currentToken->setTokenValue("|");
+				}
+
+				else if (currentToken->getTokenValue() == "|")
+				{
+					currentToken->setTokenValue("&");
+				}
+			}
+		}
 	}
 
 	else if (currentToken->getTokenValue() == "not")

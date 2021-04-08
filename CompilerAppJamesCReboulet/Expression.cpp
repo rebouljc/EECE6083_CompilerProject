@@ -29,6 +29,9 @@ void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mo
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
 		
+		this->setNotPresentFlag(true);
+		
+		
 	}
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method
 	//That will probably cause a memory access violation to occur at runtime, because we are accessing a non-existent element in our vector.

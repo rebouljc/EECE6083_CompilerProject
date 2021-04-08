@@ -16,6 +16,7 @@ private:
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
+	
 
 
 

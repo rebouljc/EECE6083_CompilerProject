@@ -25,7 +25,7 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	this->climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(this, false, relationPresentFlag, setRelationPresentFlag);
 
 	bool expressionDefinedFlag = false;
-	
+	bool notWithParenthesesFlag = false;
 	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
 	
 	

@@ -73,10 +73,12 @@ ParseTreeNode* ProgramHeader::getNodePtr()
 void ProgramHeader::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 	
-
+	
 	for (unsigned int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(motherNode);
+		this->linkedMemberNonterminals.at(i)->populateSearchResultsList(this);
+
 	}
 
 	motherNode->addToSearchResultsList(this->getNodePtr());

@@ -21,7 +21,7 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 	this->climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(this, false, relationPresentFlag, setRelationPresentFlag);
 
 	bool expressionDefinedFlag = false;
-	
+	bool notWithParenthesesFlag = false;
 	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
 
 

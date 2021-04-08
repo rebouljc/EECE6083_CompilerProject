@@ -59,6 +59,9 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	else if (currentToken->getTokenValue() == "(") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		//We need to let <Expression*> know that there is a parentheses present, so that if a not precedes expression,
+		//we can flip-flop the "&" to an "|" and set the not flags on both operands instead of only one of them, Demorgan's Law.
+		this->climbTreeAndSetParenthesesPresentOnExpressionFlag();
 		currentToken = this->parserPtr->readNextToken();
 		this->dealWithExpression(motherNode, 0);
 		this->setIsValid(true);

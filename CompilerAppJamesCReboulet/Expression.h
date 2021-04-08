@@ -26,6 +26,13 @@ public:
 	void setStringLiteralExpression_PtrValue(ParseTreeNode* stringLiteral);
 	ParseTreeNode* getStringLiteralExpressionPtrValue();
 	ParseTreeNode* getStringLiteralExpression_PtrValue();
+
+	//Parentheses Set Flag setter and getter
+	void setParenthesesPresentFlag(bool flagValue) { this->parenthesesSetFlag = flagValue; };
+	bool getParenthesesPresentFlag() { return this->parenthesesSetFlag; };
+	void setNotPresentFlag(bool flagValue) { this->notSetFlag = flagValue; };
+	bool getNotPresentFlag() { return this->notSetFlag; };
+	
 	~Expression() {};
 	
 
@@ -40,6 +47,8 @@ private:
 
 	ParseTreeNode* identifierArithOpPtr = nullptr;
 	ParseTreeNode* identifierArithOp_Ptr = nullptr;
+	bool parenthesesSetFlag = false;
+	bool notSetFlag = false;
 	
 	
 

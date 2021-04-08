@@ -80,6 +80,50 @@ bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd, bool checkUniqu
     return !match;
 }
 
+void ParseTreeNode::climbTreeAndSetParenthesesPresentOnExpressionFlag()
+{
+    Expression* expr = nullptr;
+
+    if (this->parentNodePtr == nullptr)
+    {
+        return;
+    }
+    else if ((expr = dynamic_cast<Expression*>(this)) != nullptr)
+    {
+        expr->setParenthesesPresentFlag(true);
+        return;
+    }
+    this->parentNodePtr->climbTreeAndSetParenthesesPresentOnExpressionFlag();
+}
+
+bool ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool &calledFromExpression)
+{
+    Expression* expr = nullptr;
+
+    if ((expr = dynamic_cast<Expression*>(this)) != nullptr && !calledFromExpression)
+    {
+        if (expr->getParenthesesPresentFlag())
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+
+    }
+    else if (dynamic_cast<Expression*>(this))
+    {
+        calledFromExpression = false;
+    }
+
+    this->parentNodePtr->climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(calledFromExpression);
+
+
+
+}
+
 bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol)
 {
     
@@ -636,29 +680,28 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
                 //Figure out what to do about this later.  TODO!!
                 Number* num = nullptr;
                 Identifier* ident = nullptr;
-                if ((num = dynamic_cast<Number*>(tokenToCompare)) != nullptr && !numberSet)
+                if ((num = dynamic_cast<Number*>(tokenToCompare)) != nullptr && (!numberSet || expressionPtr->getParenthesesPresentFlag()))
                 {
                     expressionPtr->setNumberExpressionPtrValue(tokenToCompare);
 
                     //We need this because this will be hit for each value in expression and we
                     //don't want it to set the not flag for every identifier that is hit, if it is not preceded by "not"
-                    if (term->getNodeTokenValue() == "not")
+                   
+                    if (!expressionPresentFlag || expressionPtr->getParenthesesPresentFlag())
                     {
-                        if (!expressionPresentFlag)
-                        {
-                            num->setConvertToNotValue(true);
+                       num->setConvertToNotValue(true);
+                    }
+ 
+                }
 
-                        }
+                else if ((ident = dynamic_cast<Identifier*>(tokenToCompare)) != nullptr)
+                {
+                    expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
 
-                        else if ((ident = dynamic_cast<Identifier*>(tokenToCompare)) != nullptr)
-                        {
-                            expressionPtr->setIdentifierExpressionPtrValue(tokenToCompare);
-
-                            if (!expressionPresentFlag)
-                            {
-                                ident->setConvertToNotValue(true);
-                            }
-                        }
+                    if (expressionPtr->getParenthesesPresentFlag() || !expressionPresentFlag)
+                    {
+                        ident->setConvertToNotValue(true);
+                       
                     }
                 }
             }
@@ -775,6 +818,7 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
                 )
             {
                 expressionPresentFlag = true;
+                
                 
             }
 
@@ -990,7 +1034,7 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                             numberRight->setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
                         }
 
-                        else if (leftValue == "FLOATING_POINT_LITERAL")
+                        else if (rightValue == "FLOATING_POINT_LITERAL")
                         {
                             //throw the exception.  It must be a FLOATING_POINT_LITERAL.
                             throw ExpressionOperatorsAreNotAValidTypeException();
@@ -1090,6 +1134,8 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                     }
                                 }
 
+                                
+
                             }
 
                             else if (symbolTableTest == "float" && (leftValue == "STRING_LITERAL" || rightValue == "STRING_LITERAL" ||
@@ -1107,6 +1153,8 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                     throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
                                 }
                             }
+
+                            
 
                         }
 
@@ -1139,6 +1187,9 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                                         throw IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException();
                                     }
                                 }
+
+                               
+
                             }
 
 

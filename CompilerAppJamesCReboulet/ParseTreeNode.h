@@ -22,6 +22,11 @@ public:
 	virtual ~ParseTreeNode() {};
 	virtual bool checkGlobalTerminalNodePresent() { return false; };
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
+	void climbTreeAndSetParenthesesPresentOnExpressionFlag();
+	bool climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool& calledFromExpression);
+
+	//Get linkedNonterminals for semantic check
+	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 
 	//There were too many public methods popping up here, which were specific to semantic analysis,
 	//and should only be available to this class and its children.  Otherwise, too many possibilities for problems.  
@@ -39,8 +44,7 @@ protected:
 	//Tree climbing methods for semantic verification.
 	void climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode);
 
-	//Get linkedNonterminals for semantic check
-	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
+	
 	//Additional methods for semantic checking.
 
 	void climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
@@ -49,8 +53,7 @@ protected:
 		                                                         bool &setRelationPresentFlag);
 	void climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
 	void climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet,
-		bool& expressionPresentFlag
-	);
+		                                                           bool& expressionPresentFlag);
 	void verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
 		                                                                    std::string &leftValue, std::string &rightValue, bool& numberSet);
 	void verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
