@@ -7,6 +7,8 @@ public:
 	void setIsValid(bool isValid) override { this->isValid = isValid; };
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+	void setExpressionPtr(ParseTreeNode* expressionPtr) { this->expressionPtr = expressionPtr; };
+	ParseTreeNode* getExpressionPtr() { return this->expressionPtr; };
 	~IfStatement() {};
 	
 
@@ -16,6 +18,7 @@ private:
 	void dealWithIf(ParseTreeNode* motherNode, int tokenCounter);
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
+	ParseTreeNode* expressionPtr = nullptr;
 	
 
 };

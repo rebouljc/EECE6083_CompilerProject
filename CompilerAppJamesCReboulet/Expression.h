@@ -32,6 +32,10 @@ public:
 	bool getParenthesesPresentFlag() { return this->parenthesesSetFlag; };
 	void setNotPresentFlag(bool flagValue) { this->notSetFlag = flagValue; };
 	bool getNotPresentFlag() { return this->notSetFlag; };
+	void setIfLoopStatementPresentFlag(bool flagValue) { this->ifLoopStatementPresentFlag = flagValue; };
+	bool getIfLoopStatementPresentFlag() { return this->ifLoopStatementPresentFlag; };
+	void setSingleVariableIfLoopExpressionFlag(bool flagValue) { this->singleVariableIfOrLoopExpressionFlag = flagValue; };
+	bool getSingleVariableIfLoopExpressionFlag() { return this->singleVariableIfOrLoopExpressionFlag; };
 	
 	~Expression() {};
 	
@@ -49,6 +53,8 @@ private:
 	ParseTreeNode* identifierArithOp_Ptr = nullptr;
 	bool parenthesesSetFlag = false;
 	bool notSetFlag = false;
+	bool ifLoopStatementPresentFlag = false;
+	bool singleVariableIfOrLoopExpressionFlag = false;
 	
 	
 

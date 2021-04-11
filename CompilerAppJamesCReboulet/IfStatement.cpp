@@ -14,6 +14,8 @@ IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	this->verifySyntaxCreateParseTree(0, motherNode);
 	
 }
+
+
 void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter)
 {
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();

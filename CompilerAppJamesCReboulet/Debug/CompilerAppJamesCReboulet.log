@@ -37,13 +37,13 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJam
   Compiling...
   Parser.cpp
   ParseTreeNode.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(952,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1057,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1610,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1629,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1649,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1681,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1699,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(989,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1094,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1647,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1666,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1686,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1718,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1736,27): warning C4018: '<': signed/unsigned mismatch
   ProcedureBody.cpp
   ProcedureCall.cpp
   ProcedureDeclaration.cpp

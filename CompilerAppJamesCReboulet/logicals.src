@@ -8,7 +8,7 @@ global variable bs : string;
 begin
 
 x := getBool();
-if(bs & x) then
+if(x & bs) then
 	tmp := putString("T");
 else
 	tmp := putString("F");
