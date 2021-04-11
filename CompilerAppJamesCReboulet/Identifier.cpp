@@ -26,7 +26,8 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 
 	bool expressionDefinedFlag = false;
 	bool notWithParenthesesFlag = false;
-	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
+	bool singleVariableIfLoopExpressionPresent = false;
+	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag, singleVariableIfLoopExpressionPresent);
 	
 	
 

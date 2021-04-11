@@ -23,7 +23,7 @@ public:
 	virtual bool checkGlobalTerminalNodePresent() { return false; };
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	void climbTreeAndSetParenthesesPresentOnExpressionFlag();
-	bool climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool& calledFromExpression);
+	bool climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool& calledFromExpression, bool &parenthesesPresentFlag);
 
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
@@ -53,7 +53,8 @@ protected:
 		                                                         bool &setRelationPresentFlag);
 	void climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet);
 	void climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet,
-		                                                           bool& expressionPresentFlag);
+		                                                           bool& expressionPresentFlag, bool& singleVariableIfLoopExpressionPresent
+	                                                              );
 	void verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
 		                                                                    std::string &leftValue, std::string &rightValue, bool& numberSet);
 	void verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
@@ -88,7 +89,9 @@ private:
 		                                                                        ParseTreeNode* tokenToCompareRight,
 		                                                                        bool& leftTokInserted, bool& rightTokInserted,
 		                                                                        bool& expressionPresentFlag,
-		                                                                        bool& relationPresentFlag
+		                                                                        bool& relationPresentFlag,
+		                                                                        bool& setForOrIfStatementPresentFlag,
+		                                                                        bool& singleVariableIfLoopExpressionPresent
 	                                                                           );
 	
 	

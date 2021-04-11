@@ -3,11 +3,12 @@ program Logicals is
 global variable x : bool;
 global variable c : string;
 global variable tmp : bool;
+global variable bs : string;
 
 begin
 
 x := getBool();
-if(x) then
+if(bs & x) then
 	tmp := putString("T");
 else
 	tmp := putString("F");

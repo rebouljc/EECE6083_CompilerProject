@@ -32,7 +32,8 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 		{
 			//Do the flip flop here when "not" is present within an expression.  Changing the values of the numbers and identifiers will occur later.
 			bool calledFromExpressionRef = true;
-			bool expResult = expPtr->climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(calledFromExpressionRef);
+			bool parenthesesPresentFlag = false;
+			bool expResult = expPtr->climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(calledFromExpressionRef, parenthesesPresentFlag);
 
 			if (expResult)
 			{

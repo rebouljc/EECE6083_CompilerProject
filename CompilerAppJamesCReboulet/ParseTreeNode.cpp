@@ -30,6 +30,8 @@
 #include "Relation_.h"
 #include "StringLiteral.h"
 #include "IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h"
+#include "IfStatement.h"
+#include "LoopStatement.h"
 
 
 
@@ -96,29 +98,43 @@ void ParseTreeNode::climbTreeAndSetParenthesesPresentOnExpressionFlag()
     this->parentNodePtr->climbTreeAndSetParenthesesPresentOnExpressionFlag();
 }
 
-bool ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool &calledFromExpression)
+bool ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool &calledFromExpression, bool &parenthesesPresentFlag)
 {
     Expression* expr = nullptr;
 
-    if ((expr = dynamic_cast<Expression*>(this)) != nullptr && !calledFromExpression)
+    if (this->parentNodePtr == nullptr)
+    {
+        if (parenthesesPresentFlag)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+    else if ((expr = dynamic_cast<Expression*>(this)) != nullptr && !calledFromExpression)
     {
         if (expr->getParenthesesPresentFlag())
         {
             return true;
         }
-
-        else
-        {
-            return false;
-        }
+        
+        return false;
 
     }
-    else if (dynamic_cast<Expression*>(this))
+    //set the expression pointer anyway in case there is no cascading of expressions.
+    else if ((expr = dynamic_cast<Expression*>(this)) != nullptr)
     {
+       
         calledFromExpression = false;
+
+        if (expr->getParenthesesPresentFlag())
+        {
+            parenthesesPresentFlag = true;
+        }
     }
 
-    this->parentNodePtr->climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(calledFromExpression);
+    this->parentNodePtr->climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(calledFromExpression, parenthesesPresentFlag);
 
 
 
@@ -297,13 +313,16 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
         bool rightTokInserted = false;
         bool expressionPresentFlag = false;
         bool setRelationPresentFlag = false;
+        bool setForOrIfStatementPresentFlag = false;
+        bool singleVariableIfLoopExpressionPresent = false;
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOpPtrValue())) != nullptr &&
             (tokenToCompareRight = dynamic_cast<Identifier*>(arithOpPtr->getIdentifierArithOp_PtrValue())) != nullptr
            )
         {
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                                                                                         rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                                                                                         rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+                                                                                         singleVariableIfLoopExpressionPresent);
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(arithOpPtr->getNumberArithOpPtrValue())) != nullptr ||
@@ -322,7 +341,8 @@ void ParseTreeNode::climbTreeAndVerifyArithmeticOperationsAreCorrectlyDefined(Pa
 
             
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+                singleVariableIfLoopExpressionPresent);
         }
     }
 
@@ -393,13 +413,16 @@ void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTre
         bool rightTokInserted = false;
         bool expressionPresentFlag = false;
         bool setRelationPresentFlag = false;
+        bool setForOfIfStatementPresentFlag = false;
+        bool singleVariableIfLoopExpressionPresent = false;
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(termPtr->getIdentifierTermPtrValue())) != nullptr &&
             (tokenToCompareRight = dynamic_cast<Identifier*>(termPtr->getIdentifierTerm_PtrValue())) != nullptr
             )
         {
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOfIfStatementPresentFlag,
+                singleVariableIfLoopExpressionPresent);
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(termPtr->getNumberTermPtrValue())) != nullptr ||
@@ -418,7 +441,8 @@ void ParseTreeNode::climbTreeAndVerifyTermOperationsAreCorrectlyDefined(ParseTre
 
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOfIfStatementPresentFlag,
+                singleVariableIfLoopExpressionPresent);
         }
     }
 
@@ -500,6 +524,8 @@ void ParseTreeNode::climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(Pars
         bool leftTokInserted = false;
         bool rightTokInserted = false;
         bool expressionPresentFlag = false;
+        bool setForOrIfStatementPresentFlag = false;
+        bool singleVariableIfLoopExpressionPresent = false;
        
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(relPtr->getIdentifierRelationPtrValue())) != nullptr &&
@@ -522,7 +548,8 @@ void ParseTreeNode::climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(Pars
             
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+                singleVariableIfLoopExpressionPresent);
         }
         
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(relPtr->getNumberRelationPtrValue())) != nullptr ||
@@ -541,7 +568,8 @@ void ParseTreeNode::climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(Pars
 
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+                singleVariableIfLoopExpressionPresent);
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<StringLiteral*>(relPtr->getStringLiteralRelationPtrValue())) != nullptr ||
@@ -568,7 +596,7 @@ void ParseTreeNode::climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(Pars
 
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag, singleVariableIfLoopExpressionPresent);
         }
     }
 
@@ -647,7 +675,7 @@ void ParseTreeNode::climbTreeToNearestExpressionAndSetParenthesesFlag()
 //Climb tree and verify Expressions are correctly defined.
 
 void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompare, bool numberSet,
-                                                                              bool &expressionPresentFlag
+                                                                              bool &expressionPresentFlag, bool &singleVariableIfLoopExpressionPresent
                                                                              )
 {
     //Identifier and Number will call this method.
@@ -745,16 +773,26 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
         bool leftTokInserted = false;
         bool rightTokInserted = false;
         bool setRelationPresentFlag = false;
+        bool setForOrIfStatementPresentFlag = false;
+        
+       
+        //We assume that we are starting from an <Expression> here, so its parent pointer should resolve to an <IfStatement> or <LoopStatement> if
+        //this is the case that <Expression> is a member of one of those statements.
 
+        
 
         if ((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpressionPtrValue())) != nullptr &&
-            (tokenToCompareRight = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpression_PtrValue())) != nullptr
+                 (tokenToCompareRight = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpression_PtrValue())) != nullptr
             )
         {
 
+            singleVariableIfLoopExpressionPresent = true;
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+                singleVariableIfLoopExpressionPresent);
+
+            
         }
 
         else if ((tokenToCompareLeft = dynamic_cast<Number*>(expressionPtr->getNumberExpressionPtrValue())) != nullptr ||
@@ -762,6 +800,7 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
             )
         {
 
+            singleVariableIfLoopExpressionPresent = true;
 
             if ((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getNumberExpressionPtrValue())) != nullptr)
             {
@@ -774,7 +813,9 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
             }
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag, 
+                singleVariableIfLoopExpressionPresent);
+            
         }
 
         //Added code to handle string literals.
@@ -783,6 +824,8 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
             (tokenToCompareRight = dynamic_cast<StringLiteral*>(expressionPtr->getStringLiteralExpression_PtrValue())) != nullptr
             )
         {
+            singleVariableIfLoopExpressionPresent = true;
+
             if ((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpressionPtrValue())) != nullptr)
             {
                 tokenToCompareRight = dynamic_cast<StringLiteral*>(expressionPtr->getStringLiteralExpression_PtrValue());
@@ -797,9 +840,44 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
 
 
             this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                rightTokInserted, expressionPresentFlag, setRelationPresentFlag);
+                rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+                singleVariableIfLoopExpressionPresent);
+            
 
         }
+
+        else if (dynamic_cast<IfStatement*>(this->parentNodePtr) != nullptr || dynamic_cast<LoopStatement*>(this->parentNodePtr) != nullptr)
+        {
+            setForOrIfStatementPresentFlag = true;
+
+
+            expressionPtr->setParenthesesPresentFlag(true);
+
+
+            //Now, we have to take care of the case where expression is only a single variable.
+            //We have to do it in <Program> and in <Declaration>
+            if (((tokenToCompareLeft = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpressionPtrValue())) != nullptr ||
+                (tokenToCompareLeft = dynamic_cast<StringLiteral*>(expressionPtr->getStringLiteralExpressionPtrValue())
+                    ) != nullptr
+                ) &&
+                ((tokenToCompareRight = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpression_PtrValue())) == nullptr ||
+                    (tokenToCompareRight = dynamic_cast<Identifier*>(expressionPtr->getIdentifierExpression_PtrValue())
+                        ) == nullptr
+                    )
+                )
+            {
+
+                this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+                    rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+                    singleVariableIfLoopExpressionPresent);
+
+
+                //Otherwise, we continue into the next if-statment if there are cascading expressions.
+            }
+
+        }
+
+        
     }
     
 
@@ -848,7 +926,9 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
 
     }
 
-    this->parentNodePtr->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(tokenToCompare, numberSet, expressionPresentFlag);
+    this->parentNodePtr->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(tokenToCompare, numberSet, expressionPresentFlag,
+                                                                                   singleVariableIfLoopExpressionPresent
+                                                                                  );
 
 }
 
@@ -1231,7 +1311,9 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
                                                                                            ParseTreeNode* tokenToCompareRight,
                                                                                            bool &leftTokInserted, bool &rightTokInserted,
                                                                                            bool &expressionPresentFlag,
-                                                                                           bool &relationPresentFlag
+                                                                                           bool &relationPresentFlag, 
+                                                                                           bool &setForOrIfStatementPresentFlag,
+                                                                                           bool &singleVariableIfLoopExpressionPresent
                                                                                           )
 {
     Identifier* identifierArithOpPtr = nullptr;
@@ -1246,13 +1328,26 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
         return;
     }
 
+
     else if ((prog = dynamic_cast<Program*>(this)) != nullptr)
     {
         
         //Now, we need to notify the <Program*> object that a relation is being set.
         //We set it on each identifier and number as usual.
 
-        if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
+        //Take care of the single expression case within the IfStatement or LoopStatement if the flag is set.
+
+        if (setForOrIfStatementPresentFlag)
+        {
+            //TODO: Needs to be fixed, so that it recognizes whether if and loop statements return a bool for an expression.
+            
+            //cout << "\nIf-Statement Present with Single Variable for Expression";
+            //This will notify the parent recursive function to return and not continue.
+            //Let's just get out of here, so recursion is not infinite.
+            return;
+        }
+
+        else if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
             (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
             )
         {
@@ -1364,10 +1459,15 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
     else if ((decl = dynamic_cast<Declaration*>(this)) != nullptr)
     {
         
-
-        if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
-            (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
-            )
+       if (setForOrIfStatementPresentFlag)
+       {
+           //cout << "\nIf-Statement Present with Single Variable for Expression";
+           //We just continue here.  We will eventually hit <Program> and then return from there.
+           //TODO: Needs to be fixed, so that it recognizes whether if and loop statements return a bool for an expression.
+       }
+        else if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
+                 (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
+                )
         {
             
             
@@ -1483,8 +1583,10 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
         }
     }
 
+ 
     this->parentNodePtr->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(tokenToCompareLeft, tokenToCompareRight,
-                                                                                                leftTokInserted, rightTokInserted, expressionPresentFlag, relationPresentFlag);
+                                                                                                leftTokInserted, rightTokInserted, expressionPresentFlag, relationPresentFlag, setForOrIfStatementPresentFlag,
+                                                                                                singleVariableIfLoopExpressionPresent);
 }
 
 void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)

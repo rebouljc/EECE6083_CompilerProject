@@ -22,7 +22,8 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 
 	bool expressionDefinedFlag = false;
 	bool notWithParenthesesFlag = false;
-	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag);
+	bool singleVariableIfLoopExpressionPresent = false;
+	this->climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(this, false, expressionDefinedFlag, singleVariableIfLoopExpressionPresent);
 
 
 }

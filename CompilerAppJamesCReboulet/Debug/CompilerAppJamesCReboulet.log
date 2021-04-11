@@ -37,13 +37,13 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJam
   Compiling...
   Parser.cpp
   ParseTreeNode.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(872,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(977,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1508,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1527,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1547,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1579,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1597,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(952,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1057,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1610,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1629,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1649,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1681,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1699,27): warning C4018: '<': signed/unsigned mismatch
   ProcedureBody.cpp
   ProcedureCall.cpp
   ProcedureDeclaration.cpp
@@ -78,8 +78,8 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJam
   Scanner.cpp
   TypeDeclaration.cpp
   Generating Code...
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(125): warning C4715: 'ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag': not all control paths return a value
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(153): warning C4715: 'ParseTreeNode::searchSymbolTable': not all control paths return a value
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(141): warning C4715: 'ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag': not all control paths return a value
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(169): warning C4715: 'ParseTreeNode::searchSymbolTable': not all control paths return a value
   Compiling...
   TypeMark.cpp
   VariableDeclaration.cpp
