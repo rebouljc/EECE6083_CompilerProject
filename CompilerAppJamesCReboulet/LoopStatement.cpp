@@ -11,6 +11,32 @@ LoopStatement::LoopStatement(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	this->setParserPtr(parser);
 	this->programNode_motherNode = motherNode;
 	this->verifySyntaxCreateParseTree(0, motherNode);
+
+	//Now, we call the ParseTree climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined([blah blah blah]) and go from there.
+
+	for (int e = 0; e < this->linkedMemberNonterminals.size(); ++e)
+	{
+		Expression* expr = nullptr;
+
+		if ((expr = dynamic_cast<Expression*>(this->linkedMemberNonterminals.at(e))) != nullptr &&
+			expr->getIfLoopStatementPresentFlag() && expr->getSingleVariableIfLoopExpressionFlag())
+		{
+			ParseTreeNode* tokenToCompareLeft = this->getTokenToCompareValue();
+			ParseTreeNode* tokenToCompareRight = nullptr;
+			bool leftTokInserted = false;
+			bool rightTokInserted = false;
+			bool setRelationPresentFlag = false;
+			bool setForOrIfStatementPresentFlag = true;
+			bool expressionPresentFlag = true;
+			bool singleVariableIfLoopExpressionPresent = true;
+
+			this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(
+				tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
+				rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
+				singleVariableIfLoopExpressionPresent);
+			break;
+		}
+	}
 	
 }
 

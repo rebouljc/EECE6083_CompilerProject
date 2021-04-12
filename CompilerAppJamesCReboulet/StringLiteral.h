@@ -18,6 +18,12 @@ public:
 	void setNoStringsAllowedValue(bool flagValue) { this->noStringsAllowedFlag = flagValue; };
 	bool getNoStringsAllowedFlagValue() { return this->noStringsAllowedFlag; };
 
+	//And the flags keep waving!  More flags.  Now, the if_statement/Loop flags. 
+	//The kicker is that if you set one of them incorrectly, the whole application will be destroyed :).  
+
+	void setSingleVariableIfLoopExpressionFlag(bool flagValue) { this->singleVariableIfOrLoopExpressionFlag = flagValue; };
+	bool getSingleVariableIfLoopExpressionFlag() { return this->singleVariableIfOrLoopExpressionFlag; };
+
 	~StringLiteral() {};
 
 private:
@@ -25,6 +31,6 @@ private:
 	bool bitwiseAndOrOperationDefined = false;
 	bool relationPresentFlag = false;
 	bool noStringsAllowedFlag = false;
-
+	bool singleVariableIfOrLoopExpressionFlag = false;
 
 };

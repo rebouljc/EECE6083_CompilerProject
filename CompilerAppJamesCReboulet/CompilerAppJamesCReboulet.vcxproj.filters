@@ -311,5 +311,8 @@
     <ClInclude Include="IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IfAndForLoopsMustReturnABooleanValueStringException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

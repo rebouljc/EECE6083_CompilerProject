@@ -8,6 +8,7 @@
 #include "NoStringsAllowedInRelationalOperatorsException.h"
 #include "StringLiteral.h"
 #include "IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h"
+#include "IfAndForLoopsMustReturnABooleanValueStringException.h"
 
 
 
@@ -33,6 +34,8 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 			bool itSecondIsRelation = false;
 
 			//Need to check the value of tokenToCompare.
+
+
 			if (dynamic_cast<Identifier*>(it->first) != nullptr)
 			{
 				if (dynamic_cast<Identifier*>(it->first)->getBitwiseAndOrOperationDefinedFlagValue())
@@ -40,7 +43,9 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 					itFirstIsIdentifier = true;
 				}
 
-				else if (dynamic_cast<Identifier*>(it->first)->getRelationPresentFlagValue())
+				else if (dynamic_cast<Identifier*>(it->first)->getRelationPresentFlagValue() ||
+					     dynamic_cast<Identifier*>(it->first)->getSingleVariableIfLoopExpressionFlag()
+					    )
 				{
 					itFirstIsRelation = true;
 				}
@@ -53,7 +58,9 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 					itFirstIsIdentifier = true;
 				}
 
-				else if (dynamic_cast<Number*>(it->first)->getRelationPresentFlagValue())
+				else if (dynamic_cast<Number*>(it->first)->getRelationPresentFlagValue() ||
+					     dynamic_cast<Number*>(it->first)->getSingleVariableIfLoopExpressionFlag()
+					    )
 				{
 					itFirstIsRelation = true;
 				}
@@ -66,7 +73,9 @@ Declaration::Declaration(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 					itFirstIsIdentifier = true;
 				}
 
-				else if (dynamic_cast<StringLiteral*>(it->first)->getRelationPresentFlagValue())
+				else if (dynamic_cast<StringLiteral*>(it->first)->getRelationPresentFlagValue() ||
+					     dynamic_cast<Identifier*>(it->first)->getSingleVariableIfLoopExpressionFlag()
+					    )
 				{
 					itFirstIsRelation = true;
 				}
@@ -396,6 +405,30 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedNumberRight(Ident
 	}
 }
 
+void Declaration::verifyStringOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeftIdentifier, StringLiteral* tokenToCompareLeftStringLiteral,
+	                                                        Number* tokenToCompareLeftNumber)
+{
+	std::pair<ParseTreeNode*, ParseTreeNode*> pair;
+
+	if (tokenToCompareLeftIdentifier != nullptr)
+	{
+		pair.first = tokenToCompareLeftIdentifier;
+		this->tokenToCompare.insert(pair);
+	}
+
+	else if (tokenToCompareLeftStringLiteral != nullptr)
+	{
+		pair.first = tokenToCompareLeftStringLiteral;
+		this->tokenToCompare.insert(pair);
+	}
+
+	else if (tokenToCompareLeftNumber != nullptr)
+	{
+		pair.first = tokenToCompareLeftNumber;
+		this->tokenToCompare.insert(pair);
+	}
+}
+
 //String literal semantic checks
 void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralLeft(StringLiteral* tokenToCompareLeft, Identifier* tokenToCompareRight,
 	bool& leftTokInserted, bool& rightTokInserted)
@@ -550,6 +583,25 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 	bool numberSet = false;
 	try
 	{
+		Identifier* ident = nullptr;
+		StringLiteral* str = nullptr;
+		Number* num = nullptr;
+
+		if ((ident = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr && ident->getSingleVariableIfLoopExpressionFlag())
+		{
+			this->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet, relationSet);
+		}
+
+		if ((str = dynamic_cast<StringLiteral*>(tokenToCompareLeft)) != nullptr && str->getSingleVariableIfLoopExpressionFlag())
+		{
+			this->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet, relationSet);
+		}
+
+		if ((num = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr && num->getSingleVariableIfLoopExpressionFlag())
+		{
+			this->verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(tokenToCompareLeft, tokenToCompareRight, leftValue, rightValue, numberSet, relationSet);
+		}
+
 		if (tokenToCompareLeft != nullptr && tokenToCompareRight != nullptr)
 		{
 
@@ -699,6 +751,27 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 		}
 
 
+	}
+
+	catch (IfAndForLoopsMustReturnABooleanValueException& e)
+	{
+		if (dynamic_cast<Identifier*>(tokenToCompareLeft) != nullptr)
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+		}
+
+		if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
+		{
+			cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+				<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+		}
+
+		if (dynamic_cast<Number*>(tokenToCompareLeft) != nullptr)
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Number*>(tokenToCompareLeft)->getNodeTokenLineNumber()
+				<< " Floating-Point-Literal Value: " << dynamic_cast<Number*>(tokenToCompareLeft)->getNodeTokenIntegerDoubleNumberTokenValue();
+		}
 	}
 
 

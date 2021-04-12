@@ -31,6 +31,11 @@ public:
 
 	void setRelationPresentFlag(bool flagValue) { this->relationPresentFlag = flagValue; };
 	bool getRelationPresentFlagValue() { return this->relationPresentFlag; };
+
+	//And the flags keep waving!  More flags.  Now, the if_statement/Loop flags.
+
+	void setSingleVariableIfLoopExpressionFlag(bool flagValue) { this->singleVariableIfOrLoopExpressionFlag = flagValue; };
+	bool getSingleVariableIfLoopExpressionFlag() { return this->singleVariableIfOrLoopExpressionFlag; };
 	~Identifier() {};
 
 
@@ -44,6 +49,6 @@ private:
 	bool noStringsAllowedFlag = false;
 	bool relationPresentFlag = false;
 	bool convertToNotValue = false;
-
+	bool singleVariableIfOrLoopExpressionFlag = false;
 
 };

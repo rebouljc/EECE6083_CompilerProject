@@ -4,11 +4,12 @@ global variable x : bool;
 global variable c : string;
 global variable tmp : bool;
 global variable bs : string;
+global variable bsFloat : float;
 
 begin
 
 x := getBool();
-if(x & bs) then
+if(1.0) then
 	tmp := putString("T");
 else
 	tmp := putString("F");

@@ -60,6 +60,15 @@ protected:
 	void verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClockCycles(ParseTreeNode* tokenToCompareLeft, ParseTreeNode* tokenToCompareRight,
 		std::string& leftValue, std::string& rightValue, bool& numberSet, bool& relationSet);
 
+	void climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
+		ParseTreeNode* tokenToCompareRight,
+		bool& leftTokInserted, bool& rightTokInserted,
+		bool& expressionPresentFlag,
+		bool& relationPresentFlag,
+		bool& setForOrIfStatementPresentFlag,
+		bool& singleVariableIfLoopExpressionPresent
+	);
+
 #define OUT 0
 #ifndef OUT
 	void climbTreeToNearestExpressionAndSetParenthesesFlag();
@@ -85,14 +94,7 @@ private:
 	void climbTreeToDeclarationNode(ParseTreeNode* identifierNode);
 	//Private Semantic Checking Methods
 	void checkArrayIndexInBounds(ParseTreeNode &identifier, ParseTreeNode &symbolTableIdentifier);
-	void climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(ParseTreeNode* tokenToCompareLeft,
-		                                                                        ParseTreeNode* tokenToCompareRight,
-		                                                                        bool& leftTokInserted, bool& rightTokInserted,
-		                                                                        bool& expressionPresentFlag,
-		                                                                        bool& relationPresentFlag,
-		                                                                        bool& setForOrIfStatementPresentFlag,
-		                                                                        bool& singleVariableIfLoopExpressionPresent
-	                                                                           );
+	
 	
 	
 	

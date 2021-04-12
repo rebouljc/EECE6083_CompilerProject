@@ -202,6 +202,7 @@
     <ClInclude Include="Identifier.h" />
     <ClInclude Include="IdentifierBeginsWithNumberException.h" />
     <ClInclude Include="IdentifierNotDeclaredException.h" />
+    <ClInclude Include="IfAndForLoopsMustReturnABooleanValueStringException.h" />
     <ClInclude Include="IfStatement.h" />
     <ClInclude Include="IllegalEqualsSignException.h" />
     <ClInclude Include="IllegalIdentifierException.h" />

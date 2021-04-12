@@ -22,6 +22,8 @@ public:
 		                                                                bool& leftTokInserted, bool& rightTokInserted);
 	void verifyArithmeticOperationsAreCorrectlyDefinedStringLiteralRight(Identifier* tokenToCompareLeft, StringLiteral* tokenToCompareRight,
 		bool& leftTokInserted, bool& rightTokInserted);
+	void verifyStringOperationsAreCorrectlyDefined(Identifier* tokenToCompareLeftIdentifier, StringLiteral* tokenToCompareLeftStringLiteral,
+		                                           Number* tokenToCompareLeftNumber);
 
 
 	

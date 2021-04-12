@@ -24,6 +24,9 @@ public:
 	void setRelationPresentFlag(bool flagValue) { this->relationPresentFlag = flagValue; };
 	bool getRelationPresentFlagValue() { return this->relationPresentFlag; };
 
+	void setSingleVariableIfLoopExpressionFlag(bool flagValue) { this->singleVariableIfOrLoopExpressionFlag = flagValue; };
+	bool getSingleVariableIfLoopExpressionFlag() { return this->singleVariableIfOrLoopExpressionFlag; };
+
 	~Number() {};
 
 private:
@@ -32,6 +35,7 @@ private:
 	bool readIntegerAsBooleanValueFlag = false;
 	bool convertToNotValue = false;
 	bool relationPresentFlag = false;
+	bool singleVariableIfOrLoopExpressionFlag = false;
 
 
 };

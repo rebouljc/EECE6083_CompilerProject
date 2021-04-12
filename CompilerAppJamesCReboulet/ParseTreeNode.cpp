@@ -32,6 +32,7 @@
 #include "IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException.h"
 #include "IfStatement.h"
 #include "LoopStatement.h"
+#include "IfAndForLoopsMustReturnABooleanValueStringException.h"
 
 
 
@@ -485,12 +486,23 @@ void ParseTreeNode::climbTreeAndVerifyRelationOperationsAreCorrectlyDefined(Pars
     Declaration* declPtr = nullptr;
     Identifier* identifierArithOpPtr = nullptr;
     Identifier* identifierArithOp_Ptr = nullptr;
-
+    Expression* expressionPtr = nullptr;
 
 
     if (this->parentNodePtr == nullptr)
     {
         return;
+    }
+
+    if ((expressionPtr = dynamic_cast<Expression*>(this)) != nullptr)
+    {
+        //If this is present, we set the associated singleVariableIfOrLoopExpressionPresent Flag to false, 
+        //since we have a relation and not a single-variable expression.
+        if (expressionPtr->getSingleVariableIfLoopExpressionFlag())
+        {
+            expressionPtr->setSingleVariableIfLoopExpressionFlag(false);
+        }
+
     }
     else if ((relPtr = dynamic_cast<Relation*>(this)) != nullptr)
     {
@@ -873,34 +885,19 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
         if ((ifStatementPtr = dynamic_cast<IfStatement*>(this->parentNodePtr)) != nullptr || (loopStatementPtr = dynamic_cast<LoopStatement*>(this->parentNodePtr)) != nullptr)
         {
 
-            
-            /*if (singleVariableIfLoopExpressionPresent)
-            {
-                ParseTreeNode* tokenToCompareLeft = nullptr;
-                ParseTreeNode* tokenToCompareRight = nullptr;
-                bool leftTokInserted = false;
-                bool rightTokInserted = false;
-                bool setRelationPresentFlag = false;
-                bool setForOrIfStatementPresentFlag = true;
-
-                this->climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrectlyDefined(
-                    tokenToCompareLeft, tokenToCompareRight, leftTokInserted,
-                    rightTokInserted, expressionPresentFlag, setRelationPresentFlag, setForOrIfStatementPresentFlag,
-                    singleVariableIfLoopExpressionPresent);
-                return;
-            }*/ //This will never be executed here, since the conditions will never be met.
-         
             if (!singleVariableIfLoopExpressionPresent && !expressionPtr->getIfLoopStatementPresentFlag())
             {
                 if (ifStatementPtr != nullptr)
                 {
                     ifStatementPtr->setExpressionPtr(expressionPtr);
+                    ifStatementPtr->setTokenToCompareLeftValue(tokenToCompare);
 
                 }
 
                 else if (loopStatementPtr != nullptr)
                 {
                     loopStatementPtr->setExpressionPtr(expressionPtr);
+                    loopStatementPtr->setTokenToCompareLeftValue(tokenToCompare);
 
                 }
                 expressionPtr->setIfLoopStatementPresentFlag(true);
@@ -909,10 +906,6 @@ void ParseTreeNode::climbTreeAndVerifyExpressionOperationsAreCorrectlyDefined(Pa
 
            
         }
-
-        
-
-
     }
     
 
@@ -1089,8 +1082,15 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
         return;
     }
 
+
     else
     {
+        Number* num = nullptr;
+        if ((num = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr && num->getSingleVariableIfLoopExpressionFlag() &&
+            num->getNodeTokenValue() == "FLOATING_POINT_LITERAL")
+        {
+            throw IfAndForLoopsMustReturnABooleanValueException();
+        }
         for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
         {
             VariableDeclaration* varDecl = nullptr;
@@ -1117,7 +1117,9 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                 Number* numberRight = nullptr;
                 StringLiteral* stringLeft = nullptr;
                 StringLiteral* stringRight = nullptr;
+                
 
+                
                 if (!numberSet && ((numberLeft = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr ||
                     (numberRight = dynamic_cast<Number*>(tokenToCompareRight)) != nullptr)
                     )
@@ -1188,12 +1190,33 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
 
                     if ((symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "integer" ||
                         (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "bool" ||
-                        ( (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()) == "string"  &&
+                        ( (symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()
+                          ) == "string"  &&
                           relationSet
+                        ) ||
+                        ((symbolTableTest = dynamic_cast<TerminalNode*>(identType->getLinkedMemberNonterminalsList().at(0))->getNodeTokenValue()
+                            ) == "float" &&
+                            relationSet
                         )
                        )
                     {
                         
+                        if ((dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue() == ident->getNodeTokenValue() &&
+                            dynamic_cast<Identifier*>(tokenToCompareLeft)->getSingleVariableIfLoopExpressionFlag()            && 
+                            symbolTableTest == "string"
+                            ) ||
+                            (dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue() == ident->getNodeTokenValue() &&
+                             dynamic_cast<Identifier*>(tokenToCompareLeft)->getSingleVariableIfLoopExpressionFlag()           &&
+                             symbolTableTest == "float"
+                            )
+
+                           )
+                        {
+                            //We throw an exception.  If and for- statements must return a value exception.
+                            throw IfAndForLoopsMustReturnABooleanValueException();
+
+                        }
+
 
                         if (!numberSet && ((numberLeft = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr ||
                             (numberRight = dynamic_cast<Number*>(tokenToCompareRight)) != nullptr)
@@ -1329,6 +1352,8 @@ void ParseTreeNode::verifyExpressionOperationsAreCorrectlyDefinedDigAndBurnClock
                             
                         }
 
+                        
+
                        
                     }
 
@@ -1357,6 +1382,7 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
     Identifier* identifierArithOp_Ptr = nullptr;
     Program* prog;
     Declaration* decl;
+
    
     
     
@@ -1376,12 +1402,38 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
 
         if (setForOrIfStatementPresentFlag)
         {
+            
             //TODO: Needs to be fixed, so that it recognizes whether if and loop statements return a bool for an expression.
             
             cout << "\nIf-Statement Present with Single Variable for Expression";
             //This will notify the parent recursive function to return and not continue.
             //Let's just get out of here, so recursion is not infinite.
+            Identifier* ident = nullptr;
+            StringLiteral* str = nullptr;
+            Number* num = nullptr;
+
+            if ((ident = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr)
+            {
+                ident->setSingleVariableIfLoopExpressionFlag(true);
+                //Now, as usual, we have to give the pointers to prog. 
+                
+            }
+
+            else if ((str = dynamic_cast<StringLiteral*>(tokenToCompareLeft)) != nullptr)
+            {
+                str->setSingleVariableIfLoopExpressionFlag(true);
+                
+            }
+
+            else if ((num = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr)
+            {
+                num->setSingleVariableIfLoopExpressionFlag(true);
+                
+            }
+
+            prog->verifyStringOperationsAreCorrectlyDefined(ident, str, num);
             return;
+            
         }
 
         else if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
@@ -1499,8 +1551,32 @@ void ParseTreeNode::climbTreeToDeclarationAndVerifyArithmeticOperationsAreCorrec
        if (setForOrIfStatementPresentFlag)
        {
            cout << "\nIf-Statement Present with Single Variable for Expression";
-           //We just continue here.  We will eventually hit <Program> and then return from there.
-           //TODO: Needs to be fixed, so that it recognizes whether if and loop statements return a bool for an expression.
+
+           Identifier* ident = nullptr;
+           StringLiteral* str = nullptr;
+           Number* num = nullptr;
+
+           if ((ident = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr)
+           {
+               ident->setSingleVariableIfLoopExpressionFlag(true);
+               //Now, as usual, we have to give the pointers to prog. 
+               
+           }
+
+           else if ((str = dynamic_cast<StringLiteral*>(tokenToCompareLeft)) != nullptr)
+           {
+               str->setSingleVariableIfLoopExpressionFlag(true);
+               
+           }
+
+           else if ((num = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr)
+           {
+               num->setSingleVariableIfLoopExpressionFlag(true);
+               
+           }
+
+           decl->verifyStringOperationsAreCorrectlyDefined(ident, str, num);
+          
        }
         else if ((identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareLeft)) != nullptr &&
                  (identifierArithOpPtr = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr

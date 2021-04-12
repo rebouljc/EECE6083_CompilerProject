@@ -9,6 +9,8 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void setExpressionPtr(ParseTreeNode* expressionPtr) { this->expressionPtr = expressionPtr; };
 	ParseTreeNode* getExpressionPtr() { return this->expressionPtr; };
+	void setTokenToCompareLeftValue(ParseTreeNode* tokenToCompareLeft) { this->tokenToCompareLeft = tokenToCompareLeft; };
+	ParseTreeNode* getTokenToCompareValue() { return this->tokenToCompareLeft; };
 	
 	~LoopStatement() {};
 
@@ -19,6 +21,7 @@ private:
 	
 	ParseTreeNode* getNodePtr() override;
 	ParseTreeNode* expressionPtr = nullptr;
+	ParseTreeNode* tokenToCompareLeft = nullptr;
 	bool isValid = false;
 	
 
