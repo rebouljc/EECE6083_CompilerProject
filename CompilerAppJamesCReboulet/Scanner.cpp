@@ -113,6 +113,10 @@ void Scanner::init()
 	catch (NoPeriodAtEndOfProgramException& e)
 	{
 		cout << endl << e.what() << this->getLineNumber();
+
+		//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+		this->setCompilerErrorsPresentFlag(true);
+
 		//Now, we have to add that token.
 		this->storedTokens.push_back(new Token("PUNCTUATION", "."));
 	}
@@ -408,6 +412,9 @@ Token* Scanner::searchRelationOperatorList(string character,ifstream* input)
 	catch (IllegalEqualsSignException& e)
 	{
 		cout << endl << e.what() << this->getLineNumber();
+
+		//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+		this->setCompilerErrorsPresentFlag(true);
 		
 		for (set<pair<string, Token*>>::iterator punctIt = this->punctuation.begin(); punctIt != this->punctuation.end(); ++punctIt)
 		{
@@ -548,6 +555,9 @@ bool Scanner::matchIdentifier()
 	{
 		cout << endl << e.what() << this->getLineNumber();
 		this->storedCharacters.erase(i);
+
+		//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+		this->setCompilerErrorsPresentFlag(true);
 	}
 
      if (this->storedCharacters.at(0)->getTokenType() == "DIGIT")
@@ -587,6 +597,9 @@ void Scanner::matchNumber(ifstream* input)
 	{
 		cout << endl << e.what() << this->getLineNumber();
 
+		//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+		this->setCompilerErrorsPresentFlag(true);
+
 		//Remove the DIGIT from the identifier and insert it at the end of the variable name.
 		//Then continue.  But throw the error.  
 		//If there are any errors present, the compiler will halt before Intermediate Code generation.
@@ -594,6 +607,8 @@ void Scanner::matchNumber(ifstream* input)
 		Character* oldChar = new Character((*i)->getTokenType(), (*i)->getTokenValue());
 		this->storedCharacters.erase(i);
 		this->storedCharacters.push_back(new Character(oldChar->getTokenType(), oldChar->getTokenValue()));
+
+		
 	}
 
 	
@@ -741,6 +756,7 @@ void Scanner::matchStringLiteral(ifstream* input)
 		catch (StringLiteralException& e)
 		{
 			cout << endl << e.what() << this->getFirstQuotationMarkLineNumber();
+			this->setCompilerErrorsPresentFlag(true);
 			throw MainCompileErrorException();
 
 		}

@@ -509,13 +509,21 @@ void Program::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(Parse
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+			//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
 
 		if (rightValue == "")
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 				 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+			//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
+
+		
 
 	}
 
@@ -612,15 +620,23 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 				{
 					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+					//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+					this->parserPtr->setCompilerErrorsPresentFlag(true);
 				}
 
 				if (rightValue == "")
 				{
 					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+					//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+					this->parserPtr->setCompilerErrorsPresentFlag(true);
 				}
 				
 			}
+
+			
 
 		}
 		catch (NoStringsAllowedInRelationOperatorsException& e)
@@ -631,13 +647,21 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 				{
 					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+					//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+					this->parserPtr->setCompilerErrorsPresentFlag(true);
 				}
 
 				else if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 				{
 					cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 						<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+
+					//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+					this->parserPtr->setCompilerErrorsPresentFlag(true);
 				}
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			if (rightValue == "")
@@ -646,11 +670,17 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 				{
 					cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 						<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+					//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+					this->parserPtr->setCompilerErrorsPresentFlag(true);
 				}
 				else if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
 				{
 					cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
 						<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+
+					//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+					this->parserPtr->setCompilerErrorsPresentFlag(true);
 				}
 			}
 			
@@ -662,27 +692,39 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 			{
 				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					 << " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 			
 			if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+				//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
 			{
 				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
 					 << " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+
+				//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 			
-
+			
 		}
 
 		catch (IfAndForLoopsMustReturnABooleanValueException& e)
@@ -691,19 +733,30 @@ void Program::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(Parse
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 			{
 				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			if (dynamic_cast<Number*>(tokenToCompareLeft) != nullptr)
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Number*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					 << " Floating-Point-Literal Value: " << dynamic_cast<Number*>(tokenToCompareLeft)->getNodeTokenIntegerDoubleNumberTokenValue();
+
+				//Flag the compiler to not proceed with Intermediate-Code Generation if unresolved compiler errors are present but not to crap out.
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
+
+			
 		}
 	
 	

@@ -23,8 +23,15 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	}
 	catch (IdentifierNotDeclaredException& e)
 	{
-		cout << endl << endl << e.what() << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenLineNumber()
-			 << " Identifier Name: "     << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue() << endl;
+		if (!this->parserPtr->searchPredefinedRuntimeProceduresList(dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue()))
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenLineNumber()
+				<< " Identifier Name: " << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue() << endl;
+
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
+		}
+		
 	}
 
 	
@@ -47,8 +54,15 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	}
 	catch (IdentifierNotDeclaredException& e)
 	{
-		cout << endl << endl << e.what() << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenLineNumber()
-			 << " Identifier Name: "     << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue() << endl;
+		if (!this->parserPtr->searchPredefinedRuntimeProceduresList(dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue()))
+		{
+			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenLineNumber()
+				<< " Identifier Name: " << dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(0))->getNodeTokenValue() << endl;
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
+		}
+		
+		
 	}
 
 }

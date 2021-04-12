@@ -314,5 +314,8 @@
     <ClInclude Include="IfAndForLoopsMustReturnABooleanValueStringException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MainCompilerIntermediateCodeGenerationException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

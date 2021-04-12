@@ -264,6 +264,9 @@ void ParseTreeNode::climbTreeAndPopulateSymbolTable(string identifierType, Parse
         {
             cout << endl << endl << e.what() << dynamic_cast<Identifier*>(identifierNode)->getNodeTokenLineNumber()
                 << " Identifier Name: " << dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue() << endl;
+
+            this->parserPtr->setCompilerErrorsPresentFlag(true);
+
             return;
         }
     
@@ -1772,6 +1775,7 @@ void ParseTreeNode::climbTreeAndVerifyArrayIndices(ParseTreeNode* numberNode)
     catch (ArrayIndexNotAnIntegerLiteralException& e)
     {
         cout << endl << endl << e.what() << dynamic_cast<Number*>(numberNode)->getNodeTokenLineNumber();
+        this->parserPtr->setCompilerErrorsPresentFlag(true);
         return;
     }
     //recurse
@@ -1852,5 +1856,7 @@ void ParseTreeNode::checkArrayIndexInBounds(ParseTreeNode& identifier, ParseTree
             << " Declared Bound Value: "
             << dynamic_cast<Number*>(dynamic_cast<Identifier*>(&symbolTableIdentifier)->getNumberPtrValue())->getNodeTokenIntegerDoubleNumberTokenValue()
             << endl;
+
+        this->parserPtr->setCompilerErrorsPresentFlag(true);
     }
 }

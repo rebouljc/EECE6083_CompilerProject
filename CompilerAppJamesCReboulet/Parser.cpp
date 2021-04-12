@@ -6,15 +6,20 @@
 
 
 
+
 Parser::Parser()
 {
-  
+    
 }
 void Parser::init()
 {
     try
     {
+        
+
         ((Scanner*)(this))->init();
+
+        this->populatePredefinedRuntimeProceduresList();
     }
 
     //Scanner Exceptions
@@ -24,7 +29,7 @@ void Parser::init()
         //This is also a bad error - forgetting to surround a string literal with " marks.
         //We must crap out on this as well, since it can't be determined until the scanner reads the entire file
         //with an eof() and the tokens are not parsed correctly at all.
-
+        this->setCompilerErrorsPresentFlag(true);
         return;
     }
 
@@ -38,6 +43,8 @@ void Parser::init()
 
         
         //Here, we crap out, but we clean up the memory mess first, since we cannot recover with this type of error.
+        this->setCompilerErrorsPresentFlag(true);
+        throw MainCompileErrorException();
         return;
 
     }
@@ -52,6 +59,37 @@ void Parser::init()
 
     //Semantic-Analyzer Exceptions
 
+}
+
+void Parser::populatePredefinedRuntimeProceduresList()
+{
+    if (this->predefinedRuntimeFunctionsList == nullptr)
+    {
+        this->predefinedRuntimeFunctionsList = new vector<string>();
+    }
+    this->predefinedRuntimeFunctionsList->push_back("getbool");
+    this->predefinedRuntimeFunctionsList->push_back("getinteger");
+    this->predefinedRuntimeFunctionsList->push_back("getfloat");
+    this->predefinedRuntimeFunctionsList->push_back("getstring");
+    this->predefinedRuntimeFunctionsList->push_back("putbool");
+    this->predefinedRuntimeFunctionsList->push_back("putinteger");
+    this->predefinedRuntimeFunctionsList->push_back("putfloat");
+    this->predefinedRuntimeFunctionsList->push_back("putstring");
+    this->predefinedRuntimeFunctionsList->push_back("sqrt");
+
+}
+
+bool Parser::searchPredefinedRuntimeProceduresList(std::string queryName)
+{
+    for (int i = 0; i < this->predefinedRuntimeFunctionsList->size(); ++i)
+    {
+        if (this->predefinedRuntimeFunctionsList->at(i) == queryName)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 Token* Parser::getCurrentlyReadToken()

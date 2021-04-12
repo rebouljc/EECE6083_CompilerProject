@@ -564,13 +564,19 @@ void Declaration::verifyArithmeticOperationsAreCorrectlyDefinedPostDeclaration(P
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
 
 		if (rightValue == "")
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 				 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
+
+		
 			
 	}
 
@@ -667,25 +673,35 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			else if (leftValue == "STRING_LITERAL")
 			{
 				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					 << " String Literal: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			if (rightValue == "")
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 					 << " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 
 			else if (rightValue == "STRING_LITERAL")
 			{
 				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
 					 << " String Literal: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
+
+			
 		}
 
 	}
@@ -698,11 +714,15 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 			else if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 			{
 				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 					<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 		}
 
@@ -712,13 +732,19 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 			{
 				cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 					<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 			else if (dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
 			{
 				cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
 					<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+
+				this->parserPtr->setCompilerErrorsPresentFlag(true);
 			}
 		}
+
+		
 	}
 
 	catch (IllegalRelationalOperatorComparisonOfIntegerFloatWithStringException& e)
@@ -730,25 +756,35 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
 
 		if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 		{
 			cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
 
 		if (dynamic_cast<Identifier*>(tokenToCompareRight) != nullptr)
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenLineNumber()
 				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareRight)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
 
 		if ( dynamic_cast<StringLiteral*>(tokenToCompareRight) != nullptr)
 		{
 			cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenLineNumber()
 				<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareRight)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
+
+		
 
 
 	}
@@ -759,19 +795,27 @@ void Declaration::verifyExpressionOperationsAreCorrectlyDefinedPostDeclaration(P
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				<< " Identifier Name: " << dynamic_cast<Identifier*>(tokenToCompareLeft)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
 
 		if (dynamic_cast<StringLiteral*>(tokenToCompareLeft) != nullptr)
 		{
 			cout << endl << endl << e.what() << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				<< " String Literal Value: " << dynamic_cast<StringLiteral*>(tokenToCompareLeft)->getNodeTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
 
 		if (dynamic_cast<Number*>(tokenToCompareLeft) != nullptr)
 		{
 			cout << endl << endl << e.what() << dynamic_cast<Number*>(tokenToCompareLeft)->getNodeTokenLineNumber()
 				<< " Floating-Point-Literal Value: " << dynamic_cast<Number*>(tokenToCompareLeft)->getNodeTokenIntegerDoubleNumberTokenValue();
+
+			this->parserPtr->setCompilerErrorsPresentFlag(true);
 		}
+
+		
 	}
 
 

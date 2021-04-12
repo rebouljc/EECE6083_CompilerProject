@@ -1,12 +1,33 @@
 #include "IntermediateCodeGenerator.h"
+#include "MainCompilerIntermediateCodeGenerationException.h"
 #include "MainCompileErrorException.h"
+
 
 
 IntermediateCodeGenerator::IntermediateCodeGenerator()
 {
-	
-	this->init();
-	
+	try
+	{
+		this->init();
+		if (this->getCompilerErrorsPresentFlag())
+		{
+			throw MainCompilerIntermediateCodeGenerationException();
+		}
+	}
+
+	catch (MainCompileErrorException &e)
+	{
+		cout << endl << e.what() << endl;
+		return;
+	}
+
+	catch (MainCompilerIntermediateCodeGenerationException &e)
+	{
+		cout << endl << e.what() << endl;
+		
+		
+		return;
+	}
 
 }
 

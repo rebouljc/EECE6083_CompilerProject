@@ -21,6 +21,8 @@ class Scanner
 	   int getFirstCommentLineNumber();
 	   int getFirstQuotationMarkLineNumber();
 	   void init();
+	   void setCompilerErrorsPresentFlag(bool flagValue) { this->compilerErrorsPresentFlag = flagValue; };
+	   bool getCompilerErrorsPresentFlag() { return this->compilerErrorsPresentFlag; };
 	  
 
    private:
@@ -102,6 +104,7 @@ class Scanner
 protected:
    void cleanUp();
    vector<Token*> storedTokens;
+   bool compilerErrorsPresentFlag = false;
 
 };
 

@@ -21,12 +21,18 @@
 		Token* readNextToken();
 		Token* getCurrentlyReadToken();
 		void resetTokenReadIndexToPrevious();
+		vector<std::string>* getPredefinedRuntimeProceduresList() { return this->predefinedRuntimeFunctionsList;}
+		bool searchPredefinedRuntimeProceduresList(std::string queryName);
+		void populatePredefinedRuntimeProceduresList();
+		
+		
 
 
 	private:
 		void parseTokensLoop();
 		unsigned int indexToRead = 0;
 		Token* currentReadToken;
+		vector<std::string>* predefinedRuntimeFunctionsList;
 		
 
 
