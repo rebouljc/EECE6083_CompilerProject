@@ -2,6 +2,7 @@
 
 
 #include "IntermediateCodeGenerator.h"
+#include <memory>
 
 
 
