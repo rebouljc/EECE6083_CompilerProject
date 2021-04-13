@@ -1,0 +1,25 @@
+program Logicals is
+
+global variable x : bool;
+global variable c : string;
+global variable tmp : bool;
+global variable bs : string;
+global variable bsFloat : float;
+
+begin
+
+x := getBool();
+if(1.0) then
+	tmp := putString("T");
+else
+	tmp := putString("F");
+end if;
+
+c := getString();
+if(c == "A") then
+	tmp := putString("T");
+else
+	tmp := putString("F");
+end if;
+
+end program.
