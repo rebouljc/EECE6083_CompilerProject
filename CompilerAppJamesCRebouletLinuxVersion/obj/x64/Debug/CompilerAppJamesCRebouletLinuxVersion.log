@@ -1,0 +1,328 @@
+﻿  Cleaning remote project directory
+  Validating sources
+  Copying sources remotely to 'localhost'
+  Validating architecture
+  Validating architecture
+  Starting remote build
+  Compiling sources:
+  ArgumentList.cpp
+  ArithOp.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ArithOp.cpp(23,9): warning : variable ‘currentToken’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ArithOp.cpp(23,9): warning :    23 |  Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ArithOp.cpp(23,9): warning :       |         ^~~~~~~~~~~~
+  ArithOp_.cpp
+  AssignmentStatement.cpp
+  Bound.cpp
+  Character.cpp
+  CompilerAppJamesCReboulet.cpp
+  Declaration.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(165,7): warning : unused variable ‘varDeclFlag’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(165,7): warning :   165 |  bool varDeclFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(165,7): warning :       |       ^~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(166,7): warning : unused variable ‘procDeclFlag’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(166,7): warning :   166 |  bool procDeclFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(166,7): warning :       |       ^~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(167,7): warning : unused variable ‘typeDeclFlag’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(167,7): warning :   167 |  bool typeDeclFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(167,7): warning :       |       ^~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(263,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(263,22): warning :   263 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(263,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(255,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(255,14): warning :   255 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(255,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(256,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(256,14): warning :   256 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(256,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(319,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(319,22): warning :   319 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(319,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(311,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(311,14): warning :   311 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(311,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(312,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(312,14): warning :   312 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(312,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(369,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(369,22): warning :   369 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(369,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(361,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(361,14): warning :   361 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(361,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(362,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(362,14): warning :   362 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(362,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(444,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(444,22): warning :   444 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(444,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(436,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(436,14): warning :   436 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(436,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(437,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(437,14): warning :   437 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(437,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(496,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(496,22): warning :   496 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(496,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(488,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(488,14): warning :   488 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(488,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(489,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(489,14): warning :   489 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Declaration.cpp(489,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+  Destination.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Destination.cpp(25,9): warning : unused variable ‘checkScopeResult’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Destination.cpp(25,9): warning :    25 |    bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Destination.cpp(25,9): warning :       |         ^~~~~~~~~~~~~~~~
+  Expression.cpp
+  Expression_.cpp
+  Factor.cpp
+  Identifier.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Identifier.cpp(28,7): warning : unused variable ‘notWithParenthesesFlag’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Identifier.cpp(28,7): warning :    28 |  bool notWithParenthesesFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Identifier.cpp(28,7): warning :       |       ^~~~~~~~~~~~~~~~~~~~~~
+  IfStatement.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\IfStatement.cpp(18,21): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\IfStatement.cpp(18,21): warning :    18 |    for(int e = 0; e < this->linkedMemberNonterminals.size(); ++e)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\IfStatement.cpp(18,21): warning :       |                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  IntermediateCodeGenerator.cpp
+  LoopStatement.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\LoopStatement.cpp(17,20): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\LoopStatement.cpp(17,20): warning :    17 |  for (int e = 0; e < this->linkedMemberNonterminals.size(); ++e)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\LoopStatement.cpp(17,20): warning :       |                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Name.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Name.cpp(22,9): warning : unused variable ‘checkScopeResult’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Name.cpp(22,9): warning :    22 |    bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Name.cpp(22,9): warning :       |         ^~~~~~~~~~~~~~~~
+  Number.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Number.cpp(24,7): warning : unused variable ‘notWithParenthesesFlag’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Number.cpp(24,7): warning :    24 |  bool notWithParenthesesFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Number.cpp(24,7): warning :       |       ^~~~~~~~~~~~~~~~~~~~~~
+  Parameter.cpp
+  ParameterList.cpp
+  Parser.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Parser.cpp(84,23): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Parser.cpp(84,23): warning :    84 |     for (int i = 0; i < this->predefinedRuntimeFunctionsList->size(); ++i)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Parser.cpp(84,23): warning :       |                     ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ParseTreeNode.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(282,15): warning : unused variable ‘arithOp_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(282,15): warning :   282 |     ArithOp_* arithOp_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(282,15): warning :       |               ^~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(284,18): warning : unused variable ‘declPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(284,18): warning :   284 |     Declaration* declPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(284,18): warning :       |                  ^~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(285,17): warning : unused variable ‘identifierArithOpPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(285,17): warning :   285 |     Identifier* identifierArithOpPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(285,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(286,17): warning : unused variable ‘identifierArithOp_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(286,17): warning :   286 |     Identifier* identifierArithOp_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(286,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(382,12): warning : unused variable ‘term_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(382,12): warning :   382 |     Term_* term_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(382,12): warning :       |            ^~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(384,18): warning : unused variable ‘declPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(384,18): warning :   384 |     Declaration* declPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(384,18): warning :       |                  ^~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(385,17): warning : unused variable ‘identifierArithOpPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(385,17): warning :   385 |     Identifier* identifierArithOpPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(385,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(386,17): warning : unused variable ‘identifierArithOp_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(386,17): warning :   386 |     Identifier* identifierArithOp_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(386,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(487,16): warning : unused variable ‘rel_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(487,16): warning :   487 |     Relation_* rel_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(487,16): warning :       |                ^~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(489,18): warning : unused variable ‘declPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(489,18): warning :   489 |     Declaration* declPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(489,18): warning :       |                  ^~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(490,17): warning : unused variable ‘identifierArithOpPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(490,17): warning :   490 |     Identifier* identifierArithOpPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(490,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(491,17): warning : unused variable ‘identifierArithOp_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(491,17): warning :   491 |     Identifier* identifierArithOp_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(491,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(698,18): warning : unused variable ‘expression_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(698,18): warning :   698 |     Expression_* expression_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(698,18): warning :       |                  ^~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(700,18): warning : unused variable ‘declPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(700,18): warning :   700 |     Declaration* declPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(700,18): warning :       |                  ^~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(701,17): warning : unused variable ‘identifierArithOpPtr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(701,17): warning :   701 |     Identifier* identifierArithOpPtr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(701,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(702,17): warning : unused variable ‘identifierArithOp_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(702,17): warning :   702 |     Identifier* identifierArithOp_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(702,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(985,27): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(985,27): warning :   985 |         for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(985,27): warning :       |                         ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1097,27): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1097,27): warning :  1097 |         for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1097,27): warning :       |                         ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1604,65): warning : variable ‘it’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1385,17): warning : unused variable ‘identifierArithOp_Ptr’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1385,17): warning :  1385 |     Identifier* identifierArithOp_Ptr = nullptr;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1385,17): warning :       |                 ^~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1726,31): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1726,31): warning :  1726 |             for (int i = 0; i < resultList.size(); ++i)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1726,31): warning :       |                             ~~^~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1745,31): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1745,31): warning :  1745 |             for (int i = 0; i < resultList.size(); ++i)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1745,31): warning :       |                             ~~^~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1765,31): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1765,31): warning :  1765 |             for (int i = 0; i < resultList.size(); ++i)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1765,31): warning :       |                             ~~^~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1798,31): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1798,31): warning :  1798 |             for (int s = 0; s < this->getSymbolTable()->size(); ++s)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1798,31): warning :       |                             ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1816,27): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1816,27): warning :  1816 |         for (int s = 0; s < this->getSymbolTable()->size(); ++s)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(1816,27): warning :       |                         ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(142,1): warning : control reaches end of non-void function [-Wreturn-type]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(142,1): warning :   142 | }
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(142,1): warning :       | ^
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(170,1): warning : control reaches end of non-void function [-Wreturn-type]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(170,1): warning :   170 | }
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ParseTreeNode.cpp(170,1): warning :       | ^
+  ProcedureBody.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureBody.cpp(68,7): warning : unused variable ‘nested’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureBody.cpp(68,7): warning :    68 |  bool nested = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureBody.cpp(68,7): warning :       |       ^~~~~~
+  ProcedureCall.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureCall.cpp(21,9): warning : unused variable ‘checkScopeResult’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureCall.cpp(21,9): warning :    21 |    bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureCall.cpp(21,9): warning :       |         ^~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureCall.cpp(52,9): warning : unused variable ‘checkScopeResult’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureCall.cpp(52,9): warning :    52 |    bool checkScopeResult = this->checkIdentifierFollowsScopingRules();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureCall.cpp(52,9): warning :       |         ^~~~~~~~~~~~~~~~
+  ProcedureDeclaration.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(21,7): warning : unused variable ‘procHeadFlag’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(21,7): warning :    21 |  bool procHeadFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(21,7): warning :       |       ^~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(22,7): warning : unused variable ‘procBodyFlag’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(22,7): warning :    22 |  bool procBodyFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(22,7): warning :       |       ^~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(28,9): warning : unused variable ‘currentToken’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(28,9): warning :    28 |  Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureDeclaration.cpp(28,9): warning :       |         ^~~~~~~~~~~~
+  ProcedureHeader.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureHeader.cpp(143,44): warning : conversion from ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} to ‘unsigned int’ may change value [-Wconversion]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureHeader.cpp(143,44): warning :   143 |  return this->linkedMemberNonterminals.size();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\ProcedureHeader.cpp(143,44): warning :       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+  Program.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(212,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(212,22): warning :   212 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(212,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(205,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(205,14): warning :   205 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(205,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(206,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(206,14): warning :   206 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(206,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(270,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(270,22): warning :   270 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(270,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(262,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(262,14): warning :   262 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(262,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(263,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(263,14): warning :   263 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(263,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(320,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(320,22): warning :   320 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(320,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(312,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(312,14): warning :   312 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(312,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(313,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(313,14): warning :   313 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(313,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(394,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(394,22): warning :   394 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(394,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(386,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(386,14): warning :   386 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(386,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(387,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(387,14): warning :   387 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(387,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(446,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<ParseTreeNode*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(446,22): warning :   446 |  for (int s1 = 0; s1 < this->symbolTable.size(); ++s1)
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(446,22): warning :       |                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(438,14): warning : unused variable ‘symbolTableLeftTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(438,14): warning :   438 |  Identifier* symbolTableLeftTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(438,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(439,14): warning : unused variable ‘symbolTableRightTokValue’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(439,14): warning :   439 |  Identifier* symbolTableRightTokValue;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Program.cpp(439,14): warning :       |              ^~~~~~~~~~~~~~~~~~~~~~~~
+  ProgramBody.cpp
+  ProgramHeader.cpp
+  Relation.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Relation.cpp(115,9): warning : variable ‘currentToken’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Relation.cpp(115,9): warning :   115 |  Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Relation.cpp(115,9): warning :       |         ^~~~~~~~~~~~
+  Relation_.cpp
+  ReturnStatement.cpp
+  Scanner.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(276,31): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(276,31): warning :   276 |   identifier.push_back(tolower(this->storedCharacters.at(i)->getTokenValue()[0]));
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(276,31): warning :       |                        ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(332,26): warning : conversion from ‘std::basic_istream<char>::int_type’ {aka ‘int’} to ‘char’ may change value [-Wconversion]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(332,26): warning :   332 |  return inputStream->peek();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(332,26): warning :       |         ~~~~~~~~~~~~~~~~~^~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(365,9): warning : unused variable ‘byteWaste’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(365,9): warning :   365 |    char byteWaste = this->readCharacterFromFile(input);
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(365,9): warning :       |         ^~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(404,10): warning : unused variable ‘byteWaste’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(404,10): warning :   404 |     char byteWaste = this->readCharacterFromFile(input);
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(404,10): warning :       |          ^~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(423,10): warning : unused variable ‘byteWaste’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(423,10): warning :   423 |     char byteWaste = this->readCharacterFromFile(input);
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(423,10): warning :       |          ^~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(494,33): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(494,33): warning :   494 |   searchString.push_back(tolower(this->storedCharacters.at(i)->getTokenValue()[0]));
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(494,33): warning :       |                          ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(649,80): warning : conversion from ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} to ‘double’ may change value [-Wconversion]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(649,80): warning :   649 |   finalResult = this->computeIntegerLiteralResult(&intVector, 0, intVector.size());
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(649,80): warning :       |                                                                  ~~~~~~~~~~~~~~^~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(687,22): warning : comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(687,22): warning :   687 |  if (vecStartElement == inputVector->size())
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(687,22): warning :       |      ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(940,7): warning : unused variable ‘wasteChar’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(940,7): warning :   940 |  char wasteChar = this->readCharacterFromFile(input);
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(940,7): warning :       |       ^~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(962,9): warning : unused variable ‘wasteToken’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(962,9): warning :   962 |    char wasteToken = this->readCharacterFromFile(input);
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(962,9): warning :       |         ^~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(973,7): warning : unused variable ‘wasteChar’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(973,7): warning :   973 |  char wasteChar = this->readCharacterFromFile(input);
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Scanner.cpp(973,7): warning :       |       ^~~~~~~~~
+  Statement.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(20,9): warning : unused variable ‘currentToken’ [-Wunused-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(20,9): warning :    20 |  Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(20,9): warning :       |         ^~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(21,7): warning : variable ‘assnStmtFlag’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(21,7): warning :    21 |  bool assnStmtFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(21,7): warning :       |       ^~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(22,7): warning : variable ‘ifStmtFlag’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(22,7): warning :    22 |  bool ifStmtFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(22,7): warning :       |       ^~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(23,7): warning : variable ‘loopStmtFlag’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(23,7): warning :    23 |  bool loopStmtFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(23,7): warning :       |       ^~~~~~~~~~~~
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(24,7): warning : variable ‘returnStmtFlag’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(24,7): warning :    24 |  bool returnStmtFlag = false;
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Statement.cpp(24,7): warning :       |       ^~~~~~~~~~~~~~
+  StringLiteral.cpp
+  Term.cpp
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Term.cpp(23,9): warning : variable ‘currentToken’ set but not used [-Wunused-but-set-variable]
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Term.cpp(23,9): warning :    23 |  Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\Term.cpp(23,9): warning :       |         ^~~~~~~~~~~~
+  TerminalNode.cpp
+  Term_.cpp
+  Token.cpp
+  TypeDeclaration.cpp
+  TypeMark.cpp
+  VariableDeclaration.cpp
+  Linking objects
+  CompilerAppJamesCRebouletLinuxVersion.vcxproj -> C:\CompilerProjectModificationRepositoryClone\EECE6083_CompilerProject\CompilerAppJamesCRebouletLinuxVersion\bin\x64\Debug\CompilerAppJamesCRebouletLinuxVersion.out
