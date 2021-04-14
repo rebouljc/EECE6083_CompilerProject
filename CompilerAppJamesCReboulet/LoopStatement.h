@@ -11,6 +11,8 @@ public:
 	ParseTreeNode* getExpressionPtr() { return this->expressionPtr; };
 	void setTokenToCompareLeftValue(ParseTreeNode* tokenToCompareLeft) { this->tokenToCompareLeft = tokenToCompareLeft; };
 	ParseTreeNode* getTokenToCompareValue() { return this->tokenToCompareLeft; };
+
+	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
 	
 	~LoopStatement() {};
 

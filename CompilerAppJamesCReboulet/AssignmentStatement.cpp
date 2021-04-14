@@ -13,6 +13,14 @@ AssignmentStatement::AssignmentStatement(Parser* parser, ParseTreeNode* motherNo
 	
 }
 
+void AssignmentStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void AssignmentStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for Statement
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();

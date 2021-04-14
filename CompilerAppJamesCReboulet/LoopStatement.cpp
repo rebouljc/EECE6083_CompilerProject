@@ -40,6 +40,14 @@ LoopStatement::LoopStatement(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
+void LoopStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void LoopStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {    //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	Token* currentToken = parserPtr->getCurrentlyReadToken();

@@ -39,6 +39,13 @@ Destination::Destination(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	//recurse
 	
 }
+void Destination::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
 
 bool Destination::checkIdentifierFollowsScopingRules()
 {

@@ -8,6 +8,8 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	unsigned int getLinkedMemberNonterminalsSize();
+
+	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
 	
 	~ProcedureHeader() {};
 

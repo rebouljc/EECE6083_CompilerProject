@@ -21,6 +21,8 @@ public:
 	ParseTreeNode* getNumberRelation_PtrValue();
 	ParseTreeNode* getStringLiteralRelationPtrValue();
 	ParseTreeNode* getStringLiteralRelation_PtrValue();
+
+	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
 	~Relation() {};
 
 private:

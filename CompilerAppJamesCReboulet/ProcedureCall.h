@@ -10,6 +10,8 @@ public:
 	void setStolenToken(Token* stolenToken) { this->stolenToken = stolenToken; };
 	Token* getIsStolenToken() { return this->stolenToken; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+
+	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
 	
 	~ProcedureCall() {};
 

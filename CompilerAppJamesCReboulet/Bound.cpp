@@ -13,6 +13,13 @@ Bound::Bound(Token* token, Parser* parser, ParseTreeNode* motherNode, ParseTreeN
 	
 }
 
+void Bound::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
 void Bound::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	

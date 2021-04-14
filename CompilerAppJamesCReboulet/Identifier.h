@@ -36,6 +36,10 @@ public:
 
 	void setSingleVariableIfLoopExpressionFlag(bool flagValue) { this->singleVariableIfOrLoopExpressionFlag = flagValue; };
 	bool getSingleVariableIfLoopExpressionFlag() { return this->singleVariableIfOrLoopExpressionFlag; };
+
+	//Intermediate Code Generation Methods
+	
+	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
 	~Identifier() {};
 
 

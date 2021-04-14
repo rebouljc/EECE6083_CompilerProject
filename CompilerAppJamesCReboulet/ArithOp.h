@@ -18,6 +18,8 @@ public:
 	ParseTreeNode* getIdentifierArithOp_PtrValue();
 	ParseTreeNode* getNumberArithOpPtrValue();
 	ParseTreeNode* getNumberArithOp_PtrValue();
+
+	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
 	~ArithOp() {};
 
 

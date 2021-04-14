@@ -13,6 +13,14 @@ ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTre
 
 }
 
+void ProcedureBody::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void ProcedureBody::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 //Both of these methods are recursive methods.  But, there can only be one "Program Body" so we have to divide the 

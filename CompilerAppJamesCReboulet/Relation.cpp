@@ -16,6 +16,14 @@ Relation::Relation(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 	
 }
 
+void Relation::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Relation::setIdentifierRelationPtrValue(ParseTreeNode* identifier)
 {
 	Identifier* ident = nullptr;

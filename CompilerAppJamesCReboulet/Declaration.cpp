@@ -236,6 +236,14 @@ ParseTreeNode* Declaration::getNodePtr()
 
 }
 
+void Declaration::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Declaration::populateSearchResultsList(ParseTreeNode* motherNode)
 {
 

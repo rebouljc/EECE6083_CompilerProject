@@ -37,6 +37,14 @@ Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodeP
 	
 }
 
+void Name::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Name::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	//Defining as of 2/26/2021

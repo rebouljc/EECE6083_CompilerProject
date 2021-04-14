@@ -12,6 +12,14 @@ ReturnStatement::ReturnStatement(Parser* parser, ParseTreeNode* motherNode, Pars
 	
 }
 
+void ReturnStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void ReturnStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 

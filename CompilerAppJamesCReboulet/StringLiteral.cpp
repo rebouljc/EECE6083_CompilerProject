@@ -16,6 +16,11 @@ StringLiteral::StringLiteral(Token* token, ParseTreeNode* parentNodePtr)
 
 }
 
+void StringLiteral::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+
+}
+
 ParseTreeNode* StringLiteral::getNodePtr()
 {
 	return this;

@@ -18,6 +18,15 @@ VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNo
 	
 }
 
+void VariableDeclaration::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
+
 void VariableDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Same as ProcedureDeclaration::verifySyntaxCreateParseTree() method, except "variable" is used, and <bound> is substituted for 
 	//<parameter_list>.

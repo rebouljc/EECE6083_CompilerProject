@@ -15,6 +15,9 @@ public:
 	void setNodeTokenValue(std:: string value);
 	int    getNodeTokenLineNumber();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
+
+	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	
 	virtual ~TerminalNode() {};
 
 

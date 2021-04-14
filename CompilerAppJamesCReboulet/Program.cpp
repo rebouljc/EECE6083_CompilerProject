@@ -143,6 +143,14 @@ Program::Program(Parser* parser)
 	
 }
 
+void Program::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Program::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	//always make sure to pass the parser ptr.

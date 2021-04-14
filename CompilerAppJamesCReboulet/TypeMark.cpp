@@ -12,6 +12,16 @@ TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 	
 }
 
+
+void TypeMark::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
+
 void TypeMark::createEnumList(ParseTreeNode* motherNode)
 {
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();

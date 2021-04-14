@@ -12,6 +12,14 @@ ParameterList::ParameterList(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
+void ParameterList::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void ParameterList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   
 	Token* currentToken = parserPtr->getCurrentlyReadToken();

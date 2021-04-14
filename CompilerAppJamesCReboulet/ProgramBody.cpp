@@ -14,6 +14,14 @@ ProgramBody::ProgramBody(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	
 }
 
+void ProgramBody::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void ProgramBody::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body. 
 	

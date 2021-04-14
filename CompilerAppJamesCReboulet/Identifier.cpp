@@ -33,6 +33,13 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 
 }
 
+void Identifier::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+
+}
+
+
+
 Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr, bool isValidDeclaration)
 {
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.

@@ -15,6 +15,14 @@ TypeDeclaration::TypeDeclaration(Parser* parser, ParseTreeNode* motherNode, Pars
 	
 }
 
+void TypeDeclaration::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {  
 	//Same as ProcedureDeclaration::verifySyntaxCreateParseTree() method, except "variable" is used, and <bound> is substituted for 

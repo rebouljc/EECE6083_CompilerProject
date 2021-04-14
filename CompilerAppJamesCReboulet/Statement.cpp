@@ -14,6 +14,14 @@ Statement::Statement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 	
 }
 
+void Statement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Statement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Completed 2-23-2021
 

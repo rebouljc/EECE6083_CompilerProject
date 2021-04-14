@@ -11,6 +11,14 @@ ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
+void ProgramHeader::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	Token* currentToken = this->parserPtr->readNextToken();

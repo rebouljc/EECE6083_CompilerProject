@@ -15,6 +15,14 @@ ArgumentList::ArgumentList(Parser* parser, ParseTreeNode* motherNode, ParseTreeN
 	
 }
 
+void ArgumentList::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void ArgumentList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	//We modified this from the code taken from the <Name> class. These changes are as of 2/28/2021.

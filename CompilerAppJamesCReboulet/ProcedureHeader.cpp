@@ -13,6 +13,14 @@ ProcedureHeader::ProcedureHeader(Parser* parser, ParseTreeNode* motherNode, Pars
 	
 }
 
+void ProcedureHeader::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //Needs to be modified for program body.  Make it recursive to handle multiple declarations and statements.
 	//Read the next token here.

@@ -17,7 +17,13 @@ Expression::Expression(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode*
 	
 }
 
-
+void Expression::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
 
 void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {

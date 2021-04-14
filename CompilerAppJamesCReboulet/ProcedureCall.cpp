@@ -37,6 +37,14 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
+void ProcedureCall::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr, Token* stolenToken)
 {
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.

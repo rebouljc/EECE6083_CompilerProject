@@ -15,6 +15,14 @@ Term::Term(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodeP
 	
 }
 
+void Term::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Term::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	//Note:  This same code will now work with relation, term, and factor.  It just needs to be modified for each of those non-terminal classes.

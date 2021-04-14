@@ -11,6 +11,14 @@ Parameter::Parameter(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 	
 }
 
+void Parameter::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Parameter::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {  
 	//dynamic_cast takes more work.  Do static_cast.

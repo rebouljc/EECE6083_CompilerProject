@@ -43,7 +43,13 @@ IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	
 }
 
-
+void IfStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
 void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter)
 {
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();

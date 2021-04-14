@@ -15,6 +15,11 @@ TerminalNode::TerminalNode(Token* token, ParseTreeNode* parentNodePtr)
 							 
 }
 
+void TerminalNode::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+
+}
+
 //Now, we will add a couple of duplicate methods from Token* here to streamline the process.  There are a lot of unnecessary public methods in token 
 //that are not needed here and may make things confusing.
 

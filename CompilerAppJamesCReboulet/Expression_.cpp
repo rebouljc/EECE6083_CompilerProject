@@ -15,6 +15,14 @@ Expression_::Expression_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	
 }
 
+void Expression_::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+{
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+	}
+}
+
 void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {
 	//Note:  This same code will now work with relation, term, and factor.  It just needs to be modified for each of those non-terminal classes.

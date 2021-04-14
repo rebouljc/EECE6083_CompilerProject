@@ -13,6 +13,13 @@ IntermediateCodeGenerator::IntermediateCodeGenerator()
 		{
 			throw MainCompilerIntermediateCodeGenerationException();
 		}
+
+		//Make fstream a nullptr for now.
+		else
+		{
+			this->parseTree->generateIntermediateCodeFromParseTree(nullptr);
+		}
+		
 	}
 
 	catch (MainCompileErrorException &e)
