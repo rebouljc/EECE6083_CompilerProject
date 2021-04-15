@@ -10,7 +10,7 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode);
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	
 	
 	

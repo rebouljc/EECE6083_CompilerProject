@@ -1,6 +1,9 @@
 #include "TypeMark.h"
 #include "TerminalNode.h"
 #include "Identifier.h"
+#include "Program.h"
+
+
 
 TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
@@ -13,8 +16,28 @@ TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 }
 
 
-void TypeMark::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void TypeMark::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
+	(*outputFileStream) << " =";
+
+	//Check global symbol table
+	TerminalNode* termNode = nullptr;
+	Program* prog = nullptr;
+
+	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+	{
+		if ((termNode = dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(i))) != nullptr &&
+			 termNode->getNodeTokenValue() == "integer"
+			)
+		{
+			(*outputFileStream) << " global";
+			break;
+		}
+	}
+	
+
+
+	
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);

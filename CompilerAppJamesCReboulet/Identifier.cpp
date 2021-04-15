@@ -1,5 +1,6 @@
 #include "Identifier.h"
 
+
 Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr)
 {
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
@@ -33,9 +34,19 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 
 }
 
-void Identifier::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
+	if (!outputFileStream->is_open())
+	{
+		outputFileStream->open(this->getNodeTokenValue() + ".output");
+	}
 
+	else
+	{
+		(*outputFileStream) << this->getNodeTokenValue();
+		
+		
+	}
 }
 
 

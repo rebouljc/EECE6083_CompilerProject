@@ -24,7 +24,7 @@ public:
 	void setSingleVariableIfLoopExpressionFlag(bool flagValue) { this->singleVariableIfOrLoopExpressionFlag = flagValue; };
 	bool getSingleVariableIfLoopExpressionFlag() { return this->singleVariableIfOrLoopExpressionFlag; };
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 
 	~StringLiteral() {};
 

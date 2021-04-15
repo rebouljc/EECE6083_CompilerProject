@@ -12,7 +12,7 @@ ReturnStatement::ReturnStatement(Parser* parser, ParseTreeNode* motherNode, Pars
 	
 }
 
-void ReturnStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void ReturnStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

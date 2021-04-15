@@ -13,7 +13,7 @@ Term_::Term_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNod
 	
 }
 
-void Term_::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Term_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

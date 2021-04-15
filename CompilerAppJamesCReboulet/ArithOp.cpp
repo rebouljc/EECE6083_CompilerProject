@@ -15,7 +15,7 @@ ArithOp::ArithOp(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* paren
 	
 }
 
-void ArithOp::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void ArithOp::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

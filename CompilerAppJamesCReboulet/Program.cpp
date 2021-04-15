@@ -143,8 +143,9 @@ Program::Program(Parser* parser)
 	
 }
 
-void Program::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Program::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
+	
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);

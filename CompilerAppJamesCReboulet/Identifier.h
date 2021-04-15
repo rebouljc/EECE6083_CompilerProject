@@ -39,7 +39,7 @@ public:
 
 	//Intermediate Code Generation Methods
 	
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	~Identifier() {};
 
 

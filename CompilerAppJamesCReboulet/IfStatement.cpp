@@ -43,7 +43,7 @@ IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	
 }
 
-void IfStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void IfStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

@@ -12,6 +12,7 @@
 
 
 
+
 /*NOTE:  REMEMBER TO CALL this->parserPtr->backupIndexToRead() if a recursive function pops a newly created object from the vector.
   Otherwise, that particular token will have already been read and it will be ignored in future methods/classes that need it.*/
 
@@ -236,12 +237,22 @@ ParseTreeNode* Declaration::getNodePtr()
 
 }
 
-void Declaration::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Declaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
+	
+	
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
 	}
+
+	
+
+	
+
+
+
+	
 }
 
 void Declaration::populateSearchResultsList(ParseTreeNode* motherNode)

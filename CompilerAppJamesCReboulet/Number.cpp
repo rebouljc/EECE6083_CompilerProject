@@ -28,7 +28,7 @@ Number::Number(Token* token, ParseTreeNode* parentNodePtr)
 
 }
 
-void Number::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Number::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 
 }

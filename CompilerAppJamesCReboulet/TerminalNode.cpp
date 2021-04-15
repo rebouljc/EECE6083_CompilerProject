@@ -1,4 +1,5 @@
 #include "TerminalNode.h"
+#include "TypeMark.h"
 
 
 
@@ -15,9 +16,16 @@ TerminalNode::TerminalNode(Token* token, ParseTreeNode* parentNodePtr)
 							 
 }
 
-void TerminalNode::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
-
+	TypeMark* typeMark = nullptr;
+	if (dynamic_cast<TypeMark*>(this->parentNodePtr) != nullptr)
+	{
+		if (this->getNodeTokenValue() == "integer")
+		{
+			(*outputFileStream) << " i32";
+		}
+	}
 }
 
 //Now, we will add a couple of duplicate methods from Token* here to streamline the process.  There are a lot of unnecessary public methods in token 

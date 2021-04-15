@@ -26,7 +26,7 @@ public:
 		                                           StringLiteral* tokenToCompareLeftStringLiteral,
 		                                           Number* tokenToCompareLeftNumber
 	                                              );
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	~Declaration() {};
 	bool checkGlobalTerminalNodePresent() override;
 	

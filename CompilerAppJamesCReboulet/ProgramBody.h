@@ -9,7 +9,7 @@ public:
 	~ProgramBody() {};
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 
 private:
 	void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode) override;

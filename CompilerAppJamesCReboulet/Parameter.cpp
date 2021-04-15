@@ -11,7 +11,7 @@ Parameter::Parameter(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 	
 }
 
-void Parameter::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Parameter::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

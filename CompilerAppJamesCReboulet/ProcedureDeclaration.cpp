@@ -15,7 +15,7 @@ ProcedureDeclaration::ProcedureDeclaration(Parser* parser, ParseTreeNode* mother
 	
 }
 
-void ProcedureDeclaration::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void ProcedureDeclaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

@@ -13,7 +13,7 @@ ProcedureHeader::ProcedureHeader(Parser* parser, ParseTreeNode* motherNode, Pars
 	
 }
 
-void ProcedureHeader::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void ProcedureHeader::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

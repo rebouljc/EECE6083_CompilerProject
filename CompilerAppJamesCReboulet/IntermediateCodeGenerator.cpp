@@ -17,7 +17,10 @@ IntermediateCodeGenerator::IntermediateCodeGenerator()
 		//Make fstream a nullptr for now.
 		else
 		{
-			this->parseTree->generateIntermediateCodeFromParseTree(nullptr);
+			ofstream* output = new ofstream();
+			
+			this->parseTree->generateIntermediateCodeFromParseTree(output);
+			output->close();
 		}
 		
 	}

@@ -15,7 +15,7 @@ ArgumentList::ArgumentList(Parser* parser, ParseTreeNode* motherNode, ParseTreeN
 	
 }
 
-void ArgumentList::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void ArgumentList::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

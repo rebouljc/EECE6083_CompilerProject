@@ -9,7 +9,7 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	unsigned int getLinkedMemberNonterminalsSize();
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	
 	~ProcedureHeader() {};
 

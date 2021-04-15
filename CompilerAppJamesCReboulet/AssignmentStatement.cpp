@@ -13,7 +13,7 @@ AssignmentStatement::AssignmentStatement(Parser* parser, ParseTreeNode* motherNo
 	
 }
 
-void AssignmentStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void AssignmentStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

@@ -11,7 +11,7 @@ public:
 	Token* getIsStolenToken() { return this->stolenToken; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	
 	~ProcedureCall() {};
 

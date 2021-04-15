@@ -19,7 +19,7 @@ public:
 	ParseTreeNode* getNumberArithOpPtrValue();
 	ParseTreeNode* getNumberArithOp_PtrValue();
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	~ArithOp() {};
 
 

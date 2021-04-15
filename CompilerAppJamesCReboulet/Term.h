@@ -19,7 +19,7 @@ public:
 	ParseTreeNode* getNumberTermPtrValue();
 	ParseTreeNode* getNumberTerm_PtrValue();
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	
 	~Term() {};
 

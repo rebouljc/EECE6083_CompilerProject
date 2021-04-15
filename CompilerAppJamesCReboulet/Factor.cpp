@@ -17,7 +17,7 @@ Factor::Factor(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentN
 	
 }
 
-void Factor::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Factor::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

@@ -14,7 +14,7 @@ Relation_::Relation_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 	
 }
 
-void Relation_::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Relation_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

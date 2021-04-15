@@ -15,7 +15,7 @@ Expression_::Expression_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	
 }
 
-void Expression_::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Expression_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

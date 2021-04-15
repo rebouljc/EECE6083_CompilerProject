@@ -11,7 +11,7 @@ ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
-void ProgramHeader::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void ProgramHeader::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

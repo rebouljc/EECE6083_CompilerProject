@@ -13,7 +13,7 @@ Bound::Bound(Token* token, Parser* parser, ParseTreeNode* motherNode, ParseTreeN
 	
 }
 
-void Bound::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Bound::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

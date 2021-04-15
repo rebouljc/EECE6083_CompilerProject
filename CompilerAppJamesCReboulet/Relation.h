@@ -22,7 +22,7 @@ public:
 	ParseTreeNode* getStringLiteralRelationPtrValue();
 	ParseTreeNode* getStringLiteralRelation_PtrValue();
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	~Relation() {};
 
 private:

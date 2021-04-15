@@ -15,7 +15,7 @@ TypeDeclaration::TypeDeclaration(Parser* parser, ParseTreeNode* motherNode, Pars
 	
 }
 
-void TypeDeclaration::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void TypeDeclaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

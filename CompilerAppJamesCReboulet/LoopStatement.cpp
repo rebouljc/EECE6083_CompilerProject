@@ -40,7 +40,7 @@ LoopStatement::LoopStatement(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
-void LoopStatement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void LoopStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

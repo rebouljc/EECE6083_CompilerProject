@@ -14,7 +14,7 @@ Statement::Statement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 	
 }
 
-void Statement::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Statement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

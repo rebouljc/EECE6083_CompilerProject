@@ -16,7 +16,7 @@ public:
 	int    getNodeTokenLineNumber();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
-	void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
 	
 	virtual ~TerminalNode() {};
 

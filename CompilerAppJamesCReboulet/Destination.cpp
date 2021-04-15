@@ -39,7 +39,7 @@ Destination::Destination(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	//recurse
 	
 }
-void Destination::generateIntermediateCodeFromParseTree(ifstream* outputFileStream)
+void Destination::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

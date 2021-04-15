@@ -24,7 +24,7 @@ public:
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	void climbTreeAndSetParenthesesPresentOnExpressionFlag();
 	bool climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool& calledFromExpression, bool &parenthesesPresentFlag);
-	virtual void generateIntermediateCodeFromParseTree(ifstream* outputFileStream) { return; };
+	virtual void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) { return; };
 	
 
 	//Get linkedNonterminals for semantic check
