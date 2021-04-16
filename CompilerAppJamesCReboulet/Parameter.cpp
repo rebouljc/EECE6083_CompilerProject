@@ -11,11 +11,11 @@ Parameter::Parameter(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 	
 }
 
-void Parameter::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void Parameter::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

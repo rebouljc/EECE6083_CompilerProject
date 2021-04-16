@@ -37,11 +37,11 @@ Name::Name(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodeP
 	
 }
 
-void Name::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void Name::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

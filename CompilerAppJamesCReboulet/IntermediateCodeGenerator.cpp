@@ -19,7 +19,7 @@ IntermediateCodeGenerator::IntermediateCodeGenerator()
 		{
 			ofstream* output = new ofstream();
 			
-			this->parseTree->generateIntermediateCodeFromParseTree(output);
+			this->parseTree->generateIntermediateCodeFromParseTree(output, nullptr);
 			output->close();
 		}
 		

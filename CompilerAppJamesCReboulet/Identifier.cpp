@@ -34,7 +34,7 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 
 }
 
-void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	if (!outputFileStream->is_open())
 	{

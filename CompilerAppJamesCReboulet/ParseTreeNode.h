@@ -24,9 +24,8 @@ public:
 	void climbTreeAndPopulateSymbolTable(string identifierType, ParseTreeNode* identifierNode);
 	void climbTreeAndSetParenthesesPresentOnExpressionFlag();
 	bool climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool& calledFromExpression, bool &parenthesesPresentFlag);
-	virtual void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) { return; };
+	virtual void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) { return; };
 	
-
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 
@@ -39,6 +38,10 @@ protected:
 	
 	virtual ParseTreeNode* getNodePtr() { return nullptr; };
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
+
+	bool searchLocalSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol,
+		vector<ParseTreeNode*>* symbolTablePtr
+	);
 	
 
 	//Protected Semantic-Checking Methods.

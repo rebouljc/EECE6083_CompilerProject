@@ -237,13 +237,20 @@ ParseTreeNode* Declaration::getNodePtr()
 
 }
 
-void Declaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void Declaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	
-	
+	//Check for the presence of the local symbol table and pass it down to subsequent objects within the parse tree
+	//for universal access.
+
+	if (!this->symbolTable.empty())
+	{
+		declSymbolTablePtr = &(this->symbolTable);
+	}
+
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 
 	

@@ -16,7 +16,7 @@ TerminalNode::TerminalNode(Token* token, ParseTreeNode* parentNodePtr)
 							 
 }
 
-void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	TypeMark* typeMark = nullptr;
 	if (dynamic_cast<TypeMark*>(this->parentNodePtr) != nullptr)

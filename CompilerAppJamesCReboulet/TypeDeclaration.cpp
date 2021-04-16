@@ -15,11 +15,11 @@ TypeDeclaration::TypeDeclaration(Parser* parser, ParseTreeNode* motherNode, Pars
 	
 }
 
-void TypeDeclaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void TypeDeclaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

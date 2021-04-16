@@ -14,11 +14,11 @@ Relation_::Relation_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 	
 }
 
-void Relation_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void Relation_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

@@ -43,11 +43,11 @@ IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	
 }
 
-void IfStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void IfStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter)

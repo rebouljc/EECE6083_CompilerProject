@@ -11,11 +11,11 @@ ProgramHeader::ProgramHeader(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
-void ProgramHeader::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void ProgramHeader::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

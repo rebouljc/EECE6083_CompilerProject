@@ -40,11 +40,11 @@ LoopStatement::LoopStatement(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
-void LoopStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void LoopStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

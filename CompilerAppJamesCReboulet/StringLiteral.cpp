@@ -16,7 +16,7 @@ StringLiteral::StringLiteral(Token* token, ParseTreeNode* parentNodePtr)
 
 }
 
-void StringLiteral::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void StringLiteral::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 
 }

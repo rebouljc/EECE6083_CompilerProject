@@ -37,11 +37,11 @@ ProcedureCall::ProcedureCall(Parser* parser, ParseTreeNode* motherNode, ParseTre
 	
 }
 
-void ProcedureCall::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void ProcedureCall::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

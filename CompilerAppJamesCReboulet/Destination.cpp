@@ -39,11 +39,11 @@ Destination::Destination(Parser* parser, ParseTreeNode* motherNode, ParseTreeNod
 	//recurse
 	
 }
-void Destination::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void Destination::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

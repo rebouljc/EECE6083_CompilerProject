@@ -22,7 +22,7 @@ VariableDeclaration::VariableDeclaration(Parser* parser, ParseTreeNode* motherNo
 	
 }
 
-void VariableDeclaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void VariableDeclaration::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	//Check global symbol table
 	Identifier* retIdent = nullptr;
@@ -30,6 +30,7 @@ void VariableDeclaration::generateIntermediateCodeFromParseTree(ofstream* output
 	Program* prog = nullptr;
 	Declaration* decl = nullptr;
 
+	
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		if ((searchIdent = dynamic_cast<Identifier*>(this->linkedMemberNonterminals.at(i))) != nullptr &&
@@ -59,12 +60,13 @@ void VariableDeclaration::generateIntermediateCodeFromParseTree(ofstream* output
 
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 
 	
 
 	(*outputFileStream) << "\n";
+	
 
 
 	

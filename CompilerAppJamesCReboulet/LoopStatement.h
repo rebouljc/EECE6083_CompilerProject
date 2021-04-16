@@ -12,7 +12,7 @@ public:
 	void setTokenToCompareLeftValue(ParseTreeNode* tokenToCompareLeft) { this->tokenToCompareLeft = tokenToCompareLeft; };
 	ParseTreeNode* getTokenToCompareValue() { return this->tokenToCompareLeft; };
 
-	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
 	
 	~LoopStatement() {};
 

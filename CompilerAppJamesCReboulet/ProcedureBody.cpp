@@ -13,11 +13,11 @@ ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTre
 
 }
 
-void ProcedureBody::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void ProcedureBody::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

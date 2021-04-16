@@ -16,7 +16,7 @@ TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 }
 
 
-void TypeMark::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void TypeMark::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	(*outputFileStream) << " =";
 
@@ -40,7 +40,7 @@ void TypeMark::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
 	
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

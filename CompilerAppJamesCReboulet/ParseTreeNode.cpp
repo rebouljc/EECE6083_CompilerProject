@@ -141,6 +141,24 @@ bool ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bo
 
 }
 
+bool ParseTreeNode::searchLocalSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol, 
+                                           vector<ParseTreeNode*>* symbolTablePtr
+                                          )
+{
+    for (vector<ParseTreeNode*>::iterator it = symbolTablePtr->begin(); it < symbolTablePtr->end(); ++it)
+    {
+        if (dynamic_cast<Identifier*>(*it)->getNodeTokenValue() ==
+            dynamic_cast<Identifier*>(searchSymbol)->getNodeTokenValue()
+            )
+        {
+            returnSymbol = dynamic_cast<Identifier*>(*it);
+            return true;
+        }
+    }
+
+    return false;  
+}
+
 bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol)
 {
     

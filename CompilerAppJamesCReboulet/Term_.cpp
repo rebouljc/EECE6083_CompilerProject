@@ -13,11 +13,11 @@ Term_::Term_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNod
 	
 }
 
-void Term_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream)
+void Term_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
-		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream);
+		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 }
 

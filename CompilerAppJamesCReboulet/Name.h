@@ -9,7 +9,7 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode);
 
-	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
 	
 	~Name() {};
 

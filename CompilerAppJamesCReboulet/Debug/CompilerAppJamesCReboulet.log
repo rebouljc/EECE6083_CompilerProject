@@ -11,22 +11,22 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJam
   Character.cpp
   CompilerAppJamesCReboulet.cpp
   Declaration.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(244,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(282,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(275,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(274,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(338,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(331,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(330,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(388,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(381,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(380,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(463,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(456,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(455,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(515,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(508,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(507,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(251,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(289,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(282,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(281,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(345,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(338,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(337,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(395,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(388,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(387,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(470,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(463,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(462,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(522,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(515,14): warning C4101: 'symbolTableRightTokValue': unreferenced local variable
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Declaration.cpp(514,14): warning C4101: 'symbolTableLeftTokValue': unreferenced local variable
   Destination.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Destination.cpp(44,20): warning C4018: '<': signed/unsigned mismatch
   Expression.cpp
@@ -55,13 +55,13 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJam
   Parser.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parser.cpp(84,23): warning C4018: '<': signed/unsigned mismatch
   ParseTreeNode.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(985,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1097,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1726,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1745,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1765,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1798,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1816,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1003,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1115,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1744,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1763,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1783,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1816,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1834,27): warning C4018: '<': signed/unsigned mismatch
   ProcedureBody.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProcedureBody.cpp(18,20): warning C4018: '<': signed/unsigned mismatch
   ProcedureCall.cpp
@@ -111,13 +111,13 @@ C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJam
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\TypeDeclaration.cpp(20,20): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(142): warning C4715: 'ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag': not all control paths return a value
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(170): warning C4715: 'ParseTreeNode::searchSymbolTable': not all control paths return a value
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(188): warning C4715: 'ParseTreeNode::searchSymbolTable': not all control paths return a value
   Compiling...
   TypeMark.cpp
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\TypeMark.cpp(27,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\TypeMark.cpp(41,20): warning C4018: '<': signed/unsigned mismatch
   VariableDeclaration.cpp
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\VariableDeclaration.cpp(33,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\VariableDeclaration.cpp(60,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\VariableDeclaration.cpp(34,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\VariableDeclaration.cpp(61,20): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   CompilerAppJamesCReboulet.vcxproj -> C:\Users\linda\OneDrive\Documents\GitHub\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Debug\CompilerAppJamesCReboulet.exe

@@ -8,7 +8,7 @@ public:
 	bool getIsValid() override { return this->isValid; };
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
-	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream) override;
+	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
 	
 	~ReturnStatement() {};
 
