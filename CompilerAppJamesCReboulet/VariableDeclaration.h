@@ -17,6 +17,9 @@ public:
 	bool getglobalVariableSetFlag() { return this->globalVariableSetFlag; };
 	void setLocalVariableSetFlag() { this->localVariableSetFlag = true; };
 	bool getLocalVariableSetFlag() { return this->localVariableSetFlag; };
+
+	void setVariableParentIsParameterFlag() { this->variableParentIsParameterFlag = true; };
+	bool getVariableParentIsParameterFlag() { return this->variableParentIsParameterFlag; };
 	
 	~VariableDeclaration(){};
 	
@@ -28,4 +31,5 @@ private:
 	bool isValid = false;
 	bool globalVariableSetFlag = false;
 	bool localVariableSetFlag = false;
+	bool variableParentIsParameterFlag = false;
 };

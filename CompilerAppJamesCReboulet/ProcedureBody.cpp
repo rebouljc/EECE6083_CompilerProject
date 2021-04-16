@@ -15,10 +15,14 @@ ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTre
 
 void ProcedureBody::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
+	(*outputFileStream) << " {\n";
+
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
+
+	(*outputFileStream) << "}\n";
 }
 
 void ProcedureBody::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

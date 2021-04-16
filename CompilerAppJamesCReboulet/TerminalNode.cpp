@@ -22,14 +22,17 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 {
 	TypeMark* typeMark = nullptr;
 	VariableDeclaration* varDecl = nullptr;
+	
 
-	if (dynamic_cast<TypeMark*>(this->parentNodePtr) != nullptr)
+	if (dynamic_cast<TypeMark*>(this->parentNodePtr) != nullptr && 
+		(varDecl = dynamic_cast<VariableDeclaration*>(this->parentNodePtr->getParentNodePtr())) != nullptr &&
+		 !varDecl->getVariableParentIsParameterFlag()
+	   )
 	{
 		if (this->getNodeTokenValue() == "integer")
 		{
 			
 			(*outputFileStream) << " i32\n";
-		
 		
 		}
 
@@ -51,7 +54,9 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 		
 	}
 
-	else if ((varDecl = dynamic_cast<VariableDeclaration*>(this->parentNodePtr)) != nullptr
+	
+	else if ((varDecl = dynamic_cast<VariableDeclaration*>(this->parentNodePtr)) != nullptr &&
+		      !varDecl->getVariableParentIsParameterFlag()
 		    )
 	{		
 		if (this->getNodeTokenValue() == ":")
@@ -75,7 +80,7 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 	{
 		if (this->getNodeTokenValue() == "procedure")
 		{
-			(*outputFileStream) << "define";
+			(*outputFileStream) << "declare";
 		}
 
 		else if (this->getNodeTokenValue() == "(")
@@ -87,14 +92,11 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 		{
 			(*outputFileStream) << ")";
 		}
+
+		
 	}
-
 	
 
-
-
-	
-	
 
 }
 

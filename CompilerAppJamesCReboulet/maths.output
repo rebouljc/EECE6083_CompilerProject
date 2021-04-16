@@ -1,8 +1,8 @@
 @value= global i32
 @tmp2= global float
 @out= global i32
-define@fib i32
-(%val= alloca i32
-)%tmp1= alloca i32
+declare @fib(%val) {
+%tmp1= alloca i32
 %tmp2= alloca i32
 %ret= alloca i32
+}

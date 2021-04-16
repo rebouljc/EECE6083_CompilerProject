@@ -9,6 +9,7 @@
 #include "Identifier.h"
 #include "Program.h"
 #include "Declaration.h"
+#include "Parameter.h"
 
 
 
@@ -27,7 +28,10 @@ void VariableDeclaration::generateIntermediateCodeFromParseTree(ofstream* output
 	
 	Program* prog = nullptr;
 	Declaration* decl = nullptr;
-
+	if (dynamic_cast<Parameter*>(this->parentNodePtr) != nullptr)
+	{
+		this->setVariableParentIsParameterFlag();
+	}
 
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
