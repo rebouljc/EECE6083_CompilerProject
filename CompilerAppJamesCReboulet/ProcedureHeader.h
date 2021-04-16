@@ -10,6 +10,12 @@ public:
 	unsigned int getLinkedMemberNonterminalsSize();
 
 	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
+
+	//flags for Intermediate-CodeGeneration
+	void setglobalVariableSetFlag() { this->globalVariableSetFlag = true; };
+	bool getglobalVariableSetFlag() { return this->globalVariableSetFlag; };
+	void setLocalVariableSetFlag() { this->localVariableSetFlag = true; };
+	bool getLocalVariableSetFlag() { return this->localVariableSetFlag; };
 	
 	~ProcedureHeader() {};
 
@@ -18,5 +24,6 @@ private:
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
-
+	bool globalVariableSetFlag = false;
+	bool localVariableSetFlag = false;
 };

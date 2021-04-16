@@ -18,25 +18,6 @@ TypeMark::TypeMark(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 
 void TypeMark::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
-	(*outputFileStream) << " =";
-
-	//Check global symbol table
-	TerminalNode* termNode = nullptr;
-	Program* prog = nullptr;
-
-	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
-	{
-		if ((termNode = dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(i))) != nullptr &&
-			 termNode->getNodeTokenValue() == "integer"
-			)
-		{
-			(*outputFileStream) << " global";
-			break;
-		}
-	}
-	
-
-
 	
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

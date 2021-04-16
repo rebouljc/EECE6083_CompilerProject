@@ -1,5 +1,7 @@
 #include "TerminalNode.h"
 #include "TypeMark.h"
+#include "VariableDeclaration.h"
+#include "ProcedureHeader.h"
 
 
 
@@ -19,13 +21,81 @@ TerminalNode::TerminalNode(Token* token, ParseTreeNode* parentNodePtr)
 void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	TypeMark* typeMark = nullptr;
+	VariableDeclaration* varDecl = nullptr;
+
 	if (dynamic_cast<TypeMark*>(this->parentNodePtr) != nullptr)
 	{
 		if (this->getNodeTokenValue() == "integer")
 		{
-			(*outputFileStream) << " i32";
+			
+			(*outputFileStream) << " i32\n";
+		
+		
+		}
+
+		else if (this->getNodeTokenValue() == "float")
+		{
+			(*outputFileStream) << " float\n";
+		}
+
+		else if (this->getNodeTokenValue() == "string")
+		{
+			(*outputFileStream) << " string\n";
+		}
+
+		else if (this->getNodeTokenValue() == "bool")
+		{
+			(*outputFileStream) << " i32\n";
+		}
+
+		
+	}
+
+	else if ((varDecl = dynamic_cast<VariableDeclaration*>(this->parentNodePtr)) != nullptr
+		    )
+	{		
+		if (this->getNodeTokenValue() == ":")
+		{
+			(*outputFileStream) << "=";
+		}
+		if (varDecl->getglobalVariableSetFlag())
+		{
+			(*outputFileStream) << " global";
+		}
+
+		else if(varDecl->getLocalVariableSetFlag())
+		{
+			(*outputFileStream) << " alloca";
+		}
+
+		
+	}
+
+	else if (dynamic_cast<ProcedureHeader*>(this->parentNodePtr) != nullptr)
+	{
+		if (this->getNodeTokenValue() == "procedure")
+		{
+			(*outputFileStream) << "define";
+		}
+
+		else if (this->getNodeTokenValue() == "(")
+		{
+			(*outputFileStream) << "(";
+		}
+
+		else if (this->getNodeTokenValue() == ")")
+		{
+			(*outputFileStream) << ")";
 		}
 	}
+
+	
+
+
+
+	
+	
+
 }
 
 //Now, we will add a couple of duplicate methods from Token* here to streamline the process.  There are a lot of unnecessary public methods in token 

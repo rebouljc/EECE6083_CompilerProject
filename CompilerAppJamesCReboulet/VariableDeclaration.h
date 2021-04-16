@@ -11,8 +11,12 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 	void checkArrayIndexIsIntegerLiteral(ParseTreeNode* numberNode);
 	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
-	
-	
+
+	//flags for Intermediate-CodeGeneration
+	void setglobalVariableSetFlag() { this->globalVariableSetFlag = true; };
+	bool getglobalVariableSetFlag() { return this->globalVariableSetFlag; };
+	void setLocalVariableSetFlag() { this->localVariableSetFlag = true; };
+	bool getLocalVariableSetFlag() { return this->localVariableSetFlag; };
 	
 	~VariableDeclaration(){};
 	
@@ -22,4 +26,6 @@ private:
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
+	bool globalVariableSetFlag = false;
+	bool localVariableSetFlag = false;
 };

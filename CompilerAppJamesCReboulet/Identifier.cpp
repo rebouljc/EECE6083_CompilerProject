@@ -1,4 +1,6 @@
 #include "Identifier.h"
+#include "VariableDeclaration.h"
+#include "ProcedureHeader.h"
 
 
 Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr)
@@ -36,17 +38,78 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 
 void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
+	VariableDeclaration* varDecl = nullptr;
+	ProcedureHeader* procHead = nullptr;
+	
+
 	if (!outputFileStream->is_open())
 	{
 		outputFileStream->open(this->getNodeTokenValue() + ".output");
 	}
 
-	else
+	else if ((varDecl = dynamic_cast<VariableDeclaration*>(this->parentNodePtr)) != nullptr)
 	{
+		//Check the global and local symbol tables.
+		//Check local first.
+		
+		
+		ParseTreeNode* returnSymbol = nullptr;
+		
+
+		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
+		{
+			(*outputFileStream) << "%";
+			
+			varDecl->setLocalVariableSetFlag();
+
+			
+		}
+		
+		else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
+		{
+			(*outputFileStream) << "@";
+			varDecl->setglobalVariableSetFlag();
+			
+			
+			
+		}
+
 		(*outputFileStream) << this->getNodeTokenValue();
-		
-		
+
 	}
+
+	else if ((procHead = dynamic_cast<ProcedureHeader*>(this->parentNodePtr)) != nullptr)
+	{
+		//Check the global and local symbol tables.
+		//Check local first.
+
+
+		ParseTreeNode* returnSymbol = nullptr;
+
+
+		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
+		{
+			(*outputFileStream) << " %";
+
+			procHead->setLocalVariableSetFlag();
+
+
+		}
+
+		else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
+		{
+			(*outputFileStream) << " @";
+			procHead->setglobalVariableSetFlag();
+
+
+
+		}
+
+		(*outputFileStream) << this->getNodeTokenValue();
+	}
+
+	
+	
 }
 
 
