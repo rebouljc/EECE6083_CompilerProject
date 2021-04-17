@@ -2,6 +2,7 @@
 #include "TypeMark.h"
 #include "VariableDeclaration.h"
 #include "ProcedureHeader.h"
+#include "ProgramBody.h"
 
 
 
@@ -81,7 +82,7 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 	{
 		if (this->getNodeTokenValue() == "procedure")
 		{
-			(*outputFileStream) << "declare";
+			(*outputFileStream) << "define";
 		}
 
 		else if (this->getNodeTokenValue() == "(")
@@ -95,6 +96,22 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 		}
 
 		
+	}
+	else if (dynamic_cast<ProgramBody*>(this->parentNodePtr) != nullptr)
+	{
+		if (this->getNodeTokenValue() == "begin")
+		{
+			(*outputFileStream) << "define i32 @main() {\n";
+		}
+		else if (this->getNodeTokenValue() == "program")
+		{
+			(*outputFileStream) << "}\n";
+		}
+	}
+
+	else if (this->getNodeTokenValue() == "return")
+	{
+		(*outputFileStream) << "ret";
 	}
 	
 

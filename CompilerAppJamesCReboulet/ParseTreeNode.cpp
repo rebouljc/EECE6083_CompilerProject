@@ -33,6 +33,7 @@
 #include "IfStatement.h"
 #include "LoopStatement.h"
 #include "IfAndForLoopsMustReturnABooleanValueStringException.h"
+#include "ReturnStatement.h"
 
 
 
@@ -81,6 +82,20 @@ bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd, bool checkUniqu
     }
 
     return !match;
+}
+
+bool ParseTreeNode::ICGenerationClimbTreeAndCheckForReturnStatement()
+{
+    if (this->parentNodePtr == nullptr)
+    {
+        return false;
+    }
+
+    else if (dynamic_cast<ReturnStatement*>(this) != nullptr)
+    {
+        return true;
+    }
+    this->parentNodePtr->ICGenerationClimbTreeAndCheckForReturnStatement();
 }
 
 void ParseTreeNode::climbTreeAndSetParenthesesPresentOnExpressionFlag()

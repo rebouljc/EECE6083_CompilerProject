@@ -26,6 +26,7 @@ public:
 	bool climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bool& calledFromExpression, bool &parenthesesPresentFlag);
 	virtual void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) { return; };
 	ParseTreeNode* getParentNodePtr() { return this->parentNodePtr; };
+
 	
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
@@ -43,6 +44,8 @@ protected:
 	bool searchLocalSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol,
 		vector<ParseTreeNode*>* symbolTablePtr
 	);
+
+	bool ICGenerationClimbTreeAndCheckForReturnStatement();
 	
 
 	//Protected Semantic-Checking Methods.

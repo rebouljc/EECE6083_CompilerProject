@@ -1,8 +1,13 @@
 @value= global i32
 @tmp2= global float
 @out= global i32
-declare i32  @fib(i32 %val) {
+define i32  @fib(i32 %val) {
 %tmp1= alloca i32
 %tmp2= alloca i32
 %ret= alloca i32
+ret %ret
+ret %ret
+ret %ret
+}
+define i32 @main() {
 }

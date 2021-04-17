@@ -120,24 +120,40 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 
 		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
 		{
-			
 			(*outputFileStream) << " %";
-
 			procHead->setLocalVariableSetFlag();
-
-
 		}
 
 		else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
 		{
 			(*outputFileStream) << " @";
 			procHead->setglobalVariableSetFlag();
-
-
-
 		}
 
 		(*outputFileStream) << this->getNodeTokenValue();
+	}
+
+	else if (this->ICGenerationClimbTreeAndCheckForReturnStatement())
+	{
+		if (this->getNodeTokenType() == "IDENTIFIER")
+		{
+			this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
+			ParseTreeNode* returnSymbol = nullptr;
+
+			if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
+			{
+				(*outputFileStream) << " %";
+				
+			}
+
+			else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
+			{
+				(*outputFileStream) << " @";
+				
+			}
+			(*outputFileStream) << this->getNodeTokenValue() << "\n";
+			
+		}
 	}
 
 	
