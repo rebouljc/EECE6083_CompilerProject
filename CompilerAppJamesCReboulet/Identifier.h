@@ -9,6 +9,7 @@ public:
 
 	Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr);
 	Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr, bool isValidDeclaration);
+
 	string getNodeSymbolIdentifierType();
 	ParseTreeNode* getNodePtr() override;
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
@@ -37,6 +38,11 @@ public:
 	void setSingleVariableIfLoopExpressionFlag(bool flagValue) { this->singleVariableIfOrLoopExpressionFlag = flagValue; };
 	bool getSingleVariableIfLoopExpressionFlag() { return this->singleVariableIfOrLoopExpressionFlag; };
 
+	//Set typemark string for use during intermediate code generation.
+	void setTypeMarkString(string typeMarkString) { this->typeMarkString = typeMarkString; };
+
+	std::string getTypeMarkString() { return this->typeMarkString; };
+
 	//Intermediate Code Generation Methods
 	
 	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
@@ -45,7 +51,7 @@ public:
 
 private:
 
-	string identifierType;
+	std::string identifierType;
 	bool isValidDeclaration = false;
 	ParseTreeNode* numberPtr;
 	bool bitwiseAndOrOperationDefined = false;
@@ -54,5 +60,7 @@ private:
 	bool relationPresentFlag = false;
 	bool convertToNotValue = false;
 	bool singleVariableIfOrLoopExpressionFlag = false;
+	std::string typeMarkString;
+	void setStringTypeForIntermediateCodeGeneration(ofstream* outputFileStream);
 
 };

@@ -79,7 +79,7 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 
 	else if (currentToken->getTokenValue() == "[")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		//recurse
 	}
 
@@ -94,7 +94,7 @@ void Destination::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 
 	else if (currentToken->getTokenValue() == "]")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		this->setIsValid(true);
 		return;
 	}

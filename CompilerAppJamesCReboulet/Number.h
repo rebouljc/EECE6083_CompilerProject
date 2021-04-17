@@ -5,7 +5,7 @@
 class Number : public TerminalNode
 {
 public:
-	Number(Token* token, ParseTreeNode* parentNodePtr);
+	Number(Token* token, ParseTreeNode* parentNodePtr, ParseTreeNode* motherNodePtr);
 	double getNodeTokenIntegerDoubleNumberTokenValue();
 	void setNodeTokenIntegerDoubleNumberTokenValueToBoolean();
 	void setNodeTokenIntegerDoubleNumberTokenValueToNotValue();

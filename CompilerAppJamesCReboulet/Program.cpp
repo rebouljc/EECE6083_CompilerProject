@@ -168,7 +168,7 @@ void Program::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mothe
 	
 	if (currentToken->getTokenValue() == ".") //Note, this isn't going to work correctly until we have defined the program body.  Never will be hit!
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 	
 

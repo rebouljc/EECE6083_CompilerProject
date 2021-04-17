@@ -65,12 +65,12 @@ void LoopStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 
 	else if (currentToken->getTokenValue() == "end") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{                                                //We can, but it would require using tokenCounter.  Easier just to add a couple of lines of code.
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 	else if (tokenCounter == 3 && currentToken->getTokenValue() == "for")
 	{
 		
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		this->setIsValid(true);
 		return;
 		
@@ -97,16 +97,16 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 
 	if (currentToken->getTokenValue() == "for")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	else if (currentToken->getTokenValue() == "(")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 	else if (currentToken->getTokenValue() == ")")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		return;
 	}
 
@@ -126,7 +126,7 @@ void LoopStatement::dealWithForHeader(ParseTreeNode* motherNode, int tokenCounte
 
 	else if (currentToken->getTokenValue() == ";")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 
 	}
 
@@ -179,7 +179,7 @@ void LoopStatement::dealWithForBody(ParseTreeNode* motherNode, int tokenCounter)
 	currentToken = this->parserPtr->readNextToken();
 	if (currentToken->getTokenValue() == ";")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 	
 	++tokenCounter;

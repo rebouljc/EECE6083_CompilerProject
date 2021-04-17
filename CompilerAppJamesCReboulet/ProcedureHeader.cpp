@@ -30,7 +30,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == "procedure")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		}
 
 		else
@@ -59,7 +59,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == ":")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		}
 
 		else
@@ -79,7 +79,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == "(")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		}
 
 		else
@@ -104,7 +104,7 @@ void ProcedureHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == ")")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 			//Read the next token, for now.  Since this is causing issues.
 			currentToken = this->parserPtr->readNextToken();
 		}

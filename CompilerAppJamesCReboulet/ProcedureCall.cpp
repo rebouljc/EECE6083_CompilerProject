@@ -96,13 +96,13 @@ void ProcedureCall::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 
 	else if (currentToken->getTokenValue() == "(")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		//recurse
 	}
 
 	else if (currentToken->getTokenValue() == ")")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		this->setIsValid(true);
 		return;
 	}

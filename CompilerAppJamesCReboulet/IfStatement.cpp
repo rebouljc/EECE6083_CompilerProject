@@ -56,7 +56,7 @@ void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter
 
 	if (currentToken->getTokenValue() == "then" || currentToken->getTokenValue() == "else")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	else if (tokenCounter >= 1)
@@ -75,7 +75,7 @@ void IfStatement::dealWithThenOrElse(ParseTreeNode* motherNode, int tokenCounter
 			currentToken = this->parserPtr->readNextToken();
 			if (currentToken->getTokenValue() == ";")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 			}
 		}
 		else
@@ -102,16 +102,16 @@ void IfStatement::dealWithIf(ParseTreeNode* motherNode, int tokenCounter)
 
 	if (currentToken->getTokenValue() == "if")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	else if (currentToken->getTokenValue() == "(")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 	else if (currentToken->getTokenValue() == ")")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		//We have to read the next token, so we don't mess up the "then" portion when this returns back
 		//to the verifySyntaxCreateParseTreeMethod.
 		return;
@@ -163,13 +163,13 @@ void IfStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	else if (currentToken->getTokenValue() == "end") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
 		
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		currentToken = this->parserPtr->readNextToken();
 
 		if (currentToken->getTokenValue() == "if")
 		{
 			currentToken = parserPtr->getCurrentlyReadToken();
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 			this->setIsValid(true);
 			return;
 		}

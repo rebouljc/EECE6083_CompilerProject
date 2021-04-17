@@ -25,7 +25,7 @@ void Bound::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherN
 	
 	if (this->token->getTokenType() == "NUMBER")
 	{
-		this->linkedMemberNonterminals.push_back(new Number(this->token, this));
+		this->linkedMemberNonterminals.push_back(new Number(this->token, this, this->programNode_motherNode));
 	}
 
 	else

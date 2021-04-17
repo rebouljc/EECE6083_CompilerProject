@@ -36,7 +36,7 @@ void ArgumentList::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* 
 
 	if (currentToken->getTokenValue() == ",")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken,this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken,this, this->programNode_motherNode));
 		//recurse
 
 	}

@@ -43,7 +43,7 @@ void AssignmentStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTre
 
 	if (currentToken->getTokenType() == "ASSIGNMENT")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		
 	}
 

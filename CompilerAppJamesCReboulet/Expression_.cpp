@@ -30,7 +30,7 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	if (currentToken->getTokenValue() == "&" ||
 		currentToken->getTokenValue() == "|")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		
 		Expression* expPtr = nullptr;
 
@@ -60,7 +60,7 @@ void Expression_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 
 	else if (currentToken->getTokenValue() == "not")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method

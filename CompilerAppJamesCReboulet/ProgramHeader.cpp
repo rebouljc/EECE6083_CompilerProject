@@ -30,7 +30,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		{
 			if (currentToken->getTokenValue() == "program")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this)); //TerminalNode inherits from both ParseTreeNode and Token.  
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode)); //TerminalNode inherits from both ParseTreeNode and Token.  
 			}
 
 			else
@@ -56,7 +56,7 @@ void ProgramHeader::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		{
 			if (currentToken->getTokenValue() == "is")
 			{
-				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+				this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 				return;
 			}
 

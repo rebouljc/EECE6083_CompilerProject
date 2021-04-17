@@ -9,7 +9,7 @@ class TerminalNode : public ParseTreeNode
 {
 public:
 	TerminalNode();
-	TerminalNode(Token* token, ParseTreeNode* parentNodePtr);
+	TerminalNode(Token* token, ParseTreeNode* parentNodePtr, ParseTreeNode* motherNodePtr);
 	string getNodeTokenType();
 	string getNodeTokenValue();
 	void setNodeTokenValue(std:: string value);

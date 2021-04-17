@@ -2,6 +2,8 @@
 #include "TerminalNode.h"
 #include "Identifier.h"
 #include "Program.h"
+#include "VariableDeclaration.h"
+#include "ProcedureHeader.h"
 
 
 
@@ -32,7 +34,7 @@ void TypeMark::createEnumList(ParseTreeNode* motherNode)
 	//Create the new identifier and check its validity.
 	if (currentToken->getTokenValue() == "{")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	if (currentToken->getTokenType() == "IDENTIFIER")
@@ -42,12 +44,12 @@ void TypeMark::createEnumList(ParseTreeNode* motherNode)
 
 	else if (currentToken->getTokenValue() == ",")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	else if (currentToken->getTokenValue() == "}")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		return;
 	}
 	else
@@ -62,6 +64,9 @@ void TypeMark::createEnumList(ParseTreeNode* motherNode)
 void TypeMark::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)
 {   //This is not to be a recursive function.  It can't be, since it is an | situation.
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
+	Identifier* ident = nullptr;
+	VariableDeclaration* varDecl = nullptr;
+	ProcedureHeader* procHead = nullptr;
 	if (currentToken->getTokenValue() == "integer" ||
 		currentToken->getTokenValue() == "float"   ||
 		currentToken->getTokenValue() == "string"  ||
@@ -69,26 +74,42 @@ void TypeMark::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* moth
 	   )
 	{
 
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
+		if ((varDecl = dynamic_cast<VariableDeclaration*>(this->parentNodePtr)) != nullptr)
+		{
+			for (int i = 0; i < varDecl->getLinkedMemberNonterminalsList().size(); ++i)
+			{
+				if ((ident = dynamic_cast<Identifier*>(varDecl->getLinkedMemberNonterminalsList().at(i))) != nullptr)
+				{
+					ident->setTypeMarkString(currentToken->getTokenValue());
+					break;
+				}
+			}
+		}
+
+		else if ((procHead = dynamic_cast<ProcedureHeader*>(this->parentNodePtr)) != nullptr)
+		{
+			for (int i = 0; i < procHead->getLinkedMemberNonterminalsList().size(); ++i)
+			{
+				if ((ident = dynamic_cast<Identifier*>(procHead->getLinkedMemberNonterminalsList().at(i))) != nullptr)
+				{
+					ident->setTypeMarkString(currentToken->getTokenValue());
+					break;
+				}
+			}
+		}
 		
 	}
 
 	else if (currentToken->getTokenValue() == "enum")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		this->createEnumList(motherNode);
 		this->setIsValid(true);
 		
 
 	}
-
-	else if (currentToken->getTokenType() == "IDENTIFIER")
-	{
-		this->linkedMemberNonterminals.push_back(new Identifier(currentToken, motherNode, "LOCAL", this));
-		this->setIsValid(true);
-		
-	}
-
+	
 	else
 	{
 		//Here, we would probably throw some type of exception, since every procedure requires a <type_mark>.

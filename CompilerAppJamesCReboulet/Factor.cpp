@@ -33,7 +33,7 @@ void Factor::dealWithExpression(ParseTreeNode* motherNode, int tokenCounter)
 	//printf("\nFactor_CurrentToken = %s", currentToken->getTokenValue().c_str());
 	if (currentToken->getTokenValue() == ")") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		//We need to return out of here, so we can stop the recursion.
 		return;
 	}
@@ -66,7 +66,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 
 	else if (currentToken->getTokenValue() == "(") //Note:  We can't recurse here, since we are expecting the sequence of tokens "end" + "if"
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		//We need to let <Expression*> know that there is a parentheses present, so that if a not precedes expression,
 		//we can flip-flop the "&" to an "|" and set the not flags on both operands instead of only one of them, Demorgan's Law.
 		this->climbTreeAndSetParenthesesPresentOnExpressionFlag();
@@ -81,7 +81,7 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	else if (currentToken->getTokenValue() == "-")
 	{
 		//Here, we need to recurse, since either a name or a number will be coming after it.
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		++tokenCounter;
 		currentToken = this->parserPtr->readNextToken();
 		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);
@@ -90,14 +90,14 @@ void Factor::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mother
 	else if (currentToken->getTokenType() == "NUMBER")
 	{
 		//Well, now we have a number, so we create one.
-		this->linkedMemberNonterminals.push_back(new Number(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new Number(currentToken, this, this->programNode_motherNode));
 		this->setIsValid(true);
 	}
 
 	else if (currentToken->getTokenType() == "STRING_LITERAL")
 	{
 		//We have a string literal, so we create one.
-		this->linkedMemberNonterminals.push_back(new StringLiteral(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new StringLiteral(currentToken, this, this->programNode_motherNode));
 		this->setIsValid(true);
 
 	}

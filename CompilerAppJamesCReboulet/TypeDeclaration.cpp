@@ -36,7 +36,7 @@ void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == "type")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		}
 
 		else
@@ -64,7 +64,7 @@ void TypeDeclaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	{
 		if (currentToken->getTokenValue() == "is")
 		{
-			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+			this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		}
 
 		else

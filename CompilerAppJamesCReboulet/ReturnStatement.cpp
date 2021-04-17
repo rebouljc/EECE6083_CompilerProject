@@ -26,7 +26,7 @@ void ReturnStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNod
 	Token* currentToken = this->parserPtr->getCurrentlyReadToken();
 	if (currentToken->getTokenValue() == "return")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 	else if (   !this->linkedMemberNonterminals.empty() &&
 		        dynamic_cast<TerminalNode*>(this->linkedMemberNonterminals.at(this->linkedMemberNonterminals.size() - 1)) != nullptr

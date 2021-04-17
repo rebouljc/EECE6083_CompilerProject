@@ -32,7 +32,7 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 		currentToken->getTokenValue() == "==" ||
 		currentToken->getTokenValue() == "!=" )
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	//This synchronizes the change made by the IllegalEqualsSign Exception in the Scanner Module.
@@ -40,7 +40,7 @@ void Relation_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* mot
 	{
 		currentToken->setTokenType("RELATION_OP");
 		currentToken->setTokenValue("==");
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method

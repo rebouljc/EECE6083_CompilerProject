@@ -168,7 +168,7 @@ void Declaration::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* m
 	bool typeDeclFlag = false;
 	if (currentToken->getTokenValue() == "global")
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		currentToken = this->parserPtr->readNextToken();  //This will store the currently read token in parserPtr, even though it returns a useless Token* here.
 		++tokenCounter; //Increment the token counter, so that if the word "global" is present, there should be at least 1 declaration.
 		this->verifySyntaxCreateParseTree(tokenCounter, motherNode);

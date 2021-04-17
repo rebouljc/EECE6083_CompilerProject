@@ -29,7 +29,7 @@ void Term_::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherN
 		currentToken->getTokenValue() == "/" 
 	   )
 	{
-		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this));
+		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
 	//If this->linkedMemberNonterminals happens to be empty, we don't want to do an access and pass a null pointer to the dynamic_cast method

@@ -3,6 +3,7 @@
 #include "ProcedureHeader.h"
 
 
+
 Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr)
 {
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
@@ -35,7 +36,28 @@ Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifie
 	
 
 }
+void Identifier::setStringTypeForIntermediateCodeGeneration(ofstream* outputFileStream)
+{
+	if (this->typeMarkString == "integer")
+	{
+		(*outputFileStream) << "i32 ";
+	}
 
+	else if (this->typeMarkString == "float")
+	{
+		(*outputFileStream) << "float ";
+	}
+
+	else if (this->typeMarkString == "bool")
+	{
+		(*outputFileStream) << "i32 ";
+	}
+
+	else if (this->typeMarkString == "string")
+	{
+		(*outputFileStream) << "string ";
+	}
+}
 void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
 	VariableDeclaration* varDecl = nullptr;
@@ -56,8 +78,13 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 		ParseTreeNode* returnSymbol = nullptr;
 		
 
+		if (varDecl->getVariableParentIsParameterFlag())
+		{
+			this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
+		}
 		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
 		{
+			
 			(*outputFileStream) << "%";
 			
 			varDecl->setLocalVariableSetFlag();
@@ -67,6 +94,7 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 		
 		else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
 		{
+			
 			(*outputFileStream) << "@";
 			varDecl->setglobalVariableSetFlag();
 			
@@ -86,9 +114,13 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 
 		ParseTreeNode* returnSymbol = nullptr;
 
+		(*outputFileStream) << " ";
+
+		this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
 
 		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
 		{
+			
 			(*outputFileStream) << " %";
 
 			procHead->setLocalVariableSetFlag();
