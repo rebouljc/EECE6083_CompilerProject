@@ -15,7 +15,7 @@ ProcedureBody::ProcedureBody(Parser* parser, ParseTreeNode* motherNode, ParseTre
 
 void ProcedureBody::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
-	(*outputFileStream) << " {\n";
+	(*outputFileStream) << " {\nentry:\n";
 
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{

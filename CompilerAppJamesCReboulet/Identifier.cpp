@@ -3,7 +3,10 @@
 #include "ProcedureHeader.h"
 
 
+Identifier::Identifier()
+{
 
+}
 Identifier::Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr)
 {
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
@@ -135,8 +138,7 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 
 	else if (this->ICGenerationClimbTreeAndCheckForReturnStatement())
 	{
-		if (this->getNodeTokenType() == "IDENTIFIER")
-		{
+		
 			this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
 			ParseTreeNode* returnSymbol = nullptr;
 
@@ -153,11 +155,10 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 			}
 			(*outputFileStream) << this->getNodeTokenValue() << "\n";
 			
-		}
+		
 	}
 
-	
-	
+
 }
 
 

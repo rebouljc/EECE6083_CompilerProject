@@ -6,7 +6,7 @@
 class Identifier : public TerminalNode
 {
 public:
-
+	Identifier();
 	Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr);
 	Identifier(Token* token, ParseTreeNode* motherNode, string identifierType, ParseTreeNode* parentNodePtr, bool isValidDeclaration);
 

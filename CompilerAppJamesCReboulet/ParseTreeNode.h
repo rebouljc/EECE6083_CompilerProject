@@ -31,6 +31,18 @@ public:
 	//Get linkedNonterminals for semantic check
 	vector<ParseTreeNode*>& getLinkedMemberNonterminalsList();
 
+	//Intermediate Code Generation Public Methods.
+	void ICGenerationIfStatementDigAndCollectRightAndLeftOperands();
+	ParseTreeNode* ICGenerationIfStatementDigAndCollectLeftOperand();
+	ParseTreeNode* ICGenerationIfStatementDigAndCollectRightOperand();
+
+	void setRightOperandPtr(ParseTreeNode* right) { this->rightOperand = right; };
+	void setLeftOperandPtr(ParseTreeNode* left) { this->leftOperand = left; };
+	ParseTreeNode* getRightOperandPtr() { return this->rightOperand; };
+	ParseTreeNode* getLeftOperandPtr() { return this->leftOperand; };
+	void ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(ParseTreeNode* left, ParseTreeNode* right);
+
+
 	//There were too many public methods popping up here, which were specific to semantic analysis,
 	//and should only be available to this class and its children.  Otherwise, too many possibilities for problems.  
 	
@@ -46,6 +58,7 @@ protected:
 	);
 
 	bool ICGenerationClimbTreeAndCheckForReturnStatement();
+	
 	
 
 	//Protected Semantic-Checking Methods.
@@ -103,6 +116,9 @@ private:
 	void climbTreeToDeclarationNode(ParseTreeNode* identifierNode);
 	//Private Semantic Checking Methods
 	void checkArrayIndexInBounds(ParseTreeNode &identifier, ParseTreeNode &symbolTableIdentifier);
+	ParseTreeNode* rightOperand = nullptr;
+	ParseTreeNode* leftOperand = nullptr;
+
 	
 	
 	

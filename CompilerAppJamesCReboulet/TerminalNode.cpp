@@ -113,6 +113,39 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 	{
 		(*outputFileStream) << "ret";
 	}
+
+	else if (this->getNodeTokenValue() == "==")
+	{
+		(*outputFileStream) << " oeq float";
+	}
+
+	else if (this->getNodeTokenValue() == "!=")
+	{
+		(*outputFileStream) << " one float";
+	}
+
+	else if (this->getNodeTokenValue() == "<")
+	{
+		(*outputFileStream) << " olt float";
+	}
+
+	else if (this->getNodeTokenValue() == "<=")
+	{
+		(*outputFileStream) << " ole float";
+	}
+
+	else if (this->getNodeTokenValue() == ">")
+	{
+		(*outputFileStream) << " ogt float";
+	}
+
+	else if (this->getNodeTokenValue() == ">=")
+	{
+		(*outputFileStream) << " oge float";
+	}
+
+
+
 	
 
 

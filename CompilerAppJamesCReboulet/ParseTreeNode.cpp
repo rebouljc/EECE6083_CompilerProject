@@ -84,6 +84,166 @@ bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd, bool checkUniqu
     return !match;
 }
 
+ParseTreeNode* ParseTreeNode::ICGenerationIfStatementDigAndCollectLeftOperand()
+{
+    
+   
+    if (dynamic_cast<Identifier*>(this) != nullptr)
+    {
+
+
+        return this;
+
+
+       
+
+
+    }
+
+    else if (dynamic_cast<Number*>(this) != nullptr)
+    {
+
+
+        
+        return this;
+
+
+    }
+
+    else if (dynamic_cast<StringLiteral*>(this) != nullptr)
+    {
+
+        return this;
+
+
+    }
+   
+
+    for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+    {
+        ParseTreeNode* leftOperand = nullptr;
+
+        leftOperand = this->linkedMemberNonterminals.at(i)->ICGenerationIfStatementDigAndCollectLeftOperand();
+        if (leftOperand != nullptr)
+        {
+            return leftOperand;
+        }
+    }
+
+
+}
+
+ParseTreeNode* ParseTreeNode::ICGenerationIfStatementDigAndCollectRightOperand()
+{
+    
+  
+    if (dynamic_cast<Identifier*>(this) != nullptr)
+    {
+
+
+        return this;
+
+
+      
+
+
+    }
+
+    else if (dynamic_cast<Number*>(this) != nullptr)
+    {
+
+
+        return this;
+
+
+        
+    }
+
+    else if (dynamic_cast<StringLiteral*>(this) != nullptr)
+    {
+
+
+        return this;
+
+
+        
+    }
+
+    
+
+    for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+    {
+        ParseTreeNode* rightOperand = nullptr;
+        rightOperand = this->linkedMemberNonterminals.at(i)->ICGenerationIfStatementDigAndCollectRightOperand();
+        if (rightOperand != nullptr)
+        {
+            return rightOperand;
+        }
+
+    }
+
+   
+    
+}
+void ParseTreeNode::ICGenerationIfStatementDigAndCollectRightAndLeftOperands()
+{
+    //This is recursive Digger method.
+    //If we come back here, we need to return or else bad things start to happen.
+
+    if (dynamic_cast<Relation_*>(this) != nullptr)
+    {
+        this->rightOperand = this->ICGenerationIfStatementDigAndCollectRightOperand();
+        if (dynamic_cast<Relation*>(this->parentNodePtr) != nullptr)
+        {
+            this->leftOperand = this->parentNodePtr->ICGenerationIfStatementDigAndCollectLeftOperand();
+        }
+        this->parentNodePtr->setLeftOperandPtr(this->leftOperand);
+        this->parentNodePtr->setRightOperandPtr(this->rightOperand);
+        return;
+
+    }
+
+    for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+    {
+       
+       this->linkedMemberNonterminals.at(i)->ICGenerationIfStatementDigAndCollectRightAndLeftOperands();
+       if (this->leftOperand != nullptr && this->rightOperand != nullptr)
+       {
+           
+           //Now, we have to send them up the chain to the <IfStatement*>.  More hacking!
+           this->ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(leftOperand, rightOperand);
+           //Get the hell out of here, FOR GOOD!
+           break;
+       }
+       
+    }
+
+    
+   
+   
+   return;
+    
+}
+
+void ParseTreeNode::ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(ParseTreeNode* left, ParseTreeNode* right)
+{
+    if (dynamic_cast<IfStatement*>(this))
+    {
+        this->setLeftOperandPtr(left);
+        this->setRightOperandPtr(right);
+        return;
+    }
+    //Do this out of safety.
+    else if (this->parentNodePtr == nullptr)
+    {
+        return;
+    }
+
+    this->parentNodePtr->ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(left, right);
+
+
+}
+
 bool ParseTreeNode::ICGenerationClimbTreeAndCheckForReturnStatement()
 {
     if (this->parentNodePtr == nullptr)
