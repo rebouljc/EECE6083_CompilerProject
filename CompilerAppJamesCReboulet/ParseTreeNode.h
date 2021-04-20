@@ -41,6 +41,8 @@ public:
 	ParseTreeNode* getRightOperandPtr() { return this->rightOperand; };
 	ParseTreeNode* getLeftOperandPtr() { return this->leftOperand; };
 	void ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(ParseTreeNode* left, ParseTreeNode* right);
+	int ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+	void ICCodeGenerationClimbTreeToProcedureBodyAndIncrementIndexValue();
 
 
 	//There were too many public methods popping up here, which were specific to semantic analysis,
@@ -58,6 +60,7 @@ protected:
 	);
 
 	bool ICGenerationClimbTreeAndCheckForReturnStatement();
+	
 	
 	
 

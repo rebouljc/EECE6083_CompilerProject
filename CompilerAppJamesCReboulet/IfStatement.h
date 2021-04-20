@@ -13,6 +13,7 @@ public:
 	ParseTreeNode* getTokenToCompareValue() { return this->tokenToCompareLeft; };
 
 	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
+	
 
 	~IfStatement() {};
 	

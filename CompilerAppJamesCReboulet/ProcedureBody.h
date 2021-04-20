@@ -9,6 +9,9 @@ public:
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 
 	void generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr) override;
+	void incrementIfStatementIndexNumber() { ++ this->ifStatementIndex; };
+	int getIfStatementIndexNumber() { return this->ifStatementIndex; };
+
 	
 	~ProcedureBody() {};
 
@@ -19,6 +22,7 @@ private:
 	
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
+	int ifStatementIndex = 0;
 	
 
 };

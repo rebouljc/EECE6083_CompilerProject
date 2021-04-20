@@ -3,6 +3,8 @@
 #include "VariableDeclaration.h"
 #include "ProcedureHeader.h"
 #include "ProgramBody.h"
+#include "IfStatement.h"
+
 
 
 
@@ -24,6 +26,7 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 {
 	TypeMark* typeMark = nullptr;
 	VariableDeclaration* varDecl = nullptr;
+	IfStatement* ifStmt = nullptr;
 	
 
 	if (dynamic_cast<TypeMark*>(this->parentNodePtr) != nullptr && 
@@ -106,6 +109,32 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 		else if (this->getNodeTokenValue() == "program")
 		{
 			(*outputFileStream) << "}\n";
+		}
+	}
+
+	else if ((ifStmt = dynamic_cast<IfStatement*>(this->parentNodePtr)) != nullptr)
+	{
+		int index = this->ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+		
+		if (this->getNodeTokenValue() == "then")
+		{
+			
+			(*outputFileStream) << "\nbtrue" << index << ":\n";
+		}
+
+		else if (this->getNodeTokenValue() == "else")
+		{
+			(*outputFileStream) << "\nbfalse" << index << ":\n";
+		}
+
+		else if (this->getNodeTokenValue() == "end")
+		{   
+			
+			(*outputFileStream) << "br label %end" << index << "\n";
+			(*outputFileStream) << "bfalse" << index << ":\n";
+			(*outputFileStream) << "br label %end" << index << "\n";
+			(*outputFileStream) << "\nend" << index << ":\n";
+ 			this->ICCodeGenerationClimbTreeToProcedureBodyAndIncrementIndexValue();
 		}
 	}
 

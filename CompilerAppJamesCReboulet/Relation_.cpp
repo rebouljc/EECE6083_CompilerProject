@@ -16,7 +16,11 @@ Relation_::Relation_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* p
 
 void Relation_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
-	(*outputFileStream) << "%0 = fcmp";
+	int index = this->ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+	if (index != -1)
+	{
+		(*outputFileStream) << "%" << index << " = fcmp";
+	}
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);

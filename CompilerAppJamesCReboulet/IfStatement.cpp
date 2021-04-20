@@ -5,6 +5,7 @@
 #include "TerminalNode.h"
 
 
+
 IfStatement::IfStatement(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* parentNodePtr)
 {
 	//Note: 3-13-2021: Added additional statement to set this node's parent node ptr, to enable reverse walking back up a tree.
@@ -53,8 +54,9 @@ void IfStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStre
 	}
 
 	
-	this->ICGenerationIfStatementDigAndCollectRightAndLeftOperands();
+
 	
+
 	
 	
 }

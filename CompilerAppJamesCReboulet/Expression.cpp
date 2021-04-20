@@ -24,6 +24,76 @@ void Expression::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
+
+	this->ICGenerationIfStatementDigAndCollectRightAndLeftOperands();
+	Identifier* leftIdent = nullptr;
+	Identifier* rightIdent = nullptr;
+	Number* leftNum = nullptr;
+	Number* rightNum = nullptr;
+	StringLiteral* leftStr = nullptr;
+	StringLiteral* rightStr = nullptr;
+    
+	if ((leftIdent = dynamic_cast<Identifier*>(this->getLeftOperandPtr())) != nullptr)
+	{
+		if (leftIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+		{
+			(*outputFileStream) << " @";
+		}
+		else
+		{
+			(*outputFileStream) << " %";
+		}
+		(*outputFileStream) << leftIdent->getNodeTokenValue() << ",";
+	}
+
+	else if ((rightIdent = dynamic_cast<Identifier*>(this->getRightOperandPtr())) != nullptr)
+	{
+		if (rightIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+		{
+			(*outputFileStream) << " @";
+		}
+		else
+		{
+			(*outputFileStream) << " %";
+		}
+		(*outputFileStream) << rightIdent->getNodeTokenValue() << "\n";
+		int index = ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+		(*outputFileStream) << "br i1 %" << index << "," << " label " << "btrue" << index << ", " << "label "
+			                << "%" << "bfalse" << index << "\n";
+		
+	
+	}
+
+	if ((leftNum = dynamic_cast<Number*>(this->getLeftOperandPtr())) != nullptr)
+	{
+		(*outputFileStream) << leftNum->getNodeTokenIntegerDoubleNumberTokenValue() << ",";
+	}
+
+	if ((rightNum = dynamic_cast<Number*>(this->getRightOperandPtr())) != nullptr)
+	{
+		(*outputFileStream) << rightNum->getNodeTokenIntegerDoubleNumberTokenValue() << "\n";
+		int index = ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+		(*outputFileStream) << "br i1 %" << index << "," << " label " << "btrue" << index << ", " << "label "
+			                << "%" << "bfalse" << index << "\n";
+
+	}
+
+	if ((leftStr = dynamic_cast<StringLiteral*>(this->getLeftOperandPtr())) != nullptr)
+	{
+		//We have to do something with string literals.
+	}
+
+	if ((rightStr = dynamic_cast<StringLiteral*>(this->getLeftOperandPtr())) != nullptr)
+	{
+		//We have to do something with string literals.
+	}
+
+	
+	
+
+	
+	
+
 }
 
 void Expression::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

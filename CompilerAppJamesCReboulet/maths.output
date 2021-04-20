@@ -1,0 +1,32 @@
+@value= global i32
+@tmp2= global float
+@out= global i32
+define i32  @fib(i32 %val) {
+entry:
+%tmp1= alloca i32
+%tmp2= alloca i32
+%ret= alloca i32
+%0 = fcmp oeq float %val,0
+br i1 %0, label btrue0, label %bfalse0
+
+btrue0:
+ret %ret
+br label %end0
+bfalse0:
+br label %end0
+
+end0:
+%1 = fcmp oeq float %val,1
+br i1 %1, label btrue1, label %bfalse1
+
+btrue1:
+ret %ret
+br label %end1
+bfalse1:
+br label %end1
+
+end1:
+ret %ret
+}
+define i32 @main() {
+}

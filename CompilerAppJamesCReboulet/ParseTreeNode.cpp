@@ -54,6 +54,43 @@ void ParseTreeNode::setParserPtr(Parser* parserPtr)
     this->parserPtr = parserPtr;
 }
 
+int ParseTreeNode::ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue()
+{
+    ProcedureBody* proc = nullptr;
+    if (this->parentNodePtr == nullptr)
+    {
+        return -1;
+    }
+
+    else if ((proc = dynamic_cast<ProcedureBody*>(this)) != nullptr)
+    {
+        return proc->getIfStatementIndexNumber();
+    }
+
+    this->parentNodePtr->ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+
+    
+}
+
+void ParseTreeNode::ICCodeGenerationClimbTreeToProcedureBodyAndIncrementIndexValue()
+{
+    ProcedureBody* proc = nullptr;
+    if (this->parentNodePtr == nullptr)
+    {
+        return;
+    }
+
+    else if ((proc = dynamic_cast<ProcedureBody*>(this)) != nullptr)
+    {
+        proc->incrementIfStatementIndexNumber();
+        return;
+    }
+
+    this->parentNodePtr->ICCodeGenerationClimbTreeToProcedureBodyAndIncrementIndexValue();
+
+
+}
+
 bool ParseTreeNode::addToSymbolTable(ParseTreeNode* symbolToAdd, bool checkUnique)
 {
     bool match = false;
@@ -227,7 +264,7 @@ void ParseTreeNode::ICGenerationIfStatementDigAndCollectRightAndLeftOperands()
 
 void ParseTreeNode::ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(ParseTreeNode* left, ParseTreeNode* right)
 {
-    if (dynamic_cast<IfStatement*>(this))
+    if (dynamic_cast<Expression*>(this))
     {
         this->setLeftOperandPtr(left);
         this->setRightOperandPtr(right);
