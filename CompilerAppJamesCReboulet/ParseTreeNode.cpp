@@ -226,7 +226,8 @@ void ParseTreeNode::ICGenerationIfStatementDigAndCollectRightAndLeftOperands()
 {
     //This is recursive Digger method.
     //If we come back here, we need to return or else bad things start to happen.
-
+    
+   
     if (dynamic_cast<Relation_*>(this) != nullptr)
     {
         this->rightOperand = this->ICGenerationIfStatementDigAndCollectRightOperand();
@@ -248,35 +249,96 @@ void ParseTreeNode::ICGenerationIfStatementDigAndCollectRightAndLeftOperands()
        {
            
            //Now, we have to send them up the chain to the <IfStatement*>.  More hacking!
-           this->ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(leftOperand, rightOperand);
+           this->ICCodeGenerationSendExpressionOperandsUpTheChainToParentExpression(leftOperand, rightOperand);
            //Get the hell out of here, FOR GOOD!
            break;
        }
        
     }
 
-    
-   
-   
-   return;
+    return;
     
 }
 
-void ParseTreeNode::ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(ParseTreeNode* left, ParseTreeNode* right)
+void ParseTreeNode::ICGenerationIfStatementDigAndCollectRightAndLeftOperandsForArithOp()
+{
+    //This is recursive Digger method.
+    //If we come back here, we need to return or else bad things start to happen.
+    
+    
+    ArithOp* arithOpPtr = nullptr;
+    ParseTreeNode* arithOp_Ptr = nullptr;
+    if ((arithOpPtr = dynamic_cast<ArithOp*>(this)) != nullptr)
+    {
+        if ((arithOp_Ptr = dynamic_cast<ParseTreeNode*>(arithOpPtr->getIdentifierArithOp_PtrValue())) != nullptr)
+        {
+            arithOpPtr->setLeftOperandPtr(arithOpPtr->ICGenerationIfStatementDigAndCollectLeftOperand());
+            arithOp_Ptr->setRightOperandPtr(arithOpPtr->ICGenerationIfStatementDigAndCollectRightOperand());
+        }
+        
+    }
+
+    return;
+
+}
+
+void ParseTreeNode::ICGenerationExpressionDigAndCollectSingleOperand()
+{
+    //This is recursive Digger method.
+    //If we come back here, we need to return or else bad things start to happen.
+    
+    
+    if (dynamic_cast<Relation*>(this))
+    {
+        this->leftOperand = this->parentNodePtr->ICGenerationIfStatementDigAndCollectLeftOperand();
+        this->parentNodePtr->setLeftOperandPtr(this->leftOperand);
+
+        return;
+    }
+      
+
+    for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
+    {
+        
+        this->linkedMemberNonterminals.at(i)->ICGenerationExpressionDigAndCollectSingleOperand();
+        if (this->leftOperand != nullptr)
+        {
+            
+            //Now, we have to send them up the chain to the <IfStatement*>.  More hacking!
+            this->ICCodeGenerationSendExpressionOperandsUpTheChainToParentExpression(leftOperand, rightOperand);
+            break;
+            //Get the hell out of here, FOR GOOD!
+            
+        }
+
+    }
+
+    return;
+
+   
+
+   
+}
+
+bool ParseTreeNode::ICCodeGenerationSendExpressionOperandsUpTheChainToParentExpression(ParseTreeNode* left, ParseTreeNode* right)
 {
     if (dynamic_cast<Expression*>(this))
     {
         this->setLeftOperandPtr(left);
         this->setRightOperandPtr(right);
-        return;
+        if (this->getLeftOperandPtr() != nullptr && this->getRightOperandPtr() != nullptr)
+        {
+            return true;
+        }
+        return false;
     }
     //Do this out of safety.
     else if (this->parentNodePtr == nullptr)
     {
-        return;
+        return false;
     }
 
-    this->parentNodePtr->ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(left, right);
+    this->parentNodePtr->ICCodeGenerationSendExpressionOperandsUpTheChainToParentExpression(left, right);
 
 
 }
@@ -353,22 +415,23 @@ bool ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag(bo
 
 }
 
-bool ParseTreeNode::searchLocalSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol, 
-                                           vector<ParseTreeNode*>* symbolTablePtr
-                                          )
+ParseTreeNode* ParseTreeNode::searchLocalSymbolTable(ParseTreeNode* searchSymbol,vector<ParseTreeNode*>* symbolTablePtr)
 {
+    ParseTreeNode* returnSymbol = nullptr;
     for (vector<ParseTreeNode*>::iterator it = symbolTablePtr->begin(); it < symbolTablePtr->end(); ++it)
     {
+        
         if (dynamic_cast<Identifier*>(*it)->getNodeTokenValue() ==
             dynamic_cast<Identifier*>(searchSymbol)->getNodeTokenValue()
             )
         {
             returnSymbol = dynamic_cast<Identifier*>(*it);
-            return true;
+            break;
+            
         }
     }
 
-    return false;  
+    return returnSymbol;  
 }
 
 bool ParseTreeNode::searchSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol)
@@ -2028,12 +2091,15 @@ void ParseTreeNode::climbTreeToDeclarationNode(ParseTreeNode* identifierNode)
             for (int s = 0; s < this->getSymbolTable()->size(); ++s)
             {
                 Identifier* symbolTableIdent = nullptr;
-
+               
                 if ((symbolTableIdent = dynamic_cast<Identifier*>(this->getSymbolTable()->at(s))) != nullptr &&
                     symbolTableIdent->getNodeTokenValue() == dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue()
                     )
                 {
+                    
                     this->checkArrayIndexInBounds(*identifierNode, *symbolTableIdent);
+                   
+                    
                 }
             }
         }
@@ -2052,6 +2118,7 @@ void ParseTreeNode::climbTreeToDeclarationNode(ParseTreeNode* identifierNode)
                )
             {
                 this->checkArrayIndexInBounds(*identifierNode, *symbolTableIdent);
+                
             }
         }
     }
@@ -2077,6 +2144,8 @@ void ParseTreeNode::checkArrayIndexInBounds(ParseTreeNode& identifier, ParseTree
                 throw ArrayIndexOutOfBoundsException();
             }
         }
+
+        return;
     }
     catch (ArrayIndexOutOfBoundsException& e)
     {
@@ -2089,4 +2158,6 @@ void ParseTreeNode::checkArrayIndexInBounds(ParseTreeNode& identifier, ParseTree
 
         this->parserPtr->setCompilerErrorsPresentFlag(true);
     }
+
+    return;
 }

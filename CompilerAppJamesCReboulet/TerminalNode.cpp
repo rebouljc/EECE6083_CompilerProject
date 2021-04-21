@@ -173,6 +173,11 @@ void TerminalNode::generateIntermediateCodeFromParseTree(ofstream* outputFileStr
 		(*outputFileStream) << " oge float";
 	}
 
+	
+	
+
+	
+
 
 
 	

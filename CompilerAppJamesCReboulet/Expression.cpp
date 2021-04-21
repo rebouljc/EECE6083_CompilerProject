@@ -4,6 +4,7 @@
 #include "Expression_.h"
 #include "ArithOp.h"
 #include "Number.h"
+#include "AssignmentStatement.h"
 
 
 //2-23-2021: Code needs to be modified.  This is type mark code.
@@ -19,13 +20,28 @@ Expression::Expression(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode*
 
 void Expression::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
+	bool result = false;
 	
+
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
 
-	this->ICGenerationIfStatementDigAndCollectRightAndLeftOperands();
+	
+	AssignmentStatement* asmt = nullptr;
+
+	if ((asmt = dynamic_cast<AssignmentStatement*>(this->parentNodePtr)) != nullptr)
+	{
+		asmt->ICGenerationExpressionDigAndCollectSingleOperand();
+		result = true;
+	}
+
+	else
+	{
+		this->ICGenerationIfStatementDigAndCollectRightAndLeftOperands();
+	}
+	
 	Identifier* leftIdent = nullptr;
 	Identifier* rightIdent = nullptr;
 	Number* leftNum = nullptr;
@@ -35,46 +51,69 @@ void Expression::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
     
 	if ((leftIdent = dynamic_cast<Identifier*>(this->getLeftOperandPtr())) != nullptr)
 	{
-		if (leftIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+		if (!result)
 		{
-			(*outputFileStream) << " @";
+			if (leftIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+			{
+				(*outputFileStream) << " @";
+			}
+			else
+			{
+				(*outputFileStream) << " %";
+			}
+
+			(*outputFileStream) << leftIdent->getNodeTokenValue();
+
+
+
+			(*outputFileStream) << ",";
 		}
-		else
-		{
-			(*outputFileStream) << " %";
-		}
-		(*outputFileStream) << leftIdent->getNodeTokenValue() << ",";
+	
+
 	}
 
-	else if ((rightIdent = dynamic_cast<Identifier*>(this->getRightOperandPtr())) != nullptr)
+	if ((rightIdent = dynamic_cast<Identifier*>(this->getRightOperandPtr())) != nullptr)
 	{
-		if (rightIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+		if (!result)
 		{
-			(*outputFileStream) << " @";
+			if (rightIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+			{
+				(*outputFileStream) << " @";
+			}
+			else
+			{
+				(*outputFileStream) << " %";
+			}
+
+			(*outputFileStream) << rightIdent->getNodeTokenValue() << "\n";
+
+			int index = ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+			(*outputFileStream) << "br i1 %" << index << "," << " label " << "btrue" << index << ", " << "label "
+				<< "%" << "bfalse" << index << "\n";
 		}
-		else
-		{
-			(*outputFileStream) << " %";
-		}
-		(*outputFileStream) << rightIdent->getNodeTokenValue() << "\n";
-		int index = ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
-		(*outputFileStream) << "br i1 %" << index << "," << " label " << "btrue" << index << ", " << "label "
-			                << "%" << "bfalse" << index << "\n";
+		
 		
 	
 	}
 
 	if ((leftNum = dynamic_cast<Number*>(this->getLeftOperandPtr())) != nullptr)
 	{
-		(*outputFileStream) << leftNum->getNodeTokenIntegerDoubleNumberTokenValue() << ",";
+		(*outputFileStream) << leftNum->getNodeTokenIntegerDoubleNumberTokenValue();
+		if (!result)
+		{
+			(*outputFileStream) << ",";
+		}
 	}
 
 	if ((rightNum = dynamic_cast<Number*>(this->getRightOperandPtr())) != nullptr)
 	{
 		(*outputFileStream) << rightNum->getNodeTokenIntegerDoubleNumberTokenValue() << "\n";
-		int index = ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
-		(*outputFileStream) << "br i1 %" << index << "," << " label " << "btrue" << index << ", " << "label "
-			                << "%" << "bfalse" << index << "\n";
+		if (!result)
+		{
+			int index = ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+			(*outputFileStream) << "br i1 %" << index << "," << " label " << "btrue" << index << ", " << "label "
+				<< "%" << "bfalse" << index << "\n";
+		}
 
 	}
 
@@ -87,12 +126,6 @@ void Expression::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 	{
 		//We have to do something with string literals.
 	}
-
-	
-	
-
-	
-	
 
 }
 

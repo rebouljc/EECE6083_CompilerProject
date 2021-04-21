@@ -13,7 +13,7 @@ public:
 	void setIdentifierArithOp_PtrValue(ParseTreeNode* identifier);
 	void setNumberArithOpPtrValue(ParseTreeNode* numberToken);
 	void setNumberArithOp_PtrValue(ParseTreeNode* numberToken);
-	
+
 	ParseTreeNode* getIdentifierArithOpPtrValue();
 	ParseTreeNode* getIdentifierArithOp_PtrValue();
 	ParseTreeNode* getNumberArithOpPtrValue();

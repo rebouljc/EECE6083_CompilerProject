@@ -1,0 +1,23 @@
+@y= global i32
+@tmp= global i32
+define i32  @proc1(i32 %val) {
+entry:
+define i32 proc2(i32 %val) {
+entry:
+define i32  @proc1(i32 %val) {
+entry:
+store  %val, %1 = fadd %val
+ret %val
+}
+store  %val, %1 = fadd %val
+store  %val, 
+ret %val
+}
+store  %val, %1 = fadd %val
+store  %val, 
+ret %val
+}
+define i32 @main() {
+store  @y, 
+store  @tmp, 
+}

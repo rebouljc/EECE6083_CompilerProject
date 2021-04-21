@@ -75,7 +75,11 @@ void Number::setNodeTokenIntegerDoubleNumberTokenValueToNotValue()
 
 double Number::getNodeTokenIntegerDoubleNumberTokenValue()
 {
+	
 	return this->token->getIntegerDoubleNumberTokenValue();
+	
+
+	
 }
 
 void Number::populateSearchResultsList(ParseTreeNode* motherNode)

@@ -21,6 +21,66 @@ void ArithOp::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, 
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream,declSymbolTablePtr);
 	}
+
+	this->ICGenerationIfStatementDigAndCollectRightAndLeftOperandsForArithOp();
+
+	Identifier* leftIdent = nullptr;
+	Identifier* rightIdent = nullptr;
+	Number* leftNum = nullptr;
+	Number* rightNum = nullptr;
+
+	if ((leftIdent = dynamic_cast<Identifier*>(this->getLeftOperandPtr())) != nullptr)
+	{
+		
+			if (leftIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+			{
+				(*outputFileStream) << " @";
+			}
+			else
+			{
+				(*outputFileStream) << " %";
+			}
+
+			(*outputFileStream) << leftIdent->getNodeTokenValue();
+			TerminalNode* termNode = nullptr;
+			
+		
+
+
+	}
+
+	if ((rightIdent = dynamic_cast<Identifier*>(this->getRightOperandPtr())) != nullptr)
+	{
+		
+			if (rightIdent->getNodeSymbolIdentifierType() == "GLOBAL")
+			{
+				(*outputFileStream) << " @";
+			}
+			else
+			{
+				(*outputFileStream) << " %";
+			}
+
+			(*outputFileStream) << rightIdent->getNodeTokenValue() << "\n";
+			
+	}
+
+	if ((leftNum = dynamic_cast<Number*>(this->getLeftOperandPtr())) != nullptr)
+	{
+		(*outputFileStream) << leftNum->getNodeTokenIntegerDoubleNumberTokenValue();
+		TerminalNode* termNode = nullptr;
+		
+		
+	}
+
+	if ((rightNum = dynamic_cast<Number*>(this->getRightOperandPtr())) != nullptr)
+	{
+		(*outputFileStream) << rightNum->getNodeTokenIntegerDoubleNumberTokenValue() << "\n";
+
+	}
+
+	
+	
 }
 
 void ArithOp::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

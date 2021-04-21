@@ -934,6 +934,7 @@ void Scanner::commentCheckingAndIgnoringAncillaryMethod(ifstream* input)
     
 	if (readNextCharacter == '\n')
 	{	
+		
 		return;
 	}
 	//Waste and recurse until '\n' is encountered, then return.
@@ -949,6 +950,7 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 	if(input->eof())
 	{
 		
+		
 		throw NoClosingCommentMarkException();
 		
 	}
@@ -959,13 +961,14 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 		char peekChar = this->peekNextCharacterInFile(input);
 		if (peekChar == '/')
 		{	
-			char wasteToken = this->readCharacterFromFile(input);
+			
 			return;
 		}
 	}
 	//Takes care of case where there is a '/' within the embedded comment.
 	else if (readNextCharacter == '/')
 	{
+		
 		this->commentCheckingAndIgnoringAncillaryMethod(input);
 	}
 

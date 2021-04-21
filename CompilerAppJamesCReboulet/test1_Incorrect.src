@@ -6,8 +6,7 @@ PROGRAM grant IS
     variable tmp : integer;
 
 	procedure if_proc : integer()
-	// this next line should throw a duplicate declaration error
- 
+	// this next line should throw a duplicate declaration error.
         global variable zach : float;
 		begin
 		if(true) then jake := jake + 1;

@@ -14,7 +14,7 @@ procedure Fib : integer(variable val : integer)
 	begin
 
     tmp[0] := -1;
-    tmp[1.0] := 1;
+    tmp[1] := 1;
 
     for(loopVal := 0; loopVal <= val)
         ret := tmp[0] + tmp[1];

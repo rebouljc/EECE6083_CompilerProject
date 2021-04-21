@@ -10,6 +10,7 @@ entry:
 br i1 %0, label btrue0, label %bfalse0
 
 btrue0:
+store  %ret, 0
 ret %ret
 br label %end0
 bfalse0:
@@ -20,13 +21,21 @@ end0:
 br i1 %1, label btrue1, label %bfalse1
 
 btrue1:
+store  %ret, 1
 ret %ret
 br label %end1
 bfalse1:
 br label %end1
 
 end1:
+store  %val, %3 = fadd %val
+store  %tmp1, 
+store  %val, %3 = fadd %val
+store  %tmp2, 
+store  %ret, %3 = fadd %tmp1
 ret %ret
 }
 define i32 @main() {
+store  @value, 
+store  @out, 
 }

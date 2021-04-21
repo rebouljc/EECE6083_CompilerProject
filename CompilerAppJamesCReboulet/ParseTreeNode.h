@@ -33,6 +33,8 @@ public:
 
 	//Intermediate Code Generation Public Methods.
 	void ICGenerationIfStatementDigAndCollectRightAndLeftOperands();
+	void ICGenerationIfStatementDigAndCollectRightAndLeftOperandsForArithOp();
+	void ICGenerationExpressionDigAndCollectSingleOperand();
 	ParseTreeNode* ICGenerationIfStatementDigAndCollectLeftOperand();
 	ParseTreeNode* ICGenerationIfStatementDigAndCollectRightOperand();
 
@@ -40,7 +42,7 @@ public:
 	void setLeftOperandPtr(ParseTreeNode* left) { this->leftOperand = left; };
 	ParseTreeNode* getRightOperandPtr() { return this->rightOperand; };
 	ParseTreeNode* getLeftOperandPtr() { return this->leftOperand; };
-	void ICCodeGenerationSendIfStatementOperandsUpTheChainToParentIfStatement(ParseTreeNode* left, ParseTreeNode* right);
+	bool ICCodeGenerationSendExpressionOperandsUpTheChainToParentExpression(ParseTreeNode* left, ParseTreeNode* right);
 	int ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
 	void ICCodeGenerationClimbTreeToProcedureBodyAndIncrementIndexValue();
 
@@ -55,9 +57,7 @@ protected:
 	virtual ParseTreeNode* getNodePtr() { return nullptr; };
 	virtual void verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode = nullptr) { return; };
 
-	bool searchLocalSymbolTable(ParseTreeNode* searchSymbol, ParseTreeNode* returnSymbol,
-		vector<ParseTreeNode*>* symbolTablePtr
-	);
+	ParseTreeNode* searchLocalSymbolTable(ParseTreeNode* searchSymbol, vector<ParseTreeNode*>* symbolTablePtr);
 
 	bool ICGenerationClimbTreeAndCheckForReturnStatement();
 	

@@ -1,7 +1,7 @@
 #include "Identifier.h"
 #include "VariableDeclaration.h"
 #include "ProcedureHeader.h"
-
+#include "Destination.h"
 
 Identifier::Identifier()
 {
@@ -65,6 +65,7 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 {
 	VariableDeclaration* varDecl = nullptr;
 	ProcedureHeader* procHead = nullptr;
+	Destination* dest = nullptr;
 	
 
 	if (!outputFileStream->is_open())
@@ -77,15 +78,11 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 		//Check the global and local symbol tables.
 		//Check local first.
 		
-		
-		ParseTreeNode* returnSymbol = nullptr;
-		
-
 		if (varDecl->getVariableParentIsParameterFlag())
 		{
 			this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
 		}
-		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
+		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, declSymbolTablePtr) != nullptr)
 		{
 			
 			(*outputFileStream) << "%";
@@ -95,7 +92,7 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 			
 		}
 		
-		else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
+		else if (this->searchLocalSymbolTable(this, this->programNode_motherNode->getSymbolTable()) != nullptr)
 		{
 			
 			(*outputFileStream) << "@";
@@ -114,20 +111,17 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 		//Check the global and local symbol tables.
 		//Check local first.
 
-
-		ParseTreeNode* returnSymbol = nullptr;
-
 		(*outputFileStream) << " ";
 
 		this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
 
-		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
+		if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, declSymbolTablePtr) != nullptr)
 		{
 			(*outputFileStream) << " %";
 			procHead->setLocalVariableSetFlag();
 		}
 
-		else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
+		else if (this->searchLocalSymbolTable(this, this->programNode_motherNode->getSymbolTable()) != nullptr)
 		{
 			(*outputFileStream) << " @";
 			procHead->setglobalVariableSetFlag();
@@ -140,21 +134,53 @@ void Identifier::generateIntermediateCodeFromParseTree(ofstream* outputFileStrea
 	{
 		
 			this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
-			ParseTreeNode* returnSymbol = nullptr;
 
-			if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, returnSymbol, declSymbolTablePtr))
+			if (declSymbolTablePtr != nullptr && this->searchLocalSymbolTable(this, declSymbolTablePtr) != nullptr)
 			{
 				(*outputFileStream) << " %";
 				
 			}
 
-			else if (this->searchLocalSymbolTable(this, returnSymbol, this->programNode_motherNode->getSymbolTable()))
+			else if (this->searchLocalSymbolTable(this, this->programNode_motherNode->getSymbolTable()) != nullptr)
 			{
 				(*outputFileStream) << " @";
 				
 			}
 			(*outputFileStream) << this->getNodeTokenValue() << "\n";
 			
+		
+	}
+
+	else if ((dest = dynamic_cast<Destination*>(this->parentNodePtr)) != nullptr)
+	{
+		//Search both the local and global symbol tables.
+
+		ParseTreeNode* returnSymbol = nullptr;
+		
+
+		if (declSymbolTablePtr != nullptr && (returnSymbol = this->searchLocalSymbolTable(this, declSymbolTablePtr)) != nullptr)
+		{
+			
+			
+			Identifier* ident = dynamic_cast<Identifier*>(returnSymbol);
+			this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
+			(*outputFileStream) << " %" << ident->getNodeTokenValue() << ", ";
+
+		}
+
+		else if ((returnSymbol = this->searchLocalSymbolTable(this, this->programNode_motherNode->getSymbolTable())) != nullptr)
+		{
+
+			
+			Identifier* ident = dynamic_cast<Identifier*>(returnSymbol);
+			this->setStringTypeForIntermediateCodeGeneration(outputFileStream);
+			(*outputFileStream) << " @" << ident->getNodeTokenValue() << ", ";
+			
+
+
+
+		}
+
 		
 	}
 

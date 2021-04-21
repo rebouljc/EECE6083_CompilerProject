@@ -1,0 +1,16 @@
+@a= global i32
+@tmp= global i32
+define i32  @f(i32 %x) {
+entry:
+%b= alloca i32
+%y= alloca i32
+store  %b, 3
+store  %y, 
+ret %x
+%1 = fadd %y
+ %x}
+define i32 @main() {
+store  @a, 3
+store  @a, 
+store  @tmp, 
+}

@@ -1,0 +1,29 @@
+@x= global i32
+@c= global string
+@tmp= global i32
+define i32 @main() {
+store  @x, 
+
+btrue-1:
+store  @tmp, 
+
+bfalse-1:
+store  @tmp, 
+br label %end-1
+bfalse-1:
+br label %end-1
+
+end-1:
+store  @c, 
+ oeq float %c,
+btrue-1:
+store  @tmp, 
+
+bfalse-1:
+store  @tmp, 
+br label %end-1
+bfalse-1:
+br label %end-1
+
+end-1:
+}

@@ -15,10 +15,14 @@ AssignmentStatement::AssignmentStatement(Parser* parser, ParseTreeNode* motherNo
 
 void AssignmentStatement::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
+	(*outputFileStream) << "store ";
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
 	}
+	(*outputFileStream) << "\n";
+
+	
 }
 
 void AssignmentStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode* motherNode)

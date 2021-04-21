@@ -16,6 +16,11 @@ ArithOp_::ArithOp_(Parser* parser, ParseTreeNode* motherNode, ParseTreeNode* par
 
 void ArithOp_::generateIntermediateCodeFromParseTree(ofstream* outputFileStream, vector<ParseTreeNode*>* declSymbolTablePtr)
 {
+	int index = this->ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue();
+	if (index != -1)
+	{
+		(*outputFileStream) << "%" << index + 1 << " = fadd";
+	}
 	for (int i = 0; i < this->linkedMemberNonterminals.size(); ++i)
 	{
 		this->linkedMemberNonterminals.at(i)->generateIntermediateCodeFromParseTree(outputFileStream, declSymbolTablePtr);
