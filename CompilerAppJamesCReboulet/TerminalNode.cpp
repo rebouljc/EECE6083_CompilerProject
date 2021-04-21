@@ -202,6 +202,11 @@ void TerminalNode::setNodeTokenValue(std::string value)
 	this->token->setTokenValue(value);
 }
 
+void TerminalNode::setNodeTokenType(std::string type)
+{
+	this->token->setTokenType(type);
+}
+
 int TerminalNode::getNodeTokenLineNumber()
 {
 	return this->token->getTokenLineNumber();

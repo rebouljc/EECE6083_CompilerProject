@@ -13,6 +13,7 @@ public:
 	string getNodeTokenType();
 	string getNodeTokenValue();
 	void setNodeTokenValue(std:: string value);
+	void setNodeTokenType(std::string type);
 	int    getNodeTokenLineNumber();
 	void populateSearchResultsList(ParseTreeNode* motherNode) override;
 

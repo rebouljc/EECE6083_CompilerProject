@@ -2093,7 +2093,7 @@ void ParseTreeNode::climbTreeToDeclarationNode(ParseTreeNode* identifierNode)
                 Identifier* symbolTableIdent = nullptr;
                 if (dynamic_cast<Identifier*>(identifierNode)->getNodeSymbolIdentifierType() == "LOCAL")
                 {
-                    return;
+                    break;
                 }
                 if ((symbolTableIdent = dynamic_cast<Identifier*>(this->getSymbolTable()->at(s))) != nullptr && 
                     
@@ -2102,13 +2102,13 @@ void ParseTreeNode::climbTreeToDeclarationNode(ParseTreeNode* identifierNode)
                 {
                     
                     this->checkArrayIndexInBounds(*identifierNode, *symbolTableIdent);
-                    return;
+                    
                     
                 }
             }
            
         }
-        
+        return;
     }
     else if (dynamic_cast<Declaration*>(this))
     {

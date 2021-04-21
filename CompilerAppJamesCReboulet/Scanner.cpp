@@ -9,6 +9,7 @@
 #include "IllegalIdentifierException.h"
 #include "NoPeriodAtEndOfProgramException.h"
 #include "MainCompileErrorException.h"
+#include <ctype.h>
 
 
 //This scanner is guaranteed not to crap out.  If something is wrong, it will immediately stop at the line of the first instance of
@@ -96,6 +97,12 @@ void Scanner::init()
 	string filename;
 	std::cin >> filename;
     ifstream* input = new ifstream(filename);
+	if (!input->is_open())
+	{
+		cout << "\nImproper file path.  Please try again with the local filename "
+			<< "in the same location as the executable followed by .src.  Program is now aborting...\n";
+		throw MainCompileErrorException();
+	}
 	this->readFile(input);
 	input->close();
 	delete input;
@@ -931,12 +938,25 @@ void Scanner::commentCheckingIgnoringDecisionMethod(ifstream* input)
 void Scanner::commentCheckingAndIgnoringAncillaryMethod(ifstream* input)
 {
 	char readNextCharacter = this->readCharacterFromFile(input);
-    
-	if (readNextCharacter == '\n')
-	{	
-		
+	
+	if (readNextCharacter == '.')
+	{
+		readNextCharacter = this->readCharacterFromFile(input);
+
+		if (isspace(readNextCharacter));
+		{
+
+			return;
+		}
+	}
+
+	else if (readNextCharacter == '\n')
+	{
 		return;
 	}
+	
+
+	
 	//Waste and recurse until '\n' is encountered, then return.
 	char wasteChar = this->readCharacterFromFile(input);
 	
@@ -970,8 +990,12 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 	//Takes care of case where there is a '/' within the embedded comment.
 	else if (readNextCharacter == '/')
 	{
-		char wasteChar = this->readCharacterFromFile(input);
+		this->readCharacterFromFile(input);
+		this->commentCheckingAndIgnoringAncillaryMethod(input);
+		
 		return;
+		
+		
 	}
 
 	//Waste and recurse until '*' is encountered, then return.  I forgot to waste.

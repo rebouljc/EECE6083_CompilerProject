@@ -97,6 +97,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 	}
 
+
 	else if (currentToken->getTokenValue() == "end")
 	{
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
@@ -124,6 +125,7 @@ void ProcedureBody::verifySyntaxCreateParseTreeStatementParser(ParseTreeNode* mo
 		if (!testNode->getIsValid())
 		{
 			this->linkedMemberNonterminals.pop_back();
+			
 
 			
 		}

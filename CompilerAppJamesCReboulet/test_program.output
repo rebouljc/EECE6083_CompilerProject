@@ -1,16 +1,48 @@
-@a= global i32
-@tmp= global i32
-define i32  @f(i32 %x) {
+@fibb_result= global i32
+@out= global i32
+define i32  @fibb(i32 %n) {
 entry:
+%result= alloca i32
+%a= alloca i32
 %b= alloca i32
-%y= alloca i32
-store  %b, 3
-store  %y, 
-ret %x
-%1 = fadd %y
- %x}
+%0 = fcmp olt float %n,0
+br i1 %0, label btrue0, label %bfalse0
+
+btrue0:
+store  %result, 1
+ret %result
+br label %end0
+bfalse0:
+br label %end0
+
+end0:
+%1 = fcmp oeq float %n,0
+br i1 %1, label btrue1, label %bfalse1
+
+btrue1:
+store  %result, 0
+ret %result
+br label %end1
+bfalse1:
+br label %end1
+
+end1:
+%2 = fcmp oeq float %n,1
+br i1 %2, label btrue2, label %bfalse2
+
+btrue2:
+store  %result, 1
+ret %result
+br label %end2
+bfalse2:
+br label %end2
+
+end2:
+store  %result, %4 = fadd %a
+ret %result
+}
 define i32 @main() {
-store  @a, 3
-store  @a, 
-store  @tmp, 
+store  @fibb_result, 1234
+store  @fibb_result, 
+store  @out, 
 }

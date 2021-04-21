@@ -18,7 +18,7 @@ void Parser::init()
         
 
         ((Scanner*)(this))->init();
-
+        cout << "\nInitial Scanning process completed successfully.\n";
         this->populatePredefinedRuntimeProceduresList();
     }
 

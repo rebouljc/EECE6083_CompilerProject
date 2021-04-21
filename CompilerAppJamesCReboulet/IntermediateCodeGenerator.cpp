@@ -17,9 +17,11 @@ IntermediateCodeGenerator::IntermediateCodeGenerator()
 		//Make fstream a nullptr for now.
 		else
 		{
+			cout << "\nParsing process and Semantic Analysis completed successfully with no errors.\n";
 			ofstream* output = new ofstream();
 			
 			this->parseTree->generateIntermediateCodeFromParseTree(output, nullptr);
+			cout << "\nIntermediate Code Generation completed with no errors - although it is far from complete.\n";
 			output->close();
 		}
 		

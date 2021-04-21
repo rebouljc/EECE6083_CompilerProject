@@ -72,6 +72,7 @@ void LoopStatement::verifySyntaxCreateParseTree(int tokenCounter, ParseTreeNode*
 		
 		this->linkedMemberNonterminals.push_back(new TerminalNode(currentToken, this, this->programNode_motherNode));
 		this->setIsValid(true);
+		
 		return;
 		
 
