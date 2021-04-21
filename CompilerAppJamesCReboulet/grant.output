@@ -1,0 +1,31 @@
+@jake= global i32
+@ryan= global i32
+ global global@zach= global i32
+@tmp= global i32
+define i32  @if_proc( {
+entry:
+%declaration= alloca i32
+
+btrue0:
+store  @jake, %1 = fadd %jake
+
+bfalse0:
+store  @zach, %1 = fadd %zach
+br label %end0
+bfalse0:
+br label %end0
+
+end0:
+ret}
+define i32  @for_proc( {
+entry:
+%i= alloca i32
+store  %i, 0
+%0 = fcmp olt float %i, %zach
+br i1 %0, label btrue0, label %bfalse0
+store  @ryan, %1 = fadd %zach
+ret}
+define i32 @main() {
+store  @tmp, 
+store  @tmp, 
+}

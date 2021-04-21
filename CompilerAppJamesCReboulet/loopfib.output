@@ -1,0 +1,30 @@
+@x= global i32
+@i= global i32
+@max= global i32
+@tmp= global i32
+@out= global i32
+define i32  @fib(i32 %val) {
+entry:
+%tmp= alloca i32
+ alloca alloca%loopval= alloca i32
+%ret= alloca i32
+store  %tmp, 1
+store  %tmp, 1
+store  %loopval, 0
+%0 = fcmp ole float %loopval, %val
+br i1 %0, label btrue0, label %bfalse0
+store  %ret, %1 = fadd %tmp
+store  %tmp, 
+store  %tmp, 
+store  %loopval, %1 = fadd %loopval
+ret %ret
+}
+define i32 @main() {
+store  @max, 
+store  @i, 0
+ olt float %i, %max
+br i1 %-1, label btrue-1, label %bfalse-1
+store  @x, 
+store  @out, 
+store  @i,  %i
+}

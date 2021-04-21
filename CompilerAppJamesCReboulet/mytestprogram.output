@@ -1,0 +1,16 @@
+@i= global i32
+@c= global string
+@myarray= global i32
+ global globaldefine i32 @main() {
+store  @i, 100
+store  @c, 
+ ogt float %i,1
+br i1 %-1, label btrue-1, label %bfalse-1
+
+btrue-1:
+br label %end-1
+bfalse-1:
+br label %end-1
+
+end-1:
+}

@@ -964,12 +964,14 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 			
 			return;
 		}
+
+
 	}
 	//Takes care of case where there is a '/' within the embedded comment.
 	else if (readNextCharacter == '/')
 	{
-		
-		this->commentCheckingAndIgnoringAncillaryMethod(input);
+		char wasteChar = this->readCharacterFromFile(input);
+		return;
 	}
 
 	//Waste and recurse until '*' is encountered, then return.  I forgot to waste.

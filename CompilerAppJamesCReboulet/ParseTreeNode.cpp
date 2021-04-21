@@ -2091,19 +2091,24 @@ void ParseTreeNode::climbTreeToDeclarationNode(ParseTreeNode* identifierNode)
             for (int s = 0; s < this->getSymbolTable()->size(); ++s)
             {
                 Identifier* symbolTableIdent = nullptr;
-               
-                if ((symbolTableIdent = dynamic_cast<Identifier*>(this->getSymbolTable()->at(s))) != nullptr &&
+                if (dynamic_cast<Identifier*>(identifierNode)->getNodeSymbolIdentifierType() == "LOCAL")
+                {
+                    return;
+                }
+                if ((symbolTableIdent = dynamic_cast<Identifier*>(this->getSymbolTable()->at(s))) != nullptr && 
+                    
                     symbolTableIdent->getNodeTokenValue() == dynamic_cast<Identifier*>(identifierNode)->getNodeTokenValue()
                     )
                 {
                     
                     this->checkArrayIndexInBounds(*identifierNode, *symbolTableIdent);
-                   
+                    return;
                     
                 }
             }
+           
         }
-        return;
+        
     }
     else if (dynamic_cast<Declaration*>(this))
     {
@@ -2133,7 +2138,8 @@ void ParseTreeNode::checkArrayIndexInBounds(ParseTreeNode& identifier, ParseTree
     try
     {
         if ((indexToCheck = dynamic_cast<Number*>(dynamic_cast<Identifier*>(&identifier)->getNumberPtrValue())) != nullptr)
-        {
+        {   
+            
             if (!(indexToCheck->getNodeTokenIntegerDoubleNumberTokenValue() >= 0 &&
                   indexToCheck->getNodeTokenIntegerDoubleNumberTokenValue() <=
                   dynamic_cast<Number*>(dynamic_cast<Identifier*>(&symbolTableIdentifier)->getNumberPtrValue())->getNodeTokenIntegerDoubleNumberTokenValue()
