@@ -118,8 +118,8 @@ C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\TypeD
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(73): warning C4715: 'ParseTreeNode::ICCodeGenerationClimbTreeToProcedureBodyAndGetIndexValue': not all control paths return a value
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(171): warning C4715: 'ParseTreeNode::ICGenerationIfStatementDigAndCollectLeftOperand': not all control paths return a value
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(224): warning C4715: 'ParseTreeNode::ICGenerationIfStatementDigAndCollectRightOperand': not all control paths return a value
-C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(344): warning C4715: 'ParseTreeNode::ICCodeGenerationSendExpressionOperandsUpTheChainToParentExpression': not all control paths return a value
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(358): warning C4715: 'ParseTreeNode::ICGenerationClimbTreeAndCheckForReturnStatement': not all control paths return a value
+C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(344): warning C4715: 'ParseTreeNode::ICCodeGenerationSendExpressionOperandsUpTheChainToParentExpression': not all control paths return a value
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(416): warning C4715: 'ParseTreeNode::climbTreeAndCheckParenthesesPresentOnParentExpressionFlag': not all control paths return a value
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(463): warning C4715: 'ParseTreeNode::searchSymbolTable': not all control paths return a value
   Compiling...

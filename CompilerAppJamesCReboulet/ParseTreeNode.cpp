@@ -1323,7 +1323,7 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                             (identLeft = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
                             )
                         {
-                            if (identRight != nullptr)
+                            /*if (identRight != nullptr)
                             {
                                 rightValue = identRight->getNodeTokenValue();
                             }
@@ -1331,7 +1331,7 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                             else if (identLeft != nullptr)
                             {
                                 leftValue = identLeft->getNodeTokenValue();
-                            }
+                            }*/
                         }
 
                         if (!numberSet && ((numberLeft = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr ||
