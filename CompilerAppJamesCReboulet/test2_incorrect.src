@@ -1,7 +1,9 @@
+
 // so, this character: @ should not cause a problem as any ascii character can be in a comment.
 
 /*  ok, so just for fun, let's see if this gives you any headaches.  this // should be ok
     and the comment should just proceeds as designed */
+
 
 program test_program is
 
