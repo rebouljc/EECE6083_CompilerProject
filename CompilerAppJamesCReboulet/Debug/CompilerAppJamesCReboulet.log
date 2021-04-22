@@ -60,12 +60,12 @@ C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\Parse
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(244,23): warning C4018: '<': signed/unsigned mismatch
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(300,23): warning C4018: '<': signed/unsigned mismatch
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1278,27): warning C4018: '<': signed/unsigned mismatch
-C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1390,27): warning C4018: '<': signed/unsigned mismatch
-C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2019,31): warning C4018: '<': signed/unsigned mismatch
-C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2038,31): warning C4018: '<': signed/unsigned mismatch
-C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2058,31): warning C4018: '<': signed/unsigned mismatch
-C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2091,31): warning C4018: '<': signed/unsigned mismatch
-C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2117,27): warning C4018: '<': signed/unsigned mismatch
+C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(1408,27): warning C4018: '<': signed/unsigned mismatch
+C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2037,31): warning C4018: '<': signed/unsigned mismatch
+C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2056,31): warning C4018: '<': signed/unsigned mismatch
+C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2076,31): warning C4018: '<': signed/unsigned mismatch
+C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2109,31): warning C4018: '<': signed/unsigned mismatch
+C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ParseTreeNode.cpp(2135,27): warning C4018: '<': signed/unsigned mismatch
   ProcedureBody.cpp
 C:\CurrentCompilerClone\EECE6083_CompilerProject\CompilerAppJamesCReboulet\ProcedureBody.cpp(20,20): warning C4018: '<': signed/unsigned mismatch
   ProcedureCall.cpp

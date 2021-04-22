@@ -1297,6 +1297,7 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                 Identifier* ident = nullptr;
                 TypeMark* identType = nullptr;
 
+                
 
 
                 if ((ident = dynamic_cast<Identifier*>(varDecl->linkedMemberNonterminals.at(1))) != nullptr &&
@@ -1315,6 +1316,23 @@ void ParseTreeNode::verifyArithmeticOperationsAreCorrectlyDefinedDigAndBurnClock
                         
                         Number* numberLeft = nullptr;
                         Number* numberRight = nullptr;
+                        Identifier* identRight = nullptr;
+                        Identifier* identLeft = nullptr;
+
+                        if ((identRight = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr ||
+                            (identLeft = dynamic_cast<Identifier*>(tokenToCompareRight)) != nullptr
+                            )
+                        {
+                            if (identRight != nullptr)
+                            {
+                                rightValue = identRight->getNodeTokenValue();
+                            }
+
+                            else if (identLeft != nullptr)
+                            {
+                                leftValue = identLeft->getNodeTokenValue();
+                            }
+                        }
 
                         if (!numberSet && ((numberLeft = dynamic_cast<Number*>(tokenToCompareLeft)) != nullptr ||
                             (numberRight = dynamic_cast<Number*>(tokenToCompareRight)) != nullptr)

@@ -4,21 +4,15 @@
 @out= global i32
 define i32  @fib(i32 %val) {
 entry:
-%ret= alloca i32
-%tmp= alloca i32
- alloca allocadefine i32 sub(i32 %val1) {
+define i32 sub(i32 %val1) {
 entry:
-%val2= alloca i32
-store  %val2, %1 = fadd %val2
-ret %val2
-}
+ret %val1
+%1 = fadd %val1}
 %0 = fcmp oeq float %val,0
 br i1 %0, label btrue0, label %bfalse0
 
 btrue0:
-store  %ret, 0
-ret %ret
-br label %end0
+retbr label %end0
 bfalse0:
 br label %end0
 
@@ -27,20 +21,16 @@ end0:
 br i1 %1, label btrue1, label %bfalse1
 
 btrue1:
-store  %ret, 1
-ret %ret
-br label %end1
+retbr label %end1
 bfalse1:
 br label %end1
 
 end1:
-store  %val, 
-store  %tmp, 
-store  %val, 
-store  %tmp, 
-store  %ret, %3 = fadd %tmp
-ret %ret
-}
+ret %val
+%3 = fadd @fib
+ %sub
+ %val
+ %val}
 define i32 @main() {
 store  @max, 
 store  @i, 0
