@@ -11,14 +11,6 @@
 #include "MainCompileErrorException.h"
 #include <ctype.h>
 
-
-//This scanner is guaranteed not to crap out.  If something is wrong, it will immediately stop at the line of the first instance of
-//the problem and throw an exception.  I will not continue to further processing and throw out 100 unrelated compiler errors in the process,
-//when the REAL problem was that the user simply used an illegal character or forgot to properly close their comments with */, etc.
-//The trick is to catch as many errors as possible the earliest in the process, to prevent it from continuing and trying to recover from
-//terrible scenarios and generating hundreds of issues in the process.  If the user writes code wrong, IT IS JUNK and needs to be FIXED NOW!
-//None of this Donald Trump impeachment crap - "I didn't mean that..."  No, you SAID IT and DIDN'T IMMEDIATELY CORRECT IT IF YOU HAD SPOKEN WRONG so that is WHAT YOU MEANT!
-
 Scanner::Scanner()
 {
 	
@@ -542,8 +534,7 @@ void Scanner::otherActionMatchNotReservedWord(ifstream* input)
 
 bool Scanner::matchIdentifier()
 {
-	//search the whole damn list, since this doesn't work if the character is in the middle of the list.
-	//It is slightly inefficient, but what do you do??
+	
 	vector<Character*>::iterator i;
 	try
 	{
@@ -714,9 +705,7 @@ void Scanner::matchStringLiteral(ifstream* input)
 	if (input->eof()) //Prevents infinite recursion if user forgets to end string literal with "
 	{
 		throw StringLiteralException();
-		//Here is where we throw the exception.  We forgot the quotation marks and we have no idea where the string token ends.
-		//For now, we will just return.  Now, if we ever get here, we can be assured that the developer forgot a closing and/or opening " and
-		//if we don't produce an error, we will have parsed and created a bunch of bullshit tokens, which is what happened when I tested it.
+		
 
 		return;
 	}
@@ -812,8 +801,7 @@ void Scanner::readFile(ifstream* input)
 		performOtherAction(input, character);
 		
 
-		//We have to put a corrective hack in to prevent the line number on a token from being incorrectly incremented when it has
-		//an '\n' after it.  For instance, after the reserved word "is" or the identifier "is".  This only took about 4 hours to figure out.
+		
 
 		if (!(this->storedTokens.empty()) && character == '\n')
 		{
@@ -852,9 +840,8 @@ void Scanner::performOtherAction(ifstream* input, char character)
 		{
 			this->storedTokens.at(this->storedTokens.size() - 1)->setTokenIsPeriodStatus(true);
 
-			//If this is so, call this->matchReservedWordAgain()
-			//Recurse back into the readFile again.  DOUBLE RECURSION, BABY!!  This is how you speak when you aren't getting any because
-			//you are a CS major and have no time and no money. 
+			
+			
 
 			this->readFile(input); //Then, it will go back to matchReservedWord(input).
 		}
@@ -998,7 +985,7 @@ void Scanner::embeddedCommentsCheckingAndIgnoringAncillaryMethod(ifstream* input
 		
 	}
 
-	//Waste and recurse until '*' is encountered, then return.  I forgot to waste.
+	//Waste and recurse until '*' is encountered, then return. 
 	char wasteChar = this->readCharacterFromFile(input);
 	this->embeddedCommentsCheckingAndIgnoringAncillaryMethod(input);
 }

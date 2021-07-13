@@ -48,8 +48,7 @@ private:
 	ParseTreeNode* getNodePtr() override;
 	bool isValid = false;
 
-	//These are really pointers to the identifiers in Term and Term_.  I was too lazy to rename them.
-	//They work as they are, and I don't want to risk potentially messing them up by renaming them.
+	
 
 	ParseTreeNode* identifierArithOpPtr = nullptr;
 	ParseTreeNode* identifierArithOp_Ptr = nullptr;
